@@ -162,7 +162,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/02/22/%E7%AC%AC%E4%B8%80%E7%AF%87/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/02/22/%E9%93%BE%E8%A1%A8%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%E4%BB%A5%E5%8F%8A%E5%92%8C%E9%A1%BA%E5%BA%8F%E8%A1%A8%E7%9A%84%E5%8C%BA%E5%88%AB/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -176,7 +176,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/02/22/%E7%AC%AC%E4%B8%80%E7%AF%87/" class="post-title-link" itemprop="url">第一篇</a>
+            <a href="/2022/02/22/%E9%93%BE%E8%A1%A8%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%E4%BB%A5%E5%8F%8A%E5%92%8C%E9%A1%BA%E5%BA%8F%E8%A1%A8%E7%9A%84%E5%8C%BA%E5%88%AB/" class="post-title-link" itemprop="url">post链表的基本使用以及和线性表的区别</a>
         </h2>
 
         <div class="post-meta">
@@ -187,7 +187,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2022-02-22 21:31:53 / 修改时间：21:32:30" itemprop="dateCreated datePublished" datetime="2022-02-22T21:31:53+08:00">2022-02-22</time>
+              <time title="创建时间：2022-02-22 22:50:47 / 修改时间：23:02:25" itemprop="dateCreated datePublished" datetime="2022-02-22T22:50:47+08:00">2022-02-22</time>
             </span>
 
           
@@ -201,7 +201,68 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>这是我的第一篇博客</p>
+          <p>1，线性表和链表的优劣<br>    1，在获取数据方面，因为有下标，顺序表的时间复杂度为O(1),而链表是O(n),因为要遍历到那个节点的位置。</p>
+<pre><code>2，在插入和删除方面，顺序表需要移动目标后面或者前面的所有元素，时间复杂度O(n)；
+链表也需要遍历到固定位置，在进行插入删除，所以也是O(n),
+但是当频繁的插入和删除是链表的优势明显（临时指针的移动量少）。
+</code></pre>
+<p>2，链表的代码实现<br>&#x2F;&#x2F;节点类<br>class Node{<br>    int data;<br>    Node next;</p>
+<pre><code>//指定数据和下一个节点
+public Node(int data,Node next)&#123;
+    this(data);
+    this.next = next;
+
+&#125;
+//指定数据
+public Node(int data)&#123;
+    this.data = data;
+&#125;
+
+public Node()&#123;
+
+&#125;
+</code></pre>
+<p>}</p>
+<p>&#x2F;&#x2F;创造一个8个随机节点的链表<br>    public void create(){<br>        Node temp &#x3D; head;<br>        for(int i &#x3D; 0;i&lt;8;i++){<br>            Node node &#x3D; new Node();<br>            node.data &#x3D; (int) (Math.random() * 10);<br>            temp.next &#x3D; node;<br>            temp &#x3D; temp.next;<br>        }<br>        &#x2F;&#x2F;将尾指针指向最后一个节点<br>        r &#x3D; temp;<br>    }</p>
+<pre><code>//打印出来链表中的值
+public void show()&#123;
+    Node temp = head;
+    while(!(temp.next == null))&#123;
+        System.out.println(temp.next.data);
+        temp = temp.next;
+    &#125;
+&#125;
+
+//尾插法，在尾部插入一个节点
+public void add(Node node)&#123;
+    r.next = node;
+    r = r.next;
+&#125;
+
+//删除一个节点,假设每个节点的data值都不同
+public int delete(int data)&#123;
+    Node temp = head;
+    //找到待删除节点
+    while(temp.next.next!=null&amp;&amp;temp.next.data != data)&#123;
+        temp = temp.next;
+    &#125;
+    //越过这个节点
+    temp.next = temp.next.next;
+    return data;
+&#125;
+
+//插入到指定位置,前提是该节点存在
+public void insert(Node node,Node next)&#123;
+    Node temp = head;
+    //找到需要插入节点的前一个节点
+    while(temp.next!=next)&#123;
+        temp = temp.next;
+    &#125;
+    //插入操作
+    node.next = temp.next;
+    temp.next = node;
+&#125;
+</code></pre>
 
       
     </div>
