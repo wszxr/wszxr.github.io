@@ -162,6 +162,99 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/02/23/datastruct-%E6%A0%88%E7%AF%87/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="impotent">
+      <meta itemprop="description" content="In the dreams of the impotent">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大森林">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/02/23/datastruct-%E6%A0%88%E7%AF%87/" class="post-title-link" itemprop="url">datastruct 栈篇</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-02-23 18:18:22 / 修改时间：18:38:42" itemprop="dateCreated datePublished" datetime="2022-02-23T18:18:22+08:00">2022-02-23</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>栈是一种后进先出结构(FILO)<br>#用数组实现栈#<br>    任何实现入栈出栈时间复杂度都是O(1)<br>    class Stack{<br>    private int maxSize;<br>        private int []datas ;<br>        private int top &#x3D; -1;&#x2F;&#x2F;栈顶初始值为-1<br>        public Stack(int maxSize){<br>            this.maxSize &#x3D; maxSize;<br>            datas &#x3D; new int[maxSize];<br>        }<br>    &#x2F;&#x2F;入栈<br>    public void push(int data){<br>        if(isFull()){<br>            throw new RuntimeException(“栈满了无法加入”);<br>        }<br>        top++;&#x2F;&#x2F;栈顶先移动<br>        datas[top] &#x3D; data;<br>    }<br>    &#x2F;&#x2F;出栈<br>    public int pop(){<br>        if(isEmpty()) {<br>            throw new RuntimeException(“栈空无法出栈”);<br>        }<br>        int temp &#x3D; datas[top];<br>        top–;<br>        return temp;<br>    }<br>#用链表实现#<br>    &#x2F;&#x2F;链表实现不用担心栈满的问题<br>    class LinkedStack {<br>    Node head &#x3D; new Node();<br>    Node top;<br>    }<br>    &#x2F;&#x2F;入栈，头节点为栈底，先连接头节点，在把top指向入栈的<br>    public void push(Node node){<br>        node.next &#x3D; top;<br>        top &#x3D; node;<br>    }<br>    &#x2F;&#x2F;出栈<br>    public int  pop(){<br>        if(isEmpty()){<br>            throw new RuntimeException(“栈空无法出栈”);<br>        }<br>        int a &#x3D; top.data;<br>        top &#x3D; top.next;<br>        return a;<br>    }<br>#共享栈#<br>    &#x2F;&#x2F;特定环境使用，一个数组中放两个栈，左边初始top1 &#x3D; -1，右边初始top2 &#x3D; maxSize.<br>    &#x2F;&#x2F;两个栈应该类型相同且一个栈增加的同时另一个栈相应减小，否则很快也会满<br>    class ShareStack {<br>        private int maxSize;<br>        private int[]datas;<br>        private int top1;<br>        private int top2;<br>    }<br>    &#x2F;&#x2F;判断栈满,top1,top2相邻<br>    public boolean isFull(){<br>        return top1+1&#x3D;&#x3D;top2;<br>    }<br>    &#x2F;&#x2F;判断栈空，分别判断<br>    public boolean isEmpty(int number){<br>        if(number&#x3D;&#x3D;1){<br>            return top1&#x3D;&#x3D;-1;<br>        }else return top2&#x3D;&#x3D;maxSize;<br>    }</p>
+<pre><code>//进栈，需要指定哪一个栈
+public void push(int data,int number)&#123;
+    //满了抛出异常
+    if(isFull())&#123;
+        throw new RuntimeException(&quot;栈满无法加入&quot;);
+    &#125;
+    //当number==1时表示加到左边的栈，否则加到右边的栈
+    if(number==1)&#123;
+        top1++;
+        datas[top1] = data;
+    &#125;else &#123;
+        top2--;
+        datas[top2] = data;
+    &#125;
+&#125;
+
+//出栈，需要指定哪一个栈
+public int pop(int number)&#123;
+    //判断是否为空
+    if(isEmpty(number))&#123;
+        throw new RuntimeException(&quot;栈空无法出栈&quot;);
+    &#125;
+
+    if(number==1)&#123;
+        int l = datas[top1];
+        top1--;
+        return l;
+    &#125;else &#123;
+        int r = datas[top2];
+        top2--;
+        return r;
+    &#125;
+&#125;
+</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/02/23/datastruct-%E9%93%BE%E8%A1%A8%E7%AF%87/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -187,7 +280,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2022-02-23 02:26:40 / 修改时间：14:49:00" itemprop="dateCreated datePublished" datetime="2022-02-23T02:26:40+08:00">2022-02-23</time>
+              <time title="创建时间：2022-02-23 02:26:40 / 修改时间：18:39:40" itemprop="dateCreated datePublished" datetime="2022-02-23T02:26:40+08:00">2022-02-23</time>
             </span>
 
           
@@ -201,9 +294,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>##链表和顺序表的优劣<br>1,因为有数组下标的存在，顺序表在查找方面领先链表，时间复杂度为O(1),而链表查找需要遍历，因此时间复杂度为o(N)。</p>
+          <p>#链表和顺序表的优劣#<br>1,因为有数组下标的存在，顺序表在查找方面领先链表，时间复杂度为O(1),而链表查找需要遍历，因此时间复杂度为o(N)。</p>
 <p>2，增加或删除元素方面，链表优势，顺序表每次插入或者删除都需要移动大量元素O(N),链表需要查找到增加或删除的位置(通过指针)，也是O(N),但是插入的越频繁链表的优势体现的越大(指针移动的距离变少)。</p>
-<p>##双向链表<br>1,除了data和next外，还有个指向前驱节点的prior指针。<br>2,空间占用更多。用空间换时间效率。</p>
+<p>#双向链表#<br>1,除了data和next外，还有个指向前驱节点的prior指针。</p>
+<p>2,空间占用更多。用空间换时间效率。</p>
 <pre><code>插入操作：//找到插入位置的前一个位置temp
         node.next = temp.next;//设置待插入节点的next
         node.prior = temp;//设置待插入节点的prior
@@ -370,7 +464,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">2</span>
+          <span class="site-state-item-count">3</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
