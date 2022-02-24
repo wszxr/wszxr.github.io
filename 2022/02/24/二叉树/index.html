@@ -20,19 +20,19 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="栈是一种后进先出结构(FILO)#用数组实现栈    任何实现入栈出栈时间复杂度都是O(1)    class Stack{    private int maxSize;        private int []datas ;        private int top &#x3D; -1;&#x2F;&#x2F;栈顶初始值为-1        public Stack(int maxSiz">
+  <meta name="description" content="#二叉树链式存储##初始化    &#x2F;&#x2F;节点类，包含数据，左右孩子指针    class TreeNode{        int data;        TreeNode left;        TreeNode right;    } &#x2F;&#x2F;二叉树类中手动初始化一棵树 public void init()&amp;#123;     root &#x3D; new TreeNode(1);">
 <meta property="og:type" content="article">
-<meta property="og:title" content="datastruct 栈篇">
-<meta property="og:url" content="http://example.com/2022/02/23/datastruct-%E6%A0%88%E7%AF%87/index.html">
+<meta property="og:title" content="二叉树">
+<meta property="og:url" content="http://example.com/2022/02/24/%E4%BA%8C%E5%8F%89%E6%A0%91/index.html">
 <meta property="og:site_name" content="大森林">
-<meta property="og:description" content="栈是一种后进先出结构(FILO)#用数组实现栈    任何实现入栈出栈时间复杂度都是O(1)    class Stack{    private int maxSize;        private int []datas ;        private int top &#x3D; -1;&#x2F;&#x2F;栈顶初始值为-1        public Stack(int maxSiz">
+<meta property="og:description" content="#二叉树链式存储##初始化    &#x2F;&#x2F;节点类，包含数据，左右孩子指针    class TreeNode{        int data;        TreeNode left;        TreeNode right;    } &#x2F;&#x2F;二叉树类中手动初始化一棵树 public void init()&amp;#123;     root &#x3D; new TreeNode(1);">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-02-23T10:18:22.000Z">
-<meta property="article:modified_time" content="2022-02-24T12:50:36.087Z">
+<meta property="article:published_time" content="2022-02-24T13:48:58.000Z">
+<meta property="article:modified_time" content="2022-02-24T14:16:04.060Z">
 <meta property="article:author" content="impotent">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/2022/02/23/datastruct-%E6%A0%88%E7%AF%87/">
+<link rel="canonical" href="http://example.com/2022/02/24/%E4%BA%8C%E5%8F%89%E6%A0%91/">
 
 
 <script id="page-configurations">
@@ -45,7 +45,7 @@
   };
 </script>
 
-  <title>datastruct 栈篇 | 大森林</title>
+  <title>二叉树 | 大森林</title>
   
 
 
@@ -165,7 +165,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/02/23/datastruct-%E6%A0%88%E7%AF%87/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/02/24/%E4%BA%8C%E5%8F%89%E6%A0%91/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -178,7 +178,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          datastruct 栈篇
+          二叉树
         </h1>
 
         <div class="post-meta">
@@ -187,16 +187,10 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2022-02-23 18:18:22" itemprop="dateCreated datePublished" datetime="2022-02-23T18:18:22+08:00">2022-02-23</time>
+              <time title="创建时间：2022-02-24 21:48:58 / 修改时间：22:16:04" itemprop="dateCreated datePublished" datetime="2022-02-24T21:48:58+08:00">2022-02-24</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-02-24 20:50:36" itemprop="dateModified" datetime="2022-02-24T20:50:36+08:00">2022-02-24</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -218,98 +212,159 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>栈是一种后进先出结构(FILO)<br>#用数组实现栈<br>    任何实现入栈出栈时间复杂度都是O(1)<br>    class Stack{<br>    private int maxSize;<br>        private int []datas ;<br>        private int top &#x3D; -1;&#x2F;&#x2F;栈顶初始值为-1<br>        public Stack(int maxSize){<br>            this.maxSize &#x3D; maxSize;<br>            datas &#x3D; new int[maxSize];<br>        }</p>
-<pre><code>//入栈
-public void push(int data)&#123;
-    if(isFull())&#123;
-        throw new RuntimeException(&quot;栈满了无法加入&quot;);
+        <p>#二叉树链式存储<br>##初始化<br>    &#x2F;&#x2F;节点类，包含数据，左右孩子指针<br>    class TreeNode{<br>        int data;<br>        TreeNode left;<br>        TreeNode right;<br>    }</p>
+<pre><code>//二叉树类中手动初始化一棵树
+public void init()&#123;
+    root = new TreeNode(1);
+    root.left = new TreeNode(2);
+    root.right = new TreeNode(3);
+    root.left.left = new TreeNode(4);
+    root.left.right = new TreeNode(5);
+    root.right.left = new TreeNode(6);
+    root.right.right = new TreeNode(7);
+&#125;
+</code></pre>
+<p>##遍历<br>    &#x2F;&#x2F;遍历，需要传入开始节点</p>
+<pre><code>//前序遍历，中左右顺序
+public void frontShow()&#123;
+    System.out.println(data);
+    if(left!=null)&#123;
+        left.frontShow();
     &#125;
-    top++;//栈顶先移动
-    datas[top] = data;
+    if(right!=null)&#123;
+        right.frontShow();
+    &#125;
 &#125;
 
-//出栈
-public int pop()&#123;
-    if(isEmpty()) &#123;
-        throw new RuntimeException(&quot;栈空无法出栈&quot;);
+//中序遍历，左中右顺序
+public void midShow()&#123;
+    if(left!=null)&#123;
+        left.midShow();
     &#125;
-    int temp = datas[top];
-    top--;
+    System.out.println(data);
+    if(right!=null)&#123;
+        right.midShow();
+    &#125;
+&#125;
+
+//后序遍历，左右中顺序
+public void afterShow()&#123;
+    if(left!=null)&#123;
+        left.afterShow();
+    &#125;
+    if(right!=null)&#123;
+        right.afterShow();
+    &#125;
+    System.out.println(data);
+&#125;
+</code></pre>
+<p>##查找</p>
+<pre><code>//三种遍历方法对应三种查找,传入目标值，返回节点对象
+
+//前序查找
+public TreeNode frontSearch(int target)&#123;
+    //当temp不为空说明已经查到，没有继续的意义
+    TreeNode temp = null;
+    if(target==this.data)&#123;
+        return this;
+    &#125;else &#123;
+        if(left!=null)&#123;
+            temp =  left.frontSearch(target);
+        &#125;
+        if(temp !=null)&#123;
+            return  temp;
+        &#125;
+
+        if(right!=null)&#123;
+            temp= right.frontSearch(target);
+        &#125;
+
+    &#125;
+    return temp;
+
+&#125;
+
+//中序查找
+public TreeNode midSearch(int target)&#123;
+    TreeNode temp = null;
+    if(left!=null)&#123;
+        temp = left.midSearch(target);
+    &#125;
+    if(temp!=null)&#123;
+        return temp;
+    &#125;
+
+    if(this.data==target)&#123;
+        return this;
+    &#125;
+    if(right!=null)&#123;
+        temp = right.midSearch(target);
+    &#125;
+    return temp;
+
+&#125;
+
+//后序查找
+public TreeNode afterSearch(int target)&#123;
+    TreeNode temp = null;
+    if (left!=null)&#123;
+        temp = left.afterSearch(target);
+    &#125;
+    if(temp!=null)&#123;
+        return temp;
+    &#125;
+    if (right!=null)&#123;
+        temp = right.afterSearch(target);
+    &#125;
+    if(temp!=null)&#123;
+        return temp;
+    &#125;
+    if(this.data==target)&#123;
+        return this;
+    &#125;
     return temp;
 &#125;
 </code></pre>
-<p>#用链表实现<br>    &#x2F;&#x2F;链表实现不用担心栈满的问题<br>    class LinkedStack {<br>    Node head &#x3D; new Node();<br>    Node top;<br>    }</p>
-<pre><code>//入栈，头节点为栈底，先连接头节点，在把top指向入栈的
-public void push(Node node)&#123;
-    node.next = top;
-    top = node;
-&#125;
-
-//出栈
-public int  pop()&#123;
-    if(isEmpty())&#123;
-        throw new RuntimeException(&quot;栈空无法出栈&quot;);
+<p>##删除<br>    &#x2F;&#x2F;这是节点类中的方法</p>
+<pre><code>//删除节点，
+public void delete(int target)&#123;
+    //子节点满足条件就断掉
+    if(left!=null&amp;&amp;left.data==target)&#123;
+        left = null;
+        return;
     &#125;
-    int a = top.data;
-    top = top.next;
-    return a;
-&#125;
-</code></pre>
-<p>#共享栈<br>    &#x2F;&#x2F;特定环境使用，一个数组中放两个栈，左边初始top1 &#x3D; -1，右边初始top2 &#x3D; maxSize.<br>    &#x2F;&#x2F;两个栈应该类型相同且一个栈增加的同时另一个栈相应减小，否则很快也会满</p>
-<pre><code>class ShareStack &#123;
-    private int maxSize;
-    private int[]datas;
-    private int top1;
-    private int top2;
-&#125;
-
-//判断栈满,top1,top2相邻
-public boolean isFull()&#123;
-    return top1+1==top2;
-&#125;
-
-//判断栈空，分别判断
-public boolean isEmpty(int number)&#123;
-    if(number==1)&#123;
-        return top1==-1;
-    &#125;else return top2==maxSize;
-&#125;
-
-
-//进栈，需要指定哪一个栈
-public void push(int data,int number)&#123;
-    //满了抛出异常
-    if(isFull())&#123;
-        throw new RuntimeException(&quot;栈满无法加入&quot;);
+    if(right!=null&amp;&amp;right.data==target)&#123;
+        right = null;
+        return;
     &#125;
-    //当number==1时表示加到左边的栈，否则加到右边的栈
-    if(number==1)&#123;
-        top1++;
-        datas[top1] = data;
+    //遍历除了叶子节点之外的所有节点
+    if(left!=null)&#123;
+        left.delete(target);
+    &#125;
+    if(right!=null)&#123;
+        right.delete(target);
+    &#125;
+
+&#125;
+
+//二叉树类的方法，调用节点类中的方法并处理空树和只有一个根节点的情况
+
+//删除节点
+public void delete(int target)&#123;
+    //根节点没有双亲，无法删除，单独判断
+    if(root==null)&#123;
+        throw new RuntimeException(&quot;树空&quot;);
+    &#125;else if(root.data==target)&#123;
+        root = null;
     &#125;else &#123;
-        top2--;
-        datas[top2] = data;
-    &#125;
-&#125;
-
-//出栈，需要指定哪一个栈
-public int pop(int number)&#123;
-    //判断是否为空
-    if(isEmpty(number))&#123;
-        throw new RuntimeException(&quot;栈空无法出栈&quot;);
-    &#125;
-
-    if(number==1)&#123;
-        int l = datas[top1];
-        top1--;
-        return l;
-    &#125;else &#123;
-        int r = datas[top2];
-        top2--;
-        return r;
+        //调用节点类方法
+        root.delete(target);
     &#125;
 &#125;
 </code></pre>
+<hr>
+<p>更新自2&#x2F;24&#x2F;2022 10:14:10 PM<br>夜晚的风儿应该很温柔，而我呆在宿舍里无福消受。</p>
+<hr>
 
     </div>
 
@@ -325,13 +380,10 @@ public int pop(int number)&#123;
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2022/02/23/datastruct-%E9%93%BE%E8%A1%A8%E7%AF%87/" rel="prev" title="datastruct 链表篇">
-      <i class="fa fa-chevron-left"></i> datastruct 链表篇
+    <a href="/2022/02/24/%E9%98%9F%E5%88%97/" rel="prev" title="队列">
+      <i class="fa fa-chevron-left"></i> 队列
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2022/02/24/datastruct-%E9%98%9F%E5%88%97/" rel="next" title="datastruct 队列">
-      datastruct 队列 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -405,7 +457,7 @@ public int pop(int number)&#123;
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-count">4</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

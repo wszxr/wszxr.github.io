@@ -162,7 +162,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/02/24/datastruct-%E9%98%9F%E5%88%97/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/02/24/%E4%BA%8C%E5%8F%89%E6%A0%91/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -176,7 +176,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/02/24/datastruct-%E9%98%9F%E5%88%97/" class="post-title-link" itemprop="url">datastruct 队列</a>
+            <a href="/2022/02/24/%E4%BA%8C%E5%8F%89%E6%A0%91/" class="post-title-link" itemprop="url">二叉树</a>
         </h2>
 
         <div class="post-meta">
@@ -187,7 +187,227 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2022-02-24 19:52:09 / 修改时间：20:51:01" itemprop="dateCreated datePublished" datetime="2022-02-24T19:52:09+08:00">2022-02-24</time>
+              <time title="创建时间：2022-02-24 21:48:58 / 修改时间：22:16:04" itemprop="dateCreated datePublished" datetime="2022-02-24T21:48:58+08:00">2022-02-24</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">数据结构</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>#二叉树链式存储<br>##初始化<br>    &#x2F;&#x2F;节点类，包含数据，左右孩子指针<br>    class TreeNode{<br>        int data;<br>        TreeNode left;<br>        TreeNode right;<br>    }</p>
+<pre><code>//二叉树类中手动初始化一棵树
+public void init()&#123;
+    root = new TreeNode(1);
+    root.left = new TreeNode(2);
+    root.right = new TreeNode(3);
+    root.left.left = new TreeNode(4);
+    root.left.right = new TreeNode(5);
+    root.right.left = new TreeNode(6);
+    root.right.right = new TreeNode(7);
+&#125;
+</code></pre>
+<p>##遍历<br>    &#x2F;&#x2F;遍历，需要传入开始节点</p>
+<pre><code>//前序遍历，中左右顺序
+public void frontShow()&#123;
+    System.out.println(data);
+    if(left!=null)&#123;
+        left.frontShow();
+    &#125;
+    if(right!=null)&#123;
+        right.frontShow();
+    &#125;
+&#125;
+
+//中序遍历，左中右顺序
+public void midShow()&#123;
+    if(left!=null)&#123;
+        left.midShow();
+    &#125;
+    System.out.println(data);
+    if(right!=null)&#123;
+        right.midShow();
+    &#125;
+&#125;
+
+//后序遍历，左右中顺序
+public void afterShow()&#123;
+    if(left!=null)&#123;
+        left.afterShow();
+    &#125;
+    if(right!=null)&#123;
+        right.afterShow();
+    &#125;
+    System.out.println(data);
+&#125;
+</code></pre>
+<p>##查找</p>
+<pre><code>//三种遍历方法对应三种查找,传入目标值，返回节点对象
+
+//前序查找
+public TreeNode frontSearch(int target)&#123;
+    //当temp不为空说明已经查到，没有继续的意义
+    TreeNode temp = null;
+    if(target==this.data)&#123;
+        return this;
+    &#125;else &#123;
+        if(left!=null)&#123;
+            temp =  left.frontSearch(target);
+        &#125;
+        if(temp !=null)&#123;
+            return  temp;
+        &#125;
+
+        if(right!=null)&#123;
+            temp= right.frontSearch(target);
+        &#125;
+
+    &#125;
+    return temp;
+
+&#125;
+
+//中序查找
+public TreeNode midSearch(int target)&#123;
+    TreeNode temp = null;
+    if(left!=null)&#123;
+        temp = left.midSearch(target);
+    &#125;
+    if(temp!=null)&#123;
+        return temp;
+    &#125;
+
+    if(this.data==target)&#123;
+        return this;
+    &#125;
+    if(right!=null)&#123;
+        temp = right.midSearch(target);
+    &#125;
+    return temp;
+
+&#125;
+
+//后序查找
+public TreeNode afterSearch(int target)&#123;
+    TreeNode temp = null;
+    if (left!=null)&#123;
+        temp = left.afterSearch(target);
+    &#125;
+    if(temp!=null)&#123;
+        return temp;
+    &#125;
+    if (right!=null)&#123;
+        temp = right.afterSearch(target);
+    &#125;
+    if(temp!=null)&#123;
+        return temp;
+    &#125;
+    if(this.data==target)&#123;
+        return this;
+    &#125;
+    return temp;
+&#125;
+</code></pre>
+<p>##删除<br>    &#x2F;&#x2F;这是节点类中的方法</p>
+<pre><code>//删除节点，
+public void delete(int target)&#123;
+    //子节点满足条件就断掉
+    if(left!=null&amp;&amp;left.data==target)&#123;
+        left = null;
+        return;
+    &#125;
+    if(right!=null&amp;&amp;right.data==target)&#123;
+        right = null;
+        return;
+    &#125;
+    //遍历除了叶子节点之外的所有节点
+    if(left!=null)&#123;
+        left.delete(target);
+    &#125;
+    if(right!=null)&#123;
+        right.delete(target);
+    &#125;
+
+&#125;
+
+//二叉树类的方法，调用节点类中的方法并处理空树和只有一个根节点的情况
+
+//删除节点
+public void delete(int target)&#123;
+    //根节点没有双亲，无法删除，单独判断
+    if(root==null)&#123;
+        throw new RuntimeException(&quot;树空&quot;);
+    &#125;else if(root.data==target)&#123;
+        root = null;
+    &#125;else &#123;
+        //调用节点类方法
+        root.delete(target);
+    &#125;
+&#125;
+</code></pre>
+<hr>
+<p>更新自2&#x2F;24&#x2F;2022 10:14:10 PM<br>夜晚的风儿应该很温柔，而我呆在宿舍里无福消受。</p>
+<hr>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/02/24/%E9%98%9F%E5%88%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="impotent">
+      <meta itemprop="description" content="In the dreams of the impotent">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大森林">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/02/24/%E9%98%9F%E5%88%97/" class="post-title-link" itemprop="url">队列</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-02-24 19:52:09 / 修改时间：21:50:06" itemprop="dateCreated datePublished" datetime="2022-02-24T19:52:09+08:00">2022-02-24</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -310,7 +530,7 @@ public int delete()&#123;
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/02/23/datastruct-%E6%A0%88%E7%AF%87/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/02/23/%E6%A0%88/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -324,7 +544,7 @@ public int delete()&#123;
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/02/23/datastruct-%E6%A0%88%E7%AF%87/" class="post-title-link" itemprop="url">datastruct 栈篇</a>
+            <a href="/2022/02/23/%E6%A0%88/" class="post-title-link" itemprop="url">栈篇</a>
         </h2>
 
         <div class="post-meta">
@@ -341,7 +561,7 @@ public int delete()&#123;
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-02-24 20:50:36" itemprop="dateModified" datetime="2022-02-24T20:50:36+08:00">2022-02-24</time>
+                <time title="修改时间：2022-02-24 21:50:33" itemprop="dateModified" datetime="2022-02-24T21:50:33+08:00">2022-02-24</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -475,7 +695,7 @@ public int pop(int number)&#123;
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/02/23/datastruct-%E9%93%BE%E8%A1%A8%E7%AF%87/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/02/23/%E9%93%BE%E8%A1%A8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -489,7 +709,7 @@ public int pop(int number)&#123;
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/02/23/datastruct-%E9%93%BE%E8%A1%A8%E7%AF%87/" class="post-title-link" itemprop="url">datastruct 链表篇</a>
+            <a href="/2022/02/23/%E9%93%BE%E8%A1%A8/" class="post-title-link" itemprop="url">链表篇</a>
         </h2>
 
         <div class="post-meta">
@@ -506,7 +726,7 @@ public int pop(int number)&#123;
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-02-24 20:50:47" itemprop="dateModified" datetime="2022-02-24T20:50:47+08:00">2022-02-24</time>
+                <time title="修改时间：2022-02-24 21:50:22" itemprop="dateModified" datetime="2022-02-24T21:50:22+08:00">2022-02-24</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -629,7 +849,7 @@ public int pop(int number)&#123;
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-count">4</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
