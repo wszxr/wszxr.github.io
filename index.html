@@ -187,7 +187,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2022-02-24 19:52:09 / 修改时间：20:45:43" itemprop="dateCreated datePublished" datetime="2022-02-24T19:52:09+08:00">2022-02-24</time>
+              <time title="创建时间：2022-02-24 19:52:09 / 修改时间：20:51:01" itemprop="dateCreated datePublished" datetime="2022-02-24T19:52:09+08:00">2022-02-24</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -210,8 +210,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>先进先出结构<br>#用数组实现#<br>##普通##<br>&#x2F;&#x2F;每次出队列都需要移动所有的元素，解决方法，循环队列。</p>
-<p>##循环队列##<br>&#x2F;&#x2F;解决了移动元素的问题，用头尾指针的移动替代了。</p>
+          <p>先进先出结构<br>#用数组实现<br>##普通<br>&#x2F;&#x2F;每次出队列都需要移动所有的元素，解决方法，循环队列。</p>
+<p>##循环队列<br>&#x2F;&#x2F;解决了移动元素的问题，用头尾指针的移动替代了。</p>
 <pre><code>//成员变量
 class Queue &#123;
     private int maxSize;
@@ -260,7 +260,7 @@ public int length()&#123;
     return (maxSize+rear-front)%maxSize;
 &#125;
 </code></pre>
-<p>#用链表实现#<br>&#x2F;&#x2F;不用考虑溢出问题</p>
+<p>#用链表实现<br>&#x2F;&#x2F;不用考虑溢出问题</p>
 <pre><code>//成员变量，需要一个头节点
 public class LinkQueue &#123;
     Node front;
@@ -333,9 +333,24 @@ public int delete()&#123;
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-02-23 18:18:22 / 修改时间：18:45:12" itemprop="dateCreated datePublished" datetime="2022-02-23T18:18:22+08:00">2022-02-23</time>
+              <time title="创建时间：2022-02-23 18:18:22" itemprop="dateCreated datePublished" datetime="2022-02-23T18:18:22+08:00">2022-02-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-02-24 20:50:36" itemprop="dateModified" datetime="2022-02-24T20:50:36+08:00">2022-02-24</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">数据结构</span></a>
+                </span>
             </span>
 
           
@@ -349,7 +364,7 @@ public int delete()&#123;
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>栈是一种后进先出结构(FILO)<br>#用数组实现栈#<br>    任何实现入栈出栈时间复杂度都是O(1)<br>    class Stack{<br>    private int maxSize;<br>        private int []datas ;<br>        private int top &#x3D; -1;&#x2F;&#x2F;栈顶初始值为-1<br>        public Stack(int maxSize){<br>            this.maxSize &#x3D; maxSize;<br>            datas &#x3D; new int[maxSize];<br>        }</p>
+          <p>栈是一种后进先出结构(FILO)<br>#用数组实现栈<br>    任何实现入栈出栈时间复杂度都是O(1)<br>    class Stack{<br>    private int maxSize;<br>        private int []datas ;<br>        private int top &#x3D; -1;&#x2F;&#x2F;栈顶初始值为-1<br>        public Stack(int maxSize){<br>            this.maxSize &#x3D; maxSize;<br>            datas &#x3D; new int[maxSize];<br>        }</p>
 <pre><code>//入栈
 public void push(int data)&#123;
     if(isFull())&#123;
@@ -369,7 +384,7 @@ public int pop()&#123;
     return temp;
 &#125;
 </code></pre>
-<p>#用链表实现#<br>    &#x2F;&#x2F;链表实现不用担心栈满的问题<br>    class LinkedStack {<br>    Node head &#x3D; new Node();<br>    Node top;<br>    }</p>
+<p>#用链表实现<br>    &#x2F;&#x2F;链表实现不用担心栈满的问题<br>    class LinkedStack {<br>    Node head &#x3D; new Node();<br>    Node top;<br>    }</p>
 <pre><code>//入栈，头节点为栈底，先连接头节点，在把top指向入栈的
 public void push(Node node)&#123;
     node.next = top;
@@ -386,7 +401,7 @@ public int  pop()&#123;
     return a;
 &#125;
 </code></pre>
-<p>#共享栈#<br>    &#x2F;&#x2F;特定环境使用，一个数组中放两个栈，左边初始top1 &#x3D; -1，右边初始top2 &#x3D; maxSize.<br>    &#x2F;&#x2F;两个栈应该类型相同且一个栈增加的同时另一个栈相应减小，否则很快也会满</p>
+<p>#共享栈<br>    &#x2F;&#x2F;特定环境使用，一个数组中放两个栈，左边初始top1 &#x3D; -1，右边初始top2 &#x3D; maxSize.<br>    &#x2F;&#x2F;两个栈应该类型相同且一个栈增加的同时另一个栈相应减小，否则很快也会满</p>
 <pre><code>class ShareStack &#123;
     private int maxSize;
     private int[]datas;
@@ -491,7 +506,7 @@ public int pop(int number)&#123;
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-02-24 20:46:08" itemprop="dateModified" datetime="2022-02-24T20:46:08+08:00">2022-02-24</time>
+                <time title="修改时间：2022-02-24 20:50:47" itemprop="dateModified" datetime="2022-02-24T20:50:47+08:00">2022-02-24</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -499,7 +514,7 @@ public int pop(int number)&#123;
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E2%80%94%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">—数据结构</span></a>
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">数据结构</span></a>
                 </span>
             </span>
 
@@ -514,9 +529,9 @@ public int pop(int number)&#123;
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>#链表和顺序表的优劣#<br>1,因为有数组下标的存在，顺序表在查找方面领先链表，时间复杂度为O(1),而链表查找需要遍历，因此时间复杂度为o(N)。</p>
+          <p>#链表和顺序表的优劣<br>1,因为有数组下标的存在，顺序表在查找方面领先链表，时间复杂度为O(1),而链表查找需要遍历，因此时间复杂度为o(N)。</p>
 <p>2，增加或删除元素方面，链表优势，顺序表每次插入或者删除都需要移动大量元素O(N),链表需要查找到增加或删除的位置(通过指针)，也是O(N),但是插入的越频繁链表的优势体现的越大(指针移动的距离变少)。</p>
-<p>#双向链表#<br>1,除了data和next外，还有个指向前驱节点的prior指针。</p>
+<p>#双向链表<br>1,除了data和next外，还有个指向前驱节点的prior指针。</p>
 <p>2,空间占用更多。用空间换时间效率。</p>
 <pre><code>插入操作：//找到插入位置的前一个位置temp
         node.next = temp.next;//设置待插入节点的next
@@ -621,7 +636,7 @@ public int pop(int number)&#123;
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-count">1</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
   </nav>
