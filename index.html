@@ -188,7 +188,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-02-25 15:09:47" itemprop="dateModified" datetime="2022-02-25T15:09:47+08:00">2022-02-25</time>
+                <time title="修改时间：2022-02-25 23:21:41" itemprop="dateModified" datetime="2022-02-25T23:21:41+08:00">2022-02-25</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -229,9 +229,7 @@ public void init()&#123;
     root.right.right = new TreeNode(7);
 &#125;
 </code></pre>
-<h2 id="遍历"><a href="#遍历" class="headerlink" title="遍历"></a>遍历</h2><pre><code>//遍历，需要传入开始节点
-
-//前序遍历，中左右顺序
+<h2 id="遍历"><a href="#遍历" class="headerlink" title="遍历"></a>遍历</h2><pre><code>//前序遍历，中左右顺序
 public void frontShow()&#123;
     System.out.println(data);
     if(left!=null)&#123;
@@ -370,6 +368,92 @@ public void delete(int target)&#123;
 </code></pre>
 <hr>
 <p>更新自2&#x2F;24&#x2F;2022 10:14:10 PM<br>夜晚的风儿应该很温柔，而我呆在宿舍里无福消受。</p>
+<hr>
+<h1 id="二叉树顺序存储"><a href="#二叉树顺序存储" class="headerlink" title="二叉树顺序存储"></a>二叉树顺序存储</h1><pre><code>/*
+1，index是下标
+
+2，2*index+1表示左孩子，2*index+2表示右孩子
+
+3，(n-1)2是双亲节点
+
+4，顺序二叉树通常只考虑完全二叉树
+*/
+
+//只需要一个数组即可
+class ArrayBinaryTree &#123;
+    //存储树的数组
+    int []array;
+    //相当于传一棵树进来
+    public ArrayBinaryTree(int []array)&#123;
+        this.array = array;
+    &#125;
+&#125;
+</code></pre>
+<h2 id="遍历-1"><a href="#遍历-1" class="headerlink" title="遍历"></a>遍历</h2><pre><code>//前序遍历
+
+public  void frontShow(int index)&#123;
+    //空数组或是数组为0无法遍历
+    if(array==null||array.length==0)&#123;
+        throw new RuntimeException(&quot;无法遍历&quot;);
+    &#125;
+    //打印出当前值
+    System.out.println(array[index]);
+    //存在左节点就向左递归
+    if(2*index+1&lt;array.length)&#123;
+        frontShow(2*index+1);
+    &#125;
+    //存在右节点就向右递归
+    if(2*index+2&lt;array.length)&#123;
+        frontShow(2*index+2);
+    &#125;
+&#125;
+
+//中序遍历
+public void midShow(int index)&#123;
+    if(array==null||array.length==0)&#123;
+        throw new RuntimeException(&quot;无法遍历&quot;);
+    &#125;
+    if(index*2+1&lt;array.length)&#123;
+        midShow(index*2+1);
+    &#125;
+    System.out.println(array[index]);
+    if(index*2+2&lt;array.length)&#123;
+        midShow(index*2+2);
+    &#125;
+&#125;
+
+//后序遍历
+public void afterShow(int index)&#123;
+    if(array==null||array.length==0)&#123;
+        throw new RuntimeException(&quot;无法遍历&quot;);
+    &#125;
+
+    if(2*index+1&lt;array.length)&#123;
+        afterShow(2*index+1);
+    &#125;
+    if(2*index+2&lt;array.length)&#123;
+        afterShow(2*index+2);
+    &#125;
+    System.out.println(array[index]);
+&#125;
+</code></pre>
+<h2 id="查找-1"><a href="#查找-1" class="headerlink" title="查找"></a>查找</h2><pre><code>//遍历数组就行了
+public int search(int target)&#123;
+        //返回下标是-1时说明没找到
+        int index = -1;
+        for(int i = 0;i&lt;array.length;i++)&#123;
+            if(array[i]==target)&#123;
+                index = i;
+            &#125;
+        &#125;
+        return index;
+
+    &#125;
+</code></pre>
+<hr>
+<p>今天的时间都被破烂选修课浪费了···</p>
+<p>晚安，好梦</p>
+<p>更新于 2&#x2F;25&#x2F;2022 11:18:53 PM </p>
 <hr>
 
       
