@@ -215,10 +215,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-02-24 21:48:58 / 修改时间：22:16:04" itemprop="dateCreated datePublished" datetime="2022-02-24T21:48:58+08:00">2022-02-24</time>
+              <time title="创建时间：2022-02-24 21:48:58" itemprop="dateCreated datePublished" datetime="2022-02-24T21:48:58+08:00">2022-02-24</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-02-25 15:09:47" itemprop="dateModified" datetime="2022-02-25T15:09:47+08:00">2022-02-25</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -240,8 +246,14 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>#二叉树链式存储<br>##初始化<br>    &#x2F;&#x2F;节点类，包含数据，左右孩子指针<br>    class TreeNode{<br>        int data;<br>        TreeNode left;<br>        TreeNode right;<br>    }</p>
-<pre><code>//二叉树类中手动初始化一棵树
+          <h1 id="二叉树链式存储"><a href="#二叉树链式存储" class="headerlink" title="二叉树链式存储"></a>二叉树链式存储</h1><h2 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h2><pre><code>//节点类，包含数据，左右孩子指针
+class TreeNode&#123;
+    int data;
+    TreeNode left;
+    TreeNode right;
+&#125;
+
+//二叉树类中手动初始化一棵树
 public void init()&#123;
     root = new TreeNode(1);
     root.left = new TreeNode(2);
@@ -252,8 +264,9 @@ public void init()&#123;
     root.right.right = new TreeNode(7);
 &#125;
 </code></pre>
-<p>##遍历<br>    &#x2F;&#x2F;遍历，需要传入开始节点</p>
-<pre><code>//前序遍历，中左右顺序
+<h2 id="遍历"><a href="#遍历" class="headerlink" title="遍历"></a>遍历</h2><pre><code>//遍历，需要传入开始节点
+
+//前序遍历，中左右顺序
 public void frontShow()&#123;
     System.out.println(data);
     if(left!=null)&#123;
@@ -286,8 +299,7 @@ public void afterShow()&#123;
     System.out.println(data);
 &#125;
 </code></pre>
-<p>##查找</p>
-<pre><code>//三种遍历方法对应三种查找,传入目标值，返回节点对象
+<h2 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h2><pre><code>//三种遍历方法对应三种查找,传入目标值，返回节点对象
 
 //前序查找
 public TreeNode frontSearch(int target)&#123;
@@ -353,8 +365,9 @@ public TreeNode afterSearch(int target)&#123;
     return temp;
 &#125;
 </code></pre>
-<p>##删除<br>    &#x2F;&#x2F;这是节点类中的方法</p>
-<pre><code>//删除节点，
+<h2 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h2><pre><code>//这是节点类中的方法
+
+//删除节点，
 public void delete(int target)&#123;
     //子节点满足条件就断掉
     if(left!=null&amp;&amp;left.data==target)&#123;
@@ -435,10 +448,16 @@ public void delete(int target)&#123;
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-02-24 19:52:09 / 修改时间：21:50:06" itemprop="dateCreated datePublished" datetime="2022-02-24T19:52:09+08:00">2022-02-24</time>
+              <time title="创建时间：2022-02-24 19:52:09" itemprop="dateCreated datePublished" datetime="2022-02-24T19:52:09+08:00">2022-02-24</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-02-25 15:09:29" itemprop="dateModified" datetime="2022-02-25T15:09:29+08:00">2022-02-25</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -460,8 +479,9 @@ public void delete(int target)&#123;
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>先进先出结构<br>#用数组实现<br>##普通<br>&#x2F;&#x2F;每次出队列都需要移动所有的元素，解决方法，循环队列。</p>
-<p>##循环队列<br>&#x2F;&#x2F;解决了移动元素的问题，用头尾指针的移动替代了。</p>
+          <p>先进先出结构</p>
+<h1 id="用数组实现"><a href="#用数组实现" class="headerlink" title="用数组实现"></a>用数组实现</h1><h2 id="普通"><a href="#普通" class="headerlink" title="普通"></a>普通</h2><p>&#x2F;&#x2F;每次出队列都需要移动所有的元素，解决方法，循环队列。</p>
+<h2 id="循环队列"><a href="#循环队列" class="headerlink" title="循环队列"></a>循环队列</h2><p>&#x2F;&#x2F;解决了移动元素的问题，用头尾指针的移动替代了。</p>
 <pre><code>//成员变量
 class Queue &#123;
     private int maxSize;
@@ -510,7 +530,7 @@ public int length()&#123;
     return (maxSize+rear-front)%maxSize;
 &#125;
 </code></pre>
-<p>#用链表实现<br>&#x2F;&#x2F;不用考虑溢出问题</p>
+<h1 id="用链表实现"><a href="#用链表实现" class="headerlink" title="用链表实现"></a>用链表实现</h1><p>&#x2F;&#x2F;不用考虑溢出问题</p>
 <pre><code>//成员变量，需要一个头节点
 public class LinkQueue &#123;
     Node front;
@@ -591,7 +611,7 @@ public int delete()&#123;
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-02-24 21:50:33" itemprop="dateModified" datetime="2022-02-24T21:50:33+08:00">2022-02-24</time>
+                <time title="修改时间：2022-02-25 15:10:08" itemprop="dateModified" datetime="2022-02-25T15:10:08+08:00">2022-02-25</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -614,8 +634,18 @@ public int delete()&#123;
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>栈是一种后进先出结构(FILO)<br>#用数组实现栈<br>    任何实现入栈出栈时间复杂度都是O(1)<br>    class Stack{<br>    private int maxSize;<br>        private int []datas ;<br>        private int top &#x3D; -1;&#x2F;&#x2F;栈顶初始值为-1<br>        public Stack(int maxSize){<br>            this.maxSize &#x3D; maxSize;<br>            datas &#x3D; new int[maxSize];<br>        }</p>
-<pre><code>//入栈
+          <p>栈是一种后进先出结构(FILO)</p>
+<h1 id="用数组实现栈"><a href="#用数组实现栈" class="headerlink" title="用数组实现栈"></a>用数组实现栈</h1><pre><code>任何实现入栈出栈时间复杂度都是O(1)
+class Stack&#123;
+private int maxSize;
+    private int []datas ;
+    private int top = -1;//栈顶初始值为-1
+    public Stack(int maxSize)&#123;
+        this.maxSize = maxSize;
+        datas = new int[maxSize];
+    &#125;
+
+//入栈
 public void push(int data)&#123;
     if(isFull())&#123;
         throw new RuntimeException(&quot;栈满了无法加入&quot;);
@@ -634,8 +664,13 @@ public int pop()&#123;
     return temp;
 &#125;
 </code></pre>
-<p>#用链表实现<br>    &#x2F;&#x2F;链表实现不用担心栈满的问题<br>    class LinkedStack {<br>    Node head &#x3D; new Node();<br>    Node top;<br>    }</p>
-<pre><code>//入栈，头节点为栈底，先连接头节点，在把top指向入栈的
+<h1 id="用链表实现"><a href="#用链表实现" class="headerlink" title="用链表实现"></a>用链表实现</h1><pre><code>//链表实现不用担心栈满的问题
+class LinkedStack &#123;
+Node head = new Node();
+Node top;
+&#125;
+
+//入栈，头节点为栈底，先连接头节点，在把top指向入栈的
 public void push(Node node)&#123;
     node.next = top;
     top = node;
@@ -651,8 +686,10 @@ public int  pop()&#123;
     return a;
 &#125;
 </code></pre>
-<p>#共享栈<br>    &#x2F;&#x2F;特定环境使用，一个数组中放两个栈，左边初始top1 &#x3D; -1，右边初始top2 &#x3D; maxSize.<br>    &#x2F;&#x2F;两个栈应该类型相同且一个栈增加的同时另一个栈相应减小，否则很快也会满</p>
-<pre><code>class ShareStack &#123;
+<h1 id="共享栈"><a href="#共享栈" class="headerlink" title="共享栈"></a>共享栈</h1><pre><code>//特定环境使用，一个数组中放两个栈，左边初始top1 = -1，右边初始top2 = maxSize.
+//两个栈应该类型相同且一个栈增加的同时另一个栈相应减小，否则很快也会满
+
+class ShareStack &#123;
     private int maxSize;
     private int[]datas;
     private int top1;
@@ -756,7 +793,7 @@ public int pop(int number)&#123;
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-02-24 21:50:22" itemprop="dateModified" datetime="2022-02-24T21:50:22+08:00">2022-02-24</time>
+                <time title="修改时间：2022-02-25 15:09:57" itemprop="dateModified" datetime="2022-02-25T15:09:57+08:00">2022-02-25</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -779,9 +816,9 @@ public int pop(int number)&#123;
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>#链表和顺序表的优劣<br>1,因为有数组下标的存在，顺序表在查找方面领先链表，时间复杂度为O(1),而链表查找需要遍历，因此时间复杂度为o(N)。</p>
+          <h1 id="链表和顺序表的优劣"><a href="#链表和顺序表的优劣" class="headerlink" title="链表和顺序表的优劣"></a>链表和顺序表的优劣</h1><p>1,因为有数组下标的存在，顺序表在查找方面领先链表，时间复杂度为O(1),而链表查找需要遍历，因此时间复杂度为o(N)。</p>
 <p>2，增加或删除元素方面，链表优势，顺序表每次插入或者删除都需要移动大量元素O(N),链表需要查找到增加或删除的位置(通过指针)，也是O(N),但是插入的越频繁链表的优势体现的越大(指针移动的距离变少)。</p>
-<p>#双向链表<br>1,除了data和next外，还有个指向前驱节点的prior指针。</p>
+<h1 id="双向链表"><a href="#双向链表" class="headerlink" title="双向链表"></a>双向链表</h1><p>1,除了data和next外，还有个指向前驱节点的prior指针。</p>
 <p>2,空间占用更多。用空间换时间效率。</p>
 <pre><code>插入操作：//找到插入位置的前一个位置temp
         node.next = temp.next;//设置待插入节点的next
@@ -922,7 +959,7 @@ public int pop(int number)&#123;
 
 <!--
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
-  </div>-->
+  </div> -->
 
         
 
