@@ -254,6 +254,93 @@ public int search(int target)&#123;
       </categories>
   </entry>
   <entry>
+    <title>字符串</title>
+    <url>/2022/02/26/%E5%AD%97%E7%AC%A6%E4%B8%B2/</url>
+    <content><![CDATA[<h1 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h1><h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>多线程时用StringBuffer,单线程用StringBiulder,不需要可变用String</p>
+<p>效率：SBiulder&gt;SBuffer&gt;String<br>##String类</p>
+<span id="more"></span>
+<pre><code>//未初始化会报错
+        // String str;
+        //System.out.println(str);
+
+// 值为null时可以正常打印
+        //str = null;
+        //System.out.println(str);
+
+
+//但是调用 值为null 的字符串会空指针异常
+        // System.out.println(str.length());
+
+//创建方法
+        // 推荐，将常量池中的“aaaa”的引用赋给str
+        String str = &quot;aaaa&quot;;
+        //不推荐，实际上创建了两个String对象，浪费空间。
+        String str1 = new String(&quot;aaaa&quot;);
+
+        char[]arr1 =&#123;&#39;1&#39;,&#39;2&#39;,&#39;3&#39;,&#39;4&#39;&#125;;
+        String str2 = new String(arr1,2/*开始下标*/,2/*切片元素数量*/);
+
+        str2 = String.valueOf(arr1,2,2);
+
+        System.out.println(str2);//34
+
+//用String类中的静态方法String.valueOf(ElementType)将基本数据类型转换为字符串
+        //System.out.println(String.valueOf(5));
+        //System.out.println(String.valueOf(5.001));
+        //System.out.println(String.valueOf(str+&quot; &quot;+str1));//转换的是一个对象时，会调用对象的toString方法
+
+//强制类型转换不可行
+        //int i = 1;
+        //System.out.println((String) i);
+
+//拼接字符串,会把括号里的全部变成字符串类型
+        //System.out.println(&quot;111&quot;+&quot;222&quot;+10);
+
+//查找方法
+        //charAt(index)返回元素
+        //indexOf(ch/String)返回第一次出现下标
+        //lastIndexOf(ch/String)反向开始搜索，返回最后一次出现下标
+</code></pre>
+<hr>
+<p>待续···</p>
+<hr>
+<h2 id="StringBuilder和StringBuffer"><a href="#StringBuilder和StringBuffer" class="headerlink" title="StringBuilder和StringBuffer"></a>StringBuilder和StringBuffer</h2><p>长度都是可变的</p>
+<p>StringBuilder:非线程安全的</p>
+<p>StringBuffer:线程安全的</p>
+<h3 id="API"><a href="#API" class="headerlink" title="API"></a>API</h3><pre><code>//创建
+new ...();
+new ...(int 长度--默认16);
+new ...(String);
+new ...(char 序列--暂时粗略理解为字符串吧);
+
+//添加到字符串最后
+append(基本数据类型或者是char数组);
+
+//插入
+insert(下标，基本数据类型或字符数组);
+
+//删除[int ,int]内的所有字符，如果两值一样，不会删除任何元素
+delete(int,int);
+
+//返回元素
+charAt(int index)
+
+//返回当前容量(并非字符数量)，默认16，超过时自动扩容
+capacity(实例对象)；
+
+//替换[start,end]
+replace(int start,int end,String);
+
+//反转
+reverse();
+</code></pre>
+<hr>
+<h2 id="更新于-2-x2F-26-x2F-2022-5-35-28-PM"><a href="#更新于-2-x2F-26-x2F-2022-5-35-28-PM" class="headerlink" title="更新于 2&#x2F;26&#x2F;2022 5:35:28 PM "></a>更新于 2&#x2F;26&#x2F;2022 5:35:28 PM </h2>]]></content>
+      <categories>
+        <category>JAVASE</category>
+      </categories>
+  </entry>
+  <entry>
     <title>栈篇</title>
     <url>/2022/02/23/%E6%A0%88/</url>
     <content><![CDATA[<p>栈是一种后进先出结构(FILO)</p>
