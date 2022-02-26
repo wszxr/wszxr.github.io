@@ -3,7 +3,8 @@
   <entry>
     <title>二叉树</title>
     <url>/2022/02/24/%E4%BA%8C%E5%8F%89%E6%A0%91/</url>
-    <content><![CDATA[<h1 id="二叉树链式存储"><a href="#二叉树链式存储" class="headerlink" title="二叉树链式存储"></a>二叉树链式存储</h1><h2 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h2><pre><code>//节点类，包含数据，左右孩子指针
+    <content><![CDATA[<h1 id="二叉树链式存储"><a href="#二叉树链式存储" class="headerlink" title="二叉树链式存储"></a>二叉树链式存储</h1><h2 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h2><span id="more"></span>
+<pre><code>//节点类，包含数据，左右孩子指针
 class TreeNode&#123;
     int data;
     TreeNode left;
@@ -256,7 +257,8 @@ public int search(int target)&#123;
     <title>栈篇</title>
     <url>/2022/02/23/%E6%A0%88/</url>
     <content><![CDATA[<p>栈是一种后进先出结构(FILO)</p>
-<h1 id="用数组实现栈"><a href="#用数组实现栈" class="headerlink" title="用数组实现栈"></a>用数组实现栈</h1><pre><code>任何实现入栈出栈时间复杂度都是O(1)
+<h1 id="用数组实现栈"><a href="#用数组实现栈" class="headerlink" title="用数组实现栈"></a>用数组实现栈</h1><span id="more"></span>
+<pre><code>任何实现入栈出栈时间复杂度都是O(1)
 class Stack&#123;
 private int maxSize;
     private int []datas ;
@@ -372,7 +374,8 @@ public int pop(int number)&#123;
   <entry>
     <title>链表篇</title>
     <url>/2022/02/23/%E9%93%BE%E8%A1%A8/</url>
-    <content><![CDATA[<h1 id="链表和顺序表的优劣"><a href="#链表和顺序表的优劣" class="headerlink" title="链表和顺序表的优劣"></a>链表和顺序表的优劣</h1><p>1,因为有数组下标的存在，顺序表在查找方面领先链表，时间复杂度为O(1),而链表查找需要遍历，因此时间复杂度为o(N)。</p>
+    <content><![CDATA[<h1 id="链表和顺序表的优劣"><a href="#链表和顺序表的优劣" class="headerlink" title="链表和顺序表的优劣"></a>链表和顺序表的优劣</h1><span id="more"></span>
+<p>1,因为有数组下标的存在，顺序表在查找方面领先链表，时间复杂度为O(1),而链表查找需要遍历，因此时间复杂度为o(N)。</p>
 <p>2，增加或删除元素方面，链表优势，顺序表每次插入或者删除都需要移动大量元素O(N),链表需要查找到增加或删除的位置(通过指针)，也是O(N),但是插入的越频繁链表的优势体现的越大(指针移动的距离变少)。</p>
 <h1 id="双向链表"><a href="#双向链表" class="headerlink" title="双向链表"></a>双向链表</h1><p>1,除了data和next外，还有个指向前驱节点的prior指针。</p>
 <p>2,空间占用更多。用空间换时间效率。</p>
@@ -398,7 +401,8 @@ public int pop(int number)&#123;
     <title>队列</title>
     <url>/2022/02/24/%E9%98%9F%E5%88%97/</url>
     <content><![CDATA[<p>先进先出结构</p>
-<h1 id="用数组实现"><a href="#用数组实现" class="headerlink" title="用数组实现"></a>用数组实现</h1><h2 id="普通"><a href="#普通" class="headerlink" title="普通"></a>普通</h2><p>&#x2F;&#x2F;每次出队列都需要移动所有的元素，解决方法，循环队列。</p>
+<h1 id="用数组实现"><a href="#用数组实现" class="headerlink" title="用数组实现"></a>用数组实现</h1><h2 id="普通"><a href="#普通" class="headerlink" title="普通"></a>普通</h2><span id="more"></span>
+<p>&#x2F;&#x2F;每次出队列都需要移动所有的元素，解决方法，循环队列。</p>
 <h2 id="循环队列"><a href="#循环队列" class="headerlink" title="循环队列"></a>循环队列</h2><p>&#x2F;&#x2F;解决了移动元素的问题，用头尾指针的移动替代了。</p>
 <pre><code>//成员变量
 class Queue &#123;

@@ -188,7 +188,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-02-25 23:23:11" itemprop="dateModified" datetime="2022-02-25T23:23:11+08:00">2022-02-25</time>
+                <time title="修改时间：2022-02-26 15:40:03" itemprop="dateModified" datetime="2022-02-26T15:40:03+08:00">2022-02-26</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -211,251 +211,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="二叉树链式存储"><a href="#二叉树链式存储" class="headerlink" title="二叉树链式存储"></a>二叉树链式存储</h1><h2 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h2><pre><code>//节点类，包含数据，左右孩子指针
-class TreeNode&#123;
-    int data;
-    TreeNode left;
-    TreeNode right;
-&#125;
-
-//二叉树类中手动初始化一棵树
-public void init()&#123;
-    root = new TreeNode(1);
-    root.left = new TreeNode(2);
-    root.right = new TreeNode(3);
-    root.left.left = new TreeNode(4);
-    root.left.right = new TreeNode(5);
-    root.right.left = new TreeNode(6);
-    root.right.right = new TreeNode(7);
-&#125;
-</code></pre>
-<h2 id="遍历"><a href="#遍历" class="headerlink" title="遍历"></a>遍历</h2><pre><code>//前序遍历，中左右顺序
-public void frontShow()&#123;
-    System.out.println(data);
-    if(left!=null)&#123;
-        left.frontShow();
-    &#125;
-    if(right!=null)&#123;
-        right.frontShow();
-    &#125;
-&#125;
-
-//中序遍历，左中右顺序
-public void midShow()&#123;
-    if(left!=null)&#123;
-        left.midShow();
-    &#125;
-    System.out.println(data);
-    if(right!=null)&#123;
-        right.midShow();
-    &#125;
-&#125;
-
-//后序遍历，左右中顺序
-public void afterShow()&#123;
-    if(left!=null)&#123;
-        left.afterShow();
-    &#125;
-    if(right!=null)&#123;
-        right.afterShow();
-    &#125;
-    System.out.println(data);
-&#125;
-</code></pre>
-<h2 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h2><pre><code>//三种遍历方法对应三种查找,传入目标值，返回节点对象
-
-//前序查找
-public TreeNode frontSearch(int target)&#123;
-    //当temp不为空说明已经查到，没有继续的意义
-    TreeNode temp = null;
-    if(target==this.data)&#123;
-        return this;
-    &#125;else &#123;
-        if(left!=null)&#123;
-            temp =  left.frontSearch(target);
-        &#125;
-        if(temp !=null)&#123;
-            return  temp;
-        &#125;
-
-        if(right!=null)&#123;
-            temp= right.frontSearch(target);
-        &#125;
-
-    &#125;
-    return temp;
-
-&#125;
-
-//中序查找
-public TreeNode midSearch(int target)&#123;
-    TreeNode temp = null;
-    if(left!=null)&#123;
-        temp = left.midSearch(target);
-    &#125;
-    if(temp!=null)&#123;
-        return temp;
-    &#125;
-
-    if(this.data==target)&#123;
-        return this;
-    &#125;
-    if(right!=null)&#123;
-        temp = right.midSearch(target);
-    &#125;
-    return temp;
-
-&#125;
-
-//后序查找
-public TreeNode afterSearch(int target)&#123;
-    TreeNode temp = null;
-    if (left!=null)&#123;
-        temp = left.afterSearch(target);
-    &#125;
-    if(temp!=null)&#123;
-        return temp;
-    &#125;
-    if (right!=null)&#123;
-        temp = right.afterSearch(target);
-    &#125;
-    if(temp!=null)&#123;
-        return temp;
-    &#125;
-    if(this.data==target)&#123;
-        return this;
-    &#125;
-    return temp;
-&#125;
-</code></pre>
-<h2 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h2><pre><code>//这是节点类中的方法
-
-//删除节点，
-public void delete(int target)&#123;
-    //子节点满足条件就断掉
-    if(left!=null&amp;&amp;left.data==target)&#123;
-        left = null;
-        return;
-    &#125;
-    if(right!=null&amp;&amp;right.data==target)&#123;
-        right = null;
-        return;
-    &#125;
-    //遍历除了叶子节点之外的所有节点
-    if(left!=null)&#123;
-        left.delete(target);
-    &#125;
-    if(right!=null)&#123;
-        right.delete(target);
-    &#125;
-
-&#125;
-
-//二叉树类的方法，调用节点类中的方法并处理空树和只有一个根节点的情况
-
-//删除节点
-public void delete(int target)&#123;
-    //根节点没有双亲，无法删除，单独判断
-    if(root==null)&#123;
-        throw new RuntimeException(&quot;树空&quot;);
-    &#125;else if(root.data==target)&#123;
-        root = null;
-    &#125;else &#123;
-        //调用节点类方法
-        root.delete(target);
-    &#125;
-&#125;
-</code></pre>
-<hr>
-<p>更新自2&#x2F;24&#x2F;2022 10:14:10 PM<br>夜晚的风儿应该很温柔，而我呆在宿舍里无福消受。</p>
-<hr>
-<h1 id="二叉树顺序存储"><a href="#二叉树顺序存储" class="headerlink" title="二叉树顺序存储"></a>二叉树顺序存储</h1><pre><code>/*
-1，index是下标
-
-2，2*index+1表示左孩子，2*index+2表示右孩子
-
-3，(n-1)2是双亲节点
-
-4，顺序二叉树通常只考虑完全二叉树
-*/
-
-//只需要一个数组即可
-class ArrayBinaryTree &#123;
-    //存储树的数组
-    int []array;
-    //相当于传一棵树进来
-    public ArrayBinaryTree(int []array)&#123;
-        this.array = array;
-    &#125;
-&#125;
-</code></pre>
-<h2 id="遍历-1"><a href="#遍历-1" class="headerlink" title="遍历"></a>遍历</h2><pre><code>//前序遍历
-
-public  void frontShow(int index)&#123;
-    //空数组或是数组为0无法遍历
-    if(array==null||array.length==0)&#123;
-        throw new RuntimeException(&quot;无法遍历&quot;);
-    &#125;
-    //打印出当前值
-    System.out.println(array[index]);
-    //存在左节点就向左递归
-    if(2*index+1&lt;array.length)&#123;
-        frontShow(2*index+1);
-    &#125;
-    //存在右节点就向右递归
-    if(2*index+2&lt;array.length)&#123;
-        frontShow(2*index+2);
-    &#125;
-&#125;
-
-//中序遍历
-public void midShow(int index)&#123;
-    if(array==null||array.length==0)&#123;
-        throw new RuntimeException(&quot;无法遍历&quot;);
-    &#125;
-    if(index*2+1&lt;array.length)&#123;
-        midShow(index*2+1);
-    &#125;
-    System.out.println(array[index]);
-    if(index*2+2&lt;array.length)&#123;
-        midShow(index*2+2);
-    &#125;
-&#125;
-
-//后序遍历
-public void afterShow(int index)&#123;
-    if(array==null||array.length==0)&#123;
-        throw new RuntimeException(&quot;无法遍历&quot;);
-    &#125;
-
-    if(2*index+1&lt;array.length)&#123;
-        afterShow(2*index+1);
-    &#125;
-    if(2*index+2&lt;array.length)&#123;
-        afterShow(2*index+2);
-    &#125;
-    System.out.println(array[index]);
-&#125;
-</code></pre>
-<h2 id="查找-1"><a href="#查找-1" class="headerlink" title="查找"></a>查找</h2><pre><code>//遍历数组就行了
-public int search(int target)&#123;
-        //返回下标是-1时说明没找到
-        int index = -1;
-        for(int i = 0;i&lt;array.length;i++)&#123;
-            if(array[i]==target)&#123;
-                index = i;
-            &#125;
-        &#125;
-        return index;
-
-    &#125;
-</code></pre>
-<hr>
-<p>今天的时间都被破烂选修课浪费了···</p>
-<p>晚安，好梦（困到神志不清zzz）</p>
-<p>更新于 2&#x2F;25&#x2F;2022 11:18:53 PM </p>
-<hr>
-
+          <h1 id="二叉树链式存储"><a href="#二叉树链式存储" class="headerlink" title="二叉树链式存储"></a>二叉树链式存储</h1><h2 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h2>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/02/24/%E4%BA%8C%E5%8F%89%E6%A0%91/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -505,7 +269,7 @@ public int search(int target)&#123;
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-02-25 15:09:29" itemprop="dateModified" datetime="2022-02-25T15:09:29+08:00">2022-02-25</time>
+                <time title="修改时间：2022-02-26 15:39:48" itemprop="dateModified" datetime="2022-02-26T15:39:48+08:00">2022-02-26</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -529,88 +293,15 @@ public int search(int target)&#123;
 
       
           <p>先进先出结构</p>
-<h1 id="用数组实现"><a href="#用数组实现" class="headerlink" title="用数组实现"></a>用数组实现</h1><h2 id="普通"><a href="#普通" class="headerlink" title="普通"></a>普通</h2><p>&#x2F;&#x2F;每次出队列都需要移动所有的元素，解决方法，循环队列。</p>
-<h2 id="循环队列"><a href="#循环队列" class="headerlink" title="循环队列"></a>循环队列</h2><p>&#x2F;&#x2F;解决了移动元素的问题，用头尾指针的移动替代了。</p>
-<pre><code>//成员变量
-class Queue &#123;
-    private int maxSize;
-    private int []datas;
-    /*
-    front 指向队列头
-    rear 指向队列尾的后一个元素
-     */
-    int front;
-    int rear;
-&#125;
-
-//判断队列是否空，头和尾重合即为空
-public boolean isEmpty()&#123;
-    return front==rear;
-&#125;
-//判断队列是不是满，尾指针一直指向空
-public boolean isFull()&#123;
-    return (rear+1)%maxSize==front;
-&#125;
-
-//入队列操作
-public void enter(int data)&#123;
-    if(isFull())&#123;
-        throw new RuntimeException(&quot;队列满了无法加入&quot;);
-    &#125;
-    datas[rear] = data;//值付给队尾指针
-    rear = (rear+1)%maxSize;//队尾加一，超过循环后取余maxSize
-&#125;
-
-//出队列操作
-public int  delete()&#123;
-    if(isEmpty())&#123;
-        throw new RuntimeException(&quot;队列空无法出队&quot;);
-    &#125;
-    int num = datas[front];
-    front = (front+1)%maxSize;
-    return num;
-&#125;
-
-/*如果头在尾巴的前面，长度就是尾减去头，
-  如果头在尾后面，长度为max-front这一段加上rear-0这一段
-*/
-//长度
-public int length()&#123;
-    return (maxSize+rear-front)%maxSize;
-&#125;
-</code></pre>
-<h1 id="用链表实现"><a href="#用链表实现" class="headerlink" title="用链表实现"></a>用链表实现</h1><p>&#x2F;&#x2F;不用考虑溢出问题</p>
-<pre><code>//成员变量，需要一个头节点
-public class LinkQueue &#123;
-    Node front;
-    Node rear;
-    Node head;
-&#125;
-
-//添加节点，先连接上下一个节点，在移动rear指针。
-public void enter(Node node)&#123;
-    rear.next = node;
-    rear = rear.next;
-&#125;
-
-//删除节点
-public int delete()&#123;
-    if(isEmpty())&#123;//头和尾重合即为空
-        throw new RuntimeException(&quot;队列空无法出队列&quot;);
-    &#125;
-    int a = front.next.data;
-
-    //如果要删除的节点是最后一个，为了不让rear指针指空，把rear放回头节点
-    if(front.next == rear)&#123;
-        rear = head;
-    &#125;
-    //跨过头结点的下一个节点即可
-    front.next = front.next.next;
-
-    return a;
-&#125;
-</code></pre>
-
+<h1 id="用数组实现"><a href="#用数组实现" class="headerlink" title="用数组实现"></a>用数组实现</h1><h2 id="普通"><a href="#普通" class="headerlink" title="普通"></a>普通</h2>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/02/24/%E9%98%9F%E5%88%97/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -660,7 +351,7 @@ public int delete()&#123;
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-02-25 15:10:08" itemprop="dateModified" datetime="2022-02-25T15:10:08+08:00">2022-02-25</time>
+                <time title="修改时间：2022-02-26 15:40:23" itemprop="dateModified" datetime="2022-02-26T15:40:23+08:00">2022-02-26</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -684,115 +375,15 @@ public int delete()&#123;
 
       
           <p>栈是一种后进先出结构(FILO)</p>
-<h1 id="用数组实现栈"><a href="#用数组实现栈" class="headerlink" title="用数组实现栈"></a>用数组实现栈</h1><pre><code>任何实现入栈出栈时间复杂度都是O(1)
-class Stack&#123;
-private int maxSize;
-    private int []datas ;
-    private int top = -1;//栈顶初始值为-1
-    public Stack(int maxSize)&#123;
-        this.maxSize = maxSize;
-        datas = new int[maxSize];
-    &#125;
-
-//入栈
-public void push(int data)&#123;
-    if(isFull())&#123;
-        throw new RuntimeException(&quot;栈满了无法加入&quot;);
-    &#125;
-    top++;//栈顶先移动
-    datas[top] = data;
-&#125;
-
-//出栈
-public int pop()&#123;
-    if(isEmpty()) &#123;
-        throw new RuntimeException(&quot;栈空无法出栈&quot;);
-    &#125;
-    int temp = datas[top];
-    top--;
-    return temp;
-&#125;
-</code></pre>
-<h1 id="用链表实现"><a href="#用链表实现" class="headerlink" title="用链表实现"></a>用链表实现</h1><pre><code>//链表实现不用担心栈满的问题
-class LinkedStack &#123;
-Node head = new Node();
-Node top;
-&#125;
-
-//入栈，头节点为栈底，先连接头节点，在把top指向入栈的
-public void push(Node node)&#123;
-    node.next = top;
-    top = node;
-&#125;
-
-//出栈
-public int  pop()&#123;
-    if(isEmpty())&#123;
-        throw new RuntimeException(&quot;栈空无法出栈&quot;);
-    &#125;
-    int a = top.data;
-    top = top.next;
-    return a;
-&#125;
-</code></pre>
-<h1 id="共享栈"><a href="#共享栈" class="headerlink" title="共享栈"></a>共享栈</h1><pre><code>//特定环境使用，一个数组中放两个栈，左边初始top1 = -1，右边初始top2 = maxSize.
-//两个栈应该类型相同且一个栈增加的同时另一个栈相应减小，否则很快也会满
-
-class ShareStack &#123;
-    private int maxSize;
-    private int[]datas;
-    private int top1;
-    private int top2;
-&#125;
-
-//判断栈满,top1,top2相邻
-public boolean isFull()&#123;
-    return top1+1==top2;
-&#125;
-
-//判断栈空，分别判断
-public boolean isEmpty(int number)&#123;
-    if(number==1)&#123;
-        return top1==-1;
-    &#125;else return top2==maxSize;
-&#125;
-
-
-//进栈，需要指定哪一个栈
-public void push(int data,int number)&#123;
-    //满了抛出异常
-    if(isFull())&#123;
-        throw new RuntimeException(&quot;栈满无法加入&quot;);
-    &#125;
-    //当number==1时表示加到左边的栈，否则加到右边的栈
-    if(number==1)&#123;
-        top1++;
-        datas[top1] = data;
-    &#125;else &#123;
-        top2--;
-        datas[top2] = data;
-    &#125;
-&#125;
-
-//出栈，需要指定哪一个栈
-public int pop(int number)&#123;
-    //判断是否为空
-    if(isEmpty(number))&#123;
-        throw new RuntimeException(&quot;栈空无法出栈&quot;);
-    &#125;
-
-    if(number==1)&#123;
-        int l = datas[top1];
-        top1--;
-        return l;
-    &#125;else &#123;
-        int r = datas[top2];
-        top2--;
-        return r;
-    &#125;
-&#125;
-</code></pre>
-
+<h1 id="用数组实现栈"><a href="#用数组实现栈" class="headerlink" title="用数组实现栈"></a>用数组实现栈</h1>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/02/23/%E6%A0%88/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -842,7 +433,7 @@ public int pop(int number)&#123;
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-02-25 15:09:57" itemprop="dateModified" datetime="2022-02-25T15:09:57+08:00">2022-02-25</time>
+                <time title="修改时间：2022-02-26 15:40:13" itemprop="dateModified" datetime="2022-02-26T15:40:13+08:00">2022-02-26</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -865,24 +456,15 @@ public int pop(int number)&#123;
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="链表和顺序表的优劣"><a href="#链表和顺序表的优劣" class="headerlink" title="链表和顺序表的优劣"></a>链表和顺序表的优劣</h1><p>1,因为有数组下标的存在，顺序表在查找方面领先链表，时间复杂度为O(1),而链表查找需要遍历，因此时间复杂度为o(N)。</p>
-<p>2，增加或删除元素方面，链表优势，顺序表每次插入或者删除都需要移动大量元素O(N),链表需要查找到增加或删除的位置(通过指针)，也是O(N),但是插入的越频繁链表的优势体现的越大(指针移动的距离变少)。</p>
-<h1 id="双向链表"><a href="#双向链表" class="headerlink" title="双向链表"></a>双向链表</h1><p>1,除了data和next外，还有个指向前驱节点的prior指针。</p>
-<p>2,空间占用更多。用空间换时间效率。</p>
-<pre><code>插入操作：//找到插入位置的前一个位置temp
-        node.next = temp.next;//设置待插入节点的next
-        node.prior = temp;//设置待插入节点的prior
-        temp.next.prior = node;//将待插入节点的下一个节点的prior指向待插入节点
-        temp.next = node;//将temp指向待插入节点
-
-删除操作：//找到待删除的节点temp
-        //直接跳过删除节点
-        temp.prior.next = temp.next
-        temp.next.prior = temp.prior;
+          <h1 id="链表和顺序表的优劣"><a href="#链表和顺序表的优劣" class="headerlink" title="链表和顺序表的优劣"></a>链表和顺序表的优劣</h1>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/02/23/%E9%93%BE%E8%A1%A8/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
         
-    
-</code></pre>
-
       
     </div>
 
