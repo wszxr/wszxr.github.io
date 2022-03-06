@@ -20,15 +20,15 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="IOC负责对象创建，对象和对象之间的调用&lt;!--创建一个对象,默认无参构造--&gt; &lt;bean id&#x3D;&quot;user&quot; class&#x3D;&quot;com.company.User&quot;&gt;      &lt;!--属性注入，有参构造--&gt;     &lt;constructor-arg name&#x3D;&quot;height&quot; value&#x3D;&amp;qu">
+  <meta name="description" content="IOC负责对象创建，对象和对象之间的调用">
 <meta property="og:type" content="article">
 <meta property="og:title" content="spring">
 <meta property="og:url" content="http://example.com/2022/03/05/spring/index.html">
 <meta property="og:site_name" content="大森林">
-<meta property="og:description" content="IOC负责对象创建，对象和对象之间的调用&lt;!--创建一个对象,默认无参构造--&gt; &lt;bean id&#x3D;&quot;user&quot; class&#x3D;&quot;com.company.User&quot;&gt;      &lt;!--属性注入，有参构造--&gt;     &lt;constructor-arg name&#x3D;&quot;height&quot; value&#x3D;&amp;qu">
+<meta property="og:description" content="IOC负责对象创建，对象和对象之间的调用">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-03-05T06:21:04.000Z">
-<meta property="article:modified_time" content="2022-03-05T08:30:36.209Z">
+<meta property="article:modified_time" content="2022-03-06T13:01:20.618Z">
 <meta property="article:author" content="嘘~···小声点儿">
 <meta name="twitter:card" content="summary">
 
@@ -182,10 +182,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-03-05 14:21:04 / 修改时间：16:30:36" itemprop="dateCreated datePublished" datetime="2022-03-05T14:21:04+08:00">2022-03-05</time>
+              <time title="创建时间：2022-03-05 14:21:04" itemprop="dateCreated datePublished" datetime="2022-03-05T14:21:04+08:00">2022-03-05</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-03-06 21:01:20" itemprop="dateModified" datetime="2022-03-06T21:01:20+08:00">2022-03-06</time>
+              </span>
 
           
 
@@ -198,83 +204,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="IOC"><a href="#IOC" class="headerlink" title="IOC"></a>IOC</h1><h2 id="负责对象创建，对象和对象之间的调用"><a href="#负责对象创建，对象和对象之间的调用" class="headerlink" title="负责对象创建，对象和对象之间的调用"></a>负责对象创建，对象和对象之间的调用</h2><pre><code>&lt;!--创建一个对象,默认无参构造--&gt;
-&lt;bean id=&quot;user&quot; class=&quot;com.company.User&quot;&gt;
-
-    &lt;!--属性注入，有参构造--&gt;
-    &lt;constructor-arg name=&quot;height&quot; value=&quot;12.3&quot;&gt;&lt;/constructor-arg&gt;
-    &lt;constructor-arg name=&quot;width&quot; value=&quot;22.3&quot;&gt;&lt;/constructor-arg&gt;
-
-    &lt;!--属性注入,set方法,类中必须含有属性的set方法--&gt;
-    &lt;property name=&quot;name&quot; value=&quot;zhangSan&quot;&gt;&lt;/property&gt;
-    &lt;property name=&quot;sex&quot; value=&quot;男&quot;&gt;&lt;/property&gt;
-
-    &lt;!--注入字面量null--&gt;
-    &lt;property name=&quot;nullTest&quot; &gt;
-            &lt;null/&gt;
-    &lt;/property&gt;
-    &lt;!--注入带特殊符号 &lt; &gt; &#39; &quot; &amp;的值,用![CDATA[ 想填的值]]--&gt;
-    &lt;property name=&quot;notNormal&quot; &gt;
-        &lt;value&gt;
-            &lt;![CDATA[&lt;hahahahah&gt;]]&gt;
-        &lt;/value&gt;
-    &lt;/property&gt;
-    &lt;!--注入外部bean在对象中导入其他类的对象,ref=&quot;类id&quot;--&gt;
-
-    &lt;!-- &lt;property name=&quot;dog&quot; ref=&quot;dog&quot;&gt;&lt;/property&gt; --&gt;
-    &lt;!--被注入的外部bean--&gt;
-    &lt;!--&lt;bean id=&quot;dog&quot; class=&quot;com.company.Dog&quot;&gt;&lt;/bean&gt;--&gt;
-    &lt;!--注入内部bean,和上面注释外部bean注入作用一样--&gt;
-    &lt;property name=&quot;dog&quot; &gt;
-        &lt;bean id=&quot;dog&quot; class=&quot;com.company.Dog&quot;&gt;&lt;/bean&gt;
-    &lt;/property&gt;
-
-    &lt;!--级联赋值外部bean注入，然后给外部bean的属性,懒得写--&gt;
-
-    &lt;!--注入数组,集合,映射--&gt;
-    &lt;property name=&quot;arr&quot;&gt;
-        &lt;array&gt;
-            &lt;value&gt;
-                aaa,bbb
-            &lt;/value&gt;
-        &lt;/array&gt;
-    &lt;/property&gt;
-
-    &lt;!--list存的是Dog对象,由外部bean导入--&gt;
-    &lt;property name=&quot;list&quot;&gt;
-        &lt;list&gt;
-            &lt;ref bean=&quot;dog1&quot;&gt;&lt;/ref&gt;
-            &lt;ref bean=&quot;dog2&quot;&gt;&lt;/ref&gt;
-        &lt;/list&gt;
-    &lt;/property&gt;
-
-    &lt;property name=&quot;map&quot;&gt;
-        &lt;map&gt;
-            &lt;entry key=&quot;111&quot; value=&quot;aaa&quot;&gt;
-
-            &lt;/entry&gt;
-        &lt;/map&gt;
-
-    &lt;/property&gt;
-    &lt;property name=&quot;set&quot;&gt;
-        &lt;set&gt;
-            &lt;value&gt;
-                qqq,www,eee
-            &lt;/value&gt;
-        &lt;/set&gt;
-    &lt;/property&gt;
-
-
-&lt;!--这是上边list存的外部bean--&gt;
-&lt;/bean&gt;
-&lt;bean id=&quot;dog1&quot; class=&quot;com.company.Dog&quot;&gt;
-    &lt;property name=&quot;name&quot; value=&quot;dog1&quot;&gt;&lt;/property&gt;
-&lt;/bean&gt;
-&lt;bean id=&quot;dog2&quot; class=&quot;com.company.Dog&quot;&gt;
-    &lt;property name=&quot;name&quot; value=&quot;dog2&quot;&gt;&lt;/property&gt;
-&lt;/bean&gt;
-</code></pre>
-
+        <h1 id="IOC"><a href="#IOC" class="headerlink" title="IOC"></a>IOC</h1><h2 id="负责对象创建，对象和对象之间的调用"><a href="#负责对象创建，对象和对象之间的调用" class="headerlink" title="负责对象创建，对象和对象之间的调用"></a>负责对象创建，对象和对象之间的调用</h2>
     </div>
 
     
@@ -292,7 +222,10 @@
     <a href="/2022/03/02/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8E%E5%B9%B6%E5%8F%91/" rel="prev" title="多线程与并发">
       <i class="fa fa-chevron-left"></i> 多线程与并发
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2022/03/06/Spring-%E4%B8%80/" rel="next" title="Spring(一)">
+      Spring(一) <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -367,14 +300,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-count">10</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
   </nav>
