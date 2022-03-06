@@ -157,6 +157,197 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/05/spring/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="嘘~···小声点儿">
+      <meta itemprop="description" content="默默聆听那黑夜，晚风吻尽，荷花叶，任我醉倒在池边。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大森林">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/03/05/spring/" class="post-title-link" itemprop="url">spring</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-03-05 14:21:04 / 修改时间：16:30:36" itemprop="dateCreated datePublished" datetime="2022-03-05T14:21:04+08:00">2022-03-05</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="IOC"><a href="#IOC" class="headerlink" title="IOC"></a>IOC</h1><h2 id="负责对象创建，对象和对象之间的调用"><a href="#负责对象创建，对象和对象之间的调用" class="headerlink" title="负责对象创建，对象和对象之间的调用"></a>负责对象创建，对象和对象之间的调用</h2><pre><code>&lt;!--创建一个对象,默认无参构造--&gt;
+&lt;bean id=&quot;user&quot; class=&quot;com.company.User&quot;&gt;
+
+    &lt;!--属性注入，有参构造--&gt;
+    &lt;constructor-arg name=&quot;height&quot; value=&quot;12.3&quot;&gt;&lt;/constructor-arg&gt;
+    &lt;constructor-arg name=&quot;width&quot; value=&quot;22.3&quot;&gt;&lt;/constructor-arg&gt;
+
+    &lt;!--属性注入,set方法,类中必须含有属性的set方法--&gt;
+    &lt;property name=&quot;name&quot; value=&quot;zhangSan&quot;&gt;&lt;/property&gt;
+    &lt;property name=&quot;sex&quot; value=&quot;男&quot;&gt;&lt;/property&gt;
+
+    &lt;!--注入字面量null--&gt;
+    &lt;property name=&quot;nullTest&quot; &gt;
+            &lt;null/&gt;
+    &lt;/property&gt;
+    &lt;!--注入带特殊符号 &lt; &gt; &#39; &quot; &amp;的值,用![CDATA[ 想填的值]]--&gt;
+    &lt;property name=&quot;notNormal&quot; &gt;
+        &lt;value&gt;
+            &lt;![CDATA[&lt;hahahahah&gt;]]&gt;
+        &lt;/value&gt;
+    &lt;/property&gt;
+    &lt;!--注入外部bean在对象中导入其他类的对象,ref=&quot;类id&quot;--&gt;
+
+    &lt;!-- &lt;property name=&quot;dog&quot; ref=&quot;dog&quot;&gt;&lt;/property&gt; --&gt;
+    &lt;!--被注入的外部bean--&gt;
+    &lt;!--&lt;bean id=&quot;dog&quot; class=&quot;com.company.Dog&quot;&gt;&lt;/bean&gt;--&gt;
+    &lt;!--注入内部bean,和上面注释外部bean注入作用一样--&gt;
+    &lt;property name=&quot;dog&quot; &gt;
+        &lt;bean id=&quot;dog&quot; class=&quot;com.company.Dog&quot;&gt;&lt;/bean&gt;
+    &lt;/property&gt;
+
+    &lt;!--级联赋值外部bean注入，然后给外部bean的属性,懒得写--&gt;
+
+    &lt;!--注入数组,集合,映射--&gt;
+    &lt;property name=&quot;arr&quot;&gt;
+        &lt;array&gt;
+            &lt;value&gt;
+                aaa,bbb
+            &lt;/value&gt;
+        &lt;/array&gt;
+    &lt;/property&gt;
+
+    &lt;!--list存的是Dog对象,由外部bean导入--&gt;
+    &lt;property name=&quot;list&quot;&gt;
+        &lt;list&gt;
+            &lt;ref bean=&quot;dog1&quot;&gt;&lt;/ref&gt;
+            &lt;ref bean=&quot;dog2&quot;&gt;&lt;/ref&gt;
+        &lt;/list&gt;
+    &lt;/property&gt;
+
+    &lt;property name=&quot;map&quot;&gt;
+        &lt;map&gt;
+            &lt;entry key=&quot;111&quot; value=&quot;aaa&quot;&gt;
+
+            &lt;/entry&gt;
+        &lt;/map&gt;
+
+    &lt;/property&gt;
+    &lt;property name=&quot;set&quot;&gt;
+        &lt;set&gt;
+            &lt;value&gt;
+                qqq,www,eee
+            &lt;/value&gt;
+        &lt;/set&gt;
+    &lt;/property&gt;
+
+
+&lt;!--这是上边list存的外部bean--&gt;
+&lt;/bean&gt;
+&lt;bean id=&quot;dog1&quot; class=&quot;com.company.Dog&quot;&gt;
+    &lt;property name=&quot;name&quot; value=&quot;dog1&quot;&gt;&lt;/property&gt;
+&lt;/bean&gt;
+&lt;bean id=&quot;dog2&quot; class=&quot;com.company.Dog&quot;&gt;
+    &lt;property name=&quot;name&quot; value=&quot;dog2&quot;&gt;&lt;/property&gt;
+&lt;/bean&gt;
+</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/02/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8E%E5%B9%B6%E5%8F%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="嘘~···小声点儿">
+      <meta itemprop="description" content="默默聆听那黑夜，晚风吻尽，荷花叶，任我醉倒在池边。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大森林">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/03/02/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8E%E5%B9%B6%E5%8F%91/" class="post-title-link" itemprop="url">多线程与并发</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-03-02 21:41:47" itemprop="dateCreated datePublished" datetime="2022-03-02T21:41:47+08:00">2022-03-02</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/02/28/%E6%95%B0%E6%8D%AE%E5%BA%93/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -364,7 +555,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-02-27 22:14:27" itemprop="dateModified" datetime="2022-02-27T22:14:27+08:00">2022-02-27</time>
+                <time title="修改时间：2022-03-01 20:14:53" itemprop="dateModified" datetime="2022-03-01T20:14:53+08:00">2022-03-01</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -804,7 +995,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-count">9</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
