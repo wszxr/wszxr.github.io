@@ -379,7 +379,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-03-06 21:01:20" itemprop="dateModified" datetime="2022-03-06T21:01:20+08:00">2022-03-06</time>
+                <time title="修改时间：2022-03-07 22:27:22" itemprop="dateModified" datetime="2022-03-07T22:27:22+08:00">2022-03-07</time>
               </span>
 
           
@@ -393,7 +393,28 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="IOC"><a href="#IOC" class="headerlink" title="IOC"></a>IOC</h1><h2 id="负责对象创建，对象和对象之间的调用"><a href="#负责对象创建，对象和对象之间的调用" class="headerlink" title="负责对象创建，对象和对象之间的调用"></a>负责对象创建，对象和对象之间的调用</h2>
+          <h3 id="后置处理bean"><a href="#后置处理bean" class="headerlink" title="后置处理bean"></a>后置处理bean</h3><h3 id="红色部分"><a href="#红色部分" class="headerlink" title="红色部分"></a>红色部分</h3><p>在Bean初始化的前后可以实现再加工。</p>
+<p><img src="https://img-blog.csdnimg.cn/2020052517103049.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzczNDA5NQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p>实现步骤</p>
+<ol>
+<li>用自己的类实现BeanPostProcessor接口，然后在方法中写入自己的加工代码。</li>
+</ol>
+<p><img src="C:\Users\zxr\AppData\Roaming\Typora\typora-user-images\image-20220307220310327.png" alt="image-20220307220310327"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> Object <span class="title function_">postProcessAfterInitialization</span><span class="params">(Object bean, String beanName)</span> <span class="keyword">throws</span> BeansException &#123;</span><br><span class="line">    <span class="comment">//当传入的对象是我想要加工的对象时才执行加工代码</span></span><br><span class="line">       <span class="keyword">if</span> (bean <span class="keyword">instanceof</span>  Category) &#123;</span><br><span class="line">           <span class="type">Category</span> <span class="variable">category</span> <span class="operator">=</span> (Category) bean;</span><br><span class="line">           category.setName(<span class="string">&quot;hahaha&quot;</span>);</span><br><span class="line">           <span class="keyword">return</span> category;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">return</span> bean;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<ol start="2">
+<li><p>在配置文件制造自己写的类</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;myBeanPostProcessor&quot;</span> <span class="attr">class</span>=<span class="string">&quot;com.yusael.beanpost.MyBeanPostProcessor&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>需要注意的是，实现了这个类后，工厂中所有创建的对象都会调用这个方法，会出现类型不匹配问题，因此要筛选出自己需要加工的类</li>
+<li>一般只在postProcessAfterInitialization方法中加工，但是别忘了postProcessBefInitialization也会执行，所以必须让它return传入的对象。</li>
+</ul>
+</li>
+</ol>
+
       
     </div>
 
