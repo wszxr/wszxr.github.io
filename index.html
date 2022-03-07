@@ -157,6 +157,81 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/07/spring%EF%BC%88%E4%BA%8C%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="嘘~···小声点儿">
+      <meta itemprop="description" content="默默聆听那黑夜，晚风吻尽，荷花叶，任我醉倒在池边。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大森林">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/03/07/spring%EF%BC%88%E4%BA%8C%EF%BC%89/" class="post-title-link" itemprop="url">spring（二）</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-03-07 14:10:42 / 修改时间：20:56:40" itemprop="dateCreated datePublished" datetime="2022-03-07T14:10:42+08:00">2022-03-07</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Spring/" itemprop="url" rel="index"><span itemprop="name">Spring</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="属性注入"><a href="#属性注入" class="headerlink" title="属性注入"></a>属性注入</h1>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/03/07/spring%EF%BC%88%E4%BA%8C%EF%BC%89/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/06/Spring-%E4%B8%80/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -180,10 +255,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-03-06 22:27:07 / 修改时间：23:03:00" itemprop="dateCreated datePublished" datetime="2022-03-06T22:27:07+08:00">2022-03-06</time>
+              <time title="创建时间：2022-03-06 22:27:07" itemprop="dateCreated datePublished" datetime="2022-03-06T22:27:07+08:00">2022-03-06</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-03-07 21:08:25" itemprop="dateModified" datetime="2022-03-07T21:08:25+08:00">2022-03-07</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -230,20 +311,22 @@
 <li><p>在resoures根目录下创建Application.properties文件</p>
 </li>
 <li><pre><code class="properties">person1 = main.demo1.Person
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">+ 工厂类（自定义）</span><br><span class="line"></span><br><span class="line">```java</span><br><span class="line">//工厂类</span><br><span class="line">public class BeanFactory &#123;</span><br><span class="line">    //Properties 类型,是一个数据类型，和Map相似，但是key，value都只能是字符串类型</span><br><span class="line">    private static Properties evil = new Properties();</span><br><span class="line">    //把properties配置文件加载到evil对象中，evil是properties的一个实例</span><br><span class="line">    static &#123;</span><br><span class="line"></span><br><span class="line">        try &#123;</span><br><span class="line">            InputStream inputStream = BeanFactory.class.getResourceAsStream(&quot;/Application.properties&quot;);</span><br><span class="line">            evil.load(inputStream);</span><br><span class="line">        &#125; catch (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">	//模拟的工厂方法，获得一个实例对象，key = properties文件中的 key值</span><br><span class="line">    public static Object getBean(String key)&#123;</span><br><span class="line">        Object ret = null;</span><br><span class="line">        try &#123;</span><br><span class="line">            //evil.getProperty(key) 是根据key获得后面类的限定名称（包名加类名）</span><br><span class="line">            Class clazz = Class.forName(evil.getProperty(key));</span><br><span class="line">            //通过反射调用无参构造创造实例</span><br><span class="line">             ret = clazz.newInstance();</span><br><span class="line">        &#125; catch (InstantiationException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; catch (IllegalAccessException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; catch (ClassNotFoundException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        return ret;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">+ 工厂类（自定义）</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">```java</span><br><span class="line">//工厂类</span><br><span class="line">public class BeanFactory &#123;</span><br><span class="line">    //Properties 类型,是一个数据类型，和Map相似，但是key，value都只能是字符串类型</span><br><span class="line">    private static Properties evil = new Properties();</span><br><span class="line">    //把properties配置文件加载到evil对象中，evil是properties的一个实例</span><br><span class="line">    static &#123;</span><br><span class="line"></span><br><span class="line">        try &#123;</span><br><span class="line">            InputStream inputStream = BeanFactory.class.getResourceAsStream(&quot;/Application.properties&quot;);</span><br><span class="line">            evil.load(inputStream);</span><br><span class="line">        &#125; catch (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">	//模拟的工厂方法，获得一个实例对象，key = properties文件中的 key值</span><br><span class="line">    public static Object getBean(String key)&#123;</span><br><span class="line">        Object ret = null;</span><br><span class="line">        try &#123;</span><br><span class="line">            //evil.getProperty(key) 是根据key获得后面类的限定名称（包名加类名）</span><br><span class="line">            Class clazz = Class.forName(evil.getProperty(key));</span><br><span class="line">            //通过反射调用无参构造创造实例</span><br><span class="line">             ret = clazz.newInstance();</span><br><span class="line">        &#125; catch (InstantiationException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; catch (IllegalAccessException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; catch (ClassNotFoundException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        return ret;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 </code></pre>
 </li>
 <li><p>@Test方法</p>
 </li>
-<li><pre><code class="java">@Test
-    public void test1()&#123;
-        //用工厂类的静态getBean方法获取实例并输出地址
-        Person person = (Person) BeanFactory.getBean(&quot;person1&quot;);
-        System.out.println(person);
-    &#125;
-</code></pre>
-</li>
 </ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">test1</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="comment">//用工厂类的静态getBean方法获取实例并输出地址</span></span><br><span class="line">        <span class="type">Person</span> <span class="variable">person</span> <span class="operator">=</span> (Person) BeanFactory.getBean(<span class="string">&quot;person1&quot;</span>);</span><br><span class="line">        System.out.println(person);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>以上可以看作是第一个spring程序</p>
+<h2 id="xml配置创建类"><a href="#xml配置创建类" class="headerlink" title="xml配置创建类"></a>xml配置创建类</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;person3&quot;</span> <span class="attr">class</span>=<span class="string">&quot;Person2&quot;</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--class跟的是全限定名--&gt;</span></span><br><span class="line"> </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//ApplicationContext是一个工厂接口，ClassPathXmlApplicationContext是他的一个实现类，用于获取工厂</span></span><br><span class="line"><span class="type">ApplicationContext</span> <span class="variable">conText</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ClassPathXmlApplicationContext</span>(<span class="string">&quot;applicationContext.xml&quot;</span>);<span class="comment">//配置文件全限定名</span></span><br><span class="line"><span class="comment">//调用getBean方法可以创建一个实例，底层是通过反射创建</span></span><br><span class="line"><span class="type">Person</span> <span class="variable">person</span> <span class="operator">=</span> conText.getBean(<span class="string">&quot;person&quot;</span>, Person.class);</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>  2022年3月7日21点02分</p>
+<hr>
 </li>
 </ul>
 
@@ -884,89 +967,11 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/02/23/%E9%93%BE%E8%A1%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="嘘~···小声点儿">
-      <meta itemprop="description" content="默默聆听那黑夜，晚风吻尽，荷花叶，任我醉倒在池边。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大森林">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/02/23/%E9%93%BE%E8%A1%A8/" class="post-title-link" itemprop="url">链表篇</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-02-23 02:26:40" itemprop="dateCreated datePublished" datetime="2022-02-23T02:26:40+08:00">2022-02-23</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-02-26 15:40:13" itemprop="dateModified" datetime="2022-02-26T15:40:13+08:00">2022-02-26</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">数据结构</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="链表和顺序表的优劣"><a href="#链表和顺序表的优劣" class="headerlink" title="链表和顺序表的优劣"></a>链表和顺序表的优劣</h1>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/02/23/%E9%93%BE%E8%A1%A8/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+  </nav>
 
 
 
@@ -1033,7 +1038,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-count">11</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
