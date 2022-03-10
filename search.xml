@@ -86,10 +86,7 @@
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Test</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="comment">//获得工厂</span></span><br><span class="line">        <span class="type">ApplicationContext</span> <span class="variable">context</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ClassPathXmlApplicationContext</span>(<span class="string">&quot;applicationContext.xml&quot;</span>);</span><br><span class="line">        <span class="comment">//通过工厂获得对象,注意这里根据目标对象名字但是获得的是代理对象</span></span><br><span class="line">        <span class="type">Person</span> <span class="variable">zhang</span> <span class="operator">=</span> (Person) context.getBean(<span class="string">&quot;zhang&quot;</span>);</span><br><span class="line">        zhang.eat();</span><br><span class="line"></span><br><span class="line">        zhang.happy();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>6.结果</p>
-
-
-
-
+<p><img src="https://gitee.com/wszxr/cloudimages/raw/master/img/image-20220310094025170.png" alt="image-20220310094025170"></p>
 <ul>
 <li><p>因为我们的切入点是所有的方法，所以结果会是这样，后面会进一步解决。</p>
 </li>
