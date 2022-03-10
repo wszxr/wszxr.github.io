@@ -20,17 +20,21 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="工厂设计模式 概念：创建对象交给工厂，而不是自己new  优势：解耦合   耦合 指代码间的强关联关系，一方的改变会影响另一方。 耦合带来的问题：不利于代码的维护。  通用工厂的设计 首先，不用工厂模式创建对象    12345678&#x2F;&#x2F;首先创建一个类，实现某一个接口public Person implements Jiekou&amp;#123;    &amp;#125;&#x2F;&#x2F;普通创建对象Jiekou pe">
+  <meta name="description" content="工厂设计模式 概念：创建对象交给工厂，而不是自己new  优势：解耦合">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Spring(一)">
 <meta property="og:url" content="http://example.com/2022/03/06/Spring-%E4%B8%80/index.html">
 <meta property="og:site_name" content="大森林">
-<meta property="og:description" content="工厂设计模式 概念：创建对象交给工厂，而不是自己new  优势：解耦合   耦合 指代码间的强关联关系，一方的改变会影响另一方。 耦合带来的问题：不利于代码的维护。  通用工厂的设计 首先，不用工厂模式创建对象    12345678&#x2F;&#x2F;首先创建一个类，实现某一个接口public Person implements Jiekou&amp;#123;    &amp;#125;&#x2F;&#x2F;普通创建对象Jiekou pe">
+<meta property="og:description" content="工厂设计模式 概念：创建对象交给工厂，而不是自己new  优势：解耦合">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200521235846480.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzczNDA5NQ==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2020052517103049.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzczNDA5NQ==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="c:/Users/zxr/AppData/Roaming/Typora/typora-user-images/image-20220307220310327.png">
 <meta property="article:published_time" content="2022-03-06T14:27:07.000Z">
-<meta property="article:modified_time" content="2022-03-07T13:08:25.319Z">
+<meta property="article:modified_time" content="2022-03-10T12:35:55.011Z">
 <meta property="article:author" content="嘘~···小声点儿">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20200521235846480.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzczNDA5NQ==,size_16,color_FFFFFF,t_70">
 
 <link rel="canonical" href="http://example.com/2022/03/06/Spring-%E4%B8%80/">
 
@@ -190,7 +194,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-03-07 21:08:25" itemprop="dateModified" datetime="2022-03-07T21:08:25+08:00">2022-03-07</time>
+                <time title="修改时间：2022-03-10 20:35:55" itemprop="dateModified" datetime="2022-03-10T20:35:55+08:00">2022-03-10</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -213,13 +217,11 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <span id="more"></span>
-
-<h1 id="工厂设计模式"><a href="#工厂设计模式" class="headerlink" title="工厂设计模式"></a>工厂设计模式</h1><ol>
+        <h2 id="工厂设计模式"><a href="#工厂设计模式" class="headerlink" title="工厂设计模式"></a>工厂设计模式</h2><ol>
 <li><p>概念：创建对象交给工厂，而不是自己new</p>
 </li>
 <li><p>优势：解耦合</p>
-</li>
+<span id="more"></span></li>
 </ol>
 <h2 id="耦合"><a href="#耦合" class="headerlink" title="耦合"></a>耦合</h2><ul>
 <li>指代码间的强关联关系，一方的改变会影响另一方。</li>
@@ -247,15 +249,45 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">test1</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="comment">//用工厂类的静态getBean方法获取实例并输出地址</span></span><br><span class="line">        <span class="type">Person</span> <span class="variable">person</span> <span class="operator">=</span> (Person) BeanFactory.getBean(<span class="string">&quot;person1&quot;</span>);</span><br><span class="line">        System.out.println(person);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 
 <p>以上可以看作是第一个spring程序</p>
-<h2 id="xml配置创建类"><a href="#xml配置创建类" class="headerlink" title="xml配置创建类"></a>xml配置创建类</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;person3&quot;</span> <span class="attr">class</span>=<span class="string">&quot;Person2&quot;</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--class跟的是全限定名--&gt;</span></span><br><span class="line"> </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="xml创建类"><a href="#xml创建类" class="headerlink" title="xml创建类"></a>xml创建类</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;person3&quot;</span> <span class="attr">class</span>=<span class="string">&quot;Person2&quot;</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--class跟的是全限定名--&gt;</span></span><br><span class="line"> </span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//ApplicationContext是一个工厂接口，ClassPathXmlApplicationContext是他的一个实现类，用于获取工厂</span></span><br><span class="line"><span class="type">ApplicationContext</span> <span class="variable">conText</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ClassPathXmlApplicationContext</span>(<span class="string">&quot;applicationContext.xml&quot;</span>);<span class="comment">//配置文件全限定名</span></span><br><span class="line"><span class="comment">//调用getBean方法可以创建一个实例，底层是通过反射创建</span></span><br><span class="line"><span class="type">Person</span> <span class="variable">person</span> <span class="operator">=</span> conText.getBean(<span class="string">&quot;person&quot;</span>, Person.class);</span><br></pre></td></tr></table></figure>
 
-<hr>
-<p>  2022年3月7日21点02分</p>
-<hr>
+
+
+<h2 id="属性注入"><a href="#属性注入" class="headerlink" title="属性注入"></a>属性注入</h2><!--more-->
+
+<h2 id="set注入（需要类中的属性有set方法）"><a href="#set注入（需要类中的属性有set方法）" class="headerlink" title="set注入（需要类中的属性有set方法）"></a>set注入（需要类中的属性有set方法）</h2><p>使用properties标签，底层相当于调用set方法</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">   </span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!--注入jdk基本类型--&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--数组，List用list，Set用set，Map用map，Properties用props标签调用set方法，用prop标签指定值--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;age&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span></span><br><span class="line">            12</span><br><span class="line">        <span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;name&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span></span><br><span class="line">            zhang</span><br><span class="line">        <span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--注入list--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;friend&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">list</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">value</span>&gt;</span></span><br><span class="line">                zhao</span><br><span class="line">            <span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">value</span>&gt;</span></span><br><span class="line">                qian</span><br><span class="line">            <span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">list</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--注入map--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;myMap&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">map</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;<span class="name">entry</span> <span class="attr">key</span>=<span class="string">&quot;good&quot;</span> <span class="attr">value</span>=<span class="string">&quot;goodtoo&quot;</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;/<span class="name">entry</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">entry</span> <span class="attr">key</span>=<span class="string">&quot;haha&quot;</span> <span class="attr">value</span>=<span class="string">&quot;hahatoo&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">            <span class="tag">&lt;/<span class="name">entry</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">map</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--注入Property对象，相当于map，只不过键和值都必须是String类型--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;properties&quot;</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">props</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;<span class="name">prop</span> <span class="attr">key</span>=<span class="string">&quot;hahaah&quot;</span>&gt;</span></span><br><span class="line">              qqqqqqq</span><br><span class="line">           <span class="tag">&lt;/<span class="name">prop</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;/<span class="name">props</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    </span><br><span class="line">     <span class="comment">&lt;!--//自定义内容注入--&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;person2&quot;</span> <span class="attr">ref</span>=<span class="string">&quot;person3&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">   <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--命名空间p实现自定义类型的简洁调用--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;person&quot;</span> <span class="attr">class</span>=<span class="string">&quot;Person&quot;</span> <span class="attr">p:person2-ref</span>=<span class="string">&quot;person3&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="构造函数注入"><a href="#构造函数注入" class="headerlink" title="构造函数注入"></a>构造函数注入</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">需要类中写出有参构造</span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;person3&quot;</span> <span class="attr">class</span>=<span class="string">&quot;Person2&quot;</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 构造函数可能重载多个，使用type属性指定成员类型--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">name</span>=<span class="string">&quot;age&quot;</span> <span class="attr">type</span>=<span class="string">&quot;int&quot;</span> <span class="attr">value</span>=<span class="string">&quot;12&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">constructor-arg</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">name</span>=<span class="string">&quot;name&quot;</span> <span class="attr">type</span>=<span class="string">&quot;java.lang.String&quot;</span> <span class="attr">value</span>=<span class="string">&quot;zhangsan&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">constructor-arg</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">name</span>=<span class="string">&quot;sex&quot;</span> <span class="attr">type</span>=<span class="string">&quot;char&quot;</span> <span class="attr">value</span>=<span class="string">&quot;男&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">constructor-arg</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="结构图"><a href="#结构图" class="headerlink" title="结构图"></a>结构图</h1><p><img src="https://img-blog.csdnimg.cn/20200521235846480.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzczNDA5NQ==,size_16,color_FFFFFF,t_70" alt="img"></p>
 </li>
 </ul>
+<h2 id="IOC"><a href="#IOC" class="headerlink" title="IOC"></a>IOC</h2><p>含义：反转控制，把成员变量的赋值权转移到工厂里边</p>
+<h2 id="复杂对象的创建"><a href="#复杂对象的创建" class="headerlink" title="复杂对象的创建"></a>复杂对象的创建</h2><p>复杂对象：不能直接new出来的对象</p>
+<h2 id="后置处理bean"><a href="#后置处理bean" class="headerlink" title="后置处理bean"></a>后置处理bean</h2><h3 id="红色部分"><a href="#红色部分" class="headerlink" title="红色部分"></a>红色部分</h3><p>在Bean初始化的前后可以实现再加工。</p>
+<p><img src="https://img-blog.csdnimg.cn/2020052517103049.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzczNDA5NQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p>实现步骤</p>
+<ol>
+<li>用自己的类实现BeanPostProcessor接口，然后在方法中写入自己的加工代码。</li>
+</ol>
+<p><img src="C:\Users\zxr\AppData\Roaming\Typora\typora-user-images\image-20220307220310327.png" alt="image-20220307220310327"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> Object <span class="title function_">postProcessAfterInitialization</span><span class="params">(Object bean, String beanName)</span> <span class="keyword">throws</span> BeansException &#123;</span><br><span class="line">    <span class="comment">//当传入的对象是我想要加工的对象时才执行加工代码</span></span><br><span class="line">       <span class="keyword">if</span> (bean <span class="keyword">instanceof</span>  Category) &#123;</span><br><span class="line">           <span class="type">Category</span> <span class="variable">category</span> <span class="operator">=</span> (Category) bean;</span><br><span class="line">           category.setName(<span class="string">&quot;hahaha&quot;</span>);</span><br><span class="line">           <span class="keyword">return</span> category;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">return</span> bean;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<ol start="2">
+<li><p>在配置文件制造自己写的类</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;myBeanPostProcessor&quot;</span> <span class="attr">class</span>=<span class="string">&quot;com.yusael.beanpost.MyBeanPostProcessor&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>需要注意的是，实现了这个类后，工厂中所有创建的对象都会调用这个方法，会出现类型不匹配问题，因此要筛选出自己需要加工的类</li>
+<li>一般只在postProcessAfterInitialization方法中加工，但是别忘了postProcessBefInitialization也会执行，所以必须让它return传入的对象。</li>
+</ul>
+</li>
+</ol>
 
     </div>
 
@@ -271,12 +303,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2022/03/05/spring/" rel="prev" title="spring">
-      <i class="fa fa-chevron-left"></i> spring
+    <a href="/2022/03/02/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8E%E5%B9%B6%E5%8F%91/" rel="prev" title="多线程与并发">
+      <i class="fa fa-chevron-left"></i> 多线程与并发
     </a></div>
       <div class="post-nav-item">
-    <a href="/2022/03/07/spring%EF%BC%88%E4%BA%8C%EF%BC%89/" rel="next" title="spring（二）">
-      spring（二） <i class="fa fa-chevron-right"></i>
+    <a href="/2022/03/09/SpringAOP/" rel="next" title="SpringAOP">
+      SpringAOP <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -336,7 +368,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B7%A5%E5%8E%82%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.</span> <span class="nav-text">工厂设计模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%80%A6%E5%90%88"><span class="nav-number">1.1.</span> <span class="nav-text">耦合</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%9A%E7%94%A8%E5%B7%A5%E5%8E%82%E7%9A%84%E8%AE%BE%E8%AE%A1"><span class="nav-number">1.2.</span> <span class="nav-text">通用工厂的设计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#xml%E9%85%8D%E7%BD%AE%E5%88%9B%E5%BB%BA%E7%B1%BB"><span class="nav-number">1.3.</span> <span class="nav-text">xml配置创建类</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B7%A5%E5%8E%82%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.</span> <span class="nav-text">工厂设计模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%80%A6%E5%90%88"><span class="nav-number">2.</span> <span class="nav-text">耦合</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%9A%E7%94%A8%E5%B7%A5%E5%8E%82%E7%9A%84%E8%AE%BE%E8%AE%A1"><span class="nav-number">3.</span> <span class="nav-text">通用工厂的设计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#xml%E5%88%9B%E5%BB%BA%E7%B1%BB"><span class="nav-number">4.</span> <span class="nav-text">xml创建类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B1%9E%E6%80%A7%E6%B3%A8%E5%85%A5"><span class="nav-number">5.</span> <span class="nav-text">属性注入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#set%E6%B3%A8%E5%85%A5%EF%BC%88%E9%9C%80%E8%A6%81%E7%B1%BB%E4%B8%AD%E7%9A%84%E5%B1%9E%E6%80%A7%E6%9C%89set%E6%96%B9%E6%B3%95%EF%BC%89"><span class="nav-number">6.</span> <span class="nav-text">set注入（需要类中的属性有set方法）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E6%B3%A8%E5%85%A5"><span class="nav-number">7.</span> <span class="nav-text">构造函数注入</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BB%93%E6%9E%84%E5%9B%BE"><span class="nav-number"></span> <span class="nav-text">结构图</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#IOC"><span class="nav-number">1.</span> <span class="nav-text">IOC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%8D%E6%9D%82%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%88%9B%E5%BB%BA"><span class="nav-number">2.</span> <span class="nav-text">复杂对象的创建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8E%E7%BD%AE%E5%A4%84%E7%90%86bean"><span class="nav-number">3.</span> <span class="nav-text">后置处理bean</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%A2%E8%89%B2%E9%83%A8%E5%88%86"><span class="nav-number">3.1.</span> <span class="nav-text">红色部分</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -352,7 +384,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-count">10</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

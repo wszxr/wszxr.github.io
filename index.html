@@ -188,7 +188,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-03-10 09:40:41" itemprop="dateModified" datetime="2022-03-10T09:40:41+08:00">2022-03-10</time>
+                <time title="修改时间：2022-03-10 20:35:33" itemprop="dateModified" datetime="2022-03-10T20:35:33+08:00">2022-03-10</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -211,121 +211,12 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="动态代理"><a href="#动态代理" class="headerlink" title="动态代理"></a>动态代理</h1><p>概念：通过代理类为原始类提供额外功能</p>
-<p>用处：利于原始类的维护</p>
-<h2 id="开发步骤"><a href="#开发步骤" class="headerlink" title="开发步骤"></a>开发步骤</h2><p>1.创建原始类</p>
-<p>2.创建额外方法对象并实现MethodBeforeAdvice接口，定制额外功能</p>
-<p>3.定义切入点，也就是额外功能作用的位置</p>
-<p>4.整合切入点和代理对象</p>
-<p>5.调用</p>
-<ul>
-<li>接下来通过代码展示这些过程</li>
-</ul>
-<p>1.创建原始类</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//这是原始类的接口</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">Person</span> &#123;</span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">eat</span><span class="params">()</span>;</span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">happy</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//定义一个姓张的人实现人类接口中的两个方法</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Zhang</span> <span class="keyword">implements</span> <span class="title class_">Person</span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">eat</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;张某在吃东西&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">happy</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;张某很开心&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--先创建一个目标类的实例对象--&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;zhang&quot;</span> <span class="attr">class</span>=<span class="string">&quot;Zhang&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
-
-
-
-<p>2.创建额外方法对象并实现MethodBeforeAdvice接口，定制额外功能</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//要想成为代理类，就需要实现MethodBeforeAdvice接口</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ExtraMethod</span> <span class="keyword">implements</span> <span class="title class_">MethodBeforeAdvice</span> &#123;</span><br><span class="line">    <span class="comment">//接口中的方法，方法中的内容将会在被代理类中的方法里边最先执行（Befor）</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">before</span><span class="params">(Method method, Object[] objects, Object o)</span> <span class="keyword">throws</span> Throwable &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;吃之前想想会不会长胖&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--创建一个额外方法对象--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;extraMethod&quot;</span> <span class="attr">class</span>=<span class="string">&quot;ExtraMethod&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
-
-
-
-<p>3.定义切入点，也就是额外功能作用的位置</p>
-<p>4.整合切入点和代理对象</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--定义切入点--&gt;</span></span><br><span class="line"><span class="comment">&lt;!--整合切入点和代理对象--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">aop:config</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--id任意取,execution(* *(..) )表示在所有方法都加入此额外功能，后面会详细分析切入函数--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">aop:pointcut</span> <span class="attr">id</span>=<span class="string">&quot;pc&quot;</span> <span class="attr">expression</span>=<span class="string">&quot;execution(* *(..) )&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">aop:pointcut</span>&gt;</span></span><br><span class="line">	<span class="comment">&lt;!--调用--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">aop:advisor</span> <span class="attr">advice-ref</span>=<span class="string">&quot;proxyZhang&quot;</span> <span class="attr">pointcut-ref</span>=<span class="string">&quot;pc&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">aop:advisor</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">aop:config</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>5.调用</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Test</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="comment">//获得工厂</span></span><br><span class="line">        <span class="type">ApplicationContext</span> <span class="variable">context</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ClassPathXmlApplicationContext</span>(<span class="string">&quot;applicationContext.xml&quot;</span>);</span><br><span class="line">        <span class="comment">//通过工厂获得对象,注意这里根据目标对象名字但是获得的是代理对象</span></span><br><span class="line">        <span class="type">Person</span> <span class="variable">zhang</span> <span class="operator">=</span> (Person) context.getBean(<span class="string">&quot;zhang&quot;</span>);</span><br><span class="line">        zhang.eat();</span><br><span class="line"></span><br><span class="line">        zhang.happy();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>6.结果</p>
-<p><img src="https://gitee.com/wszxr/cloudimages/raw/master/img/image-20220310094025170.png" alt="image-20220310094025170"></p>
-<ul>
-<li><p>因为我们的切入点是所有的方法，所以结果会是这样，后面会进一步解决。</p>
-</li>
-<li><p>需要注意的是，我们没有定义代理类，但是我们通过原始类的id取出来的却是被代理类加工过的 也就是加入了额外功能的对象。</p>
-</li>
-</ul>
-<h2 id="代理类在哪？"><a href="#代理类在哪？" class="headerlink" title="代理类在哪？"></a>代理类在哪？</h2><ul>
-<li>事实上，有一个叫做动态字节码技术的东西，它通过第三方框架在jvm中创造对应的字节码（也就是java中的.class文件中的东西，但并没有创建出.class文件），进而创造类，对象。</li>
-<li>因此，Spring框架运行时，通过字节码技术创造代理类，它由jvm创建，在jvm内部运行，随着jvm的消失而消失（在程序运行结束的时候）。</li>
-<li>这也是动态代理存在的原因，它不需要像静态代理一样为每一个目标类都手动创建一个代理类，更加的利于程序的维护。</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/07/spring%EF%BC%88%E4%BA%8C%EF%BC%89/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="嘘~···小声点儿">
-      <meta itemprop="description" content="默默聆听那黑夜，晚风吻尽，荷花叶，任我醉倒在池边。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大森林">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/03/07/spring%EF%BC%88%E4%BA%8C%EF%BC%89/" class="post-title-link" itemprop="url">spring（二）</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-03-07 14:10:42 / 修改时间：20:56:40" itemprop="dateCreated datePublished" datetime="2022-03-07T14:10:42+08:00">2022-03-07</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Spring/" itemprop="url" rel="index"><span itemprop="name">Spring</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="属性注入"><a href="#属性注入" class="headerlink" title="属性注入"></a>属性注入</h1>
+          <h1 id="AOP（Aspect-Oriented-Programing）"><a href="#AOP（Aspect-Oriented-Programing）" class="headerlink" title="AOP（Aspect Oriented Programing）"></a>AOP（Aspect Oriented Programing）</h1><p>1.含义：面向切片编程,通过代理类给原始类增加ew功能</p>
+<p>2.核心问题：通过动态字节码技术创建动态代理对象</p>
+<p>1.用到了代理设计模式</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2022/03/07/spring%EF%BC%88%E4%BA%8C%EF%BC%89/#more" rel="contents">
+              <a class="btn" href="/2022/03/09/SpringAOP/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -380,7 +271,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-03-07 21:08:25" itemprop="dateModified" datetime="2022-03-07T21:08:25+08:00">2022-03-07</time>
+                <time title="修改时间：2022-03-10 20:35:55" itemprop="dateModified" datetime="2022-03-10T20:35:55+08:00">2022-03-10</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -403,166 +294,18 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <span id="more"></span>
-
-<h1 id="工厂设计模式"><a href="#工厂设计模式" class="headerlink" title="工厂设计模式"></a>工厂设计模式</h1><ol>
+          <h2 id="工厂设计模式"><a href="#工厂设计模式" class="headerlink" title="工厂设计模式"></a>工厂设计模式</h2><ol>
 <li><p>概念：创建对象交给工厂，而不是自己new</p>
 </li>
 <li><p>优势：解耦合</p>
-</li>
-</ol>
-<h2 id="耦合"><a href="#耦合" class="headerlink" title="耦合"></a>耦合</h2><ul>
-<li>指代码间的强关联关系，一方的改变会影响另一方。</li>
-<li>耦合带来的问题：不利于代码的维护。</li>
-</ul>
-<h2 id="通用工厂的设计"><a href="#通用工厂的设计" class="headerlink" title="通用工厂的设计"></a>通用工厂的设计</h2><ul>
-<li>首先，不用工厂模式创建对象</li>
-</ul>
-  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//首先创建一个类，实现某一个接口</span></span><br><span class="line"><span class="keyword">public</span> Person <span class="keyword">implements</span> <span class="title class_">Jiekou</span>&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//普通创建对象</span></span><br><span class="line"><span class="type">Jiekou</span> <span class="variable">person</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Person</span>();</span><br><span class="line"><span class="comment">//当有不同的实现类需要创建对象时，需要更改代码，耦合</span></span><br><span class="line">   </span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><p>用工厂模式创建</p>
-<ul>
-<li><p>这里直接实现通用的工厂</p>
-</li>
-<li><p>在resoures根目录下创建Application.properties文件</p>
-</li>
-<li><pre><code class="properties">person1 = main.demo1.Person
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">+ 工厂类（自定义）</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">```java</span><br><span class="line">//工厂类</span><br><span class="line">public class BeanFactory &#123;</span><br><span class="line">    //Properties 类型,是一个数据类型，和Map相似，但是key，value都只能是字符串类型</span><br><span class="line">    private static Properties evil = new Properties();</span><br><span class="line">    //把properties配置文件加载到evil对象中，evil是properties的一个实例</span><br><span class="line">    static &#123;</span><br><span class="line"></span><br><span class="line">        try &#123;</span><br><span class="line">            InputStream inputStream = BeanFactory.class.getResourceAsStream(&quot;/Application.properties&quot;);</span><br><span class="line">            evil.load(inputStream);</span><br><span class="line">        &#125; catch (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">	//模拟的工厂方法，获得一个实例对象，key = properties文件中的 key值</span><br><span class="line">    public static Object getBean(String key)&#123;</span><br><span class="line">        Object ret = null;</span><br><span class="line">        try &#123;</span><br><span class="line">            //evil.getProperty(key) 是根据key获得后面类的限定名称（包名加类名）</span><br><span class="line">            Class clazz = Class.forName(evil.getProperty(key));</span><br><span class="line">            //通过反射调用无参构造创造实例</span><br><span class="line">             ret = clazz.newInstance();</span><br><span class="line">        &#125; catch (InstantiationException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; catch (IllegalAccessException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; catch (ClassNotFoundException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        return ret;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-</code></pre>
-</li>
-<li><p>@Test方法</p>
-</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">test1</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="comment">//用工厂类的静态getBean方法获取实例并输出地址</span></span><br><span class="line">        <span class="type">Person</span> <span class="variable">person</span> <span class="operator">=</span> (Person) BeanFactory.getBean(<span class="string">&quot;person1&quot;</span>);</span><br><span class="line">        System.out.println(person);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<p>以上可以看作是第一个spring程序</p>
-<h2 id="xml配置创建类"><a href="#xml配置创建类" class="headerlink" title="xml配置创建类"></a>xml配置创建类</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;person3&quot;</span> <span class="attr">class</span>=<span class="string">&quot;Person2&quot;</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--class跟的是全限定名--&gt;</span></span><br><span class="line"> </span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//ApplicationContext是一个工厂接口，ClassPathXmlApplicationContext是他的一个实现类，用于获取工厂</span></span><br><span class="line"><span class="type">ApplicationContext</span> <span class="variable">conText</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ClassPathXmlApplicationContext</span>(<span class="string">&quot;applicationContext.xml&quot;</span>);<span class="comment">//配置文件全限定名</span></span><br><span class="line"><span class="comment">//调用getBean方法可以创建一个实例，底层是通过反射创建</span></span><br><span class="line"><span class="type">Person</span> <span class="variable">person</span> <span class="operator">=</span> conText.getBean(<span class="string">&quot;person&quot;</span>, Person.class);</span><br></pre></td></tr></table></figure>
-
-<hr>
-<p>  2022年3月7日21点02分</p>
-<hr>
-</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/05/spring/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="嘘~···小声点儿">
-      <meta itemprop="description" content="默默聆听那黑夜，晚风吻尽，荷花叶，任我醉倒在池边。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大森林">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/03/05/spring/" class="post-title-link" itemprop="url">spring</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-03-05 14:21:04" itemprop="dateCreated datePublished" datetime="2022-03-05T14:21:04+08:00">2022-03-05</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-03-10 08:42:16" itemprop="dateModified" datetime="2022-03-10T08:42:16+08:00">2022-03-10</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="后置处理bean"><a href="#后置处理bean" class="headerlink" title="后置处理bean"></a>后置处理bean</h3><h3 id="红色部分"><a href="#红色部分" class="headerlink" title="红色部分"></a>红色部分</h3><p>在Bean初始化的前后可以实现再加工。</p>
-<p><img src="https://img-blog.csdnimg.cn/2020052517103049.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzczNDA5NQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
-<p>实现步骤</p>
-<ol>
-<li>用自己的类实现BeanPostProcessor接口，然后在方法中写入自己的加工代码。</li>
-</ol>
-<p><img src="C:\Users\zxr\AppData\Roaming\Typora\typora-user-images\image-20220307220310327.png" alt="image-20220307220310327"></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> Object <span class="title function_">postProcessAfterInitialization</span><span class="params">(Object bean, String beanName)</span> <span class="keyword">throws</span> BeansException &#123;</span><br><span class="line">    <span class="comment">//当传入的对象是我想要加工的对象时才执行加工代码</span></span><br><span class="line">       <span class="keyword">if</span> (bean <span class="keyword">instanceof</span>  Category) &#123;</span><br><span class="line">           <span class="type">Category</span> <span class="variable">category</span> <span class="operator">=</span> (Category) bean;</span><br><span class="line">           category.setName(<span class="string">&quot;hahaha&quot;</span>);</span><br><span class="line">           <span class="keyword">return</span> category;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">return</span> bean;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<ol start="2">
-<li><p>在配置文件制造自己写的类</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;myBeanPostProcessor&quot;</span> <span class="attr">class</span>=<span class="string">&quot;com.yusael.beanpost.MyBeanPostProcessor&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>需要注意的是，实现了这个类后，工厂中所有创建的对象都会调用这个方法，会出现类型不匹配问题，因此要筛选出自己需要加工的类</li>
-<li>一般只在postProcessAfterInitialization方法中加工，但是别忘了postProcessBefInitialization也会执行，所以必须让它return传入的对象。</li>
-</ul>
-</li>
-</ol>
-<h2 id="静态代理模式"><a href="#静态代理模式" class="headerlink" title="静态代理模式"></a>静态代理模式</h2><p>1.代理设计模式：通过代理给原始类增加额外的功能，有利于原始类的维护</p>
-<h3 id="静态代理编码"><a href="#静态代理编码" class="headerlink" title="静态代理编码"></a>静态代理编码</h3><p>代理类 &#x3D; 目标类(原始类) + 额外功能 +和原始类(目标类)实现相同的接口</p>
-<p>1.这是目标类，实现了UserService接口</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Person</span> <span class="keyword">implements</span> <span class="title class_">UserService</span></span><br></pre></td></tr></table></figure>
-
-
-
-<p>2.这是接口中的方法，由Person类实现</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">service</span><span class="params">()</span> &#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;Person服务&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>3.用代理增加额外的功能，这些功能可能会经常更改，所以不写在目标类</p>
-<ul>
-<li><p>&#96;&#96;&#96;java<br>&#x2F;&#x2F;为了保持和目标类的方法一致，代理类和目标类实现同一个接口<br>public class PersonProxy implements UserService{<br>&#x2F;&#x2F;需要获取一个目标类，这里new了一个，因为每个Person的接口方法是一样的，具体使用时可以传一个实例进来<br>Person person &#x3D; new Person();<br>@Override<br>public void service() {<br>    person.service();<br>    &#x2F;&#x2F;除了调用增加功能之前的方法，额外加上新的功能<br>    System.out.println(“代理service”);<br>}<br>}</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">+ ```java</span><br><span class="line">  public static void main(String[] args) &#123;</span><br><span class="line">      //main中调用代理即可</span><br><span class="line">      PersonProxy personProxy = new PersonProxy();</span><br><span class="line">      personProxy.service();</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
-
-<p>运行结果</p>
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Person服务</span><br><span class="line">代理service</span><br></pre></td></tr></table></figure></li>
-</ul>
-<p>静态代理类的缺点</p>
-<ol>
-<li>每一个实现类都需要手动创建一个代理类，类太多不利于项目管理</li>
-<li>代理类中更改代码过于麻烦</li>
-</ol>
-<h2 id="动态代理"><a href="#动态代理" class="headerlink" title="动态代理"></a>动态代理</h2><p>1.概念，和静态代理的概念一样</p>
-<ul>
-<li>通过代理为原始类增加新的功能</li>
-<li>利于原始类的维护</li>
-</ul>
-<p>2.搭建开发环境</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
-
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/03/06/Spring-%E4%B8%80/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -845,7 +588,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-03-09 23:03:23" itemprop="dateModified" datetime="2022-03-09T23:03:23+08:00">2022-03-09</time>
+                <time title="修改时间：2022-03-10 20:35:05" itemprop="dateModified" datetime="2022-03-10T20:35:05+08:00">2022-03-10</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1054,11 +797,171 @@
   
   
 
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/02/23/%E6%A0%88/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="嘘~···小声点儿">
+      <meta itemprop="description" content="默默聆听那黑夜，晚风吻尽，荷花叶，任我醉倒在池边。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大森林">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/02/23/%E6%A0%88/" class="post-title-link" itemprop="url">栈篇</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-02-23 18:18:22" itemprop="dateCreated datePublished" datetime="2022-02-23T18:18:22+08:00">2022-02-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-02-26 15:40:23" itemprop="dateModified" datetime="2022-02-26T15:40:23+08:00">2022-02-26</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">数据结构</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>栈是一种后进先出结构(FILO)</p>
+<h1 id="用数组实现栈"><a href="#用数组实现栈" class="headerlink" title="用数组实现栈"></a>用数组实现栈</h1>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/02/23/%E6%A0%88/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/02/23/%E9%93%BE%E8%A1%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="嘘~···小声点儿">
+      <meta itemprop="description" content="默默聆听那黑夜，晚风吻尽，荷花叶，任我醉倒在池边。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大森林">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/02/23/%E9%93%BE%E8%A1%A8/" class="post-title-link" itemprop="url">链表篇</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-02-23 02:26:40" itemprop="dateCreated datePublished" datetime="2022-02-23T02:26:40+08:00">2022-02-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-02-26 15:40:13" itemprop="dateModified" datetime="2022-02-26T15:40:13+08:00">2022-02-26</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">数据结构</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="链表和顺序表的优劣"><a href="#链表和顺序表的优劣" class="headerlink" title="链表和顺序表的优劣"></a>链表和顺序表的优劣</h1>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/02/23/%E9%93%BE%E8%A1%A8/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
 
   
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
-  </nav>
 
 
 
@@ -1125,7 +1028,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-count">10</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
