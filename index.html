@@ -188,7 +188,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-03-10 08:28:49" itemprop="dateModified" datetime="2022-03-10T08:28:49+08:00">2022-03-10</time>
+                <time title="修改时间：2022-03-10 08:35:46" itemprop="dateModified" datetime="2022-03-10T08:35:46+08:00">2022-03-10</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -243,7 +243,7 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Test</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="comment">//获得工厂</span></span><br><span class="line">        <span class="type">ApplicationContext</span> <span class="variable">context</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ClassPathXmlApplicationContext</span>(<span class="string">&quot;applicationContext.xml&quot;</span>);</span><br><span class="line">        <span class="comment">//通过工厂获得对象,注意这里根据目标对象名字但是获得的是代理对象</span></span><br><span class="line">        <span class="type">Person</span> <span class="variable">zhang</span> <span class="operator">=</span> (Person) context.getBean(<span class="string">&quot;zhang&quot;</span>);</span><br><span class="line">        zhang.eat();</span><br><span class="line"></span><br><span class="line">        zhang.happy();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>6.结果</p>
-<p><img src="D:\Blog\source\myimage\aop1.png" alt="aop1"></p>
+<p><img src="/myimage/aop1.png" alt="aop1"></p>
 <ul>
 <li><p>因为我们的切入点是所有的方法，所以结果会是这样，后面会进一步解决。</p>
 </li>
