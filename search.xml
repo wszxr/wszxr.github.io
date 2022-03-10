@@ -613,6 +613,27 @@ public void threadShow()&#123;
       </categories>
   </entry>
   <entry>
+    <title>力扣刷题</title>
+    <url>/2022/03/10/%E5%8A%9B%E6%89%A3%E5%88%B7%E9%A2%98/</url>
+    <content><![CDATA[<h2 id="704-二分查找"><a href="#704-二分查找" class="headerlink" title="704. 二分查找"></a>704. 二分查找</h2><p>给定一个 n 个元素有序的（升序）整型数组 nums 和一个目标值 target  ，写一个函数搜索 nums 中的 target，如果目标值存在返回下标，否则返回 -1。<br>链接：<a href="https://leetcode-cn.com/problems/binary-search">https://leetcode-cn.com/problems/binary-search</a><br>1.有序数组</p>
+<p>2.无重复值</p>
+<p>可以直接遍历，但是二分查找更好</p>
+<ol>
+<li></li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//左闭右开区间，left = right时无意义</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">search</span><span class="params">(<span class="type">int</span>[] nums, <span class="type">int</span> target)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span>(target&lt;nums[<span class="number">0</span>]||target&gt;nums[nums.length-<span class="number">1</span>])</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">        <span class="type">int</span> <span class="variable">left</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span> <span class="variable">right</span> <span class="operator">=</span> nums.length;</span><br><span class="line">        <span class="keyword">while</span>(left&lt;right)&#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">mid</span> <span class="operator">=</span> left+(right-left)/<span class="number">2</span>;</span><br><span class="line">            <span class="keyword">if</span>(nums[mid]==target)&#123;</span><br><span class="line">                <span class="keyword">return</span> mid;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(nums[mid]&lt;target)&#123;</span><br><span class="line">                left = mid+<span class="number">1</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(nums[mid]&gt;target)&#123;</span><br><span class="line">                right = mid;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li></li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//左闭右闭区间，left == right时有意义</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">search</span><span class="params">(<span class="type">int</span>[] nums, <span class="type">int</span> target)</span> &#123;</span><br><span class="line">        <span class="comment">// 避免当 target 小于nums[0] nums[nums.length - 1]时多次循环运算</span></span><br><span class="line">        <span class="keyword">if</span> (target &lt; nums[<span class="number">0</span>] || target &gt; nums[nums.length - <span class="number">1</span>]) &#123;</span><br><span class="line">            <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">int</span> <span class="variable">left</span> <span class="operator">=</span> <span class="number">0</span>, right = nums.length - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span> (left &lt;= right) &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">mid</span> <span class="operator">=</span> left + ((right - left) &gt;&gt; <span class="number">1</span>);</span><br><span class="line">            <span class="keyword">if</span> (nums[mid] == target)</span><br><span class="line">                <span class="keyword">return</span> mid;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (nums[mid] &lt; target)</span><br><span class="line">                left = mid + <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (nums[mid] &gt; target)</span><br><span class="line">                right = mid - <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>刷题</category>
+      </categories>
+  </entry>
+  <entry>
     <title>多线程与并发</title>
     <url>/2022/03/02/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8E%E5%B9%B6%E5%8F%91/</url>
     <content><![CDATA[]]></content>
@@ -765,6 +786,32 @@ reverse();
       </categories>
   </entry>
   <entry>
+    <title>链表篇</title>
+    <url>/2022/02/23/%E9%93%BE%E8%A1%A8/</url>
+    <content><![CDATA[<h1 id="链表和顺序表的优劣"><a href="#链表和顺序表的优劣" class="headerlink" title="链表和顺序表的优劣"></a>链表和顺序表的优劣</h1><span id="more"></span>
+<p>1,因为有数组下标的存在，顺序表在查找方面领先链表，时间复杂度为O(1),而链表查找需要遍历，因此时间复杂度为o(N)。</p>
+<p>2，增加或删除元素方面，链表优势，顺序表每次插入或者删除都需要移动大量元素O(N),链表需要查找到增加或删除的位置(通过指针)，也是O(N),但是插入的越频繁链表的优势体现的越大(指针移动的距离变少)。</p>
+<h1 id="双向链表"><a href="#双向链表" class="headerlink" title="双向链表"></a>双向链表</h1><p>1,除了data和next外，还有个指向前驱节点的prior指针。</p>
+<p>2,空间占用更多。用空间换时间效率。</p>
+<pre><code>插入操作：//找到插入位置的前一个位置temp
+        node.next = temp.next;//设置待插入节点的next
+        node.prior = temp;//设置待插入节点的prior
+        temp.next.prior = node;//将待插入节点的下一个节点的prior指向待插入节点
+        temp.next = node;//将temp指向待插入节点
+
+删除操作：//找到待删除的节点temp
+        //直接跳过删除节点
+        temp.prior.next = temp.next
+        temp.next.prior = temp.prior;
+        
+    
+</code></pre>
+]]></content>
+      <categories>
+        <category>数据结构</category>
+      </categories>
+  </entry>
+  <entry>
     <title>栈篇</title>
     <url>/2022/02/23/%E6%A0%88/</url>
     <content><![CDATA[<p>栈是一种后进先出结构(FILO)</p>
@@ -876,32 +923,6 @@ public int pop(int number)&#123;
         return r;
     &#125;
 &#125;
-</code></pre>
-]]></content>
-      <categories>
-        <category>数据结构</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>链表篇</title>
-    <url>/2022/02/23/%E9%93%BE%E8%A1%A8/</url>
-    <content><![CDATA[<h1 id="链表和顺序表的优劣"><a href="#链表和顺序表的优劣" class="headerlink" title="链表和顺序表的优劣"></a>链表和顺序表的优劣</h1><span id="more"></span>
-<p>1,因为有数组下标的存在，顺序表在查找方面领先链表，时间复杂度为O(1),而链表查找需要遍历，因此时间复杂度为o(N)。</p>
-<p>2，增加或删除元素方面，链表优势，顺序表每次插入或者删除都需要移动大量元素O(N),链表需要查找到增加或删除的位置(通过指针)，也是O(N),但是插入的越频繁链表的优势体现的越大(指针移动的距离变少)。</p>
-<h1 id="双向链表"><a href="#双向链表" class="headerlink" title="双向链表"></a>双向链表</h1><p>1,除了data和next外，还有个指向前驱节点的prior指针。</p>
-<p>2,空间占用更多。用空间换时间效率。</p>
-<pre><code>插入操作：//找到插入位置的前一个位置temp
-        node.next = temp.next;//设置待插入节点的next
-        node.prior = temp;//设置待插入节点的prior
-        temp.next.prior = node;//将待插入节点的下一个节点的prior指向待插入节点
-        temp.next = node;//将temp指向待插入节点
-
-删除操作：//找到待删除的节点temp
-        //直接跳过删除节点
-        temp.prior.next = temp.next
-        temp.next.prior = temp.prior;
-        
-    
 </code></pre>
 ]]></content>
       <categories>
