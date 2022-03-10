@@ -72,7 +72,7 @@
 
 
 <p>2.创建额外方法对象并实现MethodBeforeAdvice接口，定制额外功能</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//要想成为代理类，就需要实现MethodBeforeAdvice接口</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ExtraMethod</span> <span class="keyword">implements</span> <span class="title class_">MethodBeforeAdvice</span> &#123;</span><br><span class="line">    <span class="comment">//接口中的方法，方法中的内容将会在被代理类中的方法里边最先执行Befor</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">before</span><span class="params">(Method method, Object[] objects, Object o)</span> <span class="keyword">throws</span> Throwable &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;吃之前想想会不会长胖&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//要想成为代理类，就需要实现MethodBeforeAdvice接口</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ExtraMethod</span> <span class="keyword">implements</span> <span class="title class_">MethodBeforeAdvice</span> &#123;</span><br><span class="line">    <span class="comment">//接口中的方法，方法中的内容将会在被代理类中的方法里边最先执行（Befor）</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">before</span><span class="params">(Method method, Object[] objects, Object o)</span> <span class="keyword">throws</span> Throwable &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;吃之前想想会不会长胖&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!--创建一个额外方法对象--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;extraMethod&quot;</span> <span class="attr">class</span>=<span class="string">&quot;ExtraMethod&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
 
@@ -86,7 +86,10 @@
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Test</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="comment">//获得工厂</span></span><br><span class="line">        <span class="type">ApplicationContext</span> <span class="variable">context</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ClassPathXmlApplicationContext</span>(<span class="string">&quot;applicationContext.xml&quot;</span>);</span><br><span class="line">        <span class="comment">//通过工厂获得对象,注意这里根据目标对象名字但是获得的是代理对象</span></span><br><span class="line">        <span class="type">Person</span> <span class="variable">zhang</span> <span class="operator">=</span> (Person) context.getBean(<span class="string">&quot;zhang&quot;</span>);</span><br><span class="line">        zhang.eat();</span><br><span class="line"></span><br><span class="line">        zhang.happy();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>6.结果</p>
-<p><img src="/myimage/aop1.png" alt="aop1"></p>
+
+
+
+
 <ul>
 <li><p>因为我们的切入点是所有的方法，所以结果会是这样，后面会进一步解决。</p>
 </li>
@@ -94,7 +97,7 @@
 </li>
 </ul>
 <h2 id="代理类在哪？"><a href="#代理类在哪？" class="headerlink" title="代理类在哪？"></a>代理类在哪？</h2><ul>
-<li>事实上，有一个叫做动态字节码技术的东西，它在jvm中创造对应的字节码（也就是java中的.class文件中的东西，但并没有创建出.class文件），进而创造类，对象。</li>
+<li>事实上，有一个叫做动态字节码技术的东西，它通过第三方框架在jvm中创造对应的字节码（也就是java中的.class文件中的东西，但并没有创建出.class文件），进而创造类，对象。</li>
 <li>因此，Spring框架运行时，通过字节码技术创造代理类，它由jvm创建，在jvm内部运行，随着jvm的消失而消失（在程序运行结束的时候）。</li>
 <li>这也是动态代理存在的原因，它不需要像静态代理一样为每一个目标类都手动创建一个代理类，更加的利于程序的维护。</li>
 </ul>
