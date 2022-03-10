@@ -82,9 +82,9 @@
   <entry>
     <title>SpringAOP</title>
     <url>/2022/03/09/SpringAOP/</url>
-    <content><![CDATA[<h1 id="AOP（Aspect-Oriented-Programing）"><a href="#AOP（Aspect-Oriented-Programing）" class="headerlink" title="AOP（Aspect Oriented Programing）"></a>AOP（Aspect Oriented Programing）</h1><p>1.含义：面向切片编程,通过代理类给原始类增加ew功能</p>
+    <content><![CDATA[<h1 id="AOP"><a href="#AOP" class="headerlink" title="AOP"></a>AOP</h1><h1 id="（Aspect-Oriented-Programing）"><a href="#（Aspect-Oriented-Programing）" class="headerlink" title="（Aspect Oriented Programing）"></a>（Aspect Oriented Programing）</h1><p>1.含义：面向切片编程,通过代理类给原始类增加ew功能</p>
 <p>2.核心问题：通过动态字节码技术创建动态代理对象</p>
-<p>1.用到了代理设计模式</p>
+<p>3.用到了代理设计模式</p>
 <span id="more"></span>
 
 <h2 id="静态代理-too-easy"><a href="#静态代理-too-easy" class="headerlink" title="静态代理(too easy)"></a>静态代理(too easy)</h2><p>为每一个原始类，手写一一个代理类</p>
@@ -753,7 +753,7 @@ reverse();
 <hr>
 <h2 id="2-x2F-27-x2F-2022-10-10-48-PM"><a href="#2-x2F-27-x2F-2022-10-10-48-PM" class="headerlink" title="2&#x2F;27&#x2F;2022 10:10:48 PM "></a>2&#x2F;27&#x2F;2022 10:10:48 PM </h2><hr>
 <hr>
-<h2 id="2022年3月9日23点01分"><a href="#2022年3月9日23点01分" class="headerlink" title="2022年3月9日23点01分"></a>2022年3月9日23点01分</h2><p>这么好看的背景虽然一天都对着它也不会腻吧。</p>
+<h2 id="2022年3月9日23点01分"><a href="#2022年3月9日23点01分" class="headerlink" title="2022年3月9日23点01分"></a>2022年3月9日23点01分</h2><p>这么好看的背景就算一天都对着它也不会腻吧。</p>
 <p><img src="https://gitee.com/wszxr/cloudimages/raw/master/img/image-20220310203356029.png" alt="image-20220310203356029"></p>
 <hr>
 <p>2022年3月10日20点34分</p>
