@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Spring(一)</title>
+    <title>SpringIOC</title>
     <url>/2022/03/06/Spring-%E4%B8%80/</url>
-    <content><![CDATA[<h2 id="工厂设计模式"><a href="#工厂设计模式" class="headerlink" title="工厂设计模式"></a>工厂设计模式</h2><ol>
+    <content><![CDATA[<h1 id="IOC"><a href="#IOC" class="headerlink" title="IOC"></a>IOC</h1><h2 id="工厂设计模式"><a href="#工厂设计模式" class="headerlink" title="工厂设计模式"></a>工厂设计模式</h2><ol>
 <li><p>概念：创建对象交给工厂，而不是自己new</p>
 </li>
 <li><p>优势：解耦合</p>
@@ -51,19 +51,140 @@
 <h1 id="结构图"><a href="#结构图" class="headerlink" title="结构图"></a>结构图</h1><p><img src="https://img-blog.csdnimg.cn/20200521235846480.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzczNDA5NQ==,size_16,color_FFFFFF,t_70" alt="img"></p>
 </li>
 </ul>
-<h2 id="IOC"><a href="#IOC" class="headerlink" title="IOC"></a>IOC</h2><p>含义：反转控制，把成员变量的赋值权转移到工厂里边</p>
+<h2 id="IOC-1"><a href="#IOC-1" class="headerlink" title="IOC"></a>IOC</h2><p>含义：反转控制，把成员变量的赋值权转移到工厂里边</p>
 <h2 id="复杂对象的创建"><a href="#复杂对象的创建" class="headerlink" title="复杂对象的创建"></a>复杂对象的创建</h2><p>复杂对象：不能直接new出来的对象</p>
-<h2 id="后置处理bean"><a href="#后置处理bean" class="headerlink" title="后置处理bean"></a>后置处理bean</h2><h3 id="红色部分"><a href="#红色部分" class="headerlink" title="红色部分"></a>红色部分</h3><p>在Bean初始化的前后可以实现再加工。</p>
-<p><img src="https://img-blog.csdnimg.cn/2020052517103049.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzczNDA5NQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
-<p>实现步骤</p>
-<ol>
-<li>用自己的类实现BeanPostProcessor接口，然后在方法中写入自己的加工代码。</li>
-</ol>
-<p><img src="C:\Users\zxr\AppData\Roaming\Typora\typora-user-images\image-20220307220310327.png" alt="image-20220307220310327"></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> Object <span class="title function_">postProcessAfterInitialization</span><span class="params">(Object bean, String beanName)</span> <span class="keyword">throws</span> BeansException &#123;</span><br><span class="line">    <span class="comment">//当传入的对象是我想要加工的对象时才执行加工代码</span></span><br><span class="line">       <span class="keyword">if</span> (bean <span class="keyword">instanceof</span>  Category) &#123;</span><br><span class="line">           <span class="type">Category</span> <span class="variable">category</span> <span class="operator">=</span> (Category) bean;</span><br><span class="line">           category.setName(<span class="string">&quot;hahaha&quot;</span>);</span><br><span class="line">           <span class="keyword">return</span> category;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">return</span> bean;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<p>例如jdbc的连接，接下来会用jdbc连接做例子</p>
+<h3 id="Spring创建复杂对象的三种方式"><a href="#Spring创建复杂对象的三种方式" class="headerlink" title="Spring创建复杂对象的三种方式"></a>Spring创建复杂对象的三种方式</h3><p>1.实现接口FactoryBean</p>
+<p>2.实例工厂</p>
+<p>3.静态工厂</p>
+<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><h3 id="1-自己创一个类，实现FactoryBean接口"><a href="#1-自己创一个类，实现FactoryBean接口" class="headerlink" title="1.自己创一个类，实现FactoryBean接口"></a>1.自己创一个类，实现FactoryBean接口</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//我们需要的是一个数据库连接对象，所以我们可以加上泛型</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ConnectMysql</span> <span class="keyword">implements</span> <span class="title class_">FactoryBean</span>&lt;Connection&gt; &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Connection <span class="title function_">getObject</span><span class="params">()</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        Class.forName(<span class="string">&quot;com.mysql.cj.jdbc.Driver&quot;</span>);</span><br><span class="line">        <span class="type">Connection</span> <span class="variable">con</span> <span class="operator">=</span> DriverManager.getConnection(<span class="string">&quot;jdbc:mysql://localhost:3306&quot;</span>, <span class="string">&quot;root&quot;</span>, <span class="string">&quot;20010718&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> con;</span><br><span class="line">    &#125;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Class&lt;?&gt; getObjectType() &#123;</span><br><span class="line">        <span class="keyword">return</span> Connection.class;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">isSingleton</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!--创建一个复杂对象--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span>  <span class="attr">id</span>=<span class="string">&quot;connect&quot;</span> <span class="attr">class</span>=<span class="string">&quot;ConnectMysql&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
 
 
 
+<h4 id="接口解析"><a href="#接口解析" class="headerlink" title="接口解析"></a>接口解析</h4><ul>
+<li>public Connection getObject() throws Exception {}方法，我们需要在方法体中创建复杂对象，然后把创建好的对象作为返回值返回。</li>
+<li>public Class&lt;?&gt; getObjectType() {}方法，只需要返回复杂对象的类的class对象就行。</li>
+<li>public boolean isSingleton() {}方法，当返回true的时候代表每次调用此方法创建的对象都是一样的（引用一样）。</li>
+</ul>
+<h4 id="调用"><a href="#调用" class="headerlink" title="调用"></a>调用</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">ApplicationContext</span> <span class="variable">context</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ClassPathXmlApplicationContext</span>(<span class="string">&quot;applicationContext1.xml&quot;</span>);</span><br><span class="line">        <span class="type">Connection</span> <span class="variable">connext</span> <span class="operator">=</span> (Connection) context.getBean(<span class="string">&quot;connect&quot;</span>);</span><br><span class="line">        System.out.println(connext);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h4><p><img src="https://gitee.com/wszxr/cloudimages/raw/master/img/image-20220311151547645.png" alt="image-20220311151547645"></p>
+<ul>
+<li>可以看到我们获得了一个Connection对象</li>
+</ul>
+<h4 id="注意点"><a href="#注意点" class="headerlink" title="注意点"></a>注意点</h4><ul>
+<li><pre><code class="xml">&lt;!--创建一个复杂对象--&gt;
+&lt;bean  id=&quot;connect&quot; class=&quot;ConnectMysql&quot;/&gt;
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">+ 我们看上边的代码，按理来说，我们这样写，通过工厂调用返回的应该是ConnectMysql类的实例对象才对，可是我们却得到了写在类方法中的复杂对象，这是为什么？</span><br><span class="line"></span><br><span class="line">解答：简单来说,FactoyBean的实现有三步</span><br><span class="line"></span><br><span class="line">​	1.先用instanceof(FactoryBean)判断是不是实现了这个接口，实现了，那么他就是一个复杂类，</span><br><span class="line"></span><br><span class="line">​	2.既然是一个复杂类，那么把创建方法写到接口中的第一个方法中就行</span><br><span class="line"></span><br><span class="line">​	2.之后，Spring会自己调用那个实现类的第一个接口的方法(public Connection getObject() throws Exception)，将返回值赋给context.getBean();所以虽然通过工厂context.getBean();调出来的是复杂方法。</span><br><span class="line"></span><br><span class="line">+ 如何才能不拿复杂方法，我就要我自己创的那个类的方法咋办？</span><br><span class="line"></span><br><span class="line">  答：easy，在context.getBean();中的参数前加一个&amp;，例如onnection connext = (Connection) context.getBean(&quot;&amp;connect&quot;);</span><br><span class="line"></span><br><span class="line">  </span><br><span class="line"></span><br><span class="line">### 2.实例工厂</span><br><span class="line"></span><br><span class="line">上边的实现接口的方法存在两个问题</span><br><span class="line"></span><br><span class="line">+ FactoryBean是属于Spring的接口，离开了Spring这个代码就没用了</span><br><span class="line">+ 系统遗留问题，前人自己写了一个方法</span><br><span class="line"></span><br><span class="line">这两个问题我们可以一起解决，就是通过自己写的类，里边定义的方法或者是前人的方法来获得复杂对象，不用实现FactoryBean接口。</span><br><span class="line"></span><br><span class="line">~~~java</span><br><span class="line">//我们更改一下工厂类，不实现接口，我们自己写了一个方法用于创建复杂对象，虽然是有自己创建的，但是还是需要返回创建出来的对象</span><br><span class="line">public class ConnectMysql &#123;</span><br><span class="line">    public Connection getObject() throws Exception &#123;</span><br><span class="line">        Class.forName(&quot;com.mysql.cj.jdbc.Driver&quot;);</span><br><span class="line">        Connection con = DriverManager.getConnection(&quot;jdbc:mysql://localhost:3306&quot;, &quot;root&quot;, &quot;20010718&quot;);</span><br><span class="line">        return con;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</code></pre>
+</li>
+<li><p>没有那个接口，Spring不知道我自己写的方法可以创建复杂对象，所以我们要告诉它。</p>
+</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!--首先创建一个工厂实例，有了实例对象才能调用里边的方法--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span>  <span class="attr">id</span>=<span class="string">&quot;connect&quot;</span> <span class="attr">class</span>=<span class="string">&quot;ConnectMysql&quot;</span>/&gt;</span></span><br><span class="line"><span class="comment">&lt;!--指定实例对象和调用的方法名，这样aaa就是我们复杂对象的id--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;aaa&quot;</span> <span class="attr">factory-bean</span>=<span class="string">&quot;connect&quot;</span> <span class="attr">factory-method</span>=<span class="string">&quot;getObject&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>同样调用试试，可以看到成功了</p>
+<p><img src="https://gitee.com/wszxr/cloudimages/raw/master/img/image-20220311180921708.png" alt="image-20220311180921708"></p>
+</li>
+</ul>
+<h3 id="3-静态工厂"><a href="#3-静态工厂" class="headerlink" title="3.静态工厂"></a>3.静态工厂</h3><p>往上看，我们的实例工厂，总是需要先创建一个实例，在整合，因此我们可以把方法变成静态的，这样就不用创建实例也可以调用方法啦！</p>
+<ul>
+<li>对比上面，我们只需要把方法改成static的就行</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> Connection <span class="title function_">getObject</span><span class="params">()</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">       Class.forName(<span class="string">&quot;com.mysql.cj.jdbc.Driver&quot;</span>);</span><br><span class="line">       <span class="type">Connection</span> <span class="variable">con</span> <span class="operator">=</span> DriverManager.getConnection(<span class="string">&quot;jdbc:mysql://localhost:3306&quot;</span>, <span class="string">&quot;root&quot;</span>, <span class="string">&quot;20010718&quot;</span>);</span><br><span class="line">       <span class="keyword">return</span> con;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>然后配置文件xml中只要一行就足以</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;aaa&quot;</span> <span class="attr">class</span>=<span class="string">&quot;ConnectMysql&quot;</span> <span class="attr">factory-method</span>=<span class="string">&quot;getObject&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h3><p>非常好！！！但是不知道你注意到了没，原本FactoryBean中有一个isSingleton()方法，决定它每次创建的是不是同一个对象。然而在我们自己写的工厂类中是没有的，该怎么办？</p>
+<ul>
+<li><p>没错，和普通对象一样，在创建时加上scope属性</p>
+</li>
+<li><pre><code class="xml">&lt;!--scope=&quot;prototype&quot;表示，每次创建的对象是不同的，默认不写是singleton--&gt;
+&lt;bean id=&quot;aaa&quot; class=&quot;ConnectMysql&quot; factory-method=&quot;getObject&quot; scope=&quot;prototype&quot;/&gt;
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">  ![img](https://gitee.com/wszxr/cloudimages/raw/master/img/1634190470547-6481ceb9-496d-4a01-b69e-64e89dcf78ec.png)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 对象生命周期</span><br><span class="line"></span><br><span class="line">大致分为三个阶段</span><br><span class="line"></span><br><span class="line">1.创建阶段</span><br><span class="line"></span><br><span class="line">2.初始化阶段</span><br><span class="line"></span><br><span class="line">3.销毁阶段</span><br><span class="line"></span><br><span class="line">### 1.创建阶段</span><br><span class="line"></span><br><span class="line">很简单，具体来说</span><br><span class="line"></span><br><span class="line">+ 当对象的scope = &quot;singleton&quot;时，那么这种对象在工厂创建时就会创建</span><br><span class="line"></span><br><span class="line">~~~java</span><br><span class="line">//这一句执行的时候就已经创建了</span><br><span class="line">ApplicationContext context = new ClassPathXmlApplicationContext(&quot;applicationContext1.xml&quot;);</span><br></pre></td></tr></table></figure>
+</code></pre>
+</li>
+<li><p>当对象的scope &#x3D; “prototype”时,工厂获得实例的时候创建</p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//这两句都执行后</span></span><br><span class="line"><span class="type">ApplicationContext</span> <span class="variable">context</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ClassPathXmlApplicationContext</span>(<span class="string">&quot;applicationContext1.xml&quot;</span>);</span><br><span class="line">        <span class="type">Connection</span> <span class="variable">aaa</span> <span class="operator">=</span> (Connection) context.getBean(<span class="string">&quot;aaa&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>注意：</p>
+<ul>
+<li>如果想要scope &#x3D; “singleton”的对象也在工厂获得实例的时候创建？</li>
+</ul>
+<p>让lazy-init属性是true就行</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;aaa&quot;</span> <span class="attr">class</span>=<span class="string">&quot;ConnectMysql&quot;</span> <span class="attr">factory-method</span>=<span class="string">&quot;getObject&quot;</span> <span class="attr">scope</span>=<span class="string">&quot;prototype&quot;</span> <span class="attr">lazy-init</span>=<span class="string">&quot;true&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-初始化阶段-简单介绍一般不用"><a href="#2-初始化阶段-简单介绍一般不用" class="headerlink" title="2.初始化阶段(简单介绍一般不用)"></a>2.初始化阶段(简单介绍一般不用)</h3><ul>
+<li><p>具体就是，在创建对象后，Spring会调用初始化方法，如果想自定义初始化方法的话，你需要写一个类继承InitializingBean接口，里面有一个afterProperitesSet()方法，把你要在初始化阶段干的事写进去就可以了。</p>
+</li>
+<li><ul>
+<li>当然也可以定制自己的方法，和上面类似，xml中创建对象时后加入init-method &#x3D; “自定义方法名”即可。</li>
+</ul>
+</li>
+<li><p>注意！！！！初始化方法名字叫这个afterProperitesSet()，很容易推断出属性set注入是在初始化阶段之前的。</p>
+</li>
+</ul>
+<h3 id="3-销毁阶段（同样不怎么用）"><a href="#3-销毁阶段（同样不怎么用）" class="headerlink" title="3.销毁阶段（同样不怎么用）"></a>3.销毁阶段（同样不怎么用）</h3><ul>
+<li><p>和上面差不多，实现DisposableBean接口，把动作写到destroy()方法中。</p>
+</li>
+<li><p>当然也可以定制自己的方法，和上面类似，xml中创建对象时后加入destory-method &#x3D; “自定义方法名”即可。</p>
+</li>
+</ul>
+<p>注意，销毁方法只适用于scope&#x3D;”singleton”的对象。</p>
+<h2 id="配置文件参数化"><a href="#配置文件参数化" class="headerlink" title="配置文件参数化"></a>配置文件参数化</h2><p>注意看这段代码</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="type">Connection</span> <span class="variable">con</span> <span class="operator">=</span> DriverManager.getConnection(<span class="string">&quot;jdbc:mysql://localhost:3306&quot;</span>, <span class="string">&quot;root&quot;</span>, <span class="string">&quot;20010718&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">我们的参数&quot;jdbc:mysql://localhost:3306&quot;, &quot;root&quot;, &quot;20010718&quot;，有的很长，有的需要多次使用，其实我们在前面用过了，利用Properties文件存储即可</span><br></pre></td></tr></table></figure>
+
+<p>类似于这样的，我们知道Properties和map非常像，只不过它的键和值都是String类型的，</p>
+<figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="attr">前面是键，后面是值，可以通过键获得值</span></span><br><span class="line"><span class="attr">log4j.appender.console</span>=<span class="string">org.apache.log4j.ConsoleAppender</span></span><br></pre></td></tr></table></figure>
+
+<p>使用：</p>
+<ul>
+<li>首先让xml工厂知道它的存在，这样既可，log4j.properties是文件名</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">context:property-placeholder</span> <span class="attr">location</span>=<span class="string">&quot;classpath:log4j.properties&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>然后用${log4j.appender.console}就可以替代org.apache.log4j.ConsoleAppender了。</p>
+<h2 id="自定义类型转换器"><a href="#自定义类型转换器" class="headerlink" title="自定义类型转换器"></a>自定义类型转换器</h2><p>类型转换器是什么？</p>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">在我们以前用set注入对象的成员变量值的时候，</span><br><span class="line">例如：</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;age&quot;</span> <span class="attr">value</span>=<span class="string">&quot;12&quot;</span>&gt;</span></span><span class="language-xml"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span></span><br><span class="line">我们的&quot;12&quot;是一个String，但是我们的age是一个Interger，为什么可以赋值？</span><br><span class="line">解答：Spring的类型转换器起了作用，大多数类型都一样</span><br></pre></td></tr></table></figure>
+
+<p>然而，有些类型是没有转换器的.接下来我们看个特殊的，java.util下的Data类</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//我们在Zhang类中定义一个Date类的成员变量，并写出setget方法</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Zhang</span> <span class="keyword">implements</span> <span class="title class_">Person</span>, ApplicationContextAware &#123;</span><br><span class="line">    <span class="keyword">private</span> Date born;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后用xml的set属性赋值</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;zhang&quot;</span> <span class="attr">class</span>=<span class="string">&quot;Zhang&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;born&quot;</span> <span class="attr">value</span>=<span class="string">&quot;2001/7/18&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>可以得到结果</p>
+<p><img src="https://gitee.com/wszxr/cloudimages/raw/master/img/image-20220311210249241.png" alt="image-20220311210249241"></p>
+<ul>
+<li>这是因为Spring提供了一个转换器，但是这个转换器只能识别2001&#x2F;7&#x2F;18这样的格式，如果是2001-7-18这样的就会报错</li>
+</ul>
+<h3 id="自定义一个日期转换器"><a href="#自定义一个日期转换器" class="headerlink" title="自定义一个日期转换器"></a>自定义一个日期转换器</h3><h4 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h4><p>1.指定一个类实现Converter接口</p>
+<p>2.注册转换器</p>
+<h4 id="实现-1"><a href="#实现-1" class="headerlink" title="实现"></a>实现</h4><p>1.指定一个类实现Converter接口</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//泛型指定转换器从String转换到Date</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyDataConverter</span> <span class="keyword">implements</span> <span class="title class_">Converter</span>&lt;String,Date&gt;&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="comment">//source参数就是需要处理的字符串，由Spring传入</span></span><br><span class="line">    <span class="keyword">public</span> Date <span class="title function_">convert</span><span class="params">(String source)</span> &#123;</span><br><span class="line">        <span class="type">Date</span> <span class="variable">date</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">        <span class="type">SimpleDateFormat</span> <span class="variable">simpleDateFormat</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SimpleDateFormat</span>(<span class="string">&quot;yyyy-MM-dd&quot;</span>);</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">//将字符串转换为日期</span></span><br><span class="line">            date=simpleDateFormat.parse(source);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (ParseException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//返回去，Spring会帮我们完成赋值</span></span><br><span class="line">        <span class="keyword">return</span> date;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>2.注册转换器，让Spring知道这个方法存在</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"> <span class="comment">&lt;!--实例一个自己写的转换器对象--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;myDataConvert&quot;</span> <span class="attr">class</span>=<span class="string">&quot;MyDataConverter&quot;</span>/&gt;</span></span><br><span class="line"><span class="comment">&lt;!--ConversionServiceFactoryBean是Spring自带的类，里面有一个Set类型的成员变量converters--&gt;</span></span><br><span class="line"><span class="comment">&lt;!--一个Spring自带类的实例--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;conversionService&quot;</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.context.support.ConversionServiceFactoryBean&quot;</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--把我们写的转换器对象赋给converters即可--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;converters&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">set</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">ref</span> <span class="attr">bean</span>=<span class="string">&quot;myDataConvert&quot;</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">set</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>千万注意！！！！Spring自带的ConversionServiceFactoryBean的实例id只能是conversionService，不能随便取，和普通类不一样。</p>
+</li>
+<li><p>~~~xml</p>
+ <bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">调用：</span><br><span class="line"></span><br><span class="line">```xml</span><br><span class="line">&lt;bean id=&quot;zhang&quot; class=&quot;Zhang&quot;&gt;</span><br><span class="line">    &lt;property name=&quot;born&quot; value=&quot;2001-7-18&quot;/&gt;</span><br><span class="line">&lt;/bean&gt;</span><br><span class="line">```</span><br><span class="line"></span><br><span class="line">结果：</span><br><span class="line"></span><br><span class="line">![image-20220311220004178](https://gitee.com/wszxr/cloudimages/raw/master/img/image-20220311220004178.png)</span><br><span class="line"></span><br><span class="line">## 后置处理bean</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 红色部分</span><br><span class="line"></span><br><span class="line">在Bean初始化的前后可以实现再加工。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">![在这里插入图片描述](https://img-blog.csdnimg.cn/2020052517103049.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzczNDA5NQ==,size_16,color_FFFFFF,t_70)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">实现步骤</span><br><span class="line"></span><br><span class="line">1. 用自己的类实现BeanPostProcessor接口，然后在方法中写入自己的加工代码。</span><br><span class="line"></span><br><span class="line">![image-20220307220310327](C:\Users\zxr\AppData\Roaming\Typora\typora-user-images\image-20220307220310327.png)</span><br><span class="line"></span><br><span class="line">~~~java</span><br><span class="line">@Override</span><br><span class="line">public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException &#123;</span><br><span class="line">    //当传入的对象是我想要加工的对象时才执行加工代码</span><br><span class="line">       if (bean instanceof  Category) &#123;</span><br><span class="line">           Category category = (Category) bean;</span><br><span class="line">           category.setName(&quot;hahaha&quot;);</span><br><span class="line">           return category;</span><br><span class="line">       &#125;</span><br><span class="line">       return bean;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
 <ol start="2">
 <li><p>在配置文件制造自己写的类</p>
 <figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;myBeanPostProcessor&quot;</span> <span class="attr">class</span>=<span class="string">&quot;com.yusael.beanpost.MyBeanPostProcessor&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
@@ -74,6 +195,9 @@
 </ul>
 </li>
 </ol>
+<hr>
+<p>完结于：2022年3月11日21点57分</p>
+<p>也许是风太小了，没能把我的思念带给你···</p>
 ]]></content>
       <categories>
         <category>Spring</category>
@@ -786,32 +910,6 @@ reverse();
       </categories>
   </entry>
   <entry>
-    <title>链表篇</title>
-    <url>/2022/02/23/%E9%93%BE%E8%A1%A8/</url>
-    <content><![CDATA[<h1 id="链表和顺序表的优劣"><a href="#链表和顺序表的优劣" class="headerlink" title="链表和顺序表的优劣"></a>链表和顺序表的优劣</h1><span id="more"></span>
-<p>1,因为有数组下标的存在，顺序表在查找方面领先链表，时间复杂度为O(1),而链表查找需要遍历，因此时间复杂度为o(N)。</p>
-<p>2，增加或删除元素方面，链表优势，顺序表每次插入或者删除都需要移动大量元素O(N),链表需要查找到增加或删除的位置(通过指针)，也是O(N),但是插入的越频繁链表的优势体现的越大(指针移动的距离变少)。</p>
-<h1 id="双向链表"><a href="#双向链表" class="headerlink" title="双向链表"></a>双向链表</h1><p>1,除了data和next外，还有个指向前驱节点的prior指针。</p>
-<p>2,空间占用更多。用空间换时间效率。</p>
-<pre><code>插入操作：//找到插入位置的前一个位置temp
-        node.next = temp.next;//设置待插入节点的next
-        node.prior = temp;//设置待插入节点的prior
-        temp.next.prior = node;//将待插入节点的下一个节点的prior指向待插入节点
-        temp.next = node;//将temp指向待插入节点
-
-删除操作：//找到待删除的节点temp
-        //直接跳过删除节点
-        temp.prior.next = temp.next
-        temp.next.prior = temp.prior;
-        
-    
-</code></pre>
-]]></content>
-      <categories>
-        <category>数据结构</category>
-      </categories>
-  </entry>
-  <entry>
     <title>栈篇</title>
     <url>/2022/02/23/%E6%A0%88/</url>
     <content><![CDATA[<p>栈是一种后进先出结构(FILO)</p>
@@ -923,6 +1021,32 @@ public int pop(int number)&#123;
         return r;
     &#125;
 &#125;
+</code></pre>
+]]></content>
+      <categories>
+        <category>数据结构</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>链表篇</title>
+    <url>/2022/02/23/%E9%93%BE%E8%A1%A8/</url>
+    <content><![CDATA[<h1 id="链表和顺序表的优劣"><a href="#链表和顺序表的优劣" class="headerlink" title="链表和顺序表的优劣"></a>链表和顺序表的优劣</h1><span id="more"></span>
+<p>1,因为有数组下标的存在，顺序表在查找方面领先链表，时间复杂度为O(1),而链表查找需要遍历，因此时间复杂度为o(N)。</p>
+<p>2，增加或删除元素方面，链表优势，顺序表每次插入或者删除都需要移动大量元素O(N),链表需要查找到增加或删除的位置(通过指针)，也是O(N),但是插入的越频繁链表的优势体现的越大(指针移动的距离变少)。</p>
+<h1 id="双向链表"><a href="#双向链表" class="headerlink" title="双向链表"></a>双向链表</h1><p>1,除了data和next外，还有个指向前驱节点的prior指针。</p>
+<p>2,空间占用更多。用空间换时间效率。</p>
+<pre><code>插入操作：//找到插入位置的前一个位置temp
+        node.next = temp.next;//设置待插入节点的next
+        node.prior = temp;//设置待插入节点的prior
+        temp.next.prior = node;//将待插入节点的下一个节点的prior指向待插入节点
+        temp.next = node;//将temp指向待插入节点
+
+删除操作：//找到待删除的节点temp
+        //直接跳过删除节点
+        temp.prior.next = temp.next
+        temp.next.prior = temp.prior;
+        
+    
 </code></pre>
 ]]></content>
       <categories>
