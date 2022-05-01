@@ -31,7 +31,7 @@
 <meta property="og:image" content="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220501190955778.png">
 <meta property="og:image" content="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220501191239463.png">
 <meta property="article:published_time" content="2022-04-21T08:48:23.000Z">
-<meta property="article:modified_time" content="2022-05-01T11:54:51.248Z">
+<meta property="article:modified_time" content="2022-05-01T12:33:58.817Z">
 <meta property="article:author" content="你好">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220501163144925.png">
@@ -194,8 +194,17 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-05-01 19:54:51" itemprop="dateModified" datetime="2022-05-01T19:54:51+08:00">2022-05-01</time>
+                <time title="修改时间：2022-05-01 20:33:58" itemprop="dateModified" datetime="2022-05-01T20:33:58+08:00">2022-05-01</time>
               </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JAVASE/" itemprop="url" rel="index"><span itemprop="name">JAVASE</span></a>
+                </span>
+            </span>
 
           
 
@@ -306,7 +315,6 @@
 </li>
 <li><p>示例</p>
 </li>
-<li></li>
 <li><pre><code class="java">/**
  * 关于串池的题
  */
@@ -376,7 +384,8 @@ public static void main(String[] args) &#123;
 <li><p>直接内存的分配和回收都由unsafe对象完成：</p>
 <ul>
 <li>以ByteBuffer为例：它的构造器中获取了unsafe实例，并且调用unsafe实例的allocatememory（）和setmemory（）两个方法分配了直接内存。然后还使用Cleaner（虚引用对象）监测ByteBuffer实例，当ByteBuffer被GC回收时，会调用Cleaner的clean(),进而调用clean()中的unsafe.freeMemory()方法对直接内存进行释放。</li>
-<li>java中默认禁止了显式GC，因为System.gc()是fullGC，会是程序停留时间过长。这时候只能等待jvm进行GC，或者是直接使用unsafe对象的.freeMemory()方法。</li>
+<li>java中默认禁止了显式GC，因为System.gc()是fullGC，会使得程序停留时间过长。</li>
+<li>这时候只能等待jvm进行GC，或者是直接使用unsafe对象的.freeMemory()方法。</li>
 <li>Unsafe只能通过反射强制获取实例。</li>
 </ul>
 </li>
