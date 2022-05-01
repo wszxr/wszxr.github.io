@@ -3,7 +3,180 @@
   <entry>
     <title>JVMMMM</title>
     <url>/2022/04/21/JVMMMM/</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<h1 id="JVM"><a href="#JVM" class="headerlink" title="JVM"></a>JVM</h1><h2 id="1，内存结构"><a href="#1，内存结构" class="headerlink" title="1，内存结构"></a>1，内存结构</h2><h3 id="程序计数器（pc-Register）"><a href="#程序计数器（pc-Register）" class="headerlink" title="程序计数器（pc Register）"></a>程序计数器（pc Register）</h3><span id="more"></span>
+
+<ol>
+<li>java运行流程：<ul>
+<li>java源码–&gt;jvm指令–&gt;解释器–&gt;机器码–&gt;cpu执行</li>
+</ul>
+</li>
+<li>计数器作用：记录下一条指令的地址</li>
+<li>特点：<ul>
+<li>java把寄存器当作程序计数器，是唯一不会出现内存溢出的问题的区域</li>
+<li>线程私有，每一个线程有自己独立的程序计数器</li>
+</ul>
+</li>
+</ol>
+<h3 id="虚拟机栈（jvm-Stacks）"><a href="#虚拟机栈（jvm-Stacks）" class="headerlink" title="虚拟机栈（jvm Stacks）"></a>虚拟机栈（jvm Stacks）</h3><ol>
+<li>定义：<ul>
+<li>每个线程运行所需要的运行空间。</li>
+</ul>
+</li>
+<li>组成：<ul>
+<li>由若干栈帧组成，每个栈帧对应一个方法的内存空间（局部变量，参数，返回地址···）。</li>
+<li>每个栈只有一个活动栈帧(顶部)，对应正在运行的那个方法。</li>
+</ul>
+</li>
+<li>栈内存溢出：<ul>
+<li>单个栈帧内存过大(一般不会出现)。</li>
+<li>栈帧过多(递归时没有定义结束条件时)。</li>
+</ul>
+</li>
+<li>注意：<ul>
+<li>垃圾回收不涉及栈内存，方法运行完自动释放。</li>
+<li>单个栈内存并不是越大越好，越大，能创建的线程数就越小。</li>
+</ul>
+</li>
+<li>方法中的局部变量是否有线程安全问题：<ul>
+<li>静态的变量是共享的，线程不安全。</li>
+<li>通过传递参数进来的是不安全的。</li>
+<li>逃离出方法作用范围的变量不安全，例如return 出去的变量。</li>
+<li>方法内非静态基本类型变量是线程安全的，每个线程都有独立的一份。</li>
+</ul>
+</li>
+</ol>
+<h3 id="本地方法栈（Native-Method-Stacks）"><a href="#本地方法栈（Native-Method-Stacks）" class="headerlink" title="本地方法栈（Native Method Stacks）"></a>本地方法栈（Native Method Stacks）</h3><ol>
+<li>Java中本地方法调用时使用的内存。</li>
+</ol>
+<h3 id="堆（Heap）"><a href="#堆（Heap）" class="headerlink" title="堆（Heap）"></a>堆（Heap）</h3><ul>
+<li>通过new关键字创建的对象会使用堆内存。</li>
+<li>堆是线程共享的。</li>
+<li>堆中有垃圾回收机制.</li>
+</ul>
+<ol>
+<li>堆内存溢出：<ul>
+<li>当对象没有被任何一个引用所引用，jvm才会把它当作垃圾。</li>
+<li>OutOfMemoryError。</li>
+</ul>
+</li>
+</ol>
+<h3 id="方法区（Method-Area"><a href="#方法区（Method-Area" class="headerlink" title="方法区（Method Area)"></a>方法区（Method Area)</h3><ol>
+<li><p>定义（jvm1.8）：</p>
+<ul>
+<li>是一种规范，存储和类的结构相关的信息，运行时常量池。</li>
+<li>在虚拟机启动时被创建.</li>
+<li>在逻辑上其实是堆的一部分,可以不遵守此规范（由具体jvm实现决定）。<ul>
+<li>例如：jvm1.8以下是在永久代里边</li>
+<li>jvm1.8以上是在本地内存中的元空间里</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220501163144925.png" alt="image-20220501163144925"></p>
+</li>
+<li><p>溢出：</p>
+<ul>
+<li>jvm1.8以前是永久代溢出。</li>
+<li>1.8以后是元空间溢出，元空间属于操作系统的空间。</li>
+<li>溢出场景：<ul>
+<li>spring和mybaties用cglib创建动态代理类。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>常量池：</p>
+<ul>
+<li>就是在字节码文件中的一张表。</li>
+<li>作用，给指令一个符号，用于虚拟机寻找要执行的东西。</li>
+</ul>
+</li>
+<li><p>运行时常量池：</p>
+<ul>
+<li><p>常量池在字节码文件运行时加载到内存中的运行时常量池中，这时候符号变成了真实的内存地址。</p>
+</li>
+<li><p>StringTable（字符串常量池）:</p>
+<ul>
+<li><p>是一个hashtable结构而且不可以扩容。</p>
+</li>
+<li><p>当第一次定义字符串时，如果串池中没有则会把对象放入串池中，如果有则直接使用串池中的对象。</p>
+</li>
+<li><p>示例</p>
+</li>
+<li></li>
+<li><pre><code class="java">/**
+ * 关于串池的题
+ */
+public static void main(String[] args) &#123;
+    String s1 = &quot;a&quot;;
+    String s2 = &quot;b&quot;;
+    //常量拼接
+    String s3 = &quot;a&quot;+&quot;b&quot;;
+
+    //s4,变量拼接实际上是新建一个空的StringBuild(),然后.append(&quot;a&quot;).append(&quot;b&quot;).toString
+    //toString会把拼接好的值放到一个新的对象中，然后复制给s4
+    String s4 = s1+s2;
+
+
+    String s5 = &quot;ab&quot;;
+
+    //尝试将字符串对象放入串池，如果串池里面有相同的常量，就不加入，
+    // 如果没有，就加入（jdk1.8以下会拷贝一份再加入拷贝的对象，拷贝出来的对象和原对象不一样），
+    //无论加入或者是没加入都会返回串池中字符串常量对应的对象
+    String s6 = s4.intern();
+
+    System.out.println(s3==s4);//false =&gt;             false=&gt;//s3的对象在串池中，s4的在堆里面
+    System.out.println(s3==s5);//true  =&gt;正确答案      true=&gt;因为String是不可变的，而且都是常量，因此结果是确定的，在编译期间就优化成&quot;ab&quot;
+    System.out.println(s3==s6);//true  =&gt;             true
+&#125;
+</code></pre>
+</li>
+<li><p>题目总结：</p>
+<ul>
+<li>当串池中没有时，新建一个String对象会加入串池，之后创建的字符串常量如果是一样的，那么就统一用串池中的那个对象。</li>
+<li>字符串常量对象拼接会在编译期间优化成拼接后的常量；而字符串变量拼接使用的是StringBuild，产生的对象存在堆中。</li>
+<li>intern()方法会尝试将堆中的对象放入常量池，串池中有此常量，那就不加入，没有则加入(java1.8)；无论加入成功或者是失败方法返回值都是串池中对应常量的对象。</li>
+</ul>
+</li>
+<li><p>StringTable的位置：</p>
+<ul>
+<li>java1.7的StringTable从永久代转到了堆空间中，因为永久代只有fullGC时才会执行回收。</li>
+</ul>
+</li>
+<li><p>StringTable也会被垃圾回收。</p>
+</li>
+<li><p>StringTable调优：</p>
+<ul>
+<li>StringTable实际上是一个hashTable，根据实际情况，调整桶的个数就是调优了，桶的个数的最小值是1009。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="直接内存-DirectMemory"><a href="#直接内存-DirectMemory" class="headerlink" title="直接内存(DirectMemory)"></a>直接内存(DirectMemory)</h3><ol>
+<li><p>定义：</p>
+<ul>
+<li>常用于NIO操作，作为数据缓冲区。</li>
+<li>分配和回收此内存空间成本较高，但是读写性能高。</li>
+<li>不受jvm回收管理，因为是操作系统的内存。</li>
+</ul>
+</li>
+<li><p><img src="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220501190955778.png" alt="image-20220501190955778"></p>
+</li>
+<li><p><img src="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220501191239463.png" alt="image-20220501191239463"></p>
+<ul>
+<li>直接内存，java代码可以直接访问，比原始io少了一次缓存复制的过程。</li>
+</ul>
+</li>
+<li><p>直接内存的分配和回收都由unsafe对象完成：</p>
+<ul>
+<li>以ByteBuffer为例：它的构造器中获取了unsafe实例，并且调用unsafe实例的allocatememory（）和setmemory（）两个方法分配了直接内存。然后还使用Cleaner（虚引用对象）监测ByteBuffer实例，当ByteBuffer被GC回收时，会调用Cleaner的clean(),进而调用clean()中的unsafe.freeMemory()方法对直接内存进行释放。</li>
+<li>java中默认禁止了显式GC，因为System.gc()是fullGC，会是程序停留时间过长。这时候只能等待jvm进行GC，或者是直接使用unsafe对象的.freeMemory()方法。</li>
+<li>Unsafe只能通过反射强制获取实例。</li>
+</ul>
+</li>
+</ol>
+]]></content>
   </entry>
   <entry>
     <title>SpringIOC</title>
@@ -715,6 +888,19 @@
       <categories>
         <category>docker</category>
       </categories>
+  </entry>
+  <entry>
+    <title>gateway</title>
+    <url>/2022/04/28/gateway/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>春天的云</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>java8新特性</title>
+    <url>/2022/04/30/java8%E6%96%B0%E7%89%B9%E6%80%A7/</url>
+    <content><![CDATA[]]></content>
   </entry>
   <entry>
     <title>jdbc</title>
@@ -1730,110 +1916,40 @@ public void threadShow()&#123;
 </ol>
 </li>
 <li><p>实现分页条件查询</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Resource</span></span><br><span class="line">    <span class="keyword">private</span> EduTeacherMapper teacherMapper;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 分页条件查询</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> current</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> limit</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="comment">//Propagation.SUPPORTS表示传播级别是，自身没有，融合与外层，查询用只读属性可以提高效率</span></span><br><span class="line">    <span class="meta">@Transactional(propagation = Propagation.SUPPORTS,readOnly = true)</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Result <span class="title function_">pageWrapperQuery</span><span class="params">(<span class="type">long</span> current, <span class="type">long</span> limit, WrapperForTeacherPageQuery wrapperForTeacherPageQuery)</span> &#123;</span><br><span class="line">        <span class="comment">//判断有没有传进来值</span></span><br><span class="line">        log.info(current +<span class="string">&quot; &quot;</span>+limit);</span><br><span class="line">        QueryWrapper&lt;EduTeacher&gt; wrapper = <span class="keyword">new</span> <span class="title class_">QueryWrapper</span>&lt;&gt;();</span><br><span class="line"></span><br><span class="line">        <span class="comment">/*</span></span><br><span class="line"><span class="comment">        1,判空</span></span><br><span class="line"><span class="comment">        2，name 模糊查询</span></span><br><span class="line"><span class="comment">        3，等级 相等</span></span><br><span class="line"><span class="comment">        4，时间段</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">if</span>(!ObjectUtils.isEmpty(wrapperForTeacherPageQuery))&#123;</span><br><span class="line">            <span class="keyword">if</span>(!ObjectUtils.isEmpty(wrapperForTeacherPageQuery.getName()))&#123;</span><br><span class="line">                wrapper.like(<span class="string">&quot;name&quot;</span>,wrapperForTeacherPageQuery.getName());</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (!ObjectUtils.isEmpty(wrapperForTeacherPageQuery.getLevel()))&#123;</span><br><span class="line">                wrapper.eq(<span class="string">&quot;level&quot;</span>,wrapperForTeacherPageQuery.getLevel());</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(!ObjectUtils.isEmpty(wrapperForTeacherPageQuery.getBegin())</span><br><span class="line">                    &amp;&amp;!ObjectUtils.isEmpty(wrapperForTeacherPageQuery.getEnd()))&#123;</span><br><span class="line">                wrapper.between(<span class="string">&quot;gmt_create&quot;</span>,</span><br><span class="line">                        wrapperForTeacherPageQuery.getBegin(),wrapperForTeacherPageQuery.getEnd());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="comment">//page对象</span></span><br><span class="line">        Page&lt;EduTeacher&gt; page = <span class="keyword">new</span> <span class="title class_">Page</span>&lt;&gt;(current,limit);</span><br><span class="line">        teacherMapper.selectPage(page,wrapper);</span><br><span class="line"></span><br><span class="line">        List&lt;EduTeacher&gt; records = page.getRecords();</span><br><span class="line">        <span class="type">long</span> <span class="variable">total</span> <span class="operator">=</span> page.getTotal();</span><br><span class="line"></span><br><span class="line">        <span class="comment">//返回总记录数和分页后的记录</span></span><br><span class="line">        <span class="keyword">return</span> Result.success().data(<span class="string">&quot;records&quot;</span>,records).data(<span class="string">&quot;total&quot;</span>,total);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Resource</span></span><br><span class="line">   <span class="keyword">private</span> EduTeacherMapper teacherMapper;</span><br><span class="line">   <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 分页条件查询</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> current</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> limit</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="comment">//Propagation.SUPPORTS表示传播级别是，自身没有，融合与外层，查询用只读属性可以提高效率</span></span><br><span class="line">   <span class="meta">@Transactional(propagation = Propagation.SUPPORTS,readOnly = true)</span></span><br><span class="line">   <span class="meta">@Override</span></span><br><span class="line">   <span class="keyword">public</span> Result <span class="title function_">pageWrapperQuery</span><span class="params">(<span class="type">long</span> current, <span class="type">long</span> limit, WrapperForTeacherPageQuery wrapperForTeacherPageQuery)</span> &#123;</span><br><span class="line">       <span class="comment">//判断有没有传进来值</span></span><br><span class="line">       log.info(current +<span class="string">&quot; &quot;</span>+limit);</span><br><span class="line">       QueryWrapper&lt;EduTeacher&gt; wrapper = <span class="keyword">new</span> <span class="title class_">QueryWrapper</span>&lt;&gt;();</span><br><span class="line">   </span><br><span class="line">       <span class="comment">/*</span></span><br><span class="line"><span class="comment">       1,判空</span></span><br><span class="line"><span class="comment">       2，name 模糊查询</span></span><br><span class="line"><span class="comment">       3，等级 相等</span></span><br><span class="line"><span class="comment">       4，时间段</span></span><br><span class="line"><span class="comment">        */</span></span><br><span class="line">       <span class="keyword">if</span>(!ObjectUtils.isEmpty(wrapperForTeacherPageQuery))&#123;</span><br><span class="line">           <span class="keyword">if</span>(!ObjectUtils.isEmpty(wrapperForTeacherPageQuery.getName()))&#123;</span><br><span class="line">               wrapper.like(<span class="string">&quot;name&quot;</span>,wrapperForTeacherPageQuery.getName());</span><br><span class="line">           &#125;</span><br><span class="line">           <span class="keyword">if</span> (!ObjectUtils.isEmpty(wrapperForTeacherPageQuery.getLevel()))&#123;</span><br><span class="line">               wrapper.eq(<span class="string">&quot;level&quot;</span>,wrapperForTeacherPageQuery.getLevel());</span><br><span class="line">           &#125;</span><br><span class="line">           <span class="keyword">if</span>(!ObjectUtils.isEmpty(wrapperForTeacherPageQuery.getBegin())</span><br><span class="line">                   &amp;&amp;!ObjectUtils.isEmpty(wrapperForTeacherPageQuery.getEnd()))&#123;</span><br><span class="line">               wrapper.between(<span class="string">&quot;gmt_create&quot;</span>,</span><br><span class="line">                       wrapperForTeacherPageQuery.getBegin(),wrapperForTeacherPageQuery.getEnd());</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">   </span><br><span class="line">   </span><br><span class="line">       <span class="comment">//page对象</span></span><br><span class="line">       Page&lt;EduTeacher&gt; page = <span class="keyword">new</span> <span class="title class_">Page</span>&lt;&gt;(current,limit);</span><br><span class="line">       teacherMapper.selectPage(page,wrapper);</span><br><span class="line">   </span><br><span class="line">       List&lt;EduTeacher&gt; records = page.getRecords();</span><br><span class="line">       <span class="type">long</span> <span class="variable">total</span> <span class="operator">=</span> page.getTotal();</span><br><span class="line">   </span><br><span class="line">       <span class="comment">//返回总记录数和分页后的记录</span></span><br><span class="line">       <span class="keyword">return</span> Result.success().data(<span class="string">&quot;records&quot;</span>,records).data(<span class="string">&quot;total&quot;</span>,total);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
 
 <ul>
 <li><p>mp的分页需要插件</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * mp分页插件</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="keyword">public</span> PaginationInterceptor <span class="title function_">paginationInterceptor</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">PaginationInterceptor</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
 </ul>
 </li>
-<li><p>common-utils模块中制定了统一返回结果~~~</p>
+<li><p>common-utils模块中制定了统一返回结果</p>
+ <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.wszxr;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.HashMap;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 1,统一结果返回</span></span><br><span class="line"><span class="comment"> * 2,使用return this的方式实现了链式调用</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Result</span> &#123;</span><br><span class="line">    <span class="comment">//返回状态码统一</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> Integer SUCCESS=<span class="number">20000</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> Integer ERROR=<span class="number">20001</span>;</span><br><span class="line">    <span class="comment">//禁止瞎使用对像返回数据,只允许通过调用success或者error方法的任何一个来创建对象</span></span><br><span class="line">    <span class="keyword">private</span> <span class="title function_">Result</span><span class="params">()</span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    1,是否成功</span></span><br><span class="line"><span class="comment">    2，返回描述</span></span><br><span class="line"><span class="comment">    3，返回码</span></span><br><span class="line"><span class="comment">    4,返回的map</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> Boolean isSuccess;</span><br><span class="line">    <span class="keyword">private</span> String message;</span><br><span class="line">    <span class="keyword">private</span> Integer code;</span><br><span class="line">    <span class="keyword">private</span> Map&lt;String,Object&gt; data = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">    <span class="comment">//成功方法</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Result <span class="title function_">success</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="type">Result</span> <span class="variable">result</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Result</span>();</span><br><span class="line">        result.setSuccess(<span class="literal">true</span>);</span><br><span class="line">        result.setCode(Result.SUCCESS);</span><br><span class="line">        result.setMessage(<span class="string">&quot;成功&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> Map&lt;String, Object&gt; <span class="title function_">getData</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> data;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">//失败方法</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Result <span class="title function_">error</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="type">Result</span> <span class="variable">result</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Result</span>();</span><br><span class="line">        result.setSuccess(<span class="literal">false</span>);</span><br><span class="line">        result.setCode(Result.ERROR);</span><br><span class="line">        result.setMessage(<span class="string">&quot;失败&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//返回数据</span></span><br><span class="line">    <span class="keyword">public</span> Result <span class="title function_">data</span><span class="params">(String description,Object result)</span>&#123;</span><br><span class="line">        <span class="built_in">this</span>.data.put(description,result);</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//设置不同的状态码</span></span><br><span class="line">    <span class="keyword">public</span> Result <span class="title function_">code</span><span class="params">(Integer code)</span>&#123;</span><br><span class="line">        <span class="built_in">this</span>.setCode(code);</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> Boolean <span class="title function_">getSuccess</span><span class="params">()</span> &#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> isSuccess;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setSuccess</span><span class="params">(Boolean success)</span> &#123;</span><br><span class="line">        isSuccess = success;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getMessage</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> message;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setMessage</span><span class="params">(String message)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.message = message;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> Integer <span class="title function_">getCode</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> code;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setCode</span><span class="params">(Integer code)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.code = code;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 </li>
-<li><pre><code class="java">package com.wszxr;
-
-import java.util.HashMap;
-import java.util.Map;
-
-/**
- * 1,统一结果返回
- * 2,使用return this的方式实现了链式调用
- */
-public class Result &#123;
-    //返回状态码统一
-    public static final Integer SUCCESS=20000;
-    public static final Integer ERROR=20001;
-    //禁止瞎使用对像返回数据,只允许通过调用success或者error方法的任何一个来创建对象
-    private Result()&#123;
-
-    &#125;
-    /*
-    1,是否成功
-    2，返回描述
-    3，返回码
-    4,返回的map
-     */
-    private Boolean isSuccess;
-    private String message;
-    private Integer code;
-    private Map&lt;String,Object&gt; data = new HashMap&lt;&gt;();
-    //成功方法
-    public static Result success()&#123;
-        Result result = new Result();
-        result.setSuccess(true);
-        result.setCode(Result.SUCCESS);
-        result.setMessage(&quot;成功&quot;);
-        return result;
-    &#125;
-
-    public Map&lt;String, Object&gt; getData() &#123;
-        return data;
-    &#125;
-
-
-
-    //失败方法
-    public static Result error()&#123;
-        Result result = new Result();
-        result.setSuccess(false);
-        result.setCode(Result.ERROR);
-        result.setMessage(&quot;失败&quot;);
-        return result;
-    &#125;
-    //返回数据
-    public Result data(String description,Object result)&#123;
-        this.data.put(description,result);
-        return this;
-    &#125;
-
-    //设置不同的状态码
-    public Result code(Integer code)&#123;
-        this.setCode(code);
-        return this;
-    &#125;
-
-
-
-
-    public Boolean getSuccess() &#123;
-
-        return isSuccess;
-    &#125;
-
-    public void setSuccess(Boolean success) &#123;
-        isSuccess = success;
-    &#125;
-
-    public String getMessage() &#123;
-        return message;
-    &#125;
-
-    public void setMessage(String message) &#123;
-        this.message = message;
-    &#125;
-
-    public Integer getCode() &#123;
-        return code;
-    &#125;
-
-    public void setCode(Integer code) &#123;
-        this.code = code;
-    &#125;
-&#125;
-
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">8. 如果实现了序列化，就要指定版本号</span><br><span class="line"></span><br><span class="line">9. ~~~java</span><br><span class="line">    //序列化的版本号，如果不显示定义这个，当序列化或反序列化前后数据发生更改就会导致序列化失败</span><br><span class="line">       private static final long serialVersionUID = 1L;</span><br></pre></td></tr></table></figure>
-</code></pre>
+<li><p>如果实现了序列化，就要指定版本号</p>
+ <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//序列化的版本号，如果不显示定义这个，当序列化或反序列化前后数据发生更改就会导致序列化失败</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">long</span> <span class="variable">serialVersionUID</span> <span class="operator">=</span> <span class="number">1L</span>;</span><br></pre></td></tr></table></figure>
 </li>
-<li></li>
+<li><p>创建和修改日期应当自动生成</p>
+<ul>
+<li>实现mb提供的MetaObjectHandler接口，以名字方式定义填入内容</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.wszxr;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;</span><br><span class="line"><span class="keyword">import</span> org.apache.ibatis.reflection.MetaObject;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Date;</span><br><span class="line"><span class="comment">//自动填充功能，这个接口由mp提供</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">AutoFillMeta</span> <span class="keyword">implements</span> <span class="title class_">MetaObjectHandler</span> &#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 注意gmtCreate，gmtModified是实体类中的名字</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> metaObject</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">insertFill</span><span class="params">(MetaObject metaObject)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.setFieldValByName(<span class="string">&quot;gmtCreate&quot;</span>,<span class="keyword">new</span> <span class="title class_">Date</span>(),metaObject);</span><br><span class="line">        <span class="built_in">this</span>.setFieldValByName(<span class="string">&quot;gmtModified&quot;</span>,<span class="keyword">new</span> <span class="title class_">Date</span>(),metaObject);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">updateFill</span><span class="params">(MetaObject metaObject)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.setFieldValByName(<span class="string">&quot;gmtModified&quot;</span>,<span class="keyword">new</span> <span class="title class_">Date</span>(),metaObject);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>既然加了@Component注解，那就得使用时设置组件扫描，事实上@SpringBootApplication包含了组件扫描，只有他默认的扫描路径和你设置的不一样才不会报错</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@ComponentScan(basePackages = &quot;com.wszxr&quot;)</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>还需要在属性上加上注解</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 设置自动填充</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@TableField(fill = FieldFill.INSERT)</span></span><br><span class="line">    <span class="keyword">private</span> Date gmtCreate;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@TableField(fill = FieldFill.INSERT_UPDATE)</span></span><br><span class="line">    <span class="keyword">private</span> Date gmtModified;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>逻辑删除</p>
+<ul>
+<li>插件由mp提供</li>
+</ul>
+</li>
 </ol>
 ]]></content>
       <categories>
@@ -1923,6 +2039,14 @@ reverse();
 </code></pre>
 <hr>
 <h2 id="更新于-2-x2F-26-x2F-2022-5-35-28-PM"><a href="#更新于-2-x2F-26-x2F-2022-5-35-28-PM" class="headerlink" title="更新于 2&#x2F;26&#x2F;2022 5:35:28 PM "></a>更新于 2&#x2F;26&#x2F;2022 5:35:28 PM </h2>]]></content>
+      <categories>
+        <category>JAVASE</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>并发编程</title>
+    <url>/2022/04/29/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/</url>
+    <content><![CDATA[]]></content>
       <categories>
         <category>JAVASE</category>
       </categories>

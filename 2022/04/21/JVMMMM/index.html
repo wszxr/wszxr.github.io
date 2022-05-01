@@ -20,17 +20,21 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="也许是风太小了，没能把我的思念带给你">
+  <meta name="description" content="JVM1，内存结构程序计数器（pc Register）">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JVMMMM">
 <meta property="og:url" content="http://example.com/2022/04/21/JVMMMM/index.html">
 <meta property="og:site_name" content="大森林">
-<meta property="og:description" content="也许是风太小了，没能把我的思念带给你">
+<meta property="og:description" content="JVM1，内存结构程序计数器（pc Register）">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220501163144925.png">
+<meta property="og:image" content="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220501190955778.png">
+<meta property="og:image" content="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220501191239463.png">
 <meta property="article:published_time" content="2022-04-21T08:48:23.000Z">
-<meta property="article:modified_time" content="2022-04-21T08:48:23.811Z">
+<meta property="article:modified_time" content="2022-05-01T11:54:51.248Z">
 <meta property="article:author" content="你好">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220501163144925.png">
 
 <link rel="canonical" href="http://example.com/2022/04/21/JVMMMM/">
 
@@ -185,6 +189,13 @@
 
               <time title="创建时间：2022-04-21 16:48:23" itemprop="dateCreated datePublished" datetime="2022-04-21T16:48:23+08:00">2022-04-21</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-05-01 19:54:51" itemprop="dateModified" datetime="2022-05-01T19:54:51+08:00">2022-05-01</time>
+              </span>
 
           
 
@@ -197,7 +208,180 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        
+        <h1 id="JVM"><a href="#JVM" class="headerlink" title="JVM"></a>JVM</h1><h2 id="1，内存结构"><a href="#1，内存结构" class="headerlink" title="1，内存结构"></a>1，内存结构</h2><h3 id="程序计数器（pc-Register）"><a href="#程序计数器（pc-Register）" class="headerlink" title="程序计数器（pc Register）"></a>程序计数器（pc Register）</h3><span id="more"></span>
+
+<ol>
+<li>java运行流程：<ul>
+<li>java源码–&gt;jvm指令–&gt;解释器–&gt;机器码–&gt;cpu执行</li>
+</ul>
+</li>
+<li>计数器作用：记录下一条指令的地址</li>
+<li>特点：<ul>
+<li>java把寄存器当作程序计数器，是唯一不会出现内存溢出的问题的区域</li>
+<li>线程私有，每一个线程有自己独立的程序计数器</li>
+</ul>
+</li>
+</ol>
+<h3 id="虚拟机栈（jvm-Stacks）"><a href="#虚拟机栈（jvm-Stacks）" class="headerlink" title="虚拟机栈（jvm Stacks）"></a>虚拟机栈（jvm Stacks）</h3><ol>
+<li>定义：<ul>
+<li>每个线程运行所需要的运行空间。</li>
+</ul>
+</li>
+<li>组成：<ul>
+<li>由若干栈帧组成，每个栈帧对应一个方法的内存空间（局部变量，参数，返回地址···）。</li>
+<li>每个栈只有一个活动栈帧(顶部)，对应正在运行的那个方法。</li>
+</ul>
+</li>
+<li>栈内存溢出：<ul>
+<li>单个栈帧内存过大(一般不会出现)。</li>
+<li>栈帧过多(递归时没有定义结束条件时)。</li>
+</ul>
+</li>
+<li>注意：<ul>
+<li>垃圾回收不涉及栈内存，方法运行完自动释放。</li>
+<li>单个栈内存并不是越大越好，越大，能创建的线程数就越小。</li>
+</ul>
+</li>
+<li>方法中的局部变量是否有线程安全问题：<ul>
+<li>静态的变量是共享的，线程不安全。</li>
+<li>通过传递参数进来的是不安全的。</li>
+<li>逃离出方法作用范围的变量不安全，例如return 出去的变量。</li>
+<li>方法内非静态基本类型变量是线程安全的，每个线程都有独立的一份。</li>
+</ul>
+</li>
+</ol>
+<h3 id="本地方法栈（Native-Method-Stacks）"><a href="#本地方法栈（Native-Method-Stacks）" class="headerlink" title="本地方法栈（Native Method Stacks）"></a>本地方法栈（Native Method Stacks）</h3><ol>
+<li>Java中本地方法调用时使用的内存。</li>
+</ol>
+<h3 id="堆（Heap）"><a href="#堆（Heap）" class="headerlink" title="堆（Heap）"></a>堆（Heap）</h3><ul>
+<li>通过new关键字创建的对象会使用堆内存。</li>
+<li>堆是线程共享的。</li>
+<li>堆中有垃圾回收机制.</li>
+</ul>
+<ol>
+<li>堆内存溢出：<ul>
+<li>当对象没有被任何一个引用所引用，jvm才会把它当作垃圾。</li>
+<li>OutOfMemoryError。</li>
+</ul>
+</li>
+</ol>
+<h3 id="方法区（Method-Area"><a href="#方法区（Method-Area" class="headerlink" title="方法区（Method Area)"></a>方法区（Method Area)</h3><ol>
+<li><p>定义（jvm1.8）：</p>
+<ul>
+<li>是一种规范，存储和类的结构相关的信息，运行时常量池。</li>
+<li>在虚拟机启动时被创建.</li>
+<li>在逻辑上其实是堆的一部分,可以不遵守此规范（由具体jvm实现决定）。<ul>
+<li>例如：jvm1.8以下是在永久代里边</li>
+<li>jvm1.8以上是在本地内存中的元空间里</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220501163144925.png" alt="image-20220501163144925"></p>
+</li>
+<li><p>溢出：</p>
+<ul>
+<li>jvm1.8以前是永久代溢出。</li>
+<li>1.8以后是元空间溢出，元空间属于操作系统的空间。</li>
+<li>溢出场景：<ul>
+<li>spring和mybaties用cglib创建动态代理类。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>常量池：</p>
+<ul>
+<li>就是在字节码文件中的一张表。</li>
+<li>作用，给指令一个符号，用于虚拟机寻找要执行的东西。</li>
+</ul>
+</li>
+<li><p>运行时常量池：</p>
+<ul>
+<li><p>常量池在字节码文件运行时加载到内存中的运行时常量池中，这时候符号变成了真实的内存地址。</p>
+</li>
+<li><p>StringTable（字符串常量池）:</p>
+<ul>
+<li><p>是一个hashtable结构而且不可以扩容。</p>
+</li>
+<li><p>当第一次定义字符串时，如果串池中没有则会把对象放入串池中，如果有则直接使用串池中的对象。</p>
+</li>
+<li><p>示例</p>
+</li>
+<li></li>
+<li><pre><code class="java">/**
+ * 关于串池的题
+ */
+public static void main(String[] args) &#123;
+    String s1 = &quot;a&quot;;
+    String s2 = &quot;b&quot;;
+    //常量拼接
+    String s3 = &quot;a&quot;+&quot;b&quot;;
+
+    //s4,变量拼接实际上是新建一个空的StringBuild(),然后.append(&quot;a&quot;).append(&quot;b&quot;).toString
+    //toString会把拼接好的值放到一个新的对象中，然后复制给s4
+    String s4 = s1+s2;
+
+
+    String s5 = &quot;ab&quot;;
+
+    //尝试将字符串对象放入串池，如果串池里面有相同的常量，就不加入，
+    // 如果没有，就加入（jdk1.8以下会拷贝一份再加入拷贝的对象，拷贝出来的对象和原对象不一样），
+    //无论加入或者是没加入都会返回串池中字符串常量对应的对象
+    String s6 = s4.intern();
+
+    System.out.println(s3==s4);//false =&gt;             false=&gt;//s3的对象在串池中，s4的在堆里面
+    System.out.println(s3==s5);//true  =&gt;正确答案      true=&gt;因为String是不可变的，而且都是常量，因此结果是确定的，在编译期间就优化成&quot;ab&quot;
+    System.out.println(s3==s6);//true  =&gt;             true
+&#125;
+</code></pre>
+</li>
+<li><p>题目总结：</p>
+<ul>
+<li>当串池中没有时，新建一个String对象会加入串池，之后创建的字符串常量如果是一样的，那么就统一用串池中的那个对象。</li>
+<li>字符串常量对象拼接会在编译期间优化成拼接后的常量；而字符串变量拼接使用的是StringBuild，产生的对象存在堆中。</li>
+<li>intern()方法会尝试将堆中的对象放入常量池，串池中有此常量，那就不加入，没有则加入(java1.8)；无论加入成功或者是失败方法返回值都是串池中对应常量的对象。</li>
+</ul>
+</li>
+<li><p>StringTable的位置：</p>
+<ul>
+<li>java1.7的StringTable从永久代转到了堆空间中，因为永久代只有fullGC时才会执行回收。</li>
+</ul>
+</li>
+<li><p>StringTable也会被垃圾回收。</p>
+</li>
+<li><p>StringTable调优：</p>
+<ul>
+<li>StringTable实际上是一个hashTable，根据实际情况，调整桶的个数就是调优了，桶的个数的最小值是1009。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="直接内存-DirectMemory"><a href="#直接内存-DirectMemory" class="headerlink" title="直接内存(DirectMemory)"></a>直接内存(DirectMemory)</h3><ol>
+<li><p>定义：</p>
+<ul>
+<li>常用于NIO操作，作为数据缓冲区。</li>
+<li>分配和回收此内存空间成本较高，但是读写性能高。</li>
+<li>不受jvm回收管理，因为是操作系统的内存。</li>
+</ul>
+</li>
+<li><p><img src="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220501190955778.png" alt="image-20220501190955778"></p>
+</li>
+<li><p><img src="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220501191239463.png" alt="image-20220501191239463"></p>
+<ul>
+<li>直接内存，java代码可以直接访问，比原始io少了一次缓存复制的过程。</li>
+</ul>
+</li>
+<li><p>直接内存的分配和回收都由unsafe对象完成：</p>
+<ul>
+<li>以ByteBuffer为例：它的构造器中获取了unsafe实例，并且调用unsafe实例的allocatememory（）和setmemory（）两个方法分配了直接内存。然后还使用Cleaner（虚引用对象）监测ByteBuffer实例，当ByteBuffer被GC回收时，会调用Cleaner的clean(),进而调用clean()中的unsafe.freeMemory()方法对直接内存进行释放。</li>
+<li>java中默认禁止了显式GC，因为System.gc()是fullGC，会是程序停留时间过长。这时候只能等待jvm进行GC，或者是直接使用unsafe对象的.freeMemory()方法。</li>
+<li>Unsafe只能通过反射强制获取实例。</li>
+</ul>
+</li>
+</ol>
+
     </div>
 
     
@@ -277,6 +461,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#JVM"><span class="nav-number">1.</span> <span class="nav-text">JVM</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1%EF%BC%8C%E5%86%85%E5%AD%98%E7%BB%93%E6%9E%84"><span class="nav-number">1.1.</span> <span class="nav-text">1，内存结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A8%8B%E5%BA%8F%E8%AE%A1%E6%95%B0%E5%99%A8%EF%BC%88pc-Register%EF%BC%89"><span class="nav-number">1.1.1.</span> <span class="nav-text">程序计数器（pc Register）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%A0%88%EF%BC%88jvm-Stacks%EF%BC%89"><span class="nav-number">1.1.2.</span> <span class="nav-text">虚拟机栈（jvm Stacks）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%AC%E5%9C%B0%E6%96%B9%E6%B3%95%E6%A0%88%EF%BC%88Native-Method-Stacks%EF%BC%89"><span class="nav-number">1.1.3.</span> <span class="nav-text">本地方法栈（Native Method Stacks）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A0%86%EF%BC%88Heap%EF%BC%89"><span class="nav-number">1.1.4.</span> <span class="nav-text">堆（Heap）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E5%8C%BA%EF%BC%88Method-Area"><span class="nav-number">1.1.5.</span> <span class="nav-text">方法区（Method Area)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%B4%E6%8E%A5%E5%86%85%E5%AD%98-DirectMemory"><span class="nav-number">1.1.6.</span> <span class="nav-text">直接内存(DirectMemory)</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -292,14 +477,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-count">18</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
   </nav>
