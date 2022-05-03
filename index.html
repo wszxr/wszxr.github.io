@@ -245,7 +245,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-05-02 22:40:41" itemprop="dateModified" datetime="2022-05-02T22:40:41+08:00">2022-05-02</time>
+                <time title="修改时间：2022-05-03 22:36:41" itemprop="dateModified" datetime="2022-05-03T22:36:41+08:00">2022-05-03</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -293,28 +293,20 @@
 </ul>
 <p>3，Thread.sleep(时间(ms))</p>
 <ul>
-<li><p>会进入timedwaiting状态，这时cpu不会给这个线程分时间片。</p>
-</li>
-<li><p>会被打断而抛出interruptException异常。</p>
-</li>
-<li><p>结束后进入就绪，不一定能立即执行。</p>
-</li>
-<li><p>使用TImeUnit.second.sleep()可以指定单位增加可读性。</p>
-</li>
-<li><p>注意：</p>
-<ul>
+<li>会进入timedwaiting状态，这时cpu不会给这个线程分时间片。</li>
+<li>会被打断而抛出interruptException异常。</li>
+<li>结束后进入就绪，不一定能立即执行。</li>
+<li>使用TImeUnit.second.sleep()可以指定单位增加可读性。</li>
+<li>注意：<ul>
 <li>while（true）中要用sleep()，不然在单核情况下会把cpu占满。</li>
 </ul>
 </li>
 </ul>
 <p>4，join()</p>
 <ul>
-<li><p>在调用线程等待被调用线程结束。</p>
-</li>
-<li><p>可以设定最大等待时间join(time),过了这个时间无论是否运行完都结束等待。</p>
-</li>
-<li><p>可以实现同步</p>
-<ul>
+<li>在调用线程等待被调用线程结束。</li>
+<li>可以设定最大等待时间join(time),过了这个时间无论是否运行完都结束等待。</li>
+<li>可以实现同步<ul>
 <li>同步：调用方需要等待结果返回才能继续运行</li>
 <li>异步：不需要等待结果返回才能继续运行</li>
 </ul>
@@ -331,7 +323,7 @@
 </ul>
 <p>7，interrupt()</p>
 <ul>
-<li>可以打断阻塞状态的线程，sleep，wait，join等</li>
+<li>可以打断阻塞状态的线程，sleep，wait，join，LockSupport.park()等</li>
 <li>可以打断正在运行的线程</li>
 <li>注意：<ul>
 <li>打断在阻塞状态的线程，线程的状态标记会充值成false</li>
@@ -363,6 +355,105 @@
 <li>在正常状态打断标记直接为1</li>
 </ul>
 </li>
+</ul>
+<h3 id="守护线程"><a href="#守护线程" class="headerlink" title="守护线程"></a>守护线程</h3><p>随着其他线程的结束，守护线程也自动结束，例如垃圾回收线程。</p>
+<h3 id="线程的状态"><a href="#线程的状态" class="headerlink" title="线程的状态"></a>线程的状态</h3><h4 id="操作系统层面-5种"><a href="#操作系统层面-5种" class="headerlink" title="操作系统层面(5种)"></a>操作系统层面(5种)</h4><p>初始状态(创建了对象)，可运行状态（还没有获得cpu的时间片），运行状态（获得了cpu的时间片），阻塞状态（不会被cpu分时间片），终止状态。</p>
+<h4 id="java层面"><a href="#java层面" class="headerlink" title="java层面"></a>java层面</h4><p>Thread.state枚举内部枚举类划分成六种状态</p>
+<p>New ,RUNNABLE(包括运行，可运行，io阻塞API),BLOCKED,WAITING,TIMEWAITING,TERMINATED</p>
+<h2 id="线程安全问题"><a href="#线程安全问题" class="headerlink" title="线程安全问题"></a>线程安全问题</h2><h3 id="安全问题实例"><a href="#安全问题实例" class="headerlink" title="安全问题实例"></a>安全问题实例</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 多线程访问共享变量</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//余额</span></span><br><span class="line"><span class="keyword">static</span> <span class="type">int</span> <span class="variable">count</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//线程一用来增加5000块</span></span><br><span class="line">    <span class="type">Thread</span> <span class="variable">t1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Thread</span>(() -&gt; &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; <span class="number">5000</span>; i++) &#123;</span><br><span class="line">            count++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;, <span class="string">&quot;线程1&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//线程二用来减少5000块</span></span><br><span class="line">    <span class="type">Thread</span> <span class="variable">t2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Thread</span>(() -&gt; &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; <span class="number">5000</span>; i++) &#123;</span><br><span class="line">            count--;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;, <span class="string">&quot;线程2&quot;</span>);</span><br><span class="line">    t1.start();</span><br><span class="line">    t2.start();</span><br><span class="line"></span><br><span class="line">    t1.join();</span><br><span class="line">    t2.join();</span><br><span class="line"></span><br><span class="line">    System.out.println(count);<span class="comment">//结果为1137，0，1637····</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>按理来说，结果应该是0，然而事实却不是这样的</li>
+</ul>
+<p>原因分析：</p>
+<p>count++;或者count–;的字节码指令实际上是4句，当某一线程操作没有执行完，时间片被另一线程抢去，然后该线程又覆盖了另一线程的结果，就会出错，例如：</p>
+<p>count &#x3D; 0时，线程一执行count++；算出结果1后，还没来得级赋值给count，线程2抢走了cpu时间片，完成计算并把值-1赋值给了count,这时候线程一分到了时间片，把之前计算得到的1赋值给count。这样，本来加一次减一次的结果应该是0，最后却成了1。</p>
+<p>结论：多个线程对共享变量发生读写操作并产生指令交错时，会发生线程安全问题，结果变得不可预测。(也可以说发生了竞态条件)</p>
+<h3 id="临界区"><a href="#临界区" class="headerlink" title="临界区"></a>临界区</h3><p>多线程对共享变量发生修改操作的代码块</p>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>阻塞式和非阻塞式</p>
+<h3 id="阻塞式"><a href="#阻塞式" class="headerlink" title="阻塞式"></a>阻塞式</h3><h4 id="syncronized-对象锁"><a href="#syncronized-对象锁" class="headerlink" title="syncronized(对象锁)"></a>syncronized(对象锁)</h4><p>给临界区上对象锁，只有获取到对象的锁资源，获取成功才会执行临界区的代码，保证了临界区代码的原子性。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="type">Object</span> <span class="variable">lock</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Object</span>();</span><br><span class="line"></span><br><span class="line"><span class="comment">//线程一的临界区</span></span><br><span class="line"><span class="keyword">synchronized</span> (lock)&#123;</span><br><span class="line">  count++;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//线程二的临界区</span></span><br><span class="line"><span class="keyword">synchronized</span> (lock)&#123;</span><br><span class="line">  count--;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//上面的代码不会出错，相当于在执行以上两个操作的任意一个线程时，另一个线程都是阻塞状态。</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>锁对象可以是任何对象，但要保证有冲突的操作的锁的对象应该是同一个。</li>
+</ul>
+<h5 id="锁的不同位置"><a href="#锁的不同位置" class="headerlink" title="锁的不同位置"></a>锁的不同位置</h5><ul>
+<li>锁在代码块上可以指定锁的对象</li>
+<li>锁在成员方法上相当于锁this</li>
+<li>在静态方法上相当于锁住所在类的类对象，XXX.class</li>
+</ul>
+<h5 id="变量的线程安全分析"><a href="#变量的线程安全分析" class="headerlink" title="变量的线程安全分析"></a>变量的线程安全分析</h5><p>1，成员变量和静态变量</p>
+<ul>
+<li>只有被线程共享且发生了修改操作，它就是不安全的</li>
+</ul>
+<p>2，局部变量</p>
+<ul>
+<li>一般来说，它是线程安全的，因为每个线程有自己的虚拟机栈，有自己的一份成员变量</li>
+<li>但是当局部变量是引用型时，就不一定是线程安全的<ul>
+<li>如果该变量引用的对象逃离出了方法的作用范围，比如说，它是通过方法参数传递进来的，或者是在方法内return出去了，那么就不安全，因为方法里只是引用而已，多个线程复制多个引用，但是引用的对象只有同一个。</li>
+<li>如果没有逃离，那就是线程安全的</li>
+</ul>
+</li>
+</ul>
+<p>3，例子</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 成员变量和局部变量是否安全</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">private</span> List&lt;Integer&gt; list = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">go</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>;i&lt;<span class="number">500</span>;i++)&#123;</span><br><span class="line">        add(list);</span><br><span class="line">        remove(list);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">add</span><span class="params">(List&lt;Integer&gt; list)</span>&#123;</span><br><span class="line">    list.add(<span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">remove</span><span class="params">(List&lt;Integer&gt; list)</span>&#123;</span><br><span class="line">    list.remove(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">    <span class="type">MyTest1</span> <span class="variable">myTest1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">MyTest1</span>();</span><br><span class="line">    <span class="comment">//用不同的线程操作这个方法，操作的实际是同一个成员变量List</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; <span class="number">500</span>; i++) &#123;</span><br><span class="line">        <span class="keyword">new</span> <span class="title class_">Thread</span>(()-&gt;&#123;</span><br><span class="line">            myTest1.go();</span><br><span class="line">        &#125;).start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>每个线程调用的发法中的list是同一个成员变量，所以可能会数组越界。</li>
+<li>把list放入go()中声明，就不会出现问题，每个线程都会有独立的list。</li>
+</ul>
+<p>典型卖票问题</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyTest1</span> &#123;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//已经卖出去的</span></span><br><span class="line">    <span class="keyword">static</span> <span class="type">int</span> hadSell;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 卖票问题</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">//总数</span></span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> total;</span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">MyTest1</span><span class="params">(<span class="type">int</span> total)</span>&#123;</span><br><span class="line">        <span class="built_in">this</span>.total = total;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//获得当前票数</span></span><br><span class="line">    <span class="keyword">public</span>  <span class="type">int</span> <span class="title function_">getLeft</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>.total;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//卖票，解决:加synchronized</span></span><br><span class="line">    <span class="keyword">public</span>  <span class="type">int</span> <span class="title function_">sell</span><span class="params">(<span class="type">int</span> amount)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="built_in">this</span>.total&gt;=amount)&#123;</span><br><span class="line">            total-=amount;</span><br><span class="line">            <span class="keyword">return</span> amount;</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">       <span class="type">MyTest1</span> <span class="variable">myTest1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">MyTest1</span>(<span class="number">1000</span>);</span><br><span class="line">    <span class="comment">//1000个线程模拟一千个人同时买票</span></span><br><span class="line">       <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; <span class="number">1000</span>; i++) &#123;</span><br><span class="line">           <span class="keyword">new</span> <span class="title class_">Thread</span>(()-&gt;&#123;</span><br><span class="line">               <span class="keyword">try</span> &#123;</span><br><span class="line">                   Thread.sleep(<span class="number">10</span>);</span><br><span class="line">               &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                   e.printStackTrace();</span><br><span class="line">               &#125;</span><br><span class="line">              </span><br><span class="line">               <span class="type">int</span> <span class="variable">sell</span> <span class="operator">=</span> myTest1.sell((<span class="type">int</span>) (Math.random() * <span class="number">10</span>));</span><br><span class="line">               <span class="comment">//获取总的卖出的票,线程不安全，解决，加synchronized(随意对象)</span></span><br><span class="line">               hadSell+=sell;</span><br><span class="line">           &#125;).start();</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">       <span class="comment">//休眠五秒等待上面的线程都执行完，其实这里应该把所有线程对象都放入集合中，</span></span><br><span class="line">    	<span class="comment">//然后遍历集合调用他们的join方法，偷懒直接sleep了</span></span><br><span class="line">       <span class="keyword">try</span> &#123;</span><br><span class="line">           Thread.sleep(<span class="number">5000</span>);</span><br><span class="line">       &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">           e.printStackTrace();</span><br><span class="line">       &#125;</span><br><span class="line">    <span class="comment">//打印卖出的票和余票，看加起来是不是等于1000</span></span><br><span class="line">       System.out.println(myTest1.getLeft());</span><br><span class="line">       System.out.println(hadSell);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p>结果，显然是有问题的</p>
+<p><img src="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220503204642705.png" alt="image-20220503204642705"></p>
+<p>分析：很显然，买票操作不是原子性的，可能某个线程卖到一半，有了结果但是没来得及赋值给total，cpu时间片轮到了另一个线程，得到结果并且赋值，然后等到被阻塞的线程拿到时间片后覆盖前一个线程更改的结果。</p>
+<p>hadSell也是线程不安全的,给它也加上锁，随意锁一个对象即可</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">synchronized</span> (MyTest1.class)&#123;</span><br><span class="line"> 	hadSell+=sell;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>解决：保证卖票方法的原子性，在sell()方法上加synchronized关键字，再把hadSell+&#x3D;sell;操作放入同步代码块中即可。</p>
+<h5 id="Monitor-监视器-x2F-管程）概念"><a href="#Monitor-监视器-x2F-管程）概念" class="headerlink" title="Monitor(监视器&#x2F;管程）概念"></a>Monitor(监视器&#x2F;管程）概念</h5><p>1，对象头，对象头分为两部分，一部分是klass word，记载对象的类信息，一部分是mark word，记载其他信息(后续介绍)</p>
+<p><img src="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220503213409174.png" alt="image-20220503213409174"></p>
+<p>2，Monitor：</p>
+<p>​    <img src="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220503212434508.png" alt="image-20220503212434508"></p>
+<p>1，当对象被加入到synchronized()中，该对象会关联操作系统的一个Monitor,并在对象头的markword区域记录下(markwold区域的值变成地址，原有的值存到了Monitor对象中)Monitor对象的内存地址。</p>
+<p>2，当有线程获得该对象的锁后，Monitor的Owner会存入该线程</p>
+<p>3，当再次有线程尝试获取锁，先检查Owner里面有没有值，有的话就进入EntryList阻塞队列，等结束后释放锁 (取出monitor对象中原来markwold的值给对象头)，阻塞队列才会重新开始非公平(不一定先来先得)竞争。</p>
+<p>4，如果临界区出现了异常，也会自动释放锁资源</p>
+<h5 id="synchronized进阶原理"><a href="#synchronized进阶原理" class="headerlink" title="synchronized进阶原理"></a>synchronized进阶原理</h5><p>1，Monitor锁是操作系统提供的重量级锁，如果有synchronied就直接使用显然不是最优方案。</p>
+<p>2，锁优化 是透明的，我们只需要正常使用synchronized关键字就可以。</p>
+<p>3，当不同线程对锁资源没有争抢，也就是说，不同线程访问临界区的时间是错开的，那么优先使用轻量级锁</p>
+<ul>
+<li>当某线程为某object对象加锁，会先在该线程的栈帧加入一条锁记录，记录的reference指向object，并尝试使用cas操作替换Record的地址和object的markword区域。替换成功则表示该线程获取轻量级锁成功。</li>
+</ul>
+<p><img src="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220503220953762.png" alt="image-20220503220953762"></p>
+<ul>
+<li><p>如果cas失败，会有两种情况，</p>
+<ul>
+<li>第一种：其他线程已经获取了该对象锁资源，那么就是发生了争抢，轻量级锁会 锁膨胀 成重量级锁</li>
+<li>第二种，该线程已经获得了对象锁资源，那么这次操作就是锁重入，这时再加一条记录用于计数，reference为object地址，record地址为null。</li>
+</ul>
+<p><img src="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220503221647565.png" alt="image-20220503221647565"></p>
+</li>
+<li><p>锁重入了多少次，就要释放多少次才能让其他线程能获取到该对象锁。锁的释放：</p>
+<ul>
+<li>当synchronized代码块执行完毕，先看有没有地址为空的锁记录，有的话就去掉一个记录</li>
+<li>当锁记录的值不为空时，尝试cas操作把record地址和object的markword的信息交换回来，如果成功，则释放成功，如果失败，则证明已经锁膨胀成重量级锁，进入重量级锁的解锁流程。</li>
+</ul>
+</li>
+</ul>
+<p>4，锁膨胀的过程</p>
+<p><img src="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220503222526885.png" alt="image-20220503222526885"></p>
+<ul>
+<li>由图，线程0已经获得object的轻量级锁，这时thread1过来争抢，将会进入锁膨胀过程。</li>
+<li>thread1会为object申请一个Monitor（重量级锁），并使得object的markword由轻量级锁(thread0锁记录)的地址变成Monitor的地址，monitor的Owner指向thread0，thread1进入EntryList阻塞队列。</li>
+<li>这时如果需要释放资源，先尝试cas把markword恢复给对象头，肯定失败，进入重量级解锁流程，即按照 Monitor 地址找到 Monitor 对象，设置 Owner 为 null，唤醒 EntryList 中 BLOCKED 线程。</li>
 </ul>
 
       
@@ -999,7 +1090,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-05-02 22:16:15" itemprop="dateModified" datetime="2022-05-02T22:16:15+08:00">2022-05-02</time>
+                <time title="修改时间：2022-05-03 16:07:48" itemprop="dateModified" datetime="2022-05-03T16:07:48+08:00">2022-05-03</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">

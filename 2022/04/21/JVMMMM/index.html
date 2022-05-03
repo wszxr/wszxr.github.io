@@ -33,10 +33,8 @@
 <meta property="og:image" content="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220502145058123.png">
 <meta property="og:image" content="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220502152418880.png">
 <meta property="og:image" content="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220502155551769.png">
-<meta property="og:image" content="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220502175743881.png">
-<meta property="og:image" content="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220502182040955.png">
 <meta property="article:published_time" content="2022-04-21T08:48:23.000Z">
-<meta property="article:modified_time" content="2022-05-02T14:16:15.579Z">
+<meta property="article:modified_time" content="2022-05-03T08:07:48.052Z">
 <meta property="article:author" content="你好">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220501163144925.png">
@@ -199,7 +197,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-05-02 22:16:15" itemprop="dateModified" datetime="2022-05-02T22:16:15+08:00">2022-05-02</time>
+                <time title="修改时间：2022-05-03 16:07:48" itemprop="dateModified" datetime="2022-05-03T16:07:48+08:00">2022-05-03</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -395,32 +393,50 @@ public static void main(String[] args) &#123;
 </ul>
 </li>
 </ol>
-<h2 id="2，垃圾回收"><a href="#2，垃圾回收" class="headerlink" title="2，垃圾回收"></a>2，垃圾回收</h2><h3 id="如何判断垃圾可以被回收？"><a href="#如何判断垃圾可以被回收？" class="headerlink" title="如何判断垃圾可以被回收？"></a>如何判断垃圾可以被回收？</h3><p>引用计数法</p>
-<ul>
+<h2 id="2，垃圾回收"><a href="#2，垃圾回收" class="headerlink" title="2，垃圾回收"></a>2，垃圾回收</h2><h3 id="如何判断垃圾可以被回收？"><a href="#如何判断垃圾可以被回收？" class="headerlink" title="如何判断垃圾可以被回收？"></a>如何判断垃圾可以被回收？</h3><h4 id="引用计数法"><a href="#引用计数法" class="headerlink" title="引用计数法"></a>引用计数法</h4><ul>
 <li><p>当被一个对象引用，计数加一，取消引用则减一</p>
 </li>
 <li><p>可能会出现循环引用，即两个对象除了互相引用外没有任何其它变量引用他们，无法使计数器归零，造成内存泄漏。</p>
 </li>
 </ul>
-<p>可达性分析算法（java中使用）</p>
-<ul>
+<h4 id="可达性分析算法（java中使用）"><a href="#可达性分析算法（java中使用）" class="headerlink" title="可达性分析算法（java中使用）"></a>可达性分析算法（java中使用）</h4><ul>
 <li><p>判断是否直接或者间接被根对象引用，不是的话就标记</p>
 </li>
 <li><p>根对象就是无论如何都不会被回收的一系列对象，例如：</p>
 <ul>
-<li><p>System Class（java启动时的系统类）</p>
+<li>System Class（java启动时的系统类）</li>
+</ul>
 </li>
 <li><p>操作系统运行时引用的java对象</p>
-</li>
-<li><p>被线程上锁的对象</p>
+<ul>
+<li>被线程上锁的对象</li>
+</ul>
 </li>
 <li><p>栈帧内引用的对象</p>
 </li>
 </ul>
+<h4 id="并发的可达性算法"><a href="#并发的可达性算法" class="headerlink" title="并发的可达性算法"></a>并发的可达性算法</h4><p> 我们知道执行可达性分析的时候是要阻塞用户线程的，当堆空间的对象过多时，可达性算法的扫描将会使得程序停顿很久，我们可以通过并发执行来提高效率。</p>
+<p>然而，在并发分析的时候，用户线程可能更改了某些对象的状态，所以并发执行可能带来两个问题。</p>
+<ul>
+<li>一是可能把应该标记为垃圾的对象错误标记为存活，这种情况并无大碍，下次再回收掉即可。</li>
+<li>二是把该存活的对象给标记为垃圾回收了，这样的结果是灾难的。</li>
+</ul>
+<p>解决方法如下：</p>
+<ul>
+<li><p>增量更新法：</p>
+</li>
+<li><p>如果经扫描的确认为安全（黑色）的对象在可达性分析期间被用户线程引用了一个未经扫描的对象（白色），那么会把此黑色对象置为灰色（已经被扫描过但是此对象上还存在没有被扫描过的引用），把这个引用记录下来，并发扫描结束后再把此灰色对象当作一个根对象扫描。</p>
+</li>
+<li><p>简单说就是黑色新引用了白色，黑色就会变成灰色。</p>
+</li>
+<li><p>原始快照法：</p>
+</li>
+<li><p>如果并发中灰色对象切断了白色对象的引用，会把此引用记录下来，并在结束后把该灰色对象当作root对象重新扫描一遍。</p>
+</li>
+<li><p>简单来说就是在开始分析的那一刻的快照被记录下来，先扫描那个快照，后边扫描并发中变化了的就可以了。</p>
 </li>
 </ul>
-<p>生存还是死亡（有复活机会，但只有一次）？</p>
-<p>这个话题分两种情况讨论，</p>
+<h4 id="生存还是死亡（有复活机会，但只有一次）？"><a href="#生存还是死亡（有复活机会，但只有一次）？" class="headerlink" title="生存还是死亡（有复活机会，但只有一次）？"></a>生存还是死亡（有复活机会，但只有一次）？</h4><p>这个话题分两种情况讨论，</p>
 <ul>
 <li><p>首先，需要两次标记才会确认对象要被回收，第一次标记是在检查到没有和GCroot相连接的引用链时。</p>
 </li>
@@ -431,8 +447,7 @@ public static void main(String[] args) &#123;
 <li><p>事实上，不要使用finalize()；深入理解jvm这本书上甚至建议我们忘了finalize()这个方法······哈哈哈哈哈哈！！！</p>
 </li>
 </ul>
-<p>四种引用</p>
-<ul>
+<h3 id="四种引用"><a href="#四种引用" class="headerlink" title="四种引用"></a>四种引用</h3><ul>
 <li><p>强引用 ：只有当root对象都没有通过强引用引用该对象时，该对象才能被垃圾回收。</p>
 </li>
 <li><p>软引用：只被软引用引用的对象，在一次垃圾回收之后，内存还是不够的情况下，就再次回收把被软引用的对象也回收掉。可以配合引用队列释放引用自身的内存。</p>
@@ -460,6 +475,8 @@ public static void main(String[] args) &#123;
 </ul>
 <h3 id="垃圾回收算法"><a href="#垃圾回收算法" class="headerlink" title="垃圾回收算法"></a>垃圾回收算法</h3><ul>
 <li>都起源于分代收集理论</li>
+<li>分代导致了多种gc方式，</li>
+<li>minorgc只回收新生代，majorgc只回收老年代（仅cms收集器实现）mixedgc收集全部新生代和部分老年代（仅G1收集器有）</li>
 </ul>
 <p>1，标记清除算法</p>
 <p>先标记可以释放的对象空间，后清除，这里的清除指的是记录下来被释放的内存的开始地址和结束地址，使他们可以再次被分配。</p>
@@ -509,68 +526,124 @@ public static void main(String[] args) &#123;
 <li>当大对象（就算是清空新生代的伊甸园也放不下）存入时，不会触发垃圾回收，会直接进入老年代。</li>
 </ul>
 <h3 id="跨代引用假说"><a href="#跨代引用假说" class="headerlink" title="跨代引用假说"></a>跨代引用假说</h3><ul>
-<li>当老年代的对象引用了新生代的对象时，minorGc就无法清除新生代的此对象，这时我们必须扫描新生代和老年代所有的对象用以判断该对象是不是可以被回收，显然这很不科学。</li>
-<li>跨代引用假说，等到新生代的此对象随着年龄的增加晋升到老年代中，就不存在跨代引用了。为了实现：<ul>
+<li><p>当老年代的对象引用了新生代的对象时，minorGc就无法清除新生代的此对象，这时我们必须扫描新生代和老年代所有的对象用以判断该对象是不是可以被回收，显然这很不科学。</p>
+</li>
+<li><p>跨代引用假说，等到新生代的此对象随着年龄的增加晋升到老年代中，就不存在跨代引用了。为了实现：</p>
+<ul>
 <li>我们在新生代创建一个叫做”记忆集“的全局数据结构，这个结构把老年代划分成了很多小块，只有包含了跨代引用的内存块才会和新生代对象一起被加入到GCRoots进行扫描。</li>
 </ul>
 </li>
-<li>HotSpot的实现<ul>
-<li>使用卡表实现数据集(相当于HashMap和Map的关系)，卡表是一个字节数组，每一个元素都标识了一个卡页（内存块），只要卡页中有一个对象存在着跨代引用指针，就把该数组元素的值变成1（变脏）没有则标识为0.</li>
-<li>在垃圾收集的时候，判断卡页是否变脏，脏了就加入gcroots一并扫描。</li>
+<li><p>HotSpot的实现</p>
+<ul>
+<li><p>使用卡表实现数据集(相当于HashMap和Map的关系)，在HotSpot中，卡表是一个字节数组。卡表中的每个元素对应其标识内存区域的一块特定大小的内存。这一块内存叫卡页。HotSpot的卡页是512字节。只要一个卡页中有一个对象存在跨代引用，就将对应卡表的数组元素的值标识为1，称为元素变脏。没有就为0。</p>
+</li>
+<li><p>CARD_TABLE [this address &gt;&gt; 9] &#x3D; DIRTY;</p>
+</li>
+<li><p>在垃圾收集的时候，判断卡页是否变脏，脏了就加入gcroots一并扫描。</p>
+</li>
+</ul>
+</li>
+<li><p>关于如何使得对象被引用时同时使得对应的卡页变脏？</p>
+<ul>
+<li>使用了写屏障，具体就是aop环绕编程，在引用变量赋值操作的时候就进行卡表的更新。</li>
+</ul>
+</li>
+<li><p>虚共享问题，java操作单位是缓存行，当两个对象在同一个缓存行中并发操作，就会导致虚共享</p>
+<ul>
+<li><p>解决if (CARD_TABLE [this address &gt;&gt; 9] !&#x3D; DIRTY) </p>
+<pre><code>     CARD_TABLE [this address &gt;&gt; 9] = DIRTY;
+</code></pre>
+<p>先判断是不是已经是脏表了</p>
+</li>
 </ul>
 </li>
 </ul>
 <h3 id="GC相关参数"><a href="#GC相关参数" class="headerlink" title="GC相关参数"></a>GC相关参数</h3><p><img src="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220502152418880.png" alt="image-20220502152418880"></p>
-<h3 id="垃圾回收器"><a href="#垃圾回收器" class="headerlink" title="垃圾回收器"></a>垃圾回收器</h3><p>1，串行垃圾回收器</p>
+<h3 id="垃圾回收器"><a href="#垃圾回收器" class="headerlink" title="垃圾回收器"></a>垃圾回收器</h3><p>垃圾回收器是垃圾回收算法的实践者。</p>
+<p>接下来是7种不同的hotspot收集器</p>
+<p>新生代：Serial,parNew,Parallel Scavenge,G1</p>
+<p>老年代：CMS ，Serial Old(MSC)，Parallel Old,G1</p>
+<h4 id="1，Serial-x2F-Serial-Old"><a href="#1，Serial-x2F-Serial-Old" class="headerlink" title="1，Serial&#x2F;Serial Old"></a>1，Serial&#x2F;Serial Old</h4><p>Serial:新生代，单线程，串行，标记清除算法</p>
 <ul>
-<li>单线程。</li>
-<li>适合个人电脑，堆内存比较小的情况。</li>
+<li>会阻塞用户线程</li>
 </ul>
-<p>2，吞吐量优先回收器(java1.8默认使用)</p>
+<p>Serial Old：配合Serial使用，作为老年代垃圾收集器，单线程，串行，标记整理算法</p>
 <ul>
-<li>多线程，需要多核cpu支持（线程数默认等于核数）。</li>
-<li>单位时间内，stw（stop the world）的总时间最短。</li>
+<li>阻塞用户线程</li>
 </ul>
-<p>3，响应时间优先</p>
+<h4 id="2，ParNew-Serial的并行版本"><a href="#2，ParNew-Serial的并行版本" class="headerlink" title="2，ParNew(Serial的并行版本)"></a>2，ParNew(Serial的并行版本)</h4><p>新生代，标记复制算法，多线程，</p>
 <ul>
-<li>多线程，需要多核cpu支持（线程数等于核数）。</li>
-<li>单次stw的时间最短.</li>
+<li><p>除了多线程并行收集以外，其他和Serial差别不大</p>
+</li>
+<li><p>是CMS(一个老年代收集器)开启后默认开启的新生代收集器</p>
+</li>
+<li><p>阻塞用户线程</p>
+</li>
+</ul>
+<h4 id="3，Parallel-Scavenge"><a href="#3，Parallel-Scavenge" class="headerlink" title="3，Parallel Scavenge"></a>3，Parallel Scavenge</h4><p>新生代，标记复制算法，多线程，</p>
+<ul>
+<li><p>吞吐量优先，尽量缩短垃圾收集占用的总时间的比值，除此之外和ParNew差不多</p>
+</li>
+<li><p>吞吐量&#x3D;运行代码时间&#x2F;(运行代码时间+垃圾收集时间)</p>
+</li>
+<li><p>一个和ParNew的区分就是它能自动调节</p>
+</li>
+</ul>
+<h4 id="4，Parallel-Old-Parallel-Scavenge的老年代版本"><a href="#4，Parallel-Old-Parallel-Scavenge的老年代版本" class="headerlink" title="4，Parallel Old(Parallel Scavenge的老年代版本)"></a>4，Parallel Old(Parallel Scavenge的老年代版本)</h4><p>老年代，标记整理算法，其他和Parallel Scavenge差不多</p>
+<ul>
+<li>阻塞用户线程</li>
+<li>在注重吞吐量或资源稀缺的情况下，可以考虑Parallel Scavenge&#x2F;Parallel Old组合</li>
+</ul>
+<h4 id="5，CMS-Concurrent-Mark-Sweep"><a href="#5，CMS-Concurrent-Mark-Sweep" class="headerlink" title="5，CMS(Concurrent Mark Sweep)"></a>5，CMS(Concurrent Mark Sweep)</h4><p>老年代，多线程，并发标记，标记清除算法</p>
+<ul>
+<li>响应时间优先，单次stw的时间最短.</li>
 </ul>
 <p><img src="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220502155551769.png" alt="image-20220502155551769"></p>
 <ul>
-<li>从图中可以看的出来，只有重新标记的时候会阻塞用户线程，所以单次响应时间很短。</li>
+<li>初次标记stw，但是仅仅标记gcroots能关联到的对象，速度很快，会阻塞用户线程</li>
+<li>并发标记会变量整个对象图，时间较长但是是和用户线程并发执行，使用的是并发可达性分析的增量更新法。</li>
+<li>重新标记是标记那些在并发标记的同时用户线程产生的增量，会阻塞用户线程</li>
+<li>并发清除，清除线程和用户线程并发运行<ul>
+<li>由于并发会降低总程序的吞吐量，所以出现和用户线程交替运行(i-cms，增量式并发收集器)这种变种,事实证明，效果很一般，jdk7已废弃.</li>
 </ul>
-<p>4,G1垃圾回收器</p>
+</li>
+</ul>
+<p>缺点：</p>
 <ul>
-<li>jdk9默认，jdk8需要-XX:+UseG1Gc开启</li>
-<li>同时注重吞吐量和低延时(默认200ms)，多线程</li>
-<li>会将堆划分为多个Region，每个区域独立作为伊甸园，幸存区和老年代的一种</li>
-<li>整体上是标记整理，Region之间是复制算法</li>
-<li>回收阶段</li>
+<li>cms在并发清理的时候用户线程同时也在产生对象，产生的垃圾（浮动垃圾）只能在下一次才能回收掉，所以需要预留足够的空间给用户线程使用，如果预留的空间不足以满足并发的时候的需要就会并发失败(Concurrent Mode Failure),临时启用Serial Old收集器（串行，会阻塞用户线程）</li>
+<li>CMS基于标记清除算法，会产生内存碎片，给的解决方案是，在若干次fullGC后，先整理碎片，再回收。</li>
 </ul>
-<p><img src="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220502175743881.png" alt="image-20220502175743881"></p>
-<ol>
-<li>Young Collection（新生代回收）<ul>
-<li>伊甸园满了会复制到幸存区</li>
-<li>在Young Collection时会初始标记(标记ROOT对象)</li>
-</ul>
-</li>
-<li>Young Collection+Concurrent Mark(并发标记)<ul>
-<li>当老年代占用的堆空间达到一定阈值的时候，进行并发标记(默认45%)，可以用-XX:InitiatingHeapOccupancyPercent&#x3D;&#96;&#96;%来修改</li>
-<li>并发标记不会阻塞用户线程，初始标记会阻塞线程</li>
-</ul>
-</li>
-<li>Mixed Collection（混合收集）</li>
-</ol>
-<p><img src="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220502182040955.png" alt="image-20220502182040955"></p>
+<h4 id="6-G1收集器（garbage-first"><a href="#6-G1收集器（garbage-first" class="headerlink" title="6,G1收集器（garbage first)"></a>6,G1收集器（garbage first)</h4><p>在jdk9，G1已经替代了parallel Scavebge&#x2F;parallel Old组合，Cms完全被标记为(Deprecate)不推荐使用，并成为jdk9的默认垃圾收集器</p>
+<p>内存布局的变化：</p>
 <ul>
-<li><p>最终标记会stw</p>
-</li>
-<li><p>当无法达到目标时间时，G1会先处理回收价值高的老年代</p>
-</li>
-<li><p>跨代</p>
-</li>
+<li>把堆内存分为若干个Region,，每一个Region都可以是新生代，幸存区，或者是老年代的其中一个。</li>
 </ul>
+<p>面向堆的任何部分组成回收集：</p>
+<ul>
+<li>以前的回收器有minorGC,majorGC,fullGC，分别回收新生代，老年代，全部。G1的Mixed GC模式，可以面向堆的任何部分组成回收集。</li>
+<li>G1的收集器会去追踪各个Region里面的堆积的垃圾的”价值”大小，然后在后台维护一个优先级列表，根据用户允许的停顿时间，价值大的先回收(garbage first名字的由来)，这样就尽可能保证了手机效率。</li>
+</ul>
+<p>G1面临的问题：</p>
+<p>跨代引用如何实现？</p>
+<ul>
+<li>G1的记忆集是个哈希表，key是 别的存在引用我们的Region的起始地址，Value是一个集合，里边是卡表的索引号。需要写前屏障和写后屏障一起配合。</li>
+<li>G1记忆集的复杂性会导致需要较多堆空间（10——20%）来维护记忆集工作。</li>
+</ul>
+<p>G1运行流程：</p>
+<p>​    1，初始标记，仅仅是标记一下GC roots能直接关联到的对象，并修改TAMS指针的值，使Region中的并发分配区域可用。虽然初始标记需要阻塞用户线程(时间很短)，但是G1借助和minorGc同步运行此阶段，所以此阶段并没有额外的停顿。</p>
+<ul>
+<li>TAMS指针：回收过程中用户线程还是会分配对象，G1在每个Region中设置了两个TAMS指针专门划分区域供并发时分配对象使用。</li>
+</ul>
+<p>​    2，并发标记，从gcroots开始进行并发可达性分析，使用的是原始快照法。</p>
+<p>​    3，最终标记，处理并发标记原始快照遗留下的SATB记录（记录了并发时有引用变动的对象），会阻塞用户线程</p>
+<p>​    4，筛选回收，基于标记&#x3D;复制，把存活的对象复制到新的region中，旧的Region清空。</p>
+<ul>
+<li>注意，宏观上看，G1使用的时标记整理算法，但是微观Region之间采用的是标记复制算法。和CMS的标记清除不一样，不会产生内存碎片。</li>
+</ul>
+<h4 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h4><p>1，大对象直接进入老年代</p>
+<p>2，当一个类的所有实例都不再存货并且类所在的加载器的所有类都没被使用，就可以卸载此类，一般框架中会有需求</p>
+<p>3，Region中有一类特殊的Hunongous Region专门用来存储大对象，对象容量超过了Region的一般就判断为大对象，当对象超过了region大小会存储在连续的的Hunongous Region里，G1优先回收大对象，并且不会复制。</p>
+<p>​    </p>
 
     </div>
 
@@ -651,7 +724,7 @@ public static void main(String[] args) &#123;
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#JVM"><span class="nav-number">1.</span> <span class="nav-text">JVM</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1%EF%BC%8C%E5%86%85%E5%AD%98%E7%BB%93%E6%9E%84"><span class="nav-number">1.1.</span> <span class="nav-text">1，内存结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A8%8B%E5%BA%8F%E8%AE%A1%E6%95%B0%E5%99%A8%EF%BC%88pc-Register%EF%BC%89"><span class="nav-number">1.1.1.</span> <span class="nav-text">程序计数器（pc Register）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%A0%88%EF%BC%88jvm-Stacks%EF%BC%89"><span class="nav-number">1.1.2.</span> <span class="nav-text">虚拟机栈（jvm Stacks）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%AC%E5%9C%B0%E6%96%B9%E6%B3%95%E6%A0%88%EF%BC%88Native-Method-Stacks%EF%BC%89"><span class="nav-number">1.1.3.</span> <span class="nav-text">本地方法栈（Native Method Stacks）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A0%86%EF%BC%88Heap%EF%BC%89"><span class="nav-number">1.1.4.</span> <span class="nav-text">堆（Heap）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E5%8C%BA%EF%BC%88Method-Area"><span class="nav-number">1.1.5.</span> <span class="nav-text">方法区（Method Area)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%B4%E6%8E%A5%E5%86%85%E5%AD%98-DirectMemory"><span class="nav-number">1.1.6.</span> <span class="nav-text">直接内存(DirectMemory)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%EF%BC%8C%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6"><span class="nav-number">1.2.</span> <span class="nav-text">2，垃圾回收</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%AD%E5%9E%83%E5%9C%BE%E5%8F%AF%E4%BB%A5%E8%A2%AB%E5%9B%9E%E6%94%B6%EF%BC%9F"><span class="nav-number">1.2.1.</span> <span class="nav-text">如何判断垃圾可以被回收？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E7%AE%97%E6%B3%95"><span class="nav-number">1.2.2.</span> <span class="nav-text">垃圾回收算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Apple%E5%BC%8F%E5%9B%9E%E6%94%B6"><span class="nav-number">1.2.3.</span> <span class="nav-text">Apple式回收</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B7%A8%E4%BB%A3%E5%BC%95%E7%94%A8%E5%81%87%E8%AF%B4"><span class="nav-number">1.2.4.</span> <span class="nav-text">跨代引用假说</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GC%E7%9B%B8%E5%85%B3%E5%8F%82%E6%95%B0"><span class="nav-number">1.2.5.</span> <span class="nav-text">GC相关参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8"><span class="nav-number">1.2.6.</span> <span class="nav-text">垃圾回收器</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#JVM"><span class="nav-number">1.</span> <span class="nav-text">JVM</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1%EF%BC%8C%E5%86%85%E5%AD%98%E7%BB%93%E6%9E%84"><span class="nav-number">1.1.</span> <span class="nav-text">1，内存结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A8%8B%E5%BA%8F%E8%AE%A1%E6%95%B0%E5%99%A8%EF%BC%88pc-Register%EF%BC%89"><span class="nav-number">1.1.1.</span> <span class="nav-text">程序计数器（pc Register）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%A0%88%EF%BC%88jvm-Stacks%EF%BC%89"><span class="nav-number">1.1.2.</span> <span class="nav-text">虚拟机栈（jvm Stacks）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%AC%E5%9C%B0%E6%96%B9%E6%B3%95%E6%A0%88%EF%BC%88Native-Method-Stacks%EF%BC%89"><span class="nav-number">1.1.3.</span> <span class="nav-text">本地方法栈（Native Method Stacks）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A0%86%EF%BC%88Heap%EF%BC%89"><span class="nav-number">1.1.4.</span> <span class="nav-text">堆（Heap）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E5%8C%BA%EF%BC%88Method-Area"><span class="nav-number">1.1.5.</span> <span class="nav-text">方法区（Method Area)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%B4%E6%8E%A5%E5%86%85%E5%AD%98-DirectMemory"><span class="nav-number">1.1.6.</span> <span class="nav-text">直接内存(DirectMemory)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%EF%BC%8C%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6"><span class="nav-number">1.2.</span> <span class="nav-text">2，垃圾回收</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%AD%E5%9E%83%E5%9C%BE%E5%8F%AF%E4%BB%A5%E8%A2%AB%E5%9B%9E%E6%94%B6%EF%BC%9F"><span class="nav-number">1.2.1.</span> <span class="nav-text">如何判断垃圾可以被回收？</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BC%95%E7%94%A8%E8%AE%A1%E6%95%B0%E6%B3%95"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">引用计数法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%AF%E8%BE%BE%E6%80%A7%E5%88%86%E6%9E%90%E7%AE%97%E6%B3%95%EF%BC%88java%E4%B8%AD%E4%BD%BF%E7%94%A8%EF%BC%89"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">可达性分析算法（java中使用）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B9%B6%E5%8F%91%E7%9A%84%E5%8F%AF%E8%BE%BE%E6%80%A7%E7%AE%97%E6%B3%95"><span class="nav-number">1.2.1.3.</span> <span class="nav-text">并发的可达性算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%94%9F%E5%AD%98%E8%BF%98%E6%98%AF%E6%AD%BB%E4%BA%A1%EF%BC%88%E6%9C%89%E5%A4%8D%E6%B4%BB%E6%9C%BA%E4%BC%9A%EF%BC%8C%E4%BD%86%E5%8F%AA%E6%9C%89%E4%B8%80%E6%AC%A1%EF%BC%89%EF%BC%9F"><span class="nav-number">1.2.1.4.</span> <span class="nav-text">生存还是死亡（有复活机会，但只有一次）？</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9B%E7%A7%8D%E5%BC%95%E7%94%A8"><span class="nav-number">1.2.2.</span> <span class="nav-text">四种引用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E7%AE%97%E6%B3%95"><span class="nav-number">1.2.3.</span> <span class="nav-text">垃圾回收算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Apple%E5%BC%8F%E5%9B%9E%E6%94%B6"><span class="nav-number">1.2.4.</span> <span class="nav-text">Apple式回收</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B7%A8%E4%BB%A3%E5%BC%95%E7%94%A8%E5%81%87%E8%AF%B4"><span class="nav-number">1.2.5.</span> <span class="nav-text">跨代引用假说</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GC%E7%9B%B8%E5%85%B3%E5%8F%82%E6%95%B0"><span class="nav-number">1.2.6.</span> <span class="nav-text">GC相关参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8"><span class="nav-number">1.2.7.</span> <span class="nav-text">垃圾回收器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1%EF%BC%8CSerial-x2F-Serial-Old"><span class="nav-number">1.2.7.1.</span> <span class="nav-text">1，Serial&#x2F;Serial Old</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2%EF%BC%8CParNew-Serial%E7%9A%84%E5%B9%B6%E8%A1%8C%E7%89%88%E6%9C%AC"><span class="nav-number">1.2.7.2.</span> <span class="nav-text">2，ParNew(Serial的并行版本)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3%EF%BC%8CParallel-Scavenge"><span class="nav-number">1.2.7.3.</span> <span class="nav-text">3，Parallel Scavenge</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4%EF%BC%8CParallel-Old-Parallel-Scavenge%E7%9A%84%E8%80%81%E5%B9%B4%E4%BB%A3%E7%89%88%E6%9C%AC"><span class="nav-number">1.2.7.4.</span> <span class="nav-text">4，Parallel Old(Parallel Scavenge的老年代版本)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5%EF%BC%8CCMS-Concurrent-Mark-Sweep"><span class="nav-number">1.2.7.5.</span> <span class="nav-text">5，CMS(Concurrent Mark Sweep)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-G1%E6%94%B6%E9%9B%86%E5%99%A8%EF%BC%88garbage-first"><span class="nav-number">1.2.7.6.</span> <span class="nav-text">6,G1收集器（garbage first)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9E%E6%88%98"><span class="nav-number">1.2.7.7.</span> <span class="nav-text">实战</span></a></li></ol></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
