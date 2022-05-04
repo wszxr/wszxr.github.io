@@ -28,13 +28,10 @@
 <meta property="og:description" content="JVM1，内存结构程序计数器（pc Register）">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220501163144925.png">
-<meta property="og:image" content="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220501190955778.png">
-<meta property="og:image" content="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220501191239463.png">
-<meta property="og:image" content="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220502145058123.png">
-<meta property="og:image" content="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220502152418880.png">
-<meta property="og:image" content="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220502155551769.png">
+<meta property="og:image" content="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220504190429322.png">
+<meta property="og:image" content="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220504191356763.png">
 <meta property="article:published_time" content="2022-04-21T08:48:23.000Z">
-<meta property="article:modified_time" content="2022-05-03T08:07:48.052Z">
+<meta property="article:modified_time" content="2022-05-04T15:17:30.574Z">
 <meta property="article:author" content="你好">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220501163144925.png">
@@ -197,7 +194,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-05-03 16:07:48" itemprop="dateModified" datetime="2022-05-03T16:07:48+08:00">2022-05-03</time>
+                <time title="修改时间：2022-05-04 23:17:30" itemprop="dateModified" datetime="2022-05-04T23:17:30+08:00">2022-05-04</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -318,332 +315,231 @@
 </li>
 <li><p>示例</p>
 </li>
-<li><pre><code class="java">/**
- * 关于串池的题
- */
-public static void main(String[] args) &#123;
-    String s1 = &quot;a&quot;;
-    String s2 = &quot;b&quot;;
-    //常量拼接
-    String s3 = &quot;a&quot;+&quot;b&quot;;
-
-    //s4,变量拼接实际上是新建一个空的StringBuild(),然后.append(&quot;a&quot;).append(&quot;b&quot;).toString
-    //toString会把拼接好的值放到一个新的对象中，然后复制给s4
-    String s4 = s1+s2;
+<li><p>&#96;&#96;&#96;java<br>&#x2F;**</p>
+<ul>
+<li>关于串池的题</li>
+</ul>
+<p> *&#x2F;<br>public static void main(String[] args) {<br>    String s1 &#x3D; “a”;<br>    String s2 &#x3D; “b”;<br>    &#x2F;&#x2F;常量拼接<br>    String s3 &#x3D; “a”+”b”;</p>
+<pre><code>//s4,变量拼接实际上是新建一个空的StringBuild(),然后.append(&quot;a&quot;).append(&quot;b&quot;).toString
+//toString会把拼接好的值放到一个新的对象中，然后复制给s4
+String s4 = s1+s2;
 
 
-    String s5 = &quot;ab&quot;;
+String s5 = &quot;ab&quot;;
 
-    //尝试将字符串对象放入串池，如果串池里面有相同的常量，就不加入，
-    // 如果没有，就加入（jdk1.8以下会拷贝一份再加入拷贝的对象，拷贝出来的对象和原对象不一样），
-    //无论加入或者是没加入都会返回串池中字符串常量对应的对象
-    String s6 = s4.intern();
+//尝试将字符串对象放入串池，如果串池里面有相同的常量，就不加入，
+// 如果没有，就加入（jdk1.8以下会拷贝一份再加入拷贝的对象，拷贝出来的对象和原对象不一样），
+//无论加入或者是没加入都会返回串池中字符串常量对应的对象
+String s6 = s4.intern();
 
-    System.out.println(s3==s4);//false =&gt;             false=&gt;//s3的对象在串池中，s4的在堆里面
-    System.out.println(s3==s5);//true  =&gt;正确答案      true=&gt;因为String是不可变的，而且都是常量，因此结果是确定的，在编译期间就优化成&quot;ab&quot;
-    System.out.println(s3==s6);//true  =&gt;             true
-&#125;
+System.out.println(s3==s4);//false =&gt;             false=&gt;//s3的对象在串池中，s4的在堆里面
+System.out.println(s3==s5);//true  =&gt;正确答案      true=&gt;因为String是不可变的，而且都是常量，因此结果是确定的，在编译期间就优化成&quot;ab&quot;
+System.out.println(s3==s6);//true  =&gt;             true
 </code></pre>
-</li>
-<li><p>题目总结：</p>
-<ul>
-<li>当串池中没有时，新建一个String对象会加入串池，之后创建的字符串常量如果是一样的，那么就统一用串池中的那个对象。</li>
-<li>字符串常量对象拼接会在编译期间优化成拼接后的常量；而字符串变量拼接使用的是StringBuild，产生的对象存在堆中。</li>
-<li>intern()方法会尝试将堆中的对象放入常量池，串池中有此常量，那就不加入，没有则加入(java1.8)；无论加入成功或者是失败方法返回值都是串池中对应常量的对象。</li>
-</ul>
-</li>
-<li><p>StringTable的位置：</p>
-<ul>
-<li>java1.7的StringTable从永久代转到了堆空间中，因为永久代只有fullGC时才会执行回收。</li>
-</ul>
-</li>
-<li><p>StringTable也会被垃圾回收。</p>
-</li>
-<li><p>StringTable调优：</p>
-<ul>
-<li>StringTable实际上是一个hashTable，根据实际情况，调整桶的个数就是调优了，桶的个数的最小值是1009。</li>
-</ul>
-</li>
+<p>}</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br></pre></td><td class="code"><pre><span class="line">     </span><br><span class="line">     + 题目总结：</span><br><span class="line"></span><br><span class="line">       + 当串池中没有时，新建一个String对象会加入串池，之后创建的字符串常量如果是一样的，那么就统一用串池中的那个对象。</span><br><span class="line">       + 字符串常量对象拼接会在编译期间优化成拼接后的常量；而字符串变量拼接使用的是StringBuild，产生的对象存在堆中。</span><br><span class="line">       + intern()方法会尝试将堆中的对象放入常量池，串池中有此常量，那就不加入，没有则加入(java1.8)；无论加入成功或者是失败方法返回值都是串池中对应常量的对象。</span><br><span class="line">     </span><br><span class="line">     + StringTable的位置：</span><br><span class="line"></span><br><span class="line">       + java1.7的StringTable从永久代转到了堆空间中，因为永久代只有fullGC时才会执行回收。</span><br><span class="line"></span><br><span class="line">     + StringTable也会被垃圾回收。</span><br><span class="line"></span><br><span class="line">     + StringTable调优：</span><br><span class="line"></span><br><span class="line">       + StringTable实际上是一个hashTable，根据实际情况，调整桶的个数就是调优了，桶的个数的最小值是1009。</span><br><span class="line"></span><br><span class="line">### 直接内存(DirectMemory)</span><br><span class="line"></span><br><span class="line">1. 定义：</span><br><span class="line"></span><br><span class="line">   + 常用于NIO操作，作为数据缓冲区。</span><br><span class="line">   + 分配和回收此内存空间成本较高，但是读写性能高。</span><br><span class="line">   + 不受jvm回收管理，因为是操作系统的内存。</span><br><span class="line"></span><br><span class="line">   </span><br><span class="line"></span><br><span class="line">2. ![image-20220501190955778](https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220501190955778.png)</span><br><span class="line"></span><br><span class="line">3. ![image-20220501191239463](https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220501191239463.png)</span><br><span class="line"></span><br><span class="line">   + 直接内存，java代码可以直接访问，比原始io少了一次缓存复制的过程。</span><br><span class="line"></span><br><span class="line">4. 直接内存的分配和回收都由unsafe对象完成：</span><br><span class="line"></span><br><span class="line">   + 以ByteBuffer为例：它的构造器中获取了unsafe实例，并且调用unsafe实例的allocatememory（）和setmemory（）两个方法分配了直接内存。然后还使用Cleaner（虚引用对象）监测ByteBuffer实例，当ByteBuffer被GC回收时，会在Reference Handler线程中调用Cleaner的clean(),进而调用clean()中的unsafe.freeMemory()方法对直接内存进行释放。</span><br><span class="line">   + java中默认禁止了显式GC，因为System.gc()是fullGC，会使得程序停留时间过长。</span><br><span class="line">   + 这时候只能等待jvm进行GC，或者是直接使用unsafe对象的.freeMemory()方法。</span><br><span class="line">   + Unsafe只能通过反射强制获取实例。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 2，垃圾回收</span><br><span class="line"></span><br><span class="line">### 如何判断垃圾可以被回收？</span><br><span class="line"></span><br><span class="line">#### 引用计数法</span><br><span class="line"></span><br><span class="line">+ 当被一个对象引用，计数加一，取消引用则减一</span><br><span class="line"></span><br><span class="line">+ 可能会出现循环引用，即两个对象除了互相引用外没有任何其它变量引用他们，无法使计数器归零，造成内存泄漏。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### 可达性分析算法（java中使用）</span><br><span class="line"></span><br><span class="line">+ 判断是否直接或者间接被根对象引用，不是的话就标记</span><br><span class="line">+ 根对象就是无论如何都不会被回收的一系列对象，例如：</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">+ System Class（java启动时的系统类）</span><br><span class="line">+ 操作系统运行时引用的java对象</span><br><span class="line">+ 被线程上锁的对象</span><br><span class="line">+ 栈帧内引用的对象</span><br><span class="line"></span><br><span class="line">#### 并发的可达性算法</span><br><span class="line"></span><br><span class="line"> 我们知道执行可达性分析的时候是要阻塞用户线程的，当堆空间的对象过多时，可达性算法的扫描将会使得程序停顿很久，我们可以通过并发执行来提高效率。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">然而，在并发分析的时候，用户线程可能更改了某些对象的状态，所以并发执行可能带来两个问题。</span><br><span class="line"></span><br><span class="line">+ 一是可能把应该标记为垃圾的对象错误标记为存活，这种情况并无大碍，下次再回收掉即可。</span><br><span class="line">+ 二是把该存活的对象给标记为垃圾回收了，这样的结果是灾难的。</span><br><span class="line"></span><br><span class="line">解决方法如下：</span><br><span class="line"></span><br><span class="line">+ 增量更新法：</span><br><span class="line"></span><br><span class="line">+ 如果经扫描的确认为安全（黑色）的对象在可达性分析期间被用户线程引用了一个未经扫描的对象（白色），那么会把此黑色对象置为灰色（已经被扫描过但是此对象上还存在没有被扫描过的引用），把这个引用记录下来，并发扫描结束后再把此灰色对象当作一个根对象扫描。</span><br><span class="line">+ 简单说就是黑色新引用了白色，黑色就会变成灰色。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">+ 原始快照法：</span><br><span class="line">+ 如果并发中灰色对象切断了白色对象的引用，会把此引用记录下来，并在结束后把该灰色对象当作root对象重新扫描一遍。</span><br><span class="line">+ 简单来说就是在开始分析的那一刻的快照被记录下来，先扫描那个快照，后边扫描并发中变化了的就可以了。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### 生存还是死亡（有复活机会，但只有一次）？</span><br><span class="line"></span><br><span class="line">这个话题分两种情况讨论，</span><br><span class="line"></span><br><span class="line">+ 首先，需要两次标记才会确认对象要被回收，第一次标记是在检查到没有和GCroot相连接的引用链时。</span><br><span class="line"></span><br><span class="line">+ 第一种情况：如果对象被判断没有必要执行finalize（）方法，比如没有覆盖过finalize（）方法或者说finalize方法已经被调用过了（此方法只能被调用一次），那么就直接再次标记为可回收状态。</span><br><span class="line">+ 第二种情况：对象被判断要执行finalize（）方法，比如对象覆盖过finalize（）方法，那么第一次标记之后，会进入F-Queue队列；然后由一个优先级很低的Finalizer线程来调用（只保证开始执行，不保证执行结束）队列中对象的finalize（）方法，在此期间，如果对象自救(再次被变量引用，例如在finalize()中把this赋值给某变量)，那么被标记的对象就会”复活“,复活后的对象的finalize（）方法将不能再被调用；如果没复活，那应该就真的该“死”（被回收）了。</span><br><span class="line"></span><br><span class="line">+ 事实上，不要使用finalize()；深入理解jvm这本书上甚至建议我们忘了finalize()这个方法······哈哈哈哈哈哈！！！</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 四种引用</span><br><span class="line"></span><br><span class="line">+ 强引用 ：只有当root对象都没有通过强引用引用该对象时，该对象才能被垃圾回收。</span><br><span class="line"></span><br><span class="line">+ 软引用：只被软引用引用的对象，在一次垃圾回收之后，内存还是不够的情况下，就再次回收把被软引用的对象也回收掉。可以配合引用队列释放引用自身的内存。</span><br><span class="line">+ 弱引用：只被弱引用引用的对象，只要发生垃圾回收，就会被当作垃圾回收掉。可以配合引用队列释放引用自身的内存。</span><br><span class="line">+ 虚引用：为一个对象设置虚引用的唯一目的就是当这个对象被回收时收到一个系统通知，当虚引用引用的对象被回收时，虚引用会进入引用队列，由References Handler线程调用相关方法释放内存，例如Cleaner和ByteBuffer。必须配合引用队列使用。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">+ 应用：软引用</span><br><span class="line">  + 可以使用软引用和弱引用引用不太重要的资源（读取图片等），当内存不够时，会自动回收。</span><br><span class="line">  + SoftReference&lt;Thread&gt; a = new SoftReference&lt;&gt;(t1);这样就可以使得a软引用t1线程对象。a.get()可以获得被引用的对象。</span><br><span class="line">  + 我们可以定义一个软引用队列作为SoftReference的参数，即可关联。也可以手动移除队列中的无用软引用对象。</span><br><span class="line">    +    //引用队列</span><br><span class="line">        ReferenceQueue&lt;Thread&gt; queue = new ReferenceQueue&lt;&gt;();</span><br><span class="line">         //关联</span><br><span class="line">         SoftReference&lt;Thread&gt; a = new SoftReference&lt;&gt;(t1,queue);</span><br><span class="line">    + t1被回收时，SoftReference入队列，t1回收完，SoftReference为空，我们人为的从队列取出，由gc回收。</span><br><span class="line">+ 应用：弱引用：</span><br><span class="line">  + 和软引用差不多，SoftReference换成WeakReference就可以了。自身的释放也需要配合引用队列。</span><br><span class="line"></span><br><span class="line">### 垃圾回收算法</span><br><span class="line"></span><br><span class="line">+ 都起源于分代收集理论</span><br><span class="line">+ 分代导致了多种gc方式，</span><br><span class="line">+ minorgc只回收新生代，majorgc只回收老年代（仅cms收集器实现）mixedgc收集全部新生代和部分老年代（仅G1收集器有）,fullGc回收堆空间所有范围。</span><br><span class="line"></span><br><span class="line">1，标记清除算法</span><br><span class="line"></span><br><span class="line">先标记可以释放的对象空间，后清除，这里的清除指的是记录下来被释放的内存的开始地址和结束地址，使他们可以再次被分配。</span><br><span class="line">+ 优点，只需要记录开始和结束地址即可，速度很快。</span><br><span class="line">+ 缺点</span><br><span class="line">  + 执行效率不稳定，随着标记的增加或者是减少，效率也对应减少或者是增加。</span><br><span class="line">  + 会产生较多的内存碎片，这也内存在被分配的时候不好处理。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">2，标记整理</span><br><span class="line"></span><br><span class="line">+ 先标记，后整理。整理的过程是把正常对象向内存的一端移动，占满内存碎片。</span><br><span class="line">  + 优点，不会产生内存碎片</span><br><span class="line">  + 缺点，对象移动，对应的内存地址也变了，效率低，而且移动的时候需要阻塞所有的用户线程。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">3，标记，复制算法</span><br><span class="line"></span><br><span class="line">+ 把内存均分为from区和to区两个区域，to区保持为空；步骤：</span><br><span class="line">  + 把from区的正常对象复制到to区</span><br><span class="line">  + 清空from区域</span><br><span class="line">  + 调换from区域和to区域</span><br><span class="line">  + 优点，解决了标记清除算法标记过多时效率低下。</span><br><span class="line">  + 缺点，需要使用两倍的内存空间</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### Apple式回收</span><br><span class="line"></span><br><span class="line">![image-20220502145058123](https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220502145058123.png)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">步骤：</span><br><span class="line"></span><br><span class="line">1. 新建对象会放入伊甸园中，当伊甸园不足以放下此对象时，触发一次minorGc，</span><br><span class="line">2. minorGc会采用标记复制算法，把伊甸园区域和from区域的正常对象复制到to中，然后清除伊甸园的数据，交换from和to，并且复制过来的对象年龄加一，</span><br><span class="line">3. 对象的年龄存储在对象头中，由四位存储，因此最大是15岁，超过15岁将会晋升至老年代区域，</span><br><span class="line">4. 老年代不足时会先触发minorGC,后触发fullGC。</span><br><span class="line">5. fullgc也清不下空间，就outofmemory错误。</span><br><span class="line">   + 注意，一个线程的outofmemory错误不会导致整个java程序结束。</span><br><span class="line"></span><br><span class="line">+ 注意，minorGC和fullGC都会stop the world（停止其他所有用户线程），因为垃圾回收会牵扯到对象内存地址的变化，这时候其他线程在使用的话会出错。</span><br><span class="line">+ 伊甸园：form：to一般是8：1：1</span><br><span class="line">+ fullGc比minorGC时间要长。</span><br><span class="line">+ 当大对象（就算是清空新生代的伊甸园也放不下）存入时，不会触发垃圾回收，会直接进入老年代。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 跨代引用假说</span><br><span class="line"></span><br><span class="line">+ 当老年代的对象引用了新生代的对象时，minorGc就无法清除新生代的此对象，这时我们必须扫描新生代和老年代所有的对象用以判断该对象是不是可以被回收，显然这很不科学。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">+ 我们在新生代创建一个叫做”记忆集“的全局数据结构，这个结构把老年代划分成了很多小块，只有包含了跨代引用的内存块才会和新生代对象一起被加入到GCRoots进行扫描。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">+ HotSpot的实现</span><br><span class="line">  + 使用卡表实现数据集(相当于HashMap和Map的关系)，在HotSpot中，卡表是一个字节数组。卡表中的每个元素对应其标识内存区域的一块特定大小的内存。这一块内存叫卡页。HotSpot的卡页是512字节。只要一个卡页中有一个对象存在跨代引用，就将对应卡表的数组元素的值标识为1，称为卡页变脏。没有就为0。</span><br><span class="line"></span><br><span class="line">  </span><br><span class="line"></span><br><span class="line">  + CARD_TABLE [this address &gt;&gt; 9] = DIRTY;</span><br><span class="line"></span><br><span class="line">  </span><br><span class="line"></span><br><span class="line">  + 在垃圾收集的时候，判断卡页是否变脏，脏了就加入gcroots一并扫描。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">+ 关于如何使得对象被引用时同时使得对应的卡页变脏？</span><br><span class="line">  + 使用了写屏障，具体就是aop环绕编程，在引用变量赋值操作的时候就进行卡表的更新。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">+ 虚共享问题，java操作单位是缓存行，当两个对象在同一个缓存行中并发操作，就会导致虚共享</span><br><span class="line"></span><br><span class="line">  </span><br><span class="line"></span><br><span class="line">  解决：先判断卡页是不是已经脏了</span><br><span class="line"></span><br><span class="line">  if (CARD_TABLE [this address &gt;&gt; 9] != DIRTY) </span><br><span class="line">  </span><br></pre></td></tr></table></figure></li>
 </ul>
 </li>
 </ul>
 </li>
 </ol>
-<h3 id="直接内存-DirectMemory"><a href="#直接内存-DirectMemory" class="headerlink" title="直接内存(DirectMemory)"></a>直接内存(DirectMemory)</h3><ol>
-<li><p>定义：</p>
+<p>  CARD_TABLE [this address &gt;&gt; 9] &#x3D; DIRTY;<br>  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br></pre></td><td class="code"><pre><span class="line">  </span><br><span class="line">  </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> ### GC相关参数</span><br><span class="line"></span><br><span class="line">![image-20220502152418880](https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220502152418880.png)</span><br><span class="line"></span><br><span class="line">### 垃圾回收器</span><br><span class="line"></span><br><span class="line">垃圾回收器是垃圾回收算法的实践者。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">接下来是7种不同的hotspot收集器</span><br><span class="line"></span><br><span class="line">新生代：Serial,parNew,Parallel Scavenge,G1</span><br><span class="line"></span><br><span class="line">老年代：CMS ，Serial Old(MSC)，Parallel Old,G1</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### 1，Serial/Serial Old</span><br><span class="line"></span><br><span class="line">Serial:新生代，单线程，串行，标记清除算法</span><br><span class="line"></span><br><span class="line">+ 会阻塞用户线程</span><br><span class="line"></span><br><span class="line">Serial Old：配合Serial使用，作为老年代垃圾收集器，单线程，串行，标记整理算法</span><br><span class="line"></span><br><span class="line">+ 阻塞用户线程</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### 2，ParNew(Serial的并行版本)</span><br><span class="line"></span><br><span class="line">新生代，标记复制算法，多线程，</span><br><span class="line"></span><br><span class="line">+ 除了多线程并行收集以外，其他和Serial差别不大</span><br><span class="line"></span><br><span class="line">+ 是CMS(一个老年代收集器)开启后默认开启的新生代收集器</span><br><span class="line">+ 阻塞用户线程</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### 3，Parallel Scavenge</span><br><span class="line"></span><br><span class="line">新生代，标记复制算法，多线程，</span><br><span class="line"></span><br><span class="line">+ 吞吐量优先，尽量缩短垃圾收集占用的总时间的比值，除此之外和ParNew差不多</span><br><span class="line"></span><br><span class="line">+ 吞吐量=运行代码时间/(运行代码时间+垃圾收集时间)</span><br><span class="line">+ 一个和ParNew的区分就是它能自动调节</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### 4，Parallel Old(Parallel Scavenge的老年代版本)</span><br><span class="line"></span><br><span class="line">老年代，标记整理算法，其他和Parallel Scavenge差不多</span><br><span class="line"></span><br><span class="line">+ 阻塞用户线程</span><br><span class="line">+ 在注重吞吐量或资源稀缺的情况下，可以考虑Parallel Scavenge/Parallel Old组合</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### 5，CMS(Concurrent Mark Sweep)</span><br><span class="line"></span><br><span class="line">老年代，多线程，并发标记，标记清除算法</span><br><span class="line"></span><br><span class="line">+ 响应时间优先，单次stw的时间最短.</span><br><span class="line"></span><br><span class="line">![image-20220502155551769](https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220502155551769.png)</span><br><span class="line"></span><br><span class="line">+ 初次标记stw，但是仅仅标记gcroots直接关联到的对象，速度很快，会阻塞用户线程</span><br><span class="line"></span><br><span class="line">+ 并发标记会变量整个对象图，时间较长但是是和用户线程并发执行，使用的是并发可达性分析的增量更新法。</span><br><span class="line"></span><br><span class="line">+ 重新标记是标记那些在并发标记的同时用户线程产生的增量，会阻塞用户线程</span><br><span class="line"></span><br><span class="line">+ 并发清除，清除线程和用户线程并发运行</span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line">  注：由于并发清除阶段并发会降低总程序的吞吐量，所以出现和用户线程交替运行(i-cms，增量式并发收集器)这种变种,事实证明，效果很一般，jdk7已废弃.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">缺点：</span><br><span class="line"></span><br><span class="line">+ cms在并发清理的时候用户线程同时也在产生对象，产生的垃圾（浮动垃圾）只能在下一次才能回收掉，所以需要预留足够的空间给用户线程分配对象，如果预留的空间不足以满足并发的时候的需要就会并发失败(Concurrent Mode Failure),临时启用Serial Old收集器（串行，会阻塞用户线程）</span><br><span class="line">+ CMS基于标记清除算法，会产生内存碎片，给的解决方案是，在若干次fullGC后，先整理碎片，再回收。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### 6,G1收集器（garbage first)</span><br><span class="line"></span><br><span class="line">在jdk9，G1已经替代了parallel Scavebge/parallel Old组合，Cms完全被标记为(Deprecate)不推荐使用，G1成为jdk9的默认垃圾收集器</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">内存布局的变化：</span><br><span class="line"></span><br><span class="line">+ 把堆内存分为若干个Region,，每一个Region都可以是新生代，幸存区，或者是老年代或者是Humongous的其中一个。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">面向堆的任何部分组成回收集：</span><br><span class="line"></span><br><span class="line">+ 以前的回收器有minorGC,majorGC,fullGC，分别回收新生代，老年代，全部。G1的Mixed GC模式，可以面向堆的任何部分组成回收集。</span><br><span class="line">+ G1的收集器会去追踪各个Region里面的堆积的垃圾的&quot;价值&quot;大小，然后在后台维护一个优先级列表，根据用户允许的停顿时间，价值大的先回收(garbage first名字的由来)，这样就尽可能保证了收集效率。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">G1面临的问题：</span><br><span class="line"></span><br><span class="line">跨代引用如何实现？</span><br><span class="line"></span><br><span class="line">+ G1的记忆集是个哈希表，key是 存在引用我们的Region的起始地址，Value是一个集合，里边是卡表的索引号。G1的记忆集需要写前屏障和写后屏障一起配合。</span><br><span class="line">+ G1记忆集的复杂性会导致需要较多堆空间（10——20%）来维护记忆集工作。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">G1运行流程：</span><br><span class="line"></span><br><span class="line">​	1，初始标记，仅仅是标记一下GC roots能直接关联到的对象，并修改TAMS指针的值，使Region中的并发分配区域可用。虽然初始标记需要阻塞用户线程(时间很短)，但是G1借助和minorGc同步运行此阶段，所以此阶段并没有额外的停顿。</span><br><span class="line"></span><br><span class="line">+ TAMS指针：回收过程中用户线程还是会分配对象，G1在每个Region中设置了两个TAMS指针专门划分区域供并发时分配对象使用。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">​	2，并发标记，从gcroots开始进行并发可达性分析，使用的是原始快照法。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">​	3，最终标记，处理并发标记时原始快照遗留下的SATB记录（记录了并发的时候有引用变动的对象），会阻塞用户线程</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">​	4，筛选回收，基于标记复制，把存活的对象复制到新的region中，旧的Region清空。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">+ 注意，宏观上看，G1使用的时标记整理算法，但是微观Region之间采用的是标记复制算法。和CMS的标记清除不一样，不会产生内存碎片。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### 实战</span><br><span class="line"></span><br><span class="line">1，大对象直接进入老年代</span><br><span class="line"></span><br><span class="line">2，当一个类的所有实例都不再存货并且类所在的加载器的所有类都没被使用，就可以卸载此类，一般框架中会有需求</span><br><span class="line"></span><br><span class="line">3，Region中有一类特殊的Hunongous Region专门用来存储大对象，对象容量超过了Region的一半就判断为大对象，当对象超过了region大小会存储在连续的的Hunongous Region里，G1优先回收大对象，并且不会复制。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 3，类文件结构以及字节码</span><br><span class="line"></span><br><span class="line">大多数情况下，任何一个类或者是接口的定义信息就对应一个字节码(Class)文件；</span><br><span class="line"></span><br><span class="line">然而，反过来说，类和接口的信息并不一定要定义在Class文件中,可以动态生成后直接放到类加载器里。</span><br><span class="line"></span><br><span class="line">### 类文件结构</span><br><span class="line"></span><br><span class="line">![image-20220504201800079](https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220504201800079.png)</span><br><span class="line"></span><br><span class="line">### 字节码分析</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">1，常量池信息会加载到运行时常量池中，但是小于32768 (short的最大值加一) 的数不会加载到运行时常量池，和方法的字节码指令一起存在方法区。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">2，方法的字节码指令会放到方法区</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">3，首先执行main方法，在虚拟机栈上有对应栈帧，栈帧分为局部变量表区域和操作数栈区域。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">4，执行引擎执行字节码，把要操作的数入栈，数小于栈深度就补全，正数0，负数1，大于就多次一点一点入栈</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">5，把操作数栈的数存入局部变量表给变量赋值</span><br><span class="line"></span><br><span class="line">iload：把int数值从局部变量表加载到操作数栈</span><br><span class="line"></span><br><span class="line">istore:把int数值从操作数栈存储到局部变量表</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### 加载流程案例</span><br><span class="line"></span><br><span class="line">a++是先把a加载(iload)到操作数栈，然后再在局部变量表中自增(iinc)，</span><br><span class="line"></span><br><span class="line">++a是先在局部变量表中自增(iinc)，然后再iload到操作数栈中</span><br><span class="line"></span><br><span class="line">```java</span><br><span class="line">public static void main(String[] args) &#123;</span><br><span class="line">    int a = 10;</span><br><span class="line">    int b = a++ + ++a + a--;//10 + 12 + 12</span><br><span class="line">    System.out.println(a);</span><br><span class="line">    System.out.println(b); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <ul>
-<li>常用于NIO操作，作为数据缓冲区。</li>
-<li>分配和回收此内存空间成本较高，但是读写性能高。</li>
-<li>不受jvm回收管理，因为是操作系统的内存。</li>
+<li>b的表达式中操作的都是操作数栈的值，而不是局部变量表槽（slot)中的变量值。</li>
 </ul>
-</li>
-<li><p><img src="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220501190955778.png" alt="image-20220501190955778"></p>
-</li>
-<li><p><img src="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220501191239463.png" alt="image-20220501191239463"></p>
+<p><img src="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220504190429322.png" alt="image-20220504190429322"></p>
+<h4 id="条件判断指令"><a href="#条件判断指令" class="headerlink" title="条件判断指令"></a>条件判断指令</h4><p><img src="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220504191356763.png" alt="image-20220504191356763"></p>
 <ul>
-<li>直接内存，java代码可以直接访问，比原始io少了一次缓存复制的过程。</li>
-</ul>
+<li><p>lt:less than(小于)  ，gt:greater than(大于)</p>
 </li>
-<li><p>直接内存的分配和回收都由unsafe对象完成：</p>
+<li><p>le:less than or equal(小于等于) ，ge:greater than or equal(小于等于)</p>
+</li>
+<li><p>byte short char 都按int处理，long float double例外</p>
+</li>
+</ul>
+<h4 id="循环指令"><a href="#循环指令" class="headerlink" title="循环指令"></a>循环指令</h4><p>就是和条件判断一样····</p>
+<p>案例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">    <span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">    <span class="type">int</span> <span class="variable">x</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span> (i&lt;<span class="number">10</span>)&#123;</span><br><span class="line">        x = x++;</span><br><span class="line">        i++;</span><br><span class="line">    &#125;</span><br><span class="line">    System.out.println(x);<span class="comment">//0</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <ul>
-<li>以ByteBuffer为例：它的构造器中获取了unsafe实例，并且调用unsafe实例的allocatememory（）和setmemory（）两个方法分配了直接内存。然后还使用Cleaner（虚引用对象）监测ByteBuffer实例，当ByteBuffer被GC回收时，会在Reference Handler线程中调用Cleaner的clean(),进而调用clean()中的unsafe.freeMemory()方法对直接内存进行释放。</li>
-<li>java中默认禁止了显式GC，因为System.gc()是fullGC，会使得程序停留时间过长。</li>
-<li>这时候只能等待jvm进行GC，或者是直接使用unsafe对象的.freeMemory()方法。</li>
-<li>Unsafe只能通过反射强制获取实例。</li>
+<li>结果是0，因为x++会先把x放到操作数栈，然后局部变量表的x加一，但是x&#x3D;x++;把操作数栈里的值(加一之前)又赋值给了局部变量表里的x，因此局部变量表的x也就是原本的零</li>
+<li>如果是x &#x3D; ++x的话，就会正常递增</li>
 </ul>
-</li>
-</ol>
-<h2 id="2，垃圾回收"><a href="#2，垃圾回收" class="headerlink" title="2，垃圾回收"></a>2，垃圾回收</h2><h3 id="如何判断垃圾可以被回收？"><a href="#如何判断垃圾可以被回收？" class="headerlink" title="如何判断垃圾可以被回收？"></a>如何判断垃圾可以被回收？</h3><h4 id="引用计数法"><a href="#引用计数法" class="headerlink" title="引用计数法"></a>引用计数法</h4><ul>
-<li><p>当被一个对象引用，计数加一，取消引用则减一</p>
-</li>
-<li><p>可能会出现循环引用，即两个对象除了互相引用外没有任何其它变量引用他们，无法使计数器归零，造成内存泄漏。</p>
-</li>
-</ul>
-<h4 id="可达性分析算法（java中使用）"><a href="#可达性分析算法（java中使用）" class="headerlink" title="可达性分析算法（java中使用）"></a>可达性分析算法（java中使用）</h4><ul>
-<li><p>判断是否直接或者间接被根对象引用，不是的话就标记</p>
-</li>
-<li><p>根对象就是无论如何都不会被回收的一系列对象，例如：</p>
+<h4 id="构造方法指令"><a href="#构造方法指令" class="headerlink" title="构造方法指令"></a>构造方法指令</h4><p>1，&lt; cinit &gt;()V,</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="type">int</span> x=<span class="number">5</span>;</span><br><span class="line"><span class="keyword">static</span> &#123;</span><br><span class="line">    x = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">static</span> &#123;</span><br><span class="line">    x = <span class="number">10</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">    System.out.println(MyTest1.x);<span class="comment">//10</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <ul>
-<li>System Class（java启动时的系统类）</li>
+<li>结果是10</li>
+<li>编译器会从上往下搜集所有静态成员变量赋值的代码和静态代码块，然后合并成一个类的构造方法–&gt;&lt; cinit &gt;()V</li>
 </ul>
-</li>
-<li><p>操作系统运行时引用的java对象</p>
+<p>2,&lt; init &gt;()v</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//成员变量赋值</span></span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> <span class="variable">a</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//非静态代码块赋值</span></span><br><span class="line">    &#123;</span><br><span class="line">        a = <span class="number">20</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//构造赋值</span></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">MyTest1</span><span class="params">(<span class="type">int</span> a)</span>&#123;</span><br><span class="line">        <span class="built_in">this</span>.a = a;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">getA</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>.a;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="comment">//获取a的值</span></span><br><span class="line">        <span class="type">MyTest1</span> <span class="variable">myTest1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">MyTest1</span>(<span class="number">100</span>);</span><br><span class="line">        System.out.println(myTest1.getA());<span class="comment">//100</span></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
 <ul>
-<li>被线程上锁的对象</li>
+<li>结果是100，编译器会从上往下搜集成员变量赋值语句和非静态赋值代码块和类的构造方法，组成一个新的构造方法&lt; init &gt;()v，并且原本的构造方法的代码总是在新的构造方法的最后调用。</li>
+</ul>
+<h4 id="方法调用指令"><a href="#方法调用指令" class="headerlink" title="方法调用指令"></a>方法调用指令</h4><ul>
+<li>构造，private,final的指令都是invokespecial,父类的方法也是<ul>
+<li>属于静态绑定：在字节码生成的时候就确定自己要执行哪个方法</li>
 </ul>
 </li>
-<li><p>栈帧内引用的对象</p>
-</li>
-</ul>
-<h4 id="并发的可达性算法"><a href="#并发的可达性算法" class="headerlink" title="并发的可达性算法"></a>并发的可达性算法</h4><p> 我们知道执行可达性分析的时候是要阻塞用户线程的，当堆空间的对象过多时，可达性算法的扫描将会使得程序停顿很久，我们可以通过并发执行来提高效率。</p>
-<p>然而，在并发分析的时候，用户线程可能更改了某些对象的状态，所以并发执行可能带来两个问题。</p>
-<ul>
-<li>一是可能把应该标记为垃圾的对象错误标记为存活，这种情况并无大碍，下次再回收掉即可。</li>
-<li>二是把该存活的对象给标记为垃圾回收了，这样的结果是灾难的。</li>
-</ul>
-<p>解决方法如下：</p>
-<ul>
-<li><p>增量更新法：</p>
-</li>
-<li><p>如果经扫描的确认为安全（黑色）的对象在可达性分析期间被用户线程引用了一个未经扫描的对象（白色），那么会把此黑色对象置为灰色（已经被扫描过但是此对象上还存在没有被扫描过的引用），把这个引用记录下来，并发扫描结束后再把此灰色对象当作一个根对象扫描。</p>
-</li>
-<li><p>简单说就是黑色新引用了白色，黑色就会变成灰色。</p>
-</li>
-<li><p>原始快照法：</p>
-</li>
-<li><p>如果并发中灰色对象切断了白色对象的引用，会把此引用记录下来，并在结束后把该灰色对象当作root对象重新扫描一遍。</p>
-</li>
-<li><p>简单来说就是在开始分析的那一刻的快照被记录下来，先扫描那个快照，后边扫描并发中变化了的就可以了。</p>
-</li>
-</ul>
-<h4 id="生存还是死亡（有复活机会，但只有一次）？"><a href="#生存还是死亡（有复活机会，但只有一次）？" class="headerlink" title="生存还是死亡（有复活机会，但只有一次）？"></a>生存还是死亡（有复活机会，但只有一次）？</h4><p>这个话题分两种情况讨论，</p>
-<ul>
-<li><p>首先，需要两次标记才会确认对象要被回收，第一次标记是在检查到没有和GCroot相连接的引用链时。</p>
-</li>
-<li><p>第一种情况：如果对象被判断没有必要执行finalize（）方法，比如没有覆盖过finalize（）方法或者说finalize方法已经被调用过了（此方法只能被调用一次），那么就直接再次标记为可回收状态。</p>
-</li>
-<li><p>第二种情况：对象被判断要执行finalize（）方法，比如对象覆盖过finalize（）方法，那么第一次标记之后，会进入F-Queue队列；然后由一个优先级很低的Finalizer线程来调用（只保证开始执行，不保证执行结束）队列中对象的finalize（）方法，在此期间，如果对象自救(再次被变量引用，例如在finalize()中把this赋值给某变量)，那么被标记的对象就会”复活“,复活后的对象的finalize（）方法将不能再被调用；如果没复活，那应该就真的该“死”（被回收）了。</p>
-</li>
-<li><p>事实上，不要使用finalize()；深入理解jvm这本书上甚至建议我们忘了finalize()这个方法······哈哈哈哈哈哈！！！</p>
-</li>
-</ul>
-<h3 id="四种引用"><a href="#四种引用" class="headerlink" title="四种引用"></a>四种引用</h3><ul>
-<li><p>强引用 ：只有当root对象都没有通过强引用引用该对象时，该对象才能被垃圾回收。</p>
-</li>
-<li><p>软引用：只被软引用引用的对象，在一次垃圾回收之后，内存还是不够的情况下，就再次回收把被软引用的对象也回收掉。可以配合引用队列释放引用自身的内存。</p>
-</li>
-<li><p>弱引用：只被弱引用引用的对象，只要发生垃圾回收，就会被当作垃圾回收掉。可以配合引用队列释放引用自身的内存。</p>
-</li>
-<li><p>虚引用：为一个对象设置虚引用的唯一目的就是当这个对象被回收时收到一个系统通知，当虚引用引用的对象被回收时，虚引用会进入引用队列，由References Handler线程调用相关方法释放内存，例如Cleaner和ByteBuffer。必须配合引用队列使用。</p>
-</li>
-<li><p>应用：软引用</p>
-<ul>
-<li>可以使用软引用和弱引用引用不太重要的资源（读取图片等），当内存不够时，会自动回收。</li>
-<li>SoftReference<Thread> a &#x3D; new SoftReference&lt;&gt;(t1);这样就可以使得a软引用t1线程对象。a.get()可以获得被引用的对象。</li>
-<li>我们可以定义一个软引用队列作为SoftReference的参数，即可关联。也可以手动移除队列中的无用软引用对象。<ul>
-<li>&#x2F;&#x2F;引用队列<br>ReferenceQueue<Thread> queue &#x3D; new ReferenceQueue&lt;&gt;();<br>&#x2F;&#x2F;关联<br>SoftReference<Thread> a &#x3D; new SoftReference&lt;&gt;(t1,queue);</li>
-<li>t1被回收时，SoftReference入队列，t1回收完，SoftReference为空，我们人为的从队列取出，由gc回收。</li>
+<li>普通的实例(public,protect)方法：invokevirtual<ul>
+<li>动态绑定，不知道是调用父类的还是某子类重写的，需要在运行的时候确定。</li>
 </ul>
 </li>
+<li>静态方法：invokestatic</li>
+<li>调用接口方法：invokeinterface</li>
+<li>调用动态方法(例如Lambda)表达式里边的：invokedynamic</li>
 </ul>
-</li>
-<li><p>应用：弱引用：</p>
-<ul>
-<li>和软引用差不多，SoftReference换成WeakReference就可以了。自身的释放也需要配合引用队列。</li>
-</ul>
-</li>
-</ul>
-<h3 id="垃圾回收算法"><a href="#垃圾回收算法" class="headerlink" title="垃圾回收算法"></a>垃圾回收算法</h3><ul>
-<li>都起源于分代收集理论</li>
-<li>分代导致了多种gc方式，</li>
-<li>minorgc只回收新生代，majorgc只回收老年代（仅cms收集器实现）mixedgc收集全部新生代和部分老年代（仅G1收集器有）</li>
-</ul>
-<p>1，标记清除算法</p>
-<p>先标记可以释放的对象空间，后清除，这里的清除指的是记录下来被释放的内存的开始地址和结束地址，使他们可以再次被分配。</p>
-<ul>
-<li>优点，只需要记录开始和结束地址即可，速度很快。</li>
-<li>缺点<ul>
-<li>执行效率不稳定，随着标记的增加或者是减少，效率也对应减少或者是增加。</li>
-<li>会产生较多的内存碎片，这也内存在被分配的时候不好处理。</li>
-</ul>
-</li>
-</ul>
-<p>2，标记整理</p>
-<ul>
-<li>先标记，后整理。整理的过程是把正常对象向内存的一端移动，占满内存碎片。<ul>
-<li>优点，不会产生内存碎片</li>
-<li>缺点，对象移动，对应的内存地址也变了，效率低，而且移动的时候需要阻塞所有的用户线程。</li>
-</ul>
-</li>
-</ul>
-<p>3，标记，复制算法</p>
-<ul>
-<li>把内存均分为from区和to区两个区域，to区保持为空；步骤：<ul>
-<li>把from区的正常对象复制到to区</li>
-<li>清空from区域</li>
-<li>调换from区域和to区域</li>
-<li>优点，解决了标记清除算法标记过多时效率低下。</li>
-<li>缺点，需要使用两倍的内存空间</li>
-</ul>
-</li>
-</ul>
-<h3 id="Apple式回收"><a href="#Apple式回收" class="headerlink" title="Apple式回收"></a>Apple式回收</h3><p><img src="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220502145058123.png" alt="image-20220502145058123"></p>
-<p>步骤：</p>
-<ol>
-<li>新建对象会放入伊甸园中，当伊甸园不足以放下此对象时，触发一次minorGc，</li>
-<li>minorGc会采用标记复制算法，把伊甸园区域和from区域的正常对象复制到to中，然后清除伊甸园的数据，交换from和to，并且复制过来的对象年龄加一，</li>
-<li>对象的年龄存储在对象头中，由四位存储，因此最大是15岁，超过15岁将会晋升至老年代区域，</li>
-<li>老年代不足时会先触发minorGC,后触发fullGC。</li>
-<li>fullgc也清不下空间，就outofmemory错误。<ul>
-<li>注意，一个线程的outofmemory错误不会导致整个java程序结束。</li>
-</ul>
-</li>
-</ol>
-<ul>
-<li>注意，minorGC和fullGC都会stop the world（停止其他所有用户线程），因为垃圾回收会牵扯到对象内存地址的变化，这时候其他线程在使用的话会出错。</li>
-<li>伊甸园：form：to一般是8：1：1</li>
-<li>fullGc比minorGC时间要长。</li>
-<li>当大对象（就算是清空新生代的伊甸园也放不下）存入时，不会触发垃圾回收，会直接进入老年代。</li>
-</ul>
-<h3 id="跨代引用假说"><a href="#跨代引用假说" class="headerlink" title="跨代引用假说"></a>跨代引用假说</h3><ul>
-<li><p>当老年代的对象引用了新生代的对象时，minorGc就无法清除新生代的此对象，这时我们必须扫描新生代和老年代所有的对象用以判断该对象是不是可以被回收，显然这很不科学。</p>
-</li>
-<li><p>跨代引用假说，等到新生代的此对象随着年龄的增加晋升到老年代中，就不存在跨代引用了。为了实现：</p>
-<ul>
-<li>我们在新生代创建一个叫做”记忆集“的全局数据结构，这个结构把老年代划分成了很多小块，只有包含了跨代引用的内存块才会和新生代对象一起被加入到GCRoots进行扫描。</li>
-</ul>
-</li>
-<li><p>HotSpot的实现</p>
-<ul>
-<li><p>使用卡表实现数据集(相当于HashMap和Map的关系)，在HotSpot中，卡表是一个字节数组。卡表中的每个元素对应其标识内存区域的一块特定大小的内存。这一块内存叫卡页。HotSpot的卡页是512字节。只要一个卡页中有一个对象存在跨代引用，就将对应卡表的数组元素的值标识为1，称为元素变脏。没有就为0。</p>
-</li>
-<li><p>CARD_TABLE [this address &gt;&gt; 9] &#x3D; DIRTY;</p>
-</li>
-<li><p>在垃圾收集的时候，判断卡页是否变脏，脏了就加入gcroots一并扫描。</p>
-</li>
-</ul>
-</li>
-<li><p>关于如何使得对象被引用时同时使得对应的卡页变脏？</p>
-<ul>
-<li>使用了写屏障，具体就是aop环绕编程，在引用变量赋值操作的时候就进行卡表的更新。</li>
-</ul>
-</li>
-<li><p>虚共享问题，java操作单位是缓存行，当两个对象在同一个缓存行中并发操作，就会导致虚共享</p>
-<ul>
-<li><p>解决if (CARD_TABLE [this address &gt;&gt; 9] !&#x3D; DIRTY) </p>
-<pre><code>     CARD_TABLE [this address &gt;&gt; 9] = DIRTY;
-</code></pre>
-<p>先判断是不是已经是脏表了</p>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="GC相关参数"><a href="#GC相关参数" class="headerlink" title="GC相关参数"></a>GC相关参数</h3><p><img src="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220502152418880.png" alt="image-20220502152418880"></p>
-<h3 id="垃圾回收器"><a href="#垃圾回收器" class="headerlink" title="垃圾回收器"></a>垃圾回收器</h3><p>垃圾回收器是垃圾回收算法的实践者。</p>
-<p>接下来是7种不同的hotspot收集器</p>
-<p>新生代：Serial,parNew,Parallel Scavenge,G1</p>
-<p>老年代：CMS ，Serial Old(MSC)，Parallel Old,G1</p>
-<h4 id="1，Serial-x2F-Serial-Old"><a href="#1，Serial-x2F-Serial-Old" class="headerlink" title="1，Serial&#x2F;Serial Old"></a>1，Serial&#x2F;Serial Old</h4><p>Serial:新生代，单线程，串行，标记清除算法</p>
-<ul>
-<li>会阻塞用户线程</li>
-</ul>
-<p>Serial Old：配合Serial使用，作为老年代垃圾收集器，单线程，串行，标记整理算法</p>
-<ul>
-<li>阻塞用户线程</li>
-</ul>
-<h4 id="2，ParNew-Serial的并行版本"><a href="#2，ParNew-Serial的并行版本" class="headerlink" title="2，ParNew(Serial的并行版本)"></a>2，ParNew(Serial的并行版本)</h4><p>新生代，标记复制算法，多线程，</p>
-<ul>
-<li><p>除了多线程并行收集以外，其他和Serial差别不大</p>
-</li>
-<li><p>是CMS(一个老年代收集器)开启后默认开启的新生代收集器</p>
-</li>
-<li><p>阻塞用户线程</p>
-</li>
-</ul>
-<h4 id="3，Parallel-Scavenge"><a href="#3，Parallel-Scavenge" class="headerlink" title="3，Parallel Scavenge"></a>3，Parallel Scavenge</h4><p>新生代，标记复制算法，多线程，</p>
-<ul>
-<li><p>吞吐量优先，尽量缩短垃圾收集占用的总时间的比值，除此之外和ParNew差不多</p>
-</li>
-<li><p>吞吐量&#x3D;运行代码时间&#x2F;(运行代码时间+垃圾收集时间)</p>
-</li>
-<li><p>一个和ParNew的区分就是它能自动调节</p>
-</li>
-</ul>
-<h4 id="4，Parallel-Old-Parallel-Scavenge的老年代版本"><a href="#4，Parallel-Old-Parallel-Scavenge的老年代版本" class="headerlink" title="4，Parallel Old(Parallel Scavenge的老年代版本)"></a>4，Parallel Old(Parallel Scavenge的老年代版本)</h4><p>老年代，标记整理算法，其他和Parallel Scavenge差不多</p>
-<ul>
-<li>阻塞用户线程</li>
-<li>在注重吞吐量或资源稀缺的情况下，可以考虑Parallel Scavenge&#x2F;Parallel Old组合</li>
-</ul>
-<h4 id="5，CMS-Concurrent-Mark-Sweep"><a href="#5，CMS-Concurrent-Mark-Sweep" class="headerlink" title="5，CMS(Concurrent Mark Sweep)"></a>5，CMS(Concurrent Mark Sweep)</h4><p>老年代，多线程，并发标记，标记清除算法</p>
-<ul>
-<li>响应时间优先，单次stw的时间最短.</li>
-</ul>
-<p><img src="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220502155551769.png" alt="image-20220502155551769"></p>
-<ul>
-<li>初次标记stw，但是仅仅标记gcroots能关联到的对象，速度很快，会阻塞用户线程</li>
-<li>并发标记会变量整个对象图，时间较长但是是和用户线程并发执行，使用的是并发可达性分析的增量更新法。</li>
-<li>重新标记是标记那些在并发标记的同时用户线程产生的增量，会阻塞用户线程</li>
-<li>并发清除，清除线程和用户线程并发运行<ul>
-<li>由于并发会降低总程序的吞吐量，所以出现和用户线程交替运行(i-cms，增量式并发收集器)这种变种,事实证明，效果很一般，jdk7已废弃.</li>
-</ul>
-</li>
-</ul>
-<p>缺点：</p>
-<ul>
-<li>cms在并发清理的时候用户线程同时也在产生对象，产生的垃圾（浮动垃圾）只能在下一次才能回收掉，所以需要预留足够的空间给用户线程使用，如果预留的空间不足以满足并发的时候的需要就会并发失败(Concurrent Mode Failure),临时启用Serial Old收集器（串行，会阻塞用户线程）</li>
-<li>CMS基于标记清除算法，会产生内存碎片，给的解决方案是，在若干次fullGC后，先整理碎片，再回收。</li>
-</ul>
-<h4 id="6-G1收集器（garbage-first"><a href="#6-G1收集器（garbage-first" class="headerlink" title="6,G1收集器（garbage first)"></a>6,G1收集器（garbage first)</h4><p>在jdk9，G1已经替代了parallel Scavebge&#x2F;parallel Old组合，Cms完全被标记为(Deprecate)不推荐使用，并成为jdk9的默认垃圾收集器</p>
-<p>内存布局的变化：</p>
-<ul>
-<li>把堆内存分为若干个Region,，每一个Region都可以是新生代，幸存区，或者是老年代的其中一个。</li>
-</ul>
-<p>面向堆的任何部分组成回收集：</p>
-<ul>
-<li>以前的回收器有minorGC,majorGC,fullGC，分别回收新生代，老年代，全部。G1的Mixed GC模式，可以面向堆的任何部分组成回收集。</li>
-<li>G1的收集器会去追踪各个Region里面的堆积的垃圾的”价值”大小，然后在后台维护一个优先级列表，根据用户允许的停顿时间，价值大的先回收(garbage first名字的由来)，这样就尽可能保证了手机效率。</li>
-</ul>
-<p>G1面临的问题：</p>
-<p>跨代引用如何实现？</p>
-<ul>
-<li>G1的记忆集是个哈希表，key是 别的存在引用我们的Region的起始地址，Value是一个集合，里边是卡表的索引号。需要写前屏障和写后屏障一起配合。</li>
-<li>G1记忆集的复杂性会导致需要较多堆空间（10——20%）来维护记忆集工作。</li>
-</ul>
-<p>G1运行流程：</p>
-<p>​    1，初始标记，仅仅是标记一下GC roots能直接关联到的对象，并修改TAMS指针的值，使Region中的并发分配区域可用。虽然初始标记需要阻塞用户线程(时间很短)，但是G1借助和minorGc同步运行此阶段，所以此阶段并没有额外的停顿。</p>
-<ul>
-<li>TAMS指针：回收过程中用户线程还是会分配对象，G1在每个Region中设置了两个TAMS指针专门划分区域供并发时分配对象使用。</li>
-</ul>
-<p>​    2，并发标记，从gcroots开始进行并发可达性分析，使用的是原始快照法。</p>
-<p>​    3，最终标记，处理并发标记原始快照遗留下的SATB记录（记录了并发时有引用变动的对象），会阻塞用户线程</p>
-<p>​    4，筛选回收，基于标记&#x3D;复制，把存活的对象复制到新的region中，旧的Region清空。</p>
-<ul>
-<li>注意，宏观上看，G1使用的时标记整理算法，但是微观Region之间采用的是标记复制算法。和CMS的标记清除不一样，不会产生内存碎片。</li>
-</ul>
-<h4 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h4><p>1，大对象直接进入老年代</p>
-<p>2，当一个类的所有实例都不再存货并且类所在的加载器的所有类都没被使用，就可以卸载此类，一般框架中会有需求</p>
-<p>3，Region中有一类特殊的Hunongous Region专门用来存储大对象，对象容量超过了Region的一般就判断为大对象，当对象超过了region大小会存储在连续的的Hunongous Region里，G1优先回收大对象，并且不会复制。</p>
 <p>​    </p>
+<p>不要用对象调用静态方法，因为这样会让对象引用先进操作数栈，再出操作数栈，执行了两次毫无意义的指令。</p>
+<p>多态原理，当执行nvokevirtual指令</p>
+<ol>
+<li>通过栈帧中的引用找到对象</li>
+<li>分析对象头，对象头的klass word存储了类的地址，进而找到类</li>
+<li>对应的Class 结构中有 vtable（一张表），它在类加载的链接阶段就已经根据方法的重写规则生成好了</li>
+<li>查表得到方法的具体地址</li>
+<li>执行方法的字节码</li>
+</ol>
+<h4 id="异常处理指令"><a href="#异常处理指令" class="headerlink" title="异常处理指令"></a>异常处理指令</h4><h5 id="catch块"><a href="#catch块" class="headerlink" title="catch块"></a>catch块</h5><p>1，单个catch块</p>
+<p>通过异常表实现</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    i = <span class="number">10</span>;</span><br><span class="line">&#125;<span class="keyword">catch</span> (Exception e)&#123;</span><br><span class="line">    i = <span class="number">20</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>字节码指令</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0</span>: iconst_0</span><br><span class="line"><span class="number">1</span>: istore_1</span><br><span class="line"><span class="number">2</span>: bipush <span class="number">10</span></span><br><span class="line"><span class="number">4</span>: istore_1</span><br><span class="line"><span class="number">5</span>: goto <span class="number">12</span></span><br><span class="line"><span class="number">8</span>: astore_2<span class="comment">//e对象存到局部变量表里</span></span><br><span class="line"><span class="number">9</span>: bipush <span class="number">20</span></span><br><span class="line"><span class="number">11</span>: istore_1</span><br><span class="line"><span class="number">12</span>: <span class="keyword">return</span></span><br></pre></td></tr></table></figure>
+
+<p>异常表</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Exception table:</span><br><span class="line">from to target type</span><br><span class="line"><span class="number">2</span> 	  <span class="number">5</span>    <span class="number">8</span> Class java/lang/Exception<span class="comment">//[2,5)行内出现异常，判断异常类型是否一致，是的话就跳转到target，</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>[2,5)行内出现异常，判断异常类型是否一致，是的话就跳转到target</li>
+<li>[2,5)左闭右开</li>
+<li>e对象存到局部变量表里</li>
+</ul>
+<p>2，多个并列catch块</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    i = <span class="number">10</span>;</span><br><span class="line">&#125; <span class="keyword">catch</span> (ArithmeticException e) &#123;</span><br><span class="line">    i = <span class="number">30</span>;</span><br><span class="line">&#125; <span class="keyword">catch</span> (NullPointerException e) &#123;</span><br><span class="line">    i = <span class="number">40</span>;</span><br><span class="line">&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">    i = <span class="number">50</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>和单个差不多，但是注意局部变量表的e变量只有一个，因为这三个异常类型最多只能触发一个。</li>
+</ul>
+<h5 id="finally块"><a href="#finally块" class="headerlink" title="finally块"></a>finally块</h5><p>finally必定能被执行的原因</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    i = <span class="number">10</span>;</span><br><span class="line">&#125;<span class="keyword">catch</span> (Exception e)&#123;</span><br><span class="line">    i = <span class="number">20</span>;</span><br><span class="line">&#125;<span class="keyword">finally</span> &#123;</span><br><span class="line">    i = <span class="number">30</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>字节码指令</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">Code:</span><br><span class="line">stack=<span class="number">1</span>, locals=<span class="number">4</span>, args_size=<span class="number">1</span></span><br><span class="line"><span class="number">0</span>: iconst_0</span><br><span class="line"><span class="number">1</span>: istore_1 <span class="comment">// 0 -&gt; i</span></span><br><span class="line"><span class="number">2</span>: bipush <span class="number">10</span> <span class="comment">// try --------------------------------------</span></span><br><span class="line"><span class="number">4</span>: istore_1 <span class="comment">// 10 -&gt; i |</span></span><br><span class="line"><span class="number">5</span>: bipush <span class="number">30</span> <span class="comment">// finally |</span></span><br><span class="line"><span class="number">7</span>: istore_1 <span class="comment">// 30 -&gt; i |</span></span><br><span class="line"><span class="number">8</span>: goto <span class="number">27</span> <span class="comment">// return -----------------------------------</span></span><br><span class="line"><span class="number">11</span>: astore_2 <span class="comment">// catch Exceptin -&gt; e ----------------------</span></span><br><span class="line"><span class="number">12</span>: bipush <span class="number">20</span> <span class="comment">// |</span></span><br><span class="line"><span class="number">14</span>: istore_1 <span class="comment">// 20 -&gt; i |</span></span><br><span class="line"><span class="number">15</span>: bipush <span class="number">30</span> <span class="comment">// finally |</span></span><br><span class="line"><span class="number">17</span>: istore_1 <span class="comment">// 30 -&gt; i |</span></span><br><span class="line"><span class="number">18</span>: goto <span class="number">27</span> <span class="comment">// return -----------------------------------</span></span><br><span class="line"><span class="number">21</span>: astore_3 <span class="comment">// catch any -&gt; slot 3 ----------------------</span></span><br><span class="line"><span class="number">22</span>: bipush <span class="number">30</span> <span class="comment">// finally |</span></span><br><span class="line"><span class="number">24</span>: istore_1 <span class="comment">// 30 -&gt; i |</span></span><br><span class="line"><span class="number">25</span>: aload_3 <span class="comment">// &lt;- slot 3 |</span></span><br><span class="line"><span class="number">26</span>: athrow <span class="comment">// throw ------------------------------------</span></span><br><span class="line"><span class="number">27</span>: <span class="keyword">return</span></span><br><span class="line">Exception table:</span><br><span class="line">from to target type</span><br><span class="line"><span class="number">2</span> <span class="number">5</span> <span class="number">11</span> Class java/lang/Exception</span><br><span class="line"><span class="number">2</span> <span class="number">5</span> <span class="number">21</span> any <span class="comment">// 剩余的异常类型，比如 Error</span></span><br><span class="line"><span class="number">11</span> <span class="number">15</span> <span class="number">21</span> any <span class="comment">// 剩余的异常类型，比如 Error</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>结果：30</li>
+</ul>
+<p>分析：把以上语句分成try代码块， catch捕获到，catch没捕获到三个部分</p>
+<ul>
+<li><p>try{}代码块只要出现异常，就会运行失败，</p>
+</li>
+<li><p>catch代码块捕获的异常如果刚好是自己写的异常或者是它的子类，那么才会执行</p>
+</li>
+<li><p>如果捕获的不是指定的异常且不是它的子类，就不会执行catch，但是通过指令可以看出，这种情况会执行另一部分：</p>
+<ul>
+<li>把没捕获到异常对象存到局部变量表的一个槽(slot)里，这个槽是没有名字的，然后会抛出这个异常</li>
+</ul>
+</li>
+</ul>
+<p>结论：finally里面的内容，会在try{}块，catch成功时的代码块，没catch到时的代码块中都复制一份。以达到必定能执行的目的。</p>
+<p>2，finally中有return</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">10</span>;</span><br><span class="line">&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">20</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>看起来结果是10，其实是20：因为try中的return 会先把10存入了局部变量表的用于固定返回值的槽里，这时候这个值将不会改变，但是，finally中的代码会复制到try中，并且直接return了，所以是20；</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0</span>: bipush <span class="number">10</span> <span class="comment">// &lt;- 10 放入栈顶</span></span><br><span class="line"><span class="number">2</span>: istore_0 <span class="comment">// 10 -&gt; i</span></span><br><span class="line"><span class="number">3</span>: iload_0 <span class="comment">// &lt;- i(10)</span></span><br><span class="line"><span class="number">4</span>: istore_1 <span class="comment">// 10 -&gt; slot 1，暂存至 slot 1，目的是为了固定返回值</span></span><br><span class="line"><span class="number">5</span>: bipush <span class="number">20</span> <span class="comment">// &lt;- 20 放入栈顶</span></span><br><span class="line"><span class="number">7</span>: istore_0 <span class="comment">// 20 -&gt; i</span></span><br><span class="line"><span class="number">8</span>: iload_1 <span class="comment">// &lt;- slot 1(10) 载入 slot 1 暂存的值</span></span><br><span class="line"><span class="number">9</span>: ireturn </span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>按结果看，finally必须执行，即使在代码前已经return了，相当于finally的return会覆盖其他代码块的return。</li>
+</ul>
+<p>注意一个问题：事实上就算catch语句没有捕捉到异常，也会进入没捕捉到异常的代码块（存入局部变量表-&gt;抛出此异常信息），然而，如果finally中有return，会吞掉catch语句没捕捉到的异常，不会有athrow指令码。因此，千万不要在finally中写return语句。</p>
+<p>3，分析结果</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">10</span>;</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> i;</span><br><span class="line"></span><br><span class="line">&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line"></span><br><span class="line">    i = <span class="number">20</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>结果是10</li>
+</ul>
+<p>try中的return 会把i的值暂存到另一个用于固定返回值的slot里（这个slot没名字），因为要等finally执行完毕，等到finally执行完了，在iload到操作数栈中，在return，return的是修改前的i的值。</p>
+<p>注意例子2和例子3的区别，finall有return会覆盖，没return会返回原本代码块的return的值。</p>
+<h4 id="synchronized代码块指令"><a href="#synchronized代码块指令" class="headerlink" title="synchronized代码块指令"></a>synchronized代码块指令</h4><p>解释为什么出现异常也可以正常解锁：</p>
+<p>代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">final</span> <span class="type">Object</span> <span class="variable">lock</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Object</span>();</span><br><span class="line"><span class="keyword">synchronized</span> (lock)&#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;ok&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对应步骤大致如下：</p>
+<ol>
+<li>new关键字会在堆中分配一定空间，并把引用放入操作数栈。</li>
+<li>dup指令复制一份引用用于构造方法（实际上是&lt; init&gt;()v方法)</li>
+<li>synchronized开始，进入锁对象之前，再复制一份（用于monitorexit指令释放锁资源，需要lock的引用），</li>
+<li>之后synchronized进入锁对象(monitorenter指令，也需要lock引用，并且和monitorexit的引用一样)的引用</li>
+<li>如果代码块中出现异常，会在Exception table里面得到该跳转的行号，跳转之后执行三步：</li>
+<li>将异常对象存到局部变量表，释放所资源，抛出异常。</li>
+</ol>
+<ul>
+<li>上面需要注意的点：</li>
+<li>new之后需要复制一次引用，</li>
+<li>进入锁之前需要复制一次引用</li>
+<li>出现异常会存储，释放锁资源，抛出。</li>
+</ul>
+<h3 id="语法糖"><a href="#语法糖" class="headerlink" title="语法糖"></a>语法糖</h3><p>1，为了减轻程序员的负担，jvm在编译期间(源文件.java转化成.Class文件的过程)会自动生成和转化一些代码。</p>
+<h4 id="默认构造器"><a href="#默认构造器" class="headerlink" title="默认构造器"></a>默认构造器</h4><p>子类构造器会默认自动调用父类的无参构造，如果我们自己显示的在子类构造中调用父类有参构造，就不会自动调用父类无参构造了。</p>
+<h4 id="自动装箱-x2F-拆箱"><a href="#自动装箱-x2F-拆箱" class="headerlink" title="自动装箱&#x2F;拆箱"></a>自动装箱&#x2F;拆箱</h4><p>在JDK4的时候，如果要把int赋值给Integer对象，需要调用valueof()方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="variable">a</span> <span class="operator">=</span> <span class="number">10</span>;</span><br><span class="line"><span class="type">Integer</span> <span class="variable">x</span> <span class="operator">=</span> Integer.valueOf(a);</span><br></pre></td></tr></table></figure>
+
+<p>把integer赋值给int要调用intValue()</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="variable">y</span> <span class="operator">=</span> x.intValue();</span><br></pre></td></tr></table></figure>
+
+<p>现在我们可以直接赋值</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="variable">a</span> <span class="operator">=</span> <span class="number">10</span>;</span><br><span class="line"><span class="type">Integer</span> <span class="variable">x</span> <span class="operator">=</span> a;</span><br><span class="line"><span class="type">int</span> <span class="variable">b</span> <span class="operator">=</span> x;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="泛型擦除机制"><a href="#泛型擦除机制" class="headerlink" title="泛型擦除机制"></a>泛型擦除机制</h4><p>1，泛型信息在编译成字节码之后就丢失了，一律按Object处理。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Integer&gt; list = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">list.add(<span class="number">1</span>);</span><br><span class="line"><span class="comment">//实际上在字节码中是add(Object e)</span></span><br><span class="line"><span class="type">Integer</span> <span class="variable">a</span> <span class="operator">=</span> list.get(<span class="number">0</span>);</span><br><span class="line"><span class="comment">//这里在字节码里面会有一个强转的过程</span></span><br><span class="line"><span class="type">Integer</span> <span class="variable">a</span> <span class="operator">=</span> (Integer)list.get(<span class="number">0</span>);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>这些事情都不用我们自己做，如果没有泛型，就得自己在代码中强转，所以说泛型很方便。</li>
+</ul>
+<p>2，虽然在字节码指令中擦除了信息，但是在栈帧中的LocalVariableTypeTable(本地变量类型表)中还存着泛型信息。</p>
+<ul>
+<li>如果泛型是在方法返回值上或者是方法参数上，我们可以利用反射获取，但是如果是方法局部变量上的泛型信息，是无法通过反射获取的。</li>
+</ul>
+<h4 id="可变参数"><a href="#可变参数" class="headerlink" title="可变参数"></a>可变参数</h4><p>编译器会变成数组，根据实参的数量决定大小。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span>  <span class="title function_">test</span><span class="params">(String ...str)</span>&#123;</span><br><span class="line">	String[] array = str; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>可以把可变参数直接赋值给数组</li>
+</ul>
+<h4 id="forEach循环"><a href="#forEach循环" class="headerlink" title="forEach循环"></a>forEach循环</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (String s : str) &#123;</span><br><span class="line">	System.out.println(s);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>如果str是数组，编译器会把它变成fori的形式</li>
+<li>如果是集合，会使用Iterator,需要实现Iterator接口，collection继承了该接口，而map并没有</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">Collection</span>&lt;E&gt; <span class="keyword">extends</span> <span class="title class_">Iterable</span>&lt;E&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="switch"><a href="#switch" class="headerlink" title="switch"></a>switch</h4><p>switch本来只能配合int使用，但是通过语法糖，可以配合字符串和enum类使用。</p>
+<h4 id="枚举类"><a href="#枚举类" class="headerlink" title="枚举类"></a>枚举类</h4><h4 id="try-with-resource"><a href="#try-with-resource" class="headerlink" title="try with resource"></a>try with resource</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>(<span class="type">InputStream</span> <span class="variable">inputStream</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">FileInputStream</span>(<span class="string">&quot;ll&quot;</span>))&#123;</span><br><span class="line">    </span><br><span class="line">&#125;<span class="keyword">catch</span> (Exception e)&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>可以实现资源的自动关闭，无需在finally中close，编译器会自动提供代码，而且不会丢失自己写finally块中出现的异常。</li>
+<li>前提是资源对象需要实现 AutoCloseable 接口，InputStream 、 OutputStream 、 Connection 、 Statement 、 ResultSet 等接口都实现了 AutoCloseable。</li>
+</ul>
+<h4 id="方法桥接"><a href="#方法桥接" class="headerlink" title="方法桥接"></a>方法桥接</h4><p>方法重写时的规则：</p>
+<ul>
+<li><p>方法签名(参数和方法名)完全一致即可</p>
+</li>
+<li><p>子类方法的访问修饰必须大于或等于父类,public &gt;private</p>
+</li>
+<li><p>子类的方法返回值可以是父类返回值的子类，这个用到了桥接。</p>
+</li>
+</ul>
 
     </div>
 
@@ -724,7 +620,7 @@ public static void main(String[] args) &#123;
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#JVM"><span class="nav-number">1.</span> <span class="nav-text">JVM</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1%EF%BC%8C%E5%86%85%E5%AD%98%E7%BB%93%E6%9E%84"><span class="nav-number">1.1.</span> <span class="nav-text">1，内存结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A8%8B%E5%BA%8F%E8%AE%A1%E6%95%B0%E5%99%A8%EF%BC%88pc-Register%EF%BC%89"><span class="nav-number">1.1.1.</span> <span class="nav-text">程序计数器（pc Register）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%A0%88%EF%BC%88jvm-Stacks%EF%BC%89"><span class="nav-number">1.1.2.</span> <span class="nav-text">虚拟机栈（jvm Stacks）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%AC%E5%9C%B0%E6%96%B9%E6%B3%95%E6%A0%88%EF%BC%88Native-Method-Stacks%EF%BC%89"><span class="nav-number">1.1.3.</span> <span class="nav-text">本地方法栈（Native Method Stacks）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A0%86%EF%BC%88Heap%EF%BC%89"><span class="nav-number">1.1.4.</span> <span class="nav-text">堆（Heap）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E5%8C%BA%EF%BC%88Method-Area"><span class="nav-number">1.1.5.</span> <span class="nav-text">方法区（Method Area)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%B4%E6%8E%A5%E5%86%85%E5%AD%98-DirectMemory"><span class="nav-number">1.1.6.</span> <span class="nav-text">直接内存(DirectMemory)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%EF%BC%8C%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6"><span class="nav-number">1.2.</span> <span class="nav-text">2，垃圾回收</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%AD%E5%9E%83%E5%9C%BE%E5%8F%AF%E4%BB%A5%E8%A2%AB%E5%9B%9E%E6%94%B6%EF%BC%9F"><span class="nav-number">1.2.1.</span> <span class="nav-text">如何判断垃圾可以被回收？</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BC%95%E7%94%A8%E8%AE%A1%E6%95%B0%E6%B3%95"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">引用计数法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%AF%E8%BE%BE%E6%80%A7%E5%88%86%E6%9E%90%E7%AE%97%E6%B3%95%EF%BC%88java%E4%B8%AD%E4%BD%BF%E7%94%A8%EF%BC%89"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">可达性分析算法（java中使用）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B9%B6%E5%8F%91%E7%9A%84%E5%8F%AF%E8%BE%BE%E6%80%A7%E7%AE%97%E6%B3%95"><span class="nav-number">1.2.1.3.</span> <span class="nav-text">并发的可达性算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%94%9F%E5%AD%98%E8%BF%98%E6%98%AF%E6%AD%BB%E4%BA%A1%EF%BC%88%E6%9C%89%E5%A4%8D%E6%B4%BB%E6%9C%BA%E4%BC%9A%EF%BC%8C%E4%BD%86%E5%8F%AA%E6%9C%89%E4%B8%80%E6%AC%A1%EF%BC%89%EF%BC%9F"><span class="nav-number">1.2.1.4.</span> <span class="nav-text">生存还是死亡（有复活机会，但只有一次）？</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9B%E7%A7%8D%E5%BC%95%E7%94%A8"><span class="nav-number">1.2.2.</span> <span class="nav-text">四种引用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E7%AE%97%E6%B3%95"><span class="nav-number">1.2.3.</span> <span class="nav-text">垃圾回收算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Apple%E5%BC%8F%E5%9B%9E%E6%94%B6"><span class="nav-number">1.2.4.</span> <span class="nav-text">Apple式回收</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B7%A8%E4%BB%A3%E5%BC%95%E7%94%A8%E5%81%87%E8%AF%B4"><span class="nav-number">1.2.5.</span> <span class="nav-text">跨代引用假说</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GC%E7%9B%B8%E5%85%B3%E5%8F%82%E6%95%B0"><span class="nav-number">1.2.6.</span> <span class="nav-text">GC相关参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8"><span class="nav-number">1.2.7.</span> <span class="nav-text">垃圾回收器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1%EF%BC%8CSerial-x2F-Serial-Old"><span class="nav-number">1.2.7.1.</span> <span class="nav-text">1，Serial&#x2F;Serial Old</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2%EF%BC%8CParNew-Serial%E7%9A%84%E5%B9%B6%E8%A1%8C%E7%89%88%E6%9C%AC"><span class="nav-number">1.2.7.2.</span> <span class="nav-text">2，ParNew(Serial的并行版本)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3%EF%BC%8CParallel-Scavenge"><span class="nav-number">1.2.7.3.</span> <span class="nav-text">3，Parallel Scavenge</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4%EF%BC%8CParallel-Old-Parallel-Scavenge%E7%9A%84%E8%80%81%E5%B9%B4%E4%BB%A3%E7%89%88%E6%9C%AC"><span class="nav-number">1.2.7.4.</span> <span class="nav-text">4，Parallel Old(Parallel Scavenge的老年代版本)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5%EF%BC%8CCMS-Concurrent-Mark-Sweep"><span class="nav-number">1.2.7.5.</span> <span class="nav-text">5，CMS(Concurrent Mark Sweep)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-G1%E6%94%B6%E9%9B%86%E5%99%A8%EF%BC%88garbage-first"><span class="nav-number">1.2.7.6.</span> <span class="nav-text">6,G1收集器（garbage first)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9E%E6%88%98"><span class="nav-number">1.2.7.7.</span> <span class="nav-text">实战</span></a></li></ol></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#JVM"><span class="nav-number">1.</span> <span class="nav-text">JVM</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1%EF%BC%8C%E5%86%85%E5%AD%98%E7%BB%93%E6%9E%84"><span class="nav-number">1.1.</span> <span class="nav-text">1，内存结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A8%8B%E5%BA%8F%E8%AE%A1%E6%95%B0%E5%99%A8%EF%BC%88pc-Register%EF%BC%89"><span class="nav-number">1.1.1.</span> <span class="nav-text">程序计数器（pc Register）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%A0%88%EF%BC%88jvm-Stacks%EF%BC%89"><span class="nav-number">1.1.2.</span> <span class="nav-text">虚拟机栈（jvm Stacks）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%AC%E5%9C%B0%E6%96%B9%E6%B3%95%E6%A0%88%EF%BC%88Native-Method-Stacks%EF%BC%89"><span class="nav-number">1.1.3.</span> <span class="nav-text">本地方法栈（Native Method Stacks）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A0%86%EF%BC%88Heap%EF%BC%89"><span class="nav-number">1.1.4.</span> <span class="nav-text">堆（Heap）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E5%8C%BA%EF%BC%88Method-Area"><span class="nav-number">1.1.5.</span> <span class="nav-text">方法区（Method Area)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9D%A1%E4%BB%B6%E5%88%A4%E6%96%AD%E6%8C%87%E4%BB%A4"><span class="nav-number">1.1.5.1.</span> <span class="nav-text">条件判断指令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BE%AA%E7%8E%AF%E6%8C%87%E4%BB%A4"><span class="nav-number">1.1.5.2.</span> <span class="nav-text">循环指令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95%E6%8C%87%E4%BB%A4"><span class="nav-number">1.1.5.3.</span> <span class="nav-text">构造方法指令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E8%B0%83%E7%94%A8%E6%8C%87%E4%BB%A4"><span class="nav-number">1.1.5.4.</span> <span class="nav-text">方法调用指令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E6%8C%87%E4%BB%A4"><span class="nav-number">1.1.5.5.</span> <span class="nav-text">异常处理指令</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#catch%E5%9D%97"><span class="nav-number">1.1.5.5.1.</span> <span class="nav-text">catch块</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#finally%E5%9D%97"><span class="nav-number">1.1.5.5.2.</span> <span class="nav-text">finally块</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#synchronized%E4%BB%A3%E7%A0%81%E5%9D%97%E6%8C%87%E4%BB%A4"><span class="nav-number">1.1.5.6.</span> <span class="nav-text">synchronized代码块指令</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95%E7%B3%96"><span class="nav-number">1.1.6.</span> <span class="nav-text">语法糖</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%BB%98%E8%AE%A4%E6%9E%84%E9%80%A0%E5%99%A8"><span class="nav-number">1.1.6.1.</span> <span class="nav-text">默认构造器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%87%AA%E5%8A%A8%E8%A3%85%E7%AE%B1-x2F-%E6%8B%86%E7%AE%B1"><span class="nav-number">1.1.6.2.</span> <span class="nav-text">自动装箱&#x2F;拆箱</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B3%9B%E5%9E%8B%E6%93%A6%E9%99%A4%E6%9C%BA%E5%88%B6"><span class="nav-number">1.1.6.3.</span> <span class="nav-text">泛型擦除机制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0"><span class="nav-number">1.1.6.4.</span> <span class="nav-text">可变参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#forEach%E5%BE%AA%E7%8E%AF"><span class="nav-number">1.1.6.5.</span> <span class="nav-text">forEach循环</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#switch"><span class="nav-number">1.1.6.6.</span> <span class="nav-text">switch</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9E%9A%E4%B8%BE%E7%B1%BB"><span class="nav-number">1.1.6.7.</span> <span class="nav-text">枚举类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#try-with-resource"><span class="nav-number">1.1.6.8.</span> <span class="nav-text">try with resource</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E6%A1%A5%E6%8E%A5"><span class="nav-number">1.1.6.9.</span> <span class="nav-text">方法桥接</span></a></li></ol></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
