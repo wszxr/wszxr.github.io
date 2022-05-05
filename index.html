@@ -245,7 +245,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-05-03 22:36:41" itemprop="dateModified" datetime="2022-05-03T22:36:41+08:00">2022-05-03</time>
+                <time title="修改时间：2022-05-05 22:30:38" itemprop="dateModified" datetime="2022-05-05T22:30:38+08:00">2022-05-05</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -454,6 +454,34 @@
 <li>由图，线程0已经获得object的轻量级锁，这时thread1过来争抢，将会进入锁膨胀过程。</li>
 <li>thread1会为object申请一个Monitor（重量级锁），并使得object的markword由轻量级锁(thread0锁记录)的地址变成Monitor的地址，monitor的Owner指向thread0，thread1进入EntryList阻塞队列。</li>
 <li>这时如果需要释放资源，先尝试cas把markword恢复给对象头，肯定失败，进入重量级解锁流程，即按照 Monitor 地址找到 Monitor 对象，设置 Owner 为 null，唤醒 EntryList 中 BLOCKED 线程。</li>
+</ul>
+<p>5，自旋优化</p>
+<p>线程在争夺重量级锁资源的时候，当锁已经被获取了，其他线程过来，会先循环请求几次，如果循环时锁被释放了，那么这个线程就有机会直接获得锁，这样就避免了一次进入阻塞队列的操作(线程上下文切换会耗费资源)。</p>
+<p>注意：</p>
+<ul>
+<li>单核cpu自选就是纯纯浪费，抢夺了正在运行代码的cpu资源</li>
+<li>自旋会自适应，当自旋操作成功过，那么以后该线程就会多自旋几次，否则就会少几次。</li>
+</ul>
+<h5 id="wait-x2F-notify-x2F-notifyAll"><a href="#wait-x2F-notify-x2F-notifyAll" class="headerlink" title="wait&#x2F;notify&#x2F;notifyAll"></a>wait&#x2F;notify&#x2F;notifyAll</h5><p>1,wait():当获得了锁资源后，条件不满足了，Monitor的Owner会先释放锁，进入Monitor对象中的waitset，这时候状态是waiting;可以指定最大wait时间，这时是timedwating状态,过时间直接出来竞争。</p>
+<p>2，notify(),当Monitor里面的Owner线程调用了notify方法，会随机唤醒一个(notifyAll可以唤醒所有waitSet里面的线程)在waitset的线程，被唤醒的线程和处于entrylist中blocked状态的线程一起竞争锁资源。</p>
+<p>3,他们三个都属于线程间协作方法，因为是进入Monitor对象中的waitset，所以必须先获得锁资源再调用Monitor关联的锁对象的wait()&#x2F;notify&#x2F;notifyAll，也就是说只能写在临界区里面。</p>
+<p>4，wiat&#x2F;notify的正确使用</p>
+<ul>
+<li>wait和sleep的区别：<ul>
+<li>wait是object的方法，需要配合对象锁用</li>
+<li>sleep是Thread类的类方法，不需要获得锁。</li>
+<li>wiat释放锁，sleep不会释放锁</li>
+</ul>
+</li>
+</ul>
+<p>使用实例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//线程t1条件</span></span><br><span class="line"><span class="keyword">static</span> <span class="type">boolean</span> <span class="variable">wrapperT1</span> <span class="operator">=</span> <span class="literal">false</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">    <span class="comment">//锁对象</span></span><br><span class="line">    <span class="keyword">final</span> <span class="type">Object</span> <span class="variable">lock</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Object</span>();</span><br><span class="line">    <span class="comment">//有条件的线程</span></span><br><span class="line">    <span class="type">Thread</span> <span class="variable">t1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Thread</span>() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">            <span class="keyword">synchronized</span> (lock) &#123;</span><br><span class="line">                <span class="comment">//只有当条件满足而且被唤醒，才会退出循环继续开始抢夺锁资源</span></span><br><span class="line">                <span class="keyword">while</span> (!wrapperT1) &#123;</span><br><span class="line">                    <span class="keyword">try</span> &#123;</span><br><span class="line">                        lock.wait();</span><br><span class="line">                    &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                        e.printStackTrace();</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                System.out.println(<span class="string">&quot;开始工作&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">    t1.start();</span><br><span class="line"></span><br><span class="line">    <span class="comment">//先设置条件正确再唤醒全部</span></span><br><span class="line">    <span class="type">Thread</span> <span class="variable">t2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Thread</span>() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">            wrapperT1 = <span class="literal">true</span>;</span><br><span class="line">            <span class="keyword">synchronized</span> (lock) &#123;</span><br><span class="line">                lock.notifyAll();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">    t2.start();</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>结果是t1可以开始工作：</p>
+<ul>
+<li>使用while循环可以保证 当既满足条件，又被Monitor的Owner线程唤醒的时候继续开始抢夺锁资源</li>
+<li>唤醒线程应当给予t1能运行的条件，而且使用notifyAll唤醒Monitor中所有的wiatSet线程。</li>
+<li>wait会释放锁资源，因此wait过程中有其他线程试图获取锁是可以的</li>
 </ul>
 
       
@@ -1090,7 +1118,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-05-04 23:17:30" itemprop="dateModified" datetime="2022-05-04T23:17:30+08:00">2022-05-04</time>
+                <time title="修改时间：2022-05-05 18:39:47" itemprop="dateModified" datetime="2022-05-05T18:39:47+08:00">2022-05-05</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1113,7 +1141,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="JVM"><a href="#JVM" class="headerlink" title="JVM"></a>JVM</h1><h2 id="1，内存结构"><a href="#1，内存结构" class="headerlink" title="1，内存结构"></a>1，内存结构</h2><h3 id="程序计数器（pc-Register）"><a href="#程序计数器（pc-Register）" class="headerlink" title="程序计数器（pc Register）"></a>程序计数器（pc Register）</h3>
+          <h1 id="JVM"><a href="#JVM" class="headerlink" title="JVM"></a>JVM</h1><h2 id="1，内存结构（运行时数据区"><a href="#1，内存结构（运行时数据区" class="headerlink" title="1，内存结构（运行时数据区)"></a>1，内存结构（运行时数据区)</h2><p><img src="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220505163009880.png" alt="image-20220505163009880"></p>
+<h3 id="程序计数器（pc-Register）"><a href="#程序计数器（pc-Register）" class="headerlink" title="程序计数器（pc Register）"></a>程序计数器（pc Register）</h3>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2022/04/21/JVMMMM/#more" rel="contents">

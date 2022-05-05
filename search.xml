@@ -3,7 +3,8 @@
   <entry>
     <title>JVMMMM</title>
     <url>/2022/04/21/JVMMMM/</url>
-    <content><![CDATA[<h1 id="JVM"><a href="#JVM" class="headerlink" title="JVM"></a>JVM</h1><h2 id="1，内存结构"><a href="#1，内存结构" class="headerlink" title="1，内存结构"></a>1，内存结构</h2><h3 id="程序计数器（pc-Register）"><a href="#程序计数器（pc-Register）" class="headerlink" title="程序计数器（pc Register）"></a>程序计数器（pc Register）</h3><span id="more"></span>
+    <content><![CDATA[<h1 id="JVM"><a href="#JVM" class="headerlink" title="JVM"></a>JVM</h1><h2 id="1，内存结构（运行时数据区"><a href="#1，内存结构（运行时数据区" class="headerlink" title="1，内存结构（运行时数据区)"></a>1，内存结构（运行时数据区)</h2><p><img src="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220505163009880.png" alt="image-20220505163009880"></p>
+<h3 id="程序计数器（pc-Register）"><a href="#程序计数器（pc-Register）" class="headerlink" title="程序计数器（pc Register）"></a>程序计数器（pc Register）</h3><span id="more"></span>
 
 <ol>
 <li>java运行流程：<ul>
@@ -12,68 +13,63 @@
 </li>
 <li>计数器作用：记录下一条指令的地址</li>
 <li>特点：<ul>
-<li>java把寄存器当作程序计数器，是唯一不会出现内存溢出的问题的区域</li>
+<li>是唯一不会出现内存溢出的问题的区域,因为它只维护了下一条指令的地址</li>
 <li>线程私有，每一个线程有自己独立的程序计数器</li>
+<li>当调用的时native方法，计数器是空(Undefined)</li>
 </ul>
 </li>
 </ol>
-<h3 id="虚拟机栈（jvm-Stacks）"><a href="#虚拟机栈（jvm-Stacks）" class="headerlink" title="虚拟机栈（jvm Stacks）"></a>虚拟机栈（jvm Stacks）</h3><ol>
-<li>定义：<ul>
+<h3 id="虚拟机栈（jvm-Stacks）"><a href="#虚拟机栈（jvm-Stacks）" class="headerlink" title="虚拟机栈（jvm Stacks）"></a>虚拟机栈（jvm Stacks）</h3><p>1，定义：</p>
+<ul>
 <li>每个线程运行所需要的运行空间。</li>
 </ul>
-</li>
-<li>组成：<ul>
+<p>2，组成：</p>
+<ul>
 <li>由若干栈帧组成，每个栈帧对应一个方法的内存空间（局部变量，参数，返回地址···）。</li>
 <li>每个栈只有一个活动栈帧(顶部)，对应正在运行的那个方法。</li>
 </ul>
-</li>
-<li>栈内存溢出：<ul>
+<p>3，栈内存溢出：</p>
+<ul>
 <li>单个栈帧内存过大(一般不会出现)。</li>
 <li>栈帧过多(递归时没有定义结束条件时)。</li>
 </ul>
-</li>
-<li>注意：<ul>
+<p>4，注意：</p>
+<ul>
 <li>垃圾回收不涉及栈内存，方法运行完自动释放。</li>
 <li>单个栈内存并不是越大越好，越大，能创建的线程数就越小。</li>
 </ul>
-</li>
-<li>方法中的局部变量是否有线程安全问题：<ul>
+<p>5，方法中的局部变量是否有线程安全问题：</p>
+<ul>
 <li>静态的变量是共享的，线程不安全。</li>
 <li>通过传递参数进来的是不安全的。</li>
 <li>逃离出方法作用范围的变量不安全，例如return 出去的变量。</li>
 <li>方法内非静态基本类型变量是线程安全的，每个线程都有独立的一份。</li>
 </ul>
-</li>
-</ol>
-<h3 id="本地方法栈（Native-Method-Stacks）"><a href="#本地方法栈（Native-Method-Stacks）" class="headerlink" title="本地方法栈（Native Method Stacks）"></a>本地方法栈（Native Method Stacks）</h3><ol>
-<li>Java中本地方法调用时使用的内存。</li>
-</ol>
+<h3 id="本地方法栈（Native-Method-Stacks）"><a href="#本地方法栈（Native-Method-Stacks）" class="headerlink" title="本地方法栈（Native Method Stacks）"></a>本地方法栈（Native Method Stacks）</h3><p>1，Java中本地方法调用时使用的内存。</p>
 <h3 id="堆（Heap）"><a href="#堆（Heap）" class="headerlink" title="堆（Heap）"></a>堆（Heap）</h3><ul>
 <li>通过new关键字创建的对象会使用堆内存。</li>
 <li>堆是线程共享的。</li>
 <li>堆中有垃圾回收机制.</li>
 </ul>
 <ol>
-<li>堆内存溢出：<ul>
-<li>当对象没有被任何一个引用所引用，jvm才会把它当作垃圾。</li>
+<li><p>堆内存溢出：</p>
+<ul>
+<li>对象过多或过大</li>
 <li>OutOfMemoryError。</li>
 </ul>
 </li>
 </ol>
-<h3 id="方法区（Method-Area"><a href="#方法区（Method-Area" class="headerlink" title="方法区（Method Area)"></a>方法区（Method Area)</h3><ol>
-<li><p>定义（jvm1.8）：</p>
+<h3 id="方法区（Method-Area"><a href="#方法区（Method-Area" class="headerlink" title="方法区（Method Area)"></a>方法区（Method Area)</h3><p>1，定义（jvm1.8）：</p>
 <ul>
-<li>是一种规范，存储和类的结构相关的信息，运行时常量池。</li>
-<li>在虚拟机启动时被创建.</li>
-<li>在逻辑上其实是堆的一部分,可以不遵守此规范（由具体jvm实现决定）。<ul>
-<li>例如：jvm1.8以下是在永久代里边</li>
-<li>jvm1.8以上是在本地内存中的元空间里</li>
+<li>线程共享，存储已经被虚拟机加载的类型信息，常量等等。</li>
 </ul>
-</li>
+<p>2，位置：</p>
+<ul>
+<li>jvm1.8以下是在永久代里边,是堆的一部分，不用额外提供垃圾回收器。</li>
+<li>jvm1.8以上是在本地内存中的元空间里，字符串常量池和静态变量都放到堆空间了</li>
 </ul>
 <p><img src="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220501163144925.png" alt="image-20220501163144925"></p>
-</li>
-<li><p>溢出：</p>
+<p>3，溢出：</p>
 <ul>
 <li>jvm1.8以前是永久代溢出。</li>
 <li>1.8以后是元空间溢出，元空间属于操作系统的空间。</li>
@@ -82,54 +78,338 @@
 </ul>
 </li>
 </ul>
-</li>
-<li><p>常量池：</p>
+<p>4，常量池：</p>
 <ul>
 <li>就是在字节码文件中的一张表。</li>
 <li>作用，给指令一个符号，用于虚拟机寻找要执行的东西。</li>
 </ul>
-</li>
-<li><p>运行时常量池：</p>
+<p>5，运行时常量池：在方法区里</p>
 <ul>
-<li><p>常量池在字节码文件运行时加载到内存中的运行时常量池中，这时候符号变成了真实的内存地址。</p>
-</li>
-<li><p>StringTable（字符串常量池）:</p>
-<ul>
-<li><p>是一个hashtable结构而且不可以扩容。</p>
-</li>
-<li><p>当第一次定义字符串时，如果串池中没有则会把对象放入串池中，如果有则直接使用串池中的对象。</p>
-</li>
-<li><p>示例</p>
-</li>
-<li><p>&#96;&#96;&#96;java<br>&#x2F;**</p>
-<ul>
-<li>关于串池的题</li>
+<li>常量池在字节码文件运行时加载到内存中的运行时常量池中，这时候符号变成了真实的内存地址。</li>
 </ul>
-<p> *&#x2F;<br>public static void main(String[] args) {<br>    String s1 &#x3D; “a”;<br>    String s2 &#x3D; “b”;<br>    &#x2F;&#x2F;常量拼接<br>    String s3 &#x3D; “a”+”b”;</p>
-<pre><code>//s4,变量拼接实际上是新建一个空的StringBuild(),然后.append(&quot;a&quot;).append(&quot;b&quot;).toString
-//toString会把拼接好的值放到一个新的对象中，然后复制给s4
-String s4 = s1+s2;
+<p>6，StringTable（字符串常量池）:</p>
+<ul>
+<li>在堆里面</li>
+<li>是一个hashtable结构而且不可以扩容。</li>
+<li>当第一次定义字符串时，如果串池中没有则会把对象放入串池中，如果有则直接使用串池中的对象。</li>
+<li>示例</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 关于串池的题</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">    <span class="type">String</span> <span class="variable">s1</span> <span class="operator">=</span> <span class="string">&quot;a&quot;</span>;</span><br><span class="line">    <span class="type">String</span> <span class="variable">s2</span> <span class="operator">=</span> <span class="string">&quot;b&quot;</span>;</span><br><span class="line">    <span class="comment">//常量拼接</span></span><br><span class="line">    <span class="type">String</span> <span class="variable">s3</span> <span class="operator">=</span> <span class="string">&quot;a&quot;</span>+<span class="string">&quot;b&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//s4,变量拼接实际上是新建一个空的StringBuild(),然后.append(&quot;a&quot;).append(&quot;b&quot;).toString</span></span><br><span class="line">    <span class="comment">//toString会把拼接好的值放到一个新的对象中，然后复制给s4</span></span><br><span class="line">    <span class="type">String</span> <span class="variable">s4</span> <span class="operator">=</span> s1+s2;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="type">String</span> <span class="variable">s5</span> <span class="operator">=</span> <span class="string">&quot;ab&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//尝试将字符串对象放入串池，如果串池里面有相同的常量，就不加入，</span></span><br><span class="line">    <span class="comment">// 如果没有，就加入（jdk1.8以下会拷贝一份再加入拷贝的对象，拷贝出来的对象和原对象不一样），</span></span><br><span class="line">    <span class="comment">//无论加入或者是没加入都会返回串池中字符串常量对应的对象</span></span><br><span class="line">    <span class="type">String</span> <span class="variable">s6</span> <span class="operator">=</span> s4.intern();</span><br><span class="line"></span><br><span class="line">    System.out.println(s3==s4);<span class="comment">//false =&gt;             false=&gt;//s3的对象在串池中，s4的在堆里面</span></span><br><span class="line">    System.out.println(s3==s5);<span class="comment">//true  =&gt;正确答案      true=&gt;因为String是不可变的，而且都是常量，因此结果是确定的，在编译期间就优化成&quot;ab&quot;</span></span><br><span class="line">    System.out.println(s3==s6);<span class="comment">//true  =&gt;             true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
-String s5 = &quot;ab&quot;;
 
-//尝试将字符串对象放入串池，如果串池里面有相同的常量，就不加入，
-// 如果没有，就加入（jdk1.8以下会拷贝一份再加入拷贝的对象，拷贝出来的对象和原对象不一样），
-//无论加入或者是没加入都会返回串池中字符串常量对应的对象
-String s6 = s4.intern();
 
-System.out.println(s3==s4);//false =&gt;             false=&gt;//s3的对象在串池中，s4的在堆里面
-System.out.println(s3==s5);//true  =&gt;正确答案      true=&gt;因为String是不可变的，而且都是常量，因此结果是确定的，在编译期间就优化成&quot;ab&quot;
-System.out.println(s3==s6);//true  =&gt;             true
-</code></pre>
-<p>}</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">     </span><br><span class="line">     + 题目总结：</span><br><span class="line"></span><br><span class="line">       + 当串池中没有时，新建一个String对象会加入串池，之后创建的字符串常量如果是一样的，那么就统一用串池中的那个对象。</span><br><span class="line">       + 字符串常量对象拼接会在编译期间优化成拼接后的常量；而字符串变量拼接使用的是StringBuild，产生的对象存在堆中。</span><br><span class="line">       + intern()方法会尝试将堆中的对象放入常量池，串池中有此常量，那就不加入，没有则加入(java1.8)；无论加入成功或者是失败方法返回值都是串池中对应常量的对象。</span><br><span class="line">     </span><br><span class="line">     + StringTable的位置：</span><br><span class="line"></span><br><span class="line">       + java1.7的StringTable从永久代转到了堆空间中，因为永久代只有fullGC时才会执行回收。</span><br><span class="line"></span><br><span class="line">     + StringTable也会被垃圾回收。</span><br><span class="line"></span><br><span class="line">     + StringTable调优：</span><br><span class="line"></span><br><span class="line">       + StringTable实际上是一个hashTable，根据实际情况，调整桶的个数就是调优了，桶的个数的最小值是1009。</span><br><span class="line"></span><br><span class="line">### 直接内存(DirectMemory)</span><br><span class="line"></span><br><span class="line">1. 定义：</span><br><span class="line"></span><br><span class="line">   + 常用于NIO操作，作为数据缓冲区。</span><br><span class="line">   + 分配和回收此内存空间成本较高，但是读写性能高。</span><br><span class="line">   + 不受jvm回收管理，因为是操作系统的内存。</span><br><span class="line"></span><br><span class="line">   </span><br><span class="line"></span><br><span class="line">2. ![image-20220501190955778](https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220501190955778.png)</span><br><span class="line"></span><br><span class="line">3. ![image-20220501191239463](https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220501191239463.png)</span><br><span class="line"></span><br><span class="line">   + 直接内存，java代码可以直接访问，比原始io少了一次缓存复制的过程。</span><br><span class="line"></span><br><span class="line">4. 直接内存的分配和回收都由unsafe对象完成：</span><br><span class="line"></span><br><span class="line">   + 以ByteBuffer为例：它的构造器中获取了unsafe实例，并且调用unsafe实例的allocatememory（）和setmemory（）两个方法分配了直接内存。然后还使用Cleaner（虚引用对象）监测ByteBuffer实例，当ByteBuffer被GC回收时，会在Reference Handler线程中调用Cleaner的clean(),进而调用clean()中的unsafe.freeMemory()方法对直接内存进行释放。</span><br><span class="line">   + java中默认禁止了显式GC，因为System.gc()是fullGC，会使得程序停留时间过长。</span><br><span class="line">   + 这时候只能等待jvm进行GC，或者是直接使用unsafe对象的.freeMemory()方法。</span><br><span class="line">   + Unsafe只能通过反射强制获取实例。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 2，垃圾回收</span><br><span class="line"></span><br><span class="line">### 如何判断垃圾可以被回收？</span><br><span class="line"></span><br><span class="line">#### 引用计数法</span><br><span class="line"></span><br><span class="line">+ 当被一个对象引用，计数加一，取消引用则减一</span><br><span class="line"></span><br><span class="line">+ 可能会出现循环引用，即两个对象除了互相引用外没有任何其它变量引用他们，无法使计数器归零，造成内存泄漏。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### 可达性分析算法（java中使用）</span><br><span class="line"></span><br><span class="line">+ 判断是否直接或者间接被根对象引用，不是的话就标记</span><br><span class="line">+ 根对象就是无论如何都不会被回收的一系列对象，例如：</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">+ System Class（java启动时的系统类）</span><br><span class="line">+ 操作系统运行时引用的java对象</span><br><span class="line">+ 被线程上锁的对象</span><br><span class="line">+ 栈帧内引用的对象</span><br><span class="line"></span><br><span class="line">#### 并发的可达性算法</span><br><span class="line"></span><br><span class="line"> 我们知道执行可达性分析的时候是要阻塞用户线程的，当堆空间的对象过多时，可达性算法的扫描将会使得程序停顿很久，我们可以通过并发执行来提高效率。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">然而，在并发分析的时候，用户线程可能更改了某些对象的状态，所以并发执行可能带来两个问题。</span><br><span class="line"></span><br><span class="line">+ 一是可能把应该标记为垃圾的对象错误标记为存活，这种情况并无大碍，下次再回收掉即可。</span><br><span class="line">+ 二是把该存活的对象给标记为垃圾回收了，这样的结果是灾难的。</span><br><span class="line"></span><br><span class="line">解决方法如下：</span><br><span class="line"></span><br><span class="line">+ 增量更新法：</span><br><span class="line"></span><br><span class="line">+ 如果经扫描的确认为安全（黑色）的对象在可达性分析期间被用户线程引用了一个未经扫描的对象（白色），那么会把此黑色对象置为灰色（已经被扫描过但是此对象上还存在没有被扫描过的引用），把这个引用记录下来，并发扫描结束后再把此灰色对象当作一个根对象扫描。</span><br><span class="line">+ 简单说就是黑色新引用了白色，黑色就会变成灰色。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">+ 原始快照法：</span><br><span class="line">+ 如果并发中灰色对象切断了白色对象的引用，会把此引用记录下来，并在结束后把该灰色对象当作root对象重新扫描一遍。</span><br><span class="line">+ 简单来说就是在开始分析的那一刻的快照被记录下来，先扫描那个快照，后边扫描并发中变化了的就可以了。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### 生存还是死亡（有复活机会，但只有一次）？</span><br><span class="line"></span><br><span class="line">这个话题分两种情况讨论，</span><br><span class="line"></span><br><span class="line">+ 首先，需要两次标记才会确认对象要被回收，第一次标记是在检查到没有和GCroot相连接的引用链时。</span><br><span class="line"></span><br><span class="line">+ 第一种情况：如果对象被判断没有必要执行finalize（）方法，比如没有覆盖过finalize（）方法或者说finalize方法已经被调用过了（此方法只能被调用一次），那么就直接再次标记为可回收状态。</span><br><span class="line">+ 第二种情况：对象被判断要执行finalize（）方法，比如对象覆盖过finalize（）方法，那么第一次标记之后，会进入F-Queue队列；然后由一个优先级很低的Finalizer线程来调用（只保证开始执行，不保证执行结束）队列中对象的finalize（）方法，在此期间，如果对象自救(再次被变量引用，例如在finalize()中把this赋值给某变量)，那么被标记的对象就会”复活“,复活后的对象的finalize（）方法将不能再被调用；如果没复活，那应该就真的该“死”（被回收）了。</span><br><span class="line"></span><br><span class="line">+ 事实上，不要使用finalize()；深入理解jvm这本书上甚至建议我们忘了finalize()这个方法······哈哈哈哈哈哈！！！</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 四种引用</span><br><span class="line"></span><br><span class="line">+ 强引用 ：只有当root对象都没有通过强引用引用该对象时，该对象才能被垃圾回收。</span><br><span class="line"></span><br><span class="line">+ 软引用：只被软引用引用的对象，在一次垃圾回收之后，内存还是不够的情况下，就再次回收把被软引用的对象也回收掉。可以配合引用队列释放引用自身的内存。</span><br><span class="line">+ 弱引用：只被弱引用引用的对象，只要发生垃圾回收，就会被当作垃圾回收掉。可以配合引用队列释放引用自身的内存。</span><br><span class="line">+ 虚引用：为一个对象设置虚引用的唯一目的就是当这个对象被回收时收到一个系统通知，当虚引用引用的对象被回收时，虚引用会进入引用队列，由References Handler线程调用相关方法释放内存，例如Cleaner和ByteBuffer。必须配合引用队列使用。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">+ 应用：软引用</span><br><span class="line">  + 可以使用软引用和弱引用引用不太重要的资源（读取图片等），当内存不够时，会自动回收。</span><br><span class="line">  + SoftReference&lt;Thread&gt; a = new SoftReference&lt;&gt;(t1);这样就可以使得a软引用t1线程对象。a.get()可以获得被引用的对象。</span><br><span class="line">  + 我们可以定义一个软引用队列作为SoftReference的参数，即可关联。也可以手动移除队列中的无用软引用对象。</span><br><span class="line">    +    //引用队列</span><br><span class="line">        ReferenceQueue&lt;Thread&gt; queue = new ReferenceQueue&lt;&gt;();</span><br><span class="line">         //关联</span><br><span class="line">         SoftReference&lt;Thread&gt; a = new SoftReference&lt;&gt;(t1,queue);</span><br><span class="line">    + t1被回收时，SoftReference入队列，t1回收完，SoftReference为空，我们人为的从队列取出，由gc回收。</span><br><span class="line">+ 应用：弱引用：</span><br><span class="line">  + 和软引用差不多，SoftReference换成WeakReference就可以了。自身的释放也需要配合引用队列。</span><br><span class="line"></span><br><span class="line">### 垃圾回收算法</span><br><span class="line"></span><br><span class="line">+ 都起源于分代收集理论</span><br><span class="line">+ 分代导致了多种gc方式，</span><br><span class="line">+ minorgc只回收新生代，majorgc只回收老年代（仅cms收集器实现）mixedgc收集全部新生代和部分老年代（仅G1收集器有）,fullGc回收堆空间所有范围。</span><br><span class="line"></span><br><span class="line">1，标记清除算法</span><br><span class="line"></span><br><span class="line">先标记可以释放的对象空间，后清除，这里的清除指的是记录下来被释放的内存的开始地址和结束地址，使他们可以再次被分配。</span><br><span class="line">+ 优点，只需要记录开始和结束地址即可，速度很快。</span><br><span class="line">+ 缺点</span><br><span class="line">  + 执行效率不稳定，随着标记的增加或者是减少，效率也对应减少或者是增加。</span><br><span class="line">  + 会产生较多的内存碎片，这也内存在被分配的时候不好处理。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">2，标记整理</span><br><span class="line"></span><br><span class="line">+ 先标记，后整理。整理的过程是把正常对象向内存的一端移动，占满内存碎片。</span><br><span class="line">  + 优点，不会产生内存碎片</span><br><span class="line">  + 缺点，对象移动，对应的内存地址也变了，效率低，而且移动的时候需要阻塞所有的用户线程。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">3，标记，复制算法</span><br><span class="line"></span><br><span class="line">+ 把内存均分为from区和to区两个区域，to区保持为空；步骤：</span><br><span class="line">  + 把from区的正常对象复制到to区</span><br><span class="line">  + 清空from区域</span><br><span class="line">  + 调换from区域和to区域</span><br><span class="line">  + 优点，解决了标记清除算法标记过多时效率低下。</span><br><span class="line">  + 缺点，需要使用两倍的内存空间</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### Apple式回收</span><br><span class="line"></span><br><span class="line">![image-20220502145058123](https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220502145058123.png)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">步骤：</span><br><span class="line"></span><br><span class="line">1. 新建对象会放入伊甸园中，当伊甸园不足以放下此对象时，触发一次minorGc，</span><br><span class="line">2. minorGc会采用标记复制算法，把伊甸园区域和from区域的正常对象复制到to中，然后清除伊甸园的数据，交换from和to，并且复制过来的对象年龄加一，</span><br><span class="line">3. 对象的年龄存储在对象头中，由四位存储，因此最大是15岁，超过15岁将会晋升至老年代区域，</span><br><span class="line">4. 老年代不足时会先触发minorGC,后触发fullGC。</span><br><span class="line">5. fullgc也清不下空间，就outofmemory错误。</span><br><span class="line">   + 注意，一个线程的outofmemory错误不会导致整个java程序结束。</span><br><span class="line"></span><br><span class="line">+ 注意，minorGC和fullGC都会stop the world（停止其他所有用户线程），因为垃圾回收会牵扯到对象内存地址的变化，这时候其他线程在使用的话会出错。</span><br><span class="line">+ 伊甸园：form：to一般是8：1：1</span><br><span class="line">+ fullGc比minorGC时间要长。</span><br><span class="line">+ 当大对象（就算是清空新生代的伊甸园也放不下）存入时，不会触发垃圾回收，会直接进入老年代。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 跨代引用假说</span><br><span class="line"></span><br><span class="line">+ 当老年代的对象引用了新生代的对象时，minorGc就无法清除新生代的此对象，这时我们必须扫描新生代和老年代所有的对象用以判断该对象是不是可以被回收，显然这很不科学。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">+ 我们在新生代创建一个叫做”记忆集“的全局数据结构，这个结构把老年代划分成了很多小块，只有包含了跨代引用的内存块才会和新生代对象一起被加入到GCRoots进行扫描。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">+ HotSpot的实现</span><br><span class="line">  + 使用卡表实现数据集(相当于HashMap和Map的关系)，在HotSpot中，卡表是一个字节数组。卡表中的每个元素对应其标识内存区域的一块特定大小的内存。这一块内存叫卡页。HotSpot的卡页是512字节。只要一个卡页中有一个对象存在跨代引用，就将对应卡表的数组元素的值标识为1，称为卡页变脏。没有就为0。</span><br><span class="line"></span><br><span class="line">  </span><br><span class="line"></span><br><span class="line">  + CARD_TABLE [this address &gt;&gt; 9] = DIRTY;</span><br><span class="line"></span><br><span class="line">  </span><br><span class="line"></span><br><span class="line">  + 在垃圾收集的时候，判断卡页是否变脏，脏了就加入gcroots一并扫描。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">+ 关于如何使得对象被引用时同时使得对应的卡页变脏？</span><br><span class="line">  + 使用了写屏障，具体就是aop环绕编程，在引用变量赋值操作的时候就进行卡表的更新。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">+ 虚共享问题，java操作单位是缓存行，当两个对象在同一个缓存行中并发操作，就会导致虚共享</span><br><span class="line"></span><br><span class="line">  </span><br><span class="line"></span><br><span class="line">  解决：先判断卡页是不是已经脏了</span><br><span class="line"></span><br><span class="line">  if (CARD_TABLE [this address &gt;&gt; 9] != DIRTY) </span><br><span class="line">  </span><br></pre></td></tr></table></figure></li>
+
+
+
+<ul>
+<li><p>题目总结：</p>
+<ul>
+<li>当串池中没有时，新建一个String对象会加入串池，之后创建的字符串常量如果是一样的，那么就统一用串池中的那个对象。</li>
+<li>字符串常量对象拼接会在编译期间优化成拼接后的常量；而字符串变量拼接使用的是StringBuild，产生的对象存在堆中。</li>
+<li>intern()方法会尝试将堆中的对象放入常量池，串池中有此常量，那就不加入，没有则加入(java1.8)；无论加入成功或者是失败方法返回值都是串池中对应常量的对象。</li>
 </ul>
 </li>
+<li><p>StringTable的位置：</p>
+<ul>
+<li>java1.7的StringTable从永久代转到了堆空间中，因为永久代只有fullGC时才会执行回收。</li>
+</ul>
+</li>
+<li><p>StringTable也会被垃圾回收。</p>
+</li>
+<li><p>StringTable调优：</p>
+<ul>
+<li>StringTable实际上是一个hashTable，根据实际情况，调整桶的个数就是调优了，桶的个数的最小值是1009。</li>
+</ul>
+</li>
+</ul>
+<h3 id="直接内存-DirectMemory"><a href="#直接内存-DirectMemory" class="headerlink" title="直接内存(DirectMemory)"></a>直接内存(DirectMemory)</h3><ol>
+<li><p>定义：</p>
+<ul>
+<li>常用于NIO操作，作为数据缓冲区。</li>
+<li>分配和回收此内存空间成本较高，但是读写性能高。</li>
+<li>不受jvm回收管理，因为是操作系统的内存。</li>
 </ul>
 </li>
 </ol>
-<p>  CARD_TABLE [this address &gt;&gt; 9] &#x3D; DIRTY;<br>  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">  </span><br><span class="line">  </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> ### GC相关参数</span><br><span class="line"></span><br><span class="line">![image-20220502152418880](https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220502152418880.png)</span><br><span class="line"></span><br><span class="line">### 垃圾回收器</span><br><span class="line"></span><br><span class="line">垃圾回收器是垃圾回收算法的实践者。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">接下来是7种不同的hotspot收集器</span><br><span class="line"></span><br><span class="line">新生代：Serial,parNew,Parallel Scavenge,G1</span><br><span class="line"></span><br><span class="line">老年代：CMS ，Serial Old(MSC)，Parallel Old,G1</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### 1，Serial/Serial Old</span><br><span class="line"></span><br><span class="line">Serial:新生代，单线程，串行，标记清除算法</span><br><span class="line"></span><br><span class="line">+ 会阻塞用户线程</span><br><span class="line"></span><br><span class="line">Serial Old：配合Serial使用，作为老年代垃圾收集器，单线程，串行，标记整理算法</span><br><span class="line"></span><br><span class="line">+ 阻塞用户线程</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### 2，ParNew(Serial的并行版本)</span><br><span class="line"></span><br><span class="line">新生代，标记复制算法，多线程，</span><br><span class="line"></span><br><span class="line">+ 除了多线程并行收集以外，其他和Serial差别不大</span><br><span class="line"></span><br><span class="line">+ 是CMS(一个老年代收集器)开启后默认开启的新生代收集器</span><br><span class="line">+ 阻塞用户线程</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### 3，Parallel Scavenge</span><br><span class="line"></span><br><span class="line">新生代，标记复制算法，多线程，</span><br><span class="line"></span><br><span class="line">+ 吞吐量优先，尽量缩短垃圾收集占用的总时间的比值，除此之外和ParNew差不多</span><br><span class="line"></span><br><span class="line">+ 吞吐量=运行代码时间/(运行代码时间+垃圾收集时间)</span><br><span class="line">+ 一个和ParNew的区分就是它能自动调节</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### 4，Parallel Old(Parallel Scavenge的老年代版本)</span><br><span class="line"></span><br><span class="line">老年代，标记整理算法，其他和Parallel Scavenge差不多</span><br><span class="line"></span><br><span class="line">+ 阻塞用户线程</span><br><span class="line">+ 在注重吞吐量或资源稀缺的情况下，可以考虑Parallel Scavenge/Parallel Old组合</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### 5，CMS(Concurrent Mark Sweep)</span><br><span class="line"></span><br><span class="line">老年代，多线程，并发标记，标记清除算法</span><br><span class="line"></span><br><span class="line">+ 响应时间优先，单次stw的时间最短.</span><br><span class="line"></span><br><span class="line">![image-20220502155551769](https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220502155551769.png)</span><br><span class="line"></span><br><span class="line">+ 初次标记stw，但是仅仅标记gcroots直接关联到的对象，速度很快，会阻塞用户线程</span><br><span class="line"></span><br><span class="line">+ 并发标记会变量整个对象图，时间较长但是是和用户线程并发执行，使用的是并发可达性分析的增量更新法。</span><br><span class="line"></span><br><span class="line">+ 重新标记是标记那些在并发标记的同时用户线程产生的增量，会阻塞用户线程</span><br><span class="line"></span><br><span class="line">+ 并发清除，清除线程和用户线程并发运行</span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line">  注：由于并发清除阶段并发会降低总程序的吞吐量，所以出现和用户线程交替运行(i-cms，增量式并发收集器)这种变种,事实证明，效果很一般，jdk7已废弃.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">缺点：</span><br><span class="line"></span><br><span class="line">+ cms在并发清理的时候用户线程同时也在产生对象，产生的垃圾（浮动垃圾）只能在下一次才能回收掉，所以需要预留足够的空间给用户线程分配对象，如果预留的空间不足以满足并发的时候的需要就会并发失败(Concurrent Mode Failure),临时启用Serial Old收集器（串行，会阻塞用户线程）</span><br><span class="line">+ CMS基于标记清除算法，会产生内存碎片，给的解决方案是，在若干次fullGC后，先整理碎片，再回收。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### 6,G1收集器（garbage first)</span><br><span class="line"></span><br><span class="line">在jdk9，G1已经替代了parallel Scavebge/parallel Old组合，Cms完全被标记为(Deprecate)不推荐使用，G1成为jdk9的默认垃圾收集器</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">内存布局的变化：</span><br><span class="line"></span><br><span class="line">+ 把堆内存分为若干个Region,，每一个Region都可以是新生代，幸存区，或者是老年代或者是Humongous的其中一个。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">面向堆的任何部分组成回收集：</span><br><span class="line"></span><br><span class="line">+ 以前的回收器有minorGC,majorGC,fullGC，分别回收新生代，老年代，全部。G1的Mixed GC模式，可以面向堆的任何部分组成回收集。</span><br><span class="line">+ G1的收集器会去追踪各个Region里面的堆积的垃圾的&quot;价值&quot;大小，然后在后台维护一个优先级列表，根据用户允许的停顿时间，价值大的先回收(garbage first名字的由来)，这样就尽可能保证了收集效率。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">G1面临的问题：</span><br><span class="line"></span><br><span class="line">跨代引用如何实现？</span><br><span class="line"></span><br><span class="line">+ G1的记忆集是个哈希表，key是 存在引用我们的Region的起始地址，Value是一个集合，里边是卡表的索引号。G1的记忆集需要写前屏障和写后屏障一起配合。</span><br><span class="line">+ G1记忆集的复杂性会导致需要较多堆空间（10——20%）来维护记忆集工作。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">G1运行流程：</span><br><span class="line"></span><br><span class="line">​	1，初始标记，仅仅是标记一下GC roots能直接关联到的对象，并修改TAMS指针的值，使Region中的并发分配区域可用。虽然初始标记需要阻塞用户线程(时间很短)，但是G1借助和minorGc同步运行此阶段，所以此阶段并没有额外的停顿。</span><br><span class="line"></span><br><span class="line">+ TAMS指针：回收过程中用户线程还是会分配对象，G1在每个Region中设置了两个TAMS指针专门划分区域供并发时分配对象使用。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">​	2，并发标记，从gcroots开始进行并发可达性分析，使用的是原始快照法。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">​	3，最终标记，处理并发标记时原始快照遗留下的SATB记录（记录了并发的时候有引用变动的对象），会阻塞用户线程</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">​	4，筛选回收，基于标记复制，把存活的对象复制到新的region中，旧的Region清空。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">+ 注意，宏观上看，G1使用的时标记整理算法，但是微观Region之间采用的是标记复制算法。和CMS的标记清除不一样，不会产生内存碎片。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### 实战</span><br><span class="line"></span><br><span class="line">1，大对象直接进入老年代</span><br><span class="line"></span><br><span class="line">2，当一个类的所有实例都不再存货并且类所在的加载器的所有类都没被使用，就可以卸载此类，一般框架中会有需求</span><br><span class="line"></span><br><span class="line">3，Region中有一类特殊的Hunongous Region专门用来存储大对象，对象容量超过了Region的一半就判断为大对象，当对象超过了region大小会存储在连续的的Hunongous Region里，G1优先回收大对象，并且不会复制。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 3，类文件结构以及字节码</span><br><span class="line"></span><br><span class="line">大多数情况下，任何一个类或者是接口的定义信息就对应一个字节码(Class)文件；</span><br><span class="line"></span><br><span class="line">然而，反过来说，类和接口的信息并不一定要定义在Class文件中,可以动态生成后直接放到类加载器里。</span><br><span class="line"></span><br><span class="line">### 类文件结构</span><br><span class="line"></span><br><span class="line">![image-20220504201800079](https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220504201800079.png)</span><br><span class="line"></span><br><span class="line">### 字节码分析</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">1，常量池信息会加载到运行时常量池中，但是小于32768 (short的最大值加一) 的数不会加载到运行时常量池，和方法的字节码指令一起存在方法区。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">2，方法的字节码指令会放到方法区</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">3，首先执行main方法，在虚拟机栈上有对应栈帧，栈帧分为局部变量表区域和操作数栈区域。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">4，执行引擎执行字节码，把要操作的数入栈，数小于栈深度就补全，正数0，负数1，大于就多次一点一点入栈</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">5，把操作数栈的数存入局部变量表给变量赋值</span><br><span class="line"></span><br><span class="line">iload：把int数值从局部变量表加载到操作数栈</span><br><span class="line"></span><br><span class="line">istore:把int数值从操作数栈存储到局部变量表</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### 加载流程案例</span><br><span class="line"></span><br><span class="line">a++是先把a加载(iload)到操作数栈，然后再在局部变量表中自增(iinc)，</span><br><span class="line"></span><br><span class="line">++a是先在局部变量表中自增(iinc)，然后再iload到操作数栈中</span><br><span class="line"></span><br><span class="line">```java</span><br><span class="line">public static void main(String[] args) &#123;</span><br><span class="line">    int a = 10;</span><br><span class="line">    int b = a++ + ++a + a--;//10 + 12 + 12</span><br><span class="line">    System.out.println(a);</span><br><span class="line">    System.out.println(b); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><img src="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220501190955778.png" alt="image-20220501190955778"></p>
+<p><img src="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220501191239463.png" alt="image-20220501191239463"></p>
+<ul>
+<li>直接内存，java代码可以直接访问，比原始io少了一次缓存复制的过程。</li>
+</ul>
+<ol>
+<li><p>直接内存的分配和回收都由unsafe对象完成：</p>
+<ul>
+<li>以ByteBuffer为例：它的构造器中获取了unsafe实例，并且调用unsafe实例的allocatememory（）和setmemory（）两个方法分配了直接内存。然后还使用Cleaner（虚引用对象）监测ByteBuffer实例，当ByteBuffer被GC回收时，会在Reference Handler线程中调用Cleaner的clean(),进而调用clean()中的unsafe.freeMemory()方法对直接内存进行释放。</li>
+<li>java中默认禁止了显式GC，因为System.gc()是fullGC，会使得程序停留时间过长。</li>
+<li>这时候只能等待jvm进行GC，或者是直接使用unsafe对象的.freeMemory()方法。</li>
+<li>Unsafe只能通过反射强制获取实例。</li>
+</ul>
+</li>
+</ol>
+<h2 id="2，垃圾回收"><a href="#2，垃圾回收" class="headerlink" title="2，垃圾回收"></a>2，垃圾回收</h2><h3 id="如何判断垃圾可以被回收？"><a href="#如何判断垃圾可以被回收？" class="headerlink" title="如何判断垃圾可以被回收？"></a>如何判断垃圾可以被回收？</h3><h4 id="引用计数法"><a href="#引用计数法" class="headerlink" title="引用计数法"></a>引用计数法</h4><ul>
+<li><p>当被一个对象引用，计数加一，取消引用则减一</p>
+</li>
+<li><p>可能会出现循环引用，即两个对象除了互相引用外没有任何其它变量引用他们，无法使计数器归零，造成内存泄漏。</p>
+</li>
+</ul>
+<h4 id="可达性分析算法（java中使用）"><a href="#可达性分析算法（java中使用）" class="headerlink" title="可达性分析算法（java中使用）"></a>可达性分析算法（java中使用）</h4><ul>
+<li><p>判断是否直接或者间接被根对象引用，不是的话就标记</p>
+</li>
+<li><p>根对象就是无论如何都不会被回收的一系列对象，例如：</p>
+</li>
+<li><p>System Class（java启动时的系统类）</p>
+</li>
+<li><p>操作系统运行时引用的java对象</p>
+</li>
+<li><p>被线程上锁的对象</p>
+</li>
+<li><p>栈帧内引用的对象</p>
+</li>
+</ul>
+<h4 id="并发的可达性算法"><a href="#并发的可达性算法" class="headerlink" title="并发的可达性算法"></a>并发的可达性算法</h4><p> 我们知道执行可达性分析的时候是要阻塞用户线程的，当堆空间的对象过多时，可达性算法的扫描将会使得程序停顿很久，我们可以通过并发执行来提高效率。</p>
+<p>然而，在并发分析的时候，用户线程可能更改了某些对象的状态，所以并发执行可能带来两个问题。</p>
+<ul>
+<li>一是可能把应该标记为垃圾的对象错误标记为存活，这种情况并无大碍，下次再回收掉即可。</li>
+<li>二是把该存活的对象给标记为垃圾回收了，这样的结果是灾难的。</li>
+</ul>
+<p>解决方法如下：</p>
+<ul>
+<li><p>增量更新法：</p>
+</li>
+<li><p>如果经扫描的确认为安全（黑色）的对象在可达性分析期间被用户线程引用了一个未经扫描的对象（白色），那么会把此黑色对象置为灰色（已经被扫描过但是此对象上还存在没有被扫描过的引用），把这个引用记录下来，并发扫描结束后再把此灰色对象当作一个根对象扫描。</p>
+</li>
+<li><p>简单说就是黑色新引用了白色，黑色就会变成灰色。</p>
+</li>
+<li><p>原始快照法：</p>
+</li>
+<li><p>如果并发中灰色对象切断了白色对象的引用，会把此引用记录下来，并在结束后把该灰色对象当作root对象重新扫描一遍。</p>
+</li>
+<li><p>简单来说就是在开始分析的那一刻的快照被记录下来，先扫描那个快照，后边扫描并发中变化了的就可以了。</p>
+</li>
+</ul>
+<h4 id="生存还是死亡（有复活机会，但只有一次）？"><a href="#生存还是死亡（有复活机会，但只有一次）？" class="headerlink" title="生存还是死亡（有复活机会，但只有一次）？"></a>生存还是死亡（有复活机会，但只有一次）？</h4><p>这个话题分两种情况讨论，</p>
+<ul>
+<li><p>首先，需要两次标记才会确认对象要被回收，第一次标记是在检查到没有和GCroot相连接的引用链时。</p>
+</li>
+<li><p>第一种情况：如果对象被判断没有必要执行finalize（）方法，比如没有覆盖过finalize（）方法或者说finalize方法已经被调用过了（此方法只能被调用一次），那么就直接再次标记为可回收状态。</p>
+</li>
+<li><p>第二种情况：对象被判断要执行finalize（）方法，比如对象覆盖过finalize（）方法，那么第一次标记之后，会进入F-Queue队列；然后由一个优先级很低的Finalizer线程来调用（只保证开始执行，不保证执行结束）队列中对象的finalize（）方法，在此期间，如果对象自救(再次被变量引用，例如在finalize()中把this赋值给某变量)，那么被标记的对象就会”复活“,复活后的对象的finalize（）方法将不能再被调用；如果没复活，那应该就真的该“死”（被回收）了。</p>
+</li>
+<li><p>事实上，不要使用finalize()；深入理解jvm这本书上甚至建议我们忘了finalize()这个方法······哈哈哈哈哈哈！！！</p>
+</li>
+</ul>
+<h3 id="四种引用"><a href="#四种引用" class="headerlink" title="四种引用"></a>四种引用</h3><ul>
+<li><p>强引用 ：只有当root对象都没有通过强引用引用该对象时，该对象才能被垃圾回收。</p>
+</li>
+<li><p>软引用：只被软引用引用的对象，在一次垃圾回收之后，内存还是不够的情况下，就再次回收把被软引用的对象也回收掉。可以配合引用队列释放引用自身的内存。</p>
+</li>
+<li><p>弱引用：只被弱引用引用的对象，只要发生垃圾回收，就会被当作垃圾回收掉。可以配合引用队列释放引用自身的内存。</p>
+</li>
+<li><p>虚引用：为一个对象设置虚引用的唯一目的就是当这个对象被回收时收到一个系统通知，当虚引用引用的对象被回收时，虚引用会进入引用队列，由References Handler线程调用相关方法释放内存，例如Cleaner和ByteBuffer。必须配合引用队列使用。</p>
+</li>
+<li><p>应用：软引用</p>
+<ul>
+<li>可以使用软引用和弱引用引用不太重要的资源（读取图片等），当内存不够时，会自动回收。</li>
+<li>SoftReference<Thread> a &#x3D; new SoftReference&lt;&gt;(t1);这样就可以使得a软引用t1线程对象。a.get()可以获得被引用的对象。</li>
+<li>我们可以定义一个软引用队列作为SoftReference的参数，即可关联。也可以手动移除队列中的无用软引用对象。<ul>
+<li>&#x2F;&#x2F;引用队列<br>ReferenceQueue<Thread> queue &#x3D; new ReferenceQueue&lt;&gt;();<br>&#x2F;&#x2F;关联<br>SoftReference<Thread> a &#x3D; new SoftReference&lt;&gt;(t1,queue);</li>
+<li>t1被回收时，SoftReference入队列，t1回收完，SoftReference为空，我们人为的从队列取出，由gc回收。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>应用：弱引用：</p>
+<ul>
+<li>和软引用差不多，SoftReference换成WeakReference就可以了。自身的释放也需要配合引用队列。</li>
+</ul>
+</li>
+</ul>
+<h3 id="垃圾回收算法"><a href="#垃圾回收算法" class="headerlink" title="垃圾回收算法"></a>垃圾回收算法</h3><ul>
+<li>都起源于分代收集理论</li>
+<li>分代导致了多种gc方式，</li>
+<li>minorgc只回收新生代，majorgc只回收老年代（仅cms收集器实现）mixedgc收集全部新生代和部分老年代（仅G1收集器有）,fullGc回收堆空间所有范围。</li>
+</ul>
+<p>1，标记清除算法</p>
+<p>先标记可以释放的对象空间，后清除，这里的清除指的是记录下来被释放的内存的开始地址和结束地址，使他们可以再次被分配。</p>
+<ul>
+<li>优点，只需要记录开始和结束地址即可，速度很快。</li>
+<li>缺点<ul>
+<li>执行效率不稳定，随着标记的增加或者是减少，效率也对应减少或者是增加。</li>
+<li>会产生较多的内存碎片，这也内存在被分配的时候不好处理。</li>
+</ul>
+</li>
+</ul>
+<p>2，标记整理</p>
+<ul>
+<li>先标记，后整理。整理的过程是把正常对象向内存的一端移动，占满内存碎片。<ul>
+<li>优点，不会产生内存碎片</li>
+<li>缺点，对象移动，对应的内存地址也变了，效率低，而且移动的时候需要阻塞所有的用户线程。</li>
+</ul>
+</li>
+</ul>
+<p>3，标记，复制算法</p>
+<ul>
+<li>把内存均分为from区和to区两个区域，to区保持为空；步骤：<ul>
+<li>把from区的正常对象复制到to区</li>
+<li>清空from区域</li>
+<li>调换from区域和to区域</li>
+<li>优点，解决了标记清除算法标记过多时效率低下。</li>
+<li>缺点，需要使用两倍的内存空间</li>
+</ul>
+</li>
+</ul>
+<h3 id="Apple式回收-分代回收"><a href="#Apple式回收-分代回收" class="headerlink" title="Apple式回收(分代回收)"></a>Apple式回收(分代回收)</h3><p><img src="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220502145058123.png" alt="image-20220502145058123"></p>
+<p>步骤：</p>
+<ol>
+<li>新建对象会放入伊甸园中，当伊甸园不足以放下此对象时，触发一次minorGc，</li>
+<li>minorGc会采用标记复制算法，把伊甸园区域和from区域的正常对象复制到to中，然后清除伊甸园的数据，交换from和to，并且复制过来的对象年龄加一，</li>
+<li>对象的年龄存储在对象头中，由四位存储，因此最大是15岁，超过15岁将会晋升至老年代区域，</li>
+<li>老年代不足时会先触发minorGC,后触发fullGC。</li>
+<li>fullgc也清不下空间，就outofmemory错误。<ul>
+<li>注意，一个线程的outofmemory错误不会导致整个java程序结束。</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li>注意，minorGC和fullGC都会stop the world（停止其他所有用户线程），因为垃圾回收会牵扯到对象内存地址的变化，这时候其他线程在使用的话会出错。</li>
+<li>伊甸园：form：to一般是8：1：1</li>
+<li>fullGc比minorGC时间要长。</li>
+<li>当大对象（就算是清空新生代的伊甸园也放不下）存入时，不会触发垃圾回收，会直接进入老年代。</li>
+</ul>
+<h3 id="跨代引用假说"><a href="#跨代引用假说" class="headerlink" title="跨代引用假说"></a>跨代引用假说</h3><ul>
+<li><p>当老年代的对象引用了新生代的对象时，minorGc就无法清除新生代的此对象，这时我们必须扫描新生代和老年代所有的对象用以判断该对象是不是可以被回收，显然这很不科学。</p>
+</li>
+<li><p>我们在新生代创建一个叫做”记忆集“的全局数据结构，这个结构把老年代划分成了很多小块，只有包含了跨代引用的内存块才会和新生代对象一起被加入到GCRoots进行扫描。</p>
+</li>
+<li><p>HotSpot的实现</p>
+<ul>
+<li><p>使用卡表实现数据集(相当于HashMap和Map的关系)，在HotSpot中，卡表是一个字节数组。卡表中的每个元素对应其标识内存区域的一块特定大小的内存。这一块内存叫卡页。HotSpot的卡页是512字节。只要一个卡页中有一个对象存在跨代引用，就将对应卡表的数组元素的值标识为1，称为卡页变脏。没有就为0。</p>
+</li>
+<li><p>CARD_TABLE [this address &gt;&gt; 9] &#x3D; DIRTY;</p>
+</li>
+<li><p>在垃圾收集的时候，判断卡页是否变脏，脏了就加入gcroots一并扫描。</p>
+</li>
+</ul>
+</li>
+<li><p>关于如何使得对象被引用时同时使得对应的卡页变脏？</p>
+<ul>
+<li>使用了写屏障，具体就是aop环绕编程，在引用变量赋值操作的时候就进行卡表的更新。</li>
+</ul>
+</li>
+<li><p>虚共享问题，java操作单位是缓存行，当两个对象在同一个缓存行中并发操作，就会导致虚共享</p>
+</li>
+</ul>
+<p>解决：先判断卡页是不是已经脏了</p>
+<p>if (CARD_TABLE [this address &gt;&gt; 9] !&#x3D; DIRTY) </p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">CARD_TABLE [<span class="built_in">this</span> address &gt;&gt; <span class="number">9</span>] = DIRTY;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+<h3 id="GC相关参数"><a href="#GC相关参数" class="headerlink" title="GC相关参数"></a>GC相关参数</h3><p><img src="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220502152418880.png" alt="image-20220502152418880"></p>
+<h3 id="垃圾回收器"><a href="#垃圾回收器" class="headerlink" title="垃圾回收器"></a>垃圾回收器</h3><p>垃圾回收器是垃圾回收算法的实践者。</p>
+<p>接下来是7种不同的hotspot收集器</p>
+<p>新生代：Serial,parNew,Parallel Scavenge,G1</p>
+<p>老年代：CMS ，Serial Old(MSC)，Parallel Old,G1</p>
+<h4 id="1，Serial-x2F-Serial-Old"><a href="#1，Serial-x2F-Serial-Old" class="headerlink" title="1，Serial&#x2F;Serial Old"></a>1，Serial&#x2F;Serial Old</h4><p>Serial:新生代，单线程，串行，标记清除算法</p>
+<ul>
+<li>会阻塞用户线程</li>
+</ul>
+<p>Serial Old：配合Serial使用，作为老年代垃圾收集器，单线程，串行，标记整理算法</p>
+<ul>
+<li>阻塞用户线程</li>
+</ul>
+<h4 id="2，ParNew-Serial的并行版本"><a href="#2，ParNew-Serial的并行版本" class="headerlink" title="2，ParNew(Serial的并行版本)"></a>2，ParNew(Serial的并行版本)</h4><p>新生代，标记复制算法，多线程，</p>
+<ul>
+<li><p>除了多线程并行收集以外，其他和Serial差别不大</p>
+</li>
+<li><p>是CMS(一个老年代收集器)开启后默认开启的新生代收集器</p>
+</li>
+<li><p>阻塞用户线程</p>
+</li>
+</ul>
+<h4 id="3，Parallel-Scavenge"><a href="#3，Parallel-Scavenge" class="headerlink" title="3，Parallel Scavenge"></a>3，Parallel Scavenge</h4><p>新生代，标记复制算法，多线程，</p>
+<ul>
+<li><p>吞吐量优先，尽量缩短垃圾收集占用的总时间的比值，除此之外和ParNew差不多</p>
+</li>
+<li><p>吞吐量&#x3D;运行代码时间&#x2F;(运行代码时间+垃圾收集时间)</p>
+</li>
+<li><p>一个和ParNew的区分就是它能自动调节</p>
+</li>
+</ul>
+<h4 id="4，Parallel-Old-Parallel-Scavenge的老年代版本"><a href="#4，Parallel-Old-Parallel-Scavenge的老年代版本" class="headerlink" title="4，Parallel Old(Parallel Scavenge的老年代版本)"></a>4，Parallel Old(Parallel Scavenge的老年代版本)</h4><p>老年代，标记整理算法，其他和Parallel Scavenge差不多</p>
+<ul>
+<li>阻塞用户线程</li>
+<li>在注重吞吐量或资源稀缺的情况下，可以考虑Parallel Scavenge&#x2F;Parallel Old组合</li>
+</ul>
+<h4 id="5，CMS-Concurrent-Mark-Sweep"><a href="#5，CMS-Concurrent-Mark-Sweep" class="headerlink" title="5，CMS(Concurrent Mark Sweep)"></a>5，CMS(Concurrent Mark Sweep)</h4><p>老年代，多线程，并发标记，标记清除算法</p>
+<ul>
+<li>响应时间优先，单次stw的时间最短.</li>
+</ul>
+<p><img src="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220502155551769.png" alt="image-20220502155551769"></p>
+<ul>
+<li><p>初次标记stw，但是仅仅标记gcroots直接关联到的对象，速度很快，会阻塞用户线程</p>
+</li>
+<li><p>并发标记会变量整个对象图，时间较长但是是和用户线程并发执行，使用的是并发可达性分析的增量更新法。</p>
+</li>
+<li><p>重新标记是标记那些在并发标记的同时用户线程产生的增量，会阻塞用户线程</p>
+</li>
+<li><p>并发清除，清除线程和用户线程并发运行</p>
+<p>注：由于并发清除阶段并发会降低总程序的吞吐量，所以出现和用户线程交替运行(i-cms，增量式并发收集器)这种变种,事实证明，效果很一般，jdk7已废弃.</p>
+</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>cms在并发清理的时候用户线程同时也在产生对象，产生的垃圾（浮动垃圾）只能在下一次才能回收掉，所以需要预留足够的空间给用户线程分配对象，如果预留的空间不足以满足并发的时候的需要就会并发失败(Concurrent Mode Failure),临时启用Serial Old收集器（串行，会阻塞用户线程）</li>
+<li>CMS基于标记清除算法，会产生内存碎片，给的解决方案是，在若干次fullGC后，先整理碎片，再回收。</li>
+</ul>
+<h4 id="6-G1收集器（garbage-first"><a href="#6-G1收集器（garbage-first" class="headerlink" title="6,G1收集器（garbage first)"></a>6,G1收集器（garbage first)</h4><p>在jdk9，G1已经替代了parallel Scavebge&#x2F;parallel Old组合，Cms完全被标记为(Deprecate)不推荐使用，G1成为jdk9的默认垃圾收集器</p>
+<p>内存布局的变化：</p>
+<ul>
+<li>把堆内存分为若干个Region,，每一个Region都可以是新生代，幸存区，或者是老年代或者是Humongous的其中一个。</li>
+</ul>
+<p>面向堆的任何部分组成回收集：</p>
+<ul>
+<li>以前的回收器有minorGC,majorGC,fullGC，分别回收新生代，老年代，全部。G1的Mixed GC模式，可以面向堆的任何部分组成回收集。</li>
+<li>G1的收集器会去追踪各个Region里面的堆积的垃圾的”价值”大小，然后在后台维护一个优先级列表，根据用户允许的停顿时间，价值大的先回收(garbage first名字的由来)，这样就尽可能保证了收集效率。</li>
+</ul>
+<p>G1面临的问题：</p>
+<p>跨代引用如何实现？</p>
+<ul>
+<li>G1的记忆集是个哈希表，key是 存在引用我们的Region的起始地址，Value是一个集合，里边是卡表的索引号。G1的记忆集需要写前屏障和写后屏障一起配合。</li>
+<li>G1记忆集的复杂性会导致需要较多堆空间（10——20%）来维护记忆集工作。</li>
+</ul>
+<p>G1运行流程：</p>
+<p>​    1，初始标记，仅仅是标记一下GC roots能直接关联到的对象，并修改TAMS指针的值，使Region中的并发分配区域可用。虽然初始标记需要阻塞用户线程(时间很短)，但是G1借助和minorGc同步运行此阶段，所以此阶段并没有额外的停顿。</p>
+<ul>
+<li>TAMS指针：回收过程中用户线程还是会分配对象，G1在每个Region中设置了两个TAMS指针专门划分区域供并发时分配对象使用。</li>
+</ul>
+<p>​    2，并发标记，从gcroots开始进行并发可达性分析，使用的是原始快照法。</p>
+<p>​    3，最终标记，处理并发标记时原始快照遗留下的SATB记录（记录了并发的时候有引用变动的对象），会阻塞用户线程</p>
+<p>​    4，筛选回收，基于标记复制，把存活的对象复制到新的region中，旧的Region清空。</p>
+<ul>
+<li>注意，宏观上看，G1使用的时标记整理算法，但是微观Region之间采用的是标记复制算法。和CMS的标记清除不一样，不会产生内存碎片。</li>
+</ul>
+<h4 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h4><p>1，大对象直接进入老年代</p>
+<p>2，当一个类的所有实例都不再存货并且类所在的加载器的所有类都没被使用，就可以卸载此类，一般框架中会有需求</p>
+<p>3，Region中有一类特殊的Hunongous Region专门用来存储大对象，对象容量超过了Region的一半就判断为大对象，当对象超过了region大小会存储在连续的的Hunongous Region里，G1优先回收大对象，并且不会复制。</p>
+<h2 id="3，类文件结构以及字节码"><a href="#3，类文件结构以及字节码" class="headerlink" title="3，类文件结构以及字节码"></a>3，类文件结构以及字节码</h2><p>大多数情况下，任何一个类或者是接口的定义信息就对应一个字节码(Class)文件；</p>
+<p>然而，反过来说，类和接口的信息并不一定要定义在Class文件中,可以动态生成后直接放到类加载器里。</p>
+<h3 id="类文件结构"><a href="#类文件结构" class="headerlink" title="类文件结构"></a>类文件结构</h3><p><img src="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220504201800079.png" alt="image-20220504201800079"></p>
+<h3 id="字节码分析"><a href="#字节码分析" class="headerlink" title="字节码分析"></a>字节码分析</h3><p>1，常量池信息会加载到运行时常量池中，但是小于32768 (short的最大值加一) 的数不会加载到运行时常量池，和方法的字节码指令一起存在方法区。</p>
+<p>2，方法的字节码指令会放到方法区</p>
+<p>3，首先执行main方法，在虚拟机栈上有对应栈帧，栈帧分为局部变量表区域和操作数栈区域。</p>
+<p>4，执行引擎执行字节码，把要操作的数入栈，数小于栈深度就补全，正数0，负数1，大于就多次一点一点入栈</p>
+<p>5，把操作数栈的数存入局部变量表给变量赋值</p>
+<p>iload：把int数值从局部变量表加载到操作数栈</p>
+<p>istore:把int数值从操作数栈存储到局部变量表</p>
+<h4 id="加载流程案例"><a href="#加载流程案例" class="headerlink" title="加载流程案例"></a>加载流程案例</h4><p>a++是先把a加载(iload)到操作数栈，然后再在局部变量表中自增(iinc)，</p>
+<p>++a是先在局部变量表中自增(iinc)，然后再iload到操作数栈中</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">    <span class="type">int</span> <span class="variable">a</span> <span class="operator">=</span> <span class="number">10</span>;</span><br><span class="line">    <span class="type">int</span> <span class="variable">b</span> <span class="operator">=</span> a++ + ++a + a--;<span class="comment">//10 + 12 + 12</span></span><br><span class="line">    System.out.println(a);</span><br><span class="line">    System.out.println(b); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <ul>
 <li>b的表达式中操作的都是操作数栈的值，而不是局部变量表槽（slot)中的变量值。</li>
 </ul>
@@ -165,16 +445,16 @@ System.out.println(s3==s6);//true  =&gt;             true
 <li>结果是100，编译器会从上往下搜集成员变量赋值语句和非静态赋值代码块和类的构造方法，组成一个新的构造方法&lt; init &gt;()v，并且原本的构造方法的代码总是在新的构造方法的最后调用。</li>
 </ul>
 <h4 id="方法调用指令"><a href="#方法调用指令" class="headerlink" title="方法调用指令"></a>方法调用指令</h4><ul>
-<li>构造，private,final的指令都是invokespecial,父类的方法也是<ul>
-<li>属于静态绑定：在字节码生成的时候就确定自己要执行哪个方法</li>
+<li>没有任何办法重写：构造，private,final的指令都是invokespecial,父类的方法也是<ul>
+<li>属于静态绑定：在解析阶段就确定自己要执行哪个方法</li>
 </ul>
 </li>
-<li>普通的实例(public,protect)方法：invokevirtual<ul>
+<li>所有的虚方法：例如普通的实例(public,protect)方法：invokevirtual<ul>
 <li>动态绑定，不知道是调用父类的还是某子类重写的，需要在运行的时候确定。</li>
 </ul>
 </li>
-<li>静态方法：invokestatic</li>
-<li>调用接口方法：invokeinterface</li>
+<li>静态方法：invokestatic，解析阶段</li>
+<li>调用接口方法：invokeinterface，运行时确定一个接口的对象</li>
 <li>调用动态方法(例如Lambda)表达式里边的：invokedynamic</li>
 </ul>
 <p>​    </p>
@@ -183,7 +463,7 @@ System.out.println(s3==s6);//true  =&gt;             true
 <ol>
 <li>通过栈帧中的引用找到对象</li>
 <li>分析对象头，对象头的klass word存储了类的地址，进而找到类</li>
-<li>对应的Class 结构中有 vtable（一张表），它在类加载的链接阶段就已经根据方法的重写规则生成好了</li>
+<li>对应的类的方法区有 vtable（虚方法表），它在类加载的链接阶段就已经根据方法的重写规则生成好了</li>
 <li>查表得到方法的具体地址</li>
 <li>执行方法的字节码</li>
 </ol>
@@ -326,6 +606,110 @@ System.out.println(s3==s6);//true  =&gt;             true
 <li><p>子类的方法返回值可以是父类返回值的子类，这个用到了桥接。</p>
 </li>
 </ul>
+<h3 id="类加载"><a href="#类加载" class="headerlink" title="类加载"></a>类加载</h3><h4 id="类生命周期"><a href="#类生命周期" class="headerlink" title="类生命周期"></a>类生命周期</h4><p><img src="https://zxrs.oss-cn-beijing.aliyuncs.com/QQ%E5%9B%BE%E7%89%8720220505111426.jpg" alt="QQ图片20220505111426"></p>
+<h4 id="类加载的过程"><a href="#类加载的过程" class="headerlink" title="类加载的过程"></a>类加载的过程</h4><p>包括 加载，连接(验证，准备，解析)，初始化</p>
+<ul>
+<li>需要注意的是，解析阶段不一定会在初始化之前，按虚拟机具体实现而定。</li>
+<li>以上的顺序是开始执行的顺序，并不代表前面执行完了才执行后面，它们会交错执行。</li>
+</ul>
+<h5 id="加载"><a href="#加载" class="headerlink" title="加载"></a>加载</h5><ol>
+<li>获得一个类的二进制字节流</li>
+<li>将这个字节流代表的静态存储结构加载到方法区变成运行时数据结构</li>
+<li>堆内存中生成一个.Class对象，作为访问方法区各种数据的入口</li>
+</ol>
+<p><img src="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220505115545562.png" alt="image-20220505115545562"></p>
+<p>注意：</p>
+<ol>
+<li>java内部采用 C++ 的 instanceKlass数据结构来描述类，上面的Preson.class只是 instanceKlass的镜像，他们互相记录指针，.classd对象是instanceKlass的访问入口，.class在堆里面，静态变量都是跟在.class对象底部。</li>
+<li>虚拟机规范没有限定二进制字节流的来源，所以可以在Class文件中获取，也可以在ZIP包中读取，亦或是从jsp文件生成······</li>
+<li>类结构中会指出父类信息，因此如果存在父类没加载会先加载父类</li>
+</ol>
+<h5 id="连接"><a href="#连接" class="headerlink" title="连接"></a>连接</h5><p>包括验证，准备，解析三个阶段</p>
+<p>1，验证：目的是确保Class文件的字节流包含的信息符合java虚拟机规范的全部要求。</p>
+<ul>
+<li>文件格式验证</li>
+<li>元数据验证</li>
+<li>字节码验证</li>
+<li>符号引用验证</li>
+</ul>
+<p>2，准备：为类变量分配空间并赋初始值，上面说了，这些变量会随着Class类放在堆中。</p>
+<p><img src="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220505121520497.png" alt="image-20220505121520497"></p>
+<ul>
+<li>注意，赋初值的意思是附上0值。</li>
+<li>在通常情况下是赋零值，但是有特殊情况<ul>
+<li>final修饰的基本类型：static final int i &#x3D; 10;</li>
+<li>final 修饰的String字符串 常量：static final String str &#x3D; “aaaa”;</li>
+</ul>
+</li>
+<li>以上两种情况，会在编译期间为变量生成ConstantValue属性，”准备’’期间会根据把ConstantValue的值直接赋值给变量。</li>
+</ul>
+<p>3，解析：将常量池的”符号引用“解析成内存中的”直接引用”(内存中地址)。</p>
+<ul>
+<li>类和接口的解析</li>
+<li>字段的解析</li>
+<li>方法的解析</li>
+</ul>
+<h5 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h5><p>1，是类加载的最后一个步骤，真正开始执行类中编写的java代码，初始化就是执行类构造器方法&lt; cinit&gt;()的过程。</p>
+<p>2，jvm会保证&lt; cinit &gt;()的线程安全性</p>
+<p>2，初始化时机</p>
+<ul>
+<li><p>main 方法所在的类，总会被首先初始化</p>
+</li>
+<li><p>首次访问这个类的静态变量或静态方法时会初始化，如果父类还没初始化，会先初始化父类；但是如果是接口的话只有使用到了父接口的变量时，才会调用父接口的构造&lt; cinit&gt;()。</p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyTest1</span> &#123;</span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;main初始化&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//访问子类变量</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        System.out.println(Son.a);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//父类</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Father</span> &#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;father初始化&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//子类</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Son</span> <span class="keyword">extends</span> <span class="title class_">Father</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="type">int</span> <span class="variable">a</span> <span class="operator">=</span> <span class="number">100</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;son初始化&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>结果：main最先初始化，然后是父类，再是子类</p>
+<p><img src="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220505141940244.png" alt="image-20220505141940244"></p>
+<ul>
+<li><p>通过子类访问父类的静态变量，只会触发父类的初始化 </p>
+</li>
+<li><p>Class.forName(不指定第二个参数为false时）和new 会导致初始化</p>
+</li>
+</ul>
+<p>3，不会初始化的时候</p>
+<ul>
+<li><p>访问类的 static final 静态常量（基本类型和字符串）不会触发初始化，因为在准备阶段他们的值就固定赋上了</p>
+</li>
+<li><p>类对象.class 不会触发初始化 </p>
+</li>
+<li><p>创建该类的数组不会触发初始化 </p>
+</li>
+<li><p>类加载器的 loadClass 方法</p>
+</li>
+<li><p>Class.forName 的参数 2(是否初始化) 为 false 时</p>
+</li>
+</ul>
+<h4 id="类加载器"><a href="#类加载器" class="headerlink" title="类加载器"></a>类加载器</h4><h5 id="类与类加载器"><a href="#类与类加载器" class="headerlink" title="类与类加载器"></a>类与类加载器</h5><p>1，java中的类实际上由类本身和加载这个类的类加载器一起唯一标识，也就是说，即使是同一个类(来源于同一个Class文件)，但是用不同类加载器加载，那么这两个类必定是不相等的。</p>
+<h5 id="双亲委派模型"><a href="#双亲委派模型" class="headerlink" title="双亲委派模型"></a>双亲委派模型</h5><p>1，架构：三层加载器+双亲委派</p>
+<ul>
+<li>三层加载器分别是启动类加载器，扩展加载器，应用程序类加载器。分别有不同的加载范围。</li>
+</ul>
+<p><img src="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220505154922949.png" alt="image-20220505154922949"></p>
+<ul>
+<li>双亲委派模型：</li>
+</ul>
+<p><img src="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220505155401118.png" alt="image-20220505155401118"></p>
+<ul>
+<li>注意：扩展类加载器，应用类加载器，这两个加载器都是ClassLoader的子类，启动加载器无法被java调用，用null表示。但是这三个之间不是继承关系，通常是一种组合关系来实现代码的复用。</li>
+</ul>
+<p>委派机制：这时ClassLoader的loadClass()方法</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">protected</span> Class&lt;?&gt; loadClass(String name, <span class="type">boolean</span> resolve)</span><br><span class="line">        <span class="keyword">throws</span> ClassNotFoundException</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">synchronized</span> (getClassLoadingLock(name)) &#123;</span><br><span class="line">            <span class="comment">// First, check if the class has already been loaded</span></span><br><span class="line">            Class&lt;?&gt; c = findLoadedClass(name);</span><br><span class="line">            <span class="keyword">if</span> (c == <span class="literal">null</span>) &#123;</span><br><span class="line">                <span class="type">long</span> <span class="variable">t0</span> <span class="operator">=</span> System.nanoTime();</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    <span class="keyword">if</span> (parent != <span class="literal">null</span>) &#123;</span><br><span class="line">                        c = parent.loadClass(name, <span class="literal">false</span>);</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        c = findBootstrapClassOrNull(name);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125; <span class="keyword">catch</span> (ClassNotFoundException e) &#123;</span><br><span class="line">                    <span class="comment">// ClassNotFoundException thrown if class not found</span></span><br><span class="line">                    <span class="comment">// from the non-null parent class loader</span></span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> (c == <span class="literal">null</span>) &#123;</span><br><span class="line">                    <span class="comment">// If still not found, then invoke findClass in order</span></span><br><span class="line">                    <span class="comment">// to find the class.</span></span><br><span class="line">                    <span class="type">long</span> <span class="variable">t1</span> <span class="operator">=</span> System.nanoTime();</span><br><span class="line">                    c = findClass(name);</span><br><span class="line"></span><br><span class="line">                    <span class="comment">// this is the defining class loader; record the stats</span></span><br><span class="line">                    sun.misc.PerfCounter.getParentDelegationTime().addTime(t1 - t0);</span><br><span class="line">                    sun.misc.PerfCounter.getFindClassTime().addElapsedTimeFrom(t1);</span><br><span class="line">                    sun.misc.PerfCounter.getFindClasses().increment();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (resolve) &#123;</span><br><span class="line">                resolveClass(c);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> c;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>具体流程：</p>
+<ul>
+<li>当加载器拿到加载请求后，判断是不是被加载过了，没有的话，自己不会加载，而是委派给上级加载器，一直往上，也就是说，bootstrap加载器会获得所有请求，当它处理不了会抛出异常，由它的下一级尝试处理，如果还是处理不了(抛出异常），一级一级往下。</li>
+</ul>
+<h5 id="双亲委派模型的破坏"><a href="#双亲委派模型的破坏" class="headerlink" title="双亲委派模型的破坏"></a>双亲委派模型的破坏</h5><p>例如：JNDI服务，JNDI存在的目的就是对资源的查找和集中管理。</p>
+<p>JNDI服务是由BootStrap加载器加载的，他需要调用部署在应用程序的CLassPath下的SPI(Service provied interface，服务提供接口，例如mysql的驱动)的代码。然而,ClassPath下的类BootStrap加载器是没办法加载到的，也就没法在JNDI中获取到SPI的代码，这可咋办？</p>
+<p>解决方案：</p>
+<p>1，可以通过Thread.setContextClassLOader来设置上下文类加载器，如果没设置会从父线程继承一个，如果哪里都没设置过，那么就是默认Application Class Loader。可以使用这个加载器来加载SPI。java中涉及SPI的加载基本都是这种方式。例如JNDI,JDBC。</p>
+<p>2，上面的方式，如果SPI的提供者有多个，那么只能通过硬编码区分，所以在JDK6时引入了ServiceLoader类，配合jar包中META-INF&#x2F;service目录中的配置信息，来实现SPI的加载。</p>
+<h2 id="4，虚拟机字节码执行引擎"><a href="#4，虚拟机字节码执行引擎" class="headerlink" title="4，虚拟机字节码执行引擎"></a>4，虚拟机字节码执行引擎</h2><p>1，执行引擎所运行的所有字节码指令都是针对当前栈帧(活动栈帧)</p>
+<p>2，栈帧中有局部变量表，第一个slot(0号槽位)默认会放调用该方法的对象的引用，然后从1号往后开始分配。</p>
+<p>局部变量表的数据类型如下,byte,char,short,int,float,reference,returnAddress,前六种可以按java的理解(仅仅是理解而已，有本质区别)，reference是一个对象的实例，需要只是能够根据它确定对象的起始地址，查到方法区中的类型信息。returnAddress指向一条指令，现在很少见。</p>
+<p>3，栈帧中还有操作数栈，Java中执行引擎被称为基于栈的执行引擎，指的就是操作数栈(也可以叫操作栈)</p>
 ]]></content>
       <categories>
         <category>JAVASE</category>
@@ -742,14 +1126,6 @@ System.out.println(s3==s6);//true  =&gt;             true
       </categories>
   </entry>
   <entry>
-    <title>gateway</title>
-    <url>/2022/04/28/gateway/</url>
-    <content><![CDATA[]]></content>
-      <categories>
-        <category>春天的云</category>
-      </categories>
-  </entry>
-  <entry>
     <title>Docker</title>
     <url>/2022/04/24/docker/</url>
     <content><![CDATA[<h3 id="docker好处"><a href="#docker好处" class="headerlink" title="docker好处"></a>docker好处</h3><p>1.环境一致</p>
@@ -1051,9 +1427,61 @@ System.out.println(s3==s6);//true  =&gt;             true
       </categories>
   </entry>
   <entry>
+    <title>gateway</title>
+    <url>/2022/04/28/gateway/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>春天的云</category>
+      </categories>
+  </entry>
+  <entry>
     <title>java8新特性</title>
     <url>/2022/04/30/java8%E6%96%B0%E7%89%B9%E6%80%A7/</url>
     <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>jdbc</title>
+    <url>/2022/03/12/jdbc/</url>
+    <content><![CDATA[<h2 id="JDBC概述"><a href="#JDBC概述" class="headerlink" title="JDBC概述"></a>JDBC概述</h2><p>( Java DataBase Connectivity ) </p>
+<p>就是java连接数据库·····</p>
+<ul>
+<li><p>数据库的种类很多，不可能每换一个数据库都创建一套不同的java代码，因此，SUN公司开发了一套叫JDBC的东西，事实上 ，JDBC就是一套接口，然后让数据库厂家去写实现类，这样java程序员直接调用他们写的实现类就可以了，而这些实现类有个洋气的名字，叫做数据库驱动。</p>
+</li>
+<li><p>既然是一套接口，那我们知道怎样使用就行，也就是著名的面向API编程😂。</p>
+</li>
+</ul>
+<h2 id="实现步骤"><a href="#实现步骤" class="headerlink" title="实现步骤"></a>实现步骤</h2><p>我们在java中进行操作大致需要</p>
+<p>1.导包</p>
+<p>2.注册驱动</p>
+<p>3.获取连接</p>
+<p>4.定制要执行的sql语句</p>
+<p>5.获取执行语句的对象</p>
+<p>6.执行</p>
+<p>7.处理结果</p>
+<p>8.释放资源</p>
+<ul>
+<li>看着步骤多，实则很简单</li>
+</ul>
+<h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">    <span class="comment">//注册驱动</span></span><br><span class="line">    Class.forName(<span class="string">&quot;com.mysql.cj.jdbc.Driver&quot;</span>);</span><br><span class="line">    <span class="comment">//获得连接</span></span><br><span class="line">    <span class="type">Connection</span> <span class="variable">connection</span> <span class="operator">=</span> DriverManager.getConnection(<span class="string">&quot;jdbc:mysql:///mydatabase?useSSL = false&quot;</span>,<span class="string">&quot;root&quot;</span>,<span class="string">&quot;20010718&quot;</span>);</span><br><span class="line">    <span class="comment">//获得数据库操作对象</span></span><br><span class="line">    <span class="type">Statement</span> <span class="variable">statement</span> <span class="operator">=</span> connection.createStatement();</span><br><span class="line">    <span class="comment">//需要执行的sql语句</span></span><br><span class="line">    <span class="type">String</span> <span class="variable">sql</span> <span class="operator">=</span> <span class="string">&quot;select * from emp&quot;</span>;</span><br><span class="line">    <span class="comment">//statement.executeQuery(sql);执行DQL查询语句</span></span><br><span class="line">    <span class="comment">//statement.executeUpdate(sql);执行DDL,DML语句</span></span><br><span class="line">    <span class="type">ResultSet</span> <span class="variable">resultSet</span> <span class="operator">=</span> statement.executeQuery(sql);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//处理结果</span></span><br><span class="line">    <span class="keyword">while</span>(resultSet.next())&#123;</span><br><span class="line">        System.out.println(resultSet.getString(<span class="number">1</span>));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//释放资源，从后到前释放</span></span><br><span class="line">    resultSet.close();</span><br><span class="line">    statement.close();</span><br><span class="line">    connection.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>这是一套基本流程，既然是面向API编程，那我们把注意力移到API上</li>
+</ul>
+<h2 id="API"><a href="#API" class="headerlink" title="API"></a>API</h2><h3 id="DriverManager"><a href="#DriverManager" class="headerlink" title="DriverManager"></a>DriverManager</h3><p>这是一个驱动注册类，里面有一个registerDriver方法用于注册驱动，然而我们的代码是这样的</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//注册驱动</span></span><br><span class="line">    Class.forName(<span class="string">&quot;com.mysql.cj.jdbc.Driver&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>为什么呢？让我们打开Driver类看看</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Driver</span> <span class="keyword">extends</span> <span class="title class_">NonRegisteringDriver</span> <span class="keyword">implements</span> <span class="title class_">java</span>.sql.Driver &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Driver</span><span class="params">()</span> <span class="keyword">throws</span> SQLException &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            DriverManager.registerDriver(<span class="keyword">new</span> <span class="title class_">Driver</span>());</span><br><span class="line">        &#125; <span class="keyword">catch</span> (SQLException var1) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(<span class="string">&quot;Can&#x27;t register driver!&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>奥！！！！原来类里面有一个静态代码块，在我们Class加载的时候就完成了注册。</p>
+<ul>
+<li>甚至于，现在不用写注册的代码，因为驱动已经帮我们弄好了</li>
+</ul>
+<h2 id="Connection"><a href="#Connection" class="headerlink" title="Connection"></a>Connection</h2><p>获取连接的类，</p>
+]]></content>
+      <categories>
+        <category>javaweb系列</category>
+      </categories>
   </entry>
   <entry>
     <title>mybatis</title>
@@ -1325,50 +1753,6 @@ private String SName;
       </categories>
   </entry>
   <entry>
-    <title>jdbc</title>
-    <url>/2022/03/12/jdbc/</url>
-    <content><![CDATA[<h2 id="JDBC概述"><a href="#JDBC概述" class="headerlink" title="JDBC概述"></a>JDBC概述</h2><p>( Java DataBase Connectivity ) </p>
-<p>就是java连接数据库·····</p>
-<ul>
-<li><p>数据库的种类很多，不可能每换一个数据库都创建一套不同的java代码，因此，SUN公司开发了一套叫JDBC的东西，事实上 ，JDBC就是一套接口，然后让数据库厂家去写实现类，这样java程序员直接调用他们写的实现类就可以了，而这些实现类有个洋气的名字，叫做数据库驱动。</p>
-</li>
-<li><p>既然是一套接口，那我们知道怎样使用就行，也就是著名的面向API编程😂。</p>
-</li>
-</ul>
-<h2 id="实现步骤"><a href="#实现步骤" class="headerlink" title="实现步骤"></a>实现步骤</h2><p>我们在java中进行操作大致需要</p>
-<p>1.导包</p>
-<p>2.注册驱动</p>
-<p>3.获取连接</p>
-<p>4.定制要执行的sql语句</p>
-<p>5.获取执行语句的对象</p>
-<p>6.执行</p>
-<p>7.处理结果</p>
-<p>8.释放资源</p>
-<ul>
-<li>看着步骤多，实则很简单</li>
-</ul>
-<h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">    <span class="comment">//注册驱动</span></span><br><span class="line">    Class.forName(<span class="string">&quot;com.mysql.cj.jdbc.Driver&quot;</span>);</span><br><span class="line">    <span class="comment">//获得连接</span></span><br><span class="line">    <span class="type">Connection</span> <span class="variable">connection</span> <span class="operator">=</span> DriverManager.getConnection(<span class="string">&quot;jdbc:mysql:///mydatabase?useSSL = false&quot;</span>,<span class="string">&quot;root&quot;</span>,<span class="string">&quot;20010718&quot;</span>);</span><br><span class="line">    <span class="comment">//获得数据库操作对象</span></span><br><span class="line">    <span class="type">Statement</span> <span class="variable">statement</span> <span class="operator">=</span> connection.createStatement();</span><br><span class="line">    <span class="comment">//需要执行的sql语句</span></span><br><span class="line">    <span class="type">String</span> <span class="variable">sql</span> <span class="operator">=</span> <span class="string">&quot;select * from emp&quot;</span>;</span><br><span class="line">    <span class="comment">//statement.executeQuery(sql);执行DQL查询语句</span></span><br><span class="line">    <span class="comment">//statement.executeUpdate(sql);执行DDL,DML语句</span></span><br><span class="line">    <span class="type">ResultSet</span> <span class="variable">resultSet</span> <span class="operator">=</span> statement.executeQuery(sql);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//处理结果</span></span><br><span class="line">    <span class="keyword">while</span>(resultSet.next())&#123;</span><br><span class="line">        System.out.println(resultSet.getString(<span class="number">1</span>));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//释放资源，从后到前释放</span></span><br><span class="line">    resultSet.close();</span><br><span class="line">    statement.close();</span><br><span class="line">    connection.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>这是一套基本流程，既然是面向API编程，那我们把注意力移到API上</li>
-</ul>
-<h2 id="API"><a href="#API" class="headerlink" title="API"></a>API</h2><h3 id="DriverManager"><a href="#DriverManager" class="headerlink" title="DriverManager"></a>DriverManager</h3><p>这是一个驱动注册类，里面有一个registerDriver方法用于注册驱动，然而我们的代码是这样的</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//注册驱动</span></span><br><span class="line">    Class.forName(<span class="string">&quot;com.mysql.cj.jdbc.Driver&quot;</span>);</span><br></pre></td></tr></table></figure>
-
-<p>为什么呢？让我们打开Driver类看看</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Driver</span> <span class="keyword">extends</span> <span class="title class_">NonRegisteringDriver</span> <span class="keyword">implements</span> <span class="title class_">java</span>.sql.Driver &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Driver</span><span class="params">()</span> <span class="keyword">throws</span> SQLException &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            DriverManager.registerDriver(<span class="keyword">new</span> <span class="title class_">Driver</span>());</span><br><span class="line">        &#125; <span class="keyword">catch</span> (SQLException var1) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(<span class="string">&quot;Can&#x27;t register driver!&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>奥！！！！原来类里面有一个静态代码块，在我们Class加载的时候就完成了注册。</p>
-<ul>
-<li>甚至于，现在不用写注册的代码，因为驱动已经帮我们弄好了</li>
-</ul>
-<h2 id="Connection"><a href="#Connection" class="headerlink" title="Connection"></a>Connection</h2><p>获取连接的类，</p>
-]]></content>
-      <categories>
-        <category>javaweb系列</category>
-      </categories>
-  </entry>
-  <entry>
     <title>mybatisplus</title>
     <url>/2022/03/23/mybatisplus/</url>
     <content><![CDATA[<h1 id="mybatis——plus"><a href="#mybatis——plus" class="headerlink" title="mybatis——plus"></a>mybatis——plus</h1><h2 id="开发步骤"><a href="#开发步骤" class="headerlink" title="开发步骤"></a>开发步骤</h2><h3 id="1-创建了一张user表"><a href="#1-创建了一张user表" class="headerlink" title="1.创建了一张user表"></a>1.创建了一张user表</h3><p><img src="https://gitee.com/wszxr/cloudimages/raw/master/img/image-20220323204917651.png" alt="image-20220323204917651"></p>
@@ -1488,6 +1872,189 @@ private String SName;
 ]]></content>
       <categories>
         <category>JAVA框架</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>springMVC</title>
+    <url>/2022/03/16/springMVC/</url>
+    <content><![CDATA[<h1 id="Springmvc"><a href="#Springmvc" class="headerlink" title="Springmvc"></a>Springmvc</h1><h2 id="创建方式"><a href="#创建方式" class="headerlink" title="创建方式"></a>创建方式</h2><ul>
+<li>maven工程加入web，导入如下的jar包</li>
+</ul>
+<span id="more"></span>
+
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--单元测试包，可选--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>4.13.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--mvc包，必须导入，会自己附带导入很多的Spring包--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-webmvc<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>5.3.16<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--mvc是基于servlet的，所以这个必须要--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>javax.servlet<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>javax.servlet-api<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>4.0.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!--Spring5 Thymeleaf整合，解析视图需要的--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.thymeleaf<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>thymeleaf-spring5<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.0.14.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.thymeleaf<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>thymeleaf<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.0.14.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--tomcat7，可以自己安装tomcat就不需要搞这个插件--&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.tomcat.maven<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>tomcat7-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>配置web.xml</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">web-app</span> <span class="attr">version</span>=<span class="string">&quot;2.4&quot;</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xmlns</span>=<span class="string">&quot;http://java.sun.com/xml/ns/j2ee&quot;</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xmlns:xsi</span>=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xsi:schemaLocation</span>=<span class="string">&quot;http://java.sun.com/xml/ns/j2ee</span></span></span><br><span class="line"><span class="string"><span class="tag">        http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">display-name</span>&gt;</span>Archetype Created Web Application<span class="tag">&lt;/<span class="name">display-name</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">&lt;!--监听器,获取参数的时候会出现乱码，所以在监听器中更改为 UTF-8--&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">filter</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>CharacterEncodingFilter<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-class</span>&gt;</span>org.springframework.web.filter.CharacterEncodingFilter<span class="tag">&lt;/<span class="name">filter-class</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">init-param</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>encoding<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>UTF-8<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">init-param</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">filter</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">filter-mapping</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>CharacterEncodingFilter<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/*<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">filter-mapping</span>&gt;</span></span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line"><span class="comment">&lt;!--声明核心对象--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">servlet</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--名字自己定，配置mvc的前端控制器，负责对浏览器发出的请求做统一处理--&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>springmvc<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--类名必须是这个--&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">servlet-class</span>&gt;</span>org.springframework.web.servlet.DispatcherServlet<span class="tag">&lt;/<span class="name">servlet-class</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!--设置配置文件的路径--&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">init-param</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>contextConfigLocation<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></span><br><span class="line">      <span class="comment">&lt;!--配置文件路径--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>classpath:springmvc.xml<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">init-param</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!--服务器创建对象的顺序，大于等于0，越小创建的越早,把初始化时间提到服务器启动时--&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">load-on-startup</span>&gt;</span>1<span class="tag">&lt;/<span class="name">load-on-startup</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">servlet</span>&gt;</span></span><br><span class="line">    </span><br><span class="line"> <span class="tag">&lt;<span class="name">servlet-mapping</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>springmvc<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">     <span class="comment">&lt;!--匹配所有的请求路径，jsp除外--&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">servlet-mapping</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">web-app</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>配置文件</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://www.springframework.org/schema/beans&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xmlns:xsi</span>=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xmlns:context</span>=<span class="string">&quot;http://www.springframework.org/schema/context&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xmlns:mvc</span>=<span class="string">&quot;http://www.springframework.org/schema/mvc&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xsi:schemaLocation</span>=<span class="string">&quot;http://www.springframework.org/schema/beans</span></span></span><br><span class="line"><span class="string"><span class="tag">http://www.springframework.org/schema/beans/spring-beans-4.2.xsd</span></span></span><br><span class="line"><span class="string"><span class="tag">http://www.springframework.org/schema/mvc</span></span></span><br><span class="line"><span class="string"><span class="tag">http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd</span></span></span><br><span class="line"><span class="string"><span class="tag">http://www.springframework.org/schema/context</span></span></span><br><span class="line"><span class="string"><span class="tag">http://www.springframework.org/schema/context/spring-context-4.2.xsd&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    <span class="comment">&lt;!--扫描组件,controller是我装类的包--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">context:component-scan</span> <span class="attr">base-package</span>=<span class="string">&quot;controller&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">context:component-scan</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--thymeleaf试图解析器--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;viewResolve&quot;</span> <span class="attr">class</span>=<span class="string">&quot;org.thymeleaf.spring5.view.ThymeleafViewResolver&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;order&quot;</span> <span class="attr">value</span>=<span class="string">&quot;1&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;characterEncoding&quot;</span> <span class="attr">value</span>=<span class="string">&quot;UTF-8&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;templateEngine&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">&quot;org.thymeleaf.spring5.SpringTemplateEngine&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;templateResolver&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">&quot;org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver&quot;</span>&gt;</span></span><br><span class="line">                    <span class="comment">&lt;!--前后都加上一段，等自己写的时候可以少点字--&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;prefix&quot;</span> <span class="attr">value</span>=<span class="string">&quot;/WEB-INF/templates/&quot;</span>/&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;suffix&quot;</span> <span class="attr">value</span>=<span class="string">&quot;.html&quot;</span>/&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;templateMode&quot;</span> <span class="attr">value</span>=<span class="string">&quot;HTML5&quot;</span>/&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;characterEncoding&quot;</span> <span class="attr">value</span>=<span class="string">&quot;UTF-8&quot;</span>/&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    <span class="tag">&lt;<span class="name">mvc:default-servlet-handler</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">mvc:annotation-driven</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">mvc:message-converters</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.http.converter.StringHttpMessageConverter&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;defaultCharset&quot;</span> <span class="attr">value</span>=<span class="string">&quot;UTF-8&quot;</span>/&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;supportedMediaTypes&quot;</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">list</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">value</span>&gt;</span>text/html<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">value</span>&gt;</span>application/json<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;/<span class="name">list</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">mvc:message-converters</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">mvc:annotation-driven</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="开发步骤"><a href="#开发步骤" class="headerlink" title="开发步骤"></a>开发步骤</h3><p>1.创建请求控制器，对浏览器发送的请求做统一处理</p>
+<p>2.测试</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//@Controller，将这个类看作一个控制器</span></span><br><span class="line"><span class="meta">@Controller</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyController</span> &#123;</span><br><span class="line">    <span class="comment">//控制器方法</span></span><br><span class="line">    <span class="meta">@RequestMapping(value = &quot;/good&quot;)</span><span class="comment">//这是访问路径</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">doSome</span><span class="params">()</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;haha&quot;</span>);</span><br><span class="line">        <span class="comment">//得利于thyemeleaf对前后的加工，我们只需要写文件名字就行</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;index&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>这是上边的index.html文件</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span> <span class="attr">xmlns:th</span>=<span class="string">&quot;http://www.thymeleaf.org&quot;</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--xmlns:th=&quot;http://www.thymeleaf.org这是thyemeleaf的配置，不加不能用--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>首页<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>首页<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>然后用tomcat启动就可以跳转到html界面</li>
+</ul>
+<p><img src="https://gitee.com/wszxr/cloudimages/raw/master/img/image-20220316214825125.png" alt="image-20220316214825125"></p>
+<p>至此，第一个mvc项目就做好了</p>
+<h2 id="关于-RequestMapping的深入"><a href="#关于-RequestMapping的深入" class="headerlink" title="关于@RequestMapping的深入"></a>关于@RequestMapping的深入</h2><ul>
+<li>这是该注解的源码</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Target(&#123;ElementType.TYPE, ElementType.METHOD&#125;)</span></span><br><span class="line"><span class="meta">@Retention(RetentionPolicy.RUNTIME)</span></span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Mapping</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> RequestMapping &#123;</span><br><span class="line">    String <span class="title function_">name</span><span class="params">()</span> <span class="keyword">default</span> <span class="string">&quot;&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@AliasFor(&quot;path&quot;)</span></span><br><span class="line">    String[] value() <span class="keyword">default</span> &#123;&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@AliasFor(&quot;value&quot;)</span></span><br><span class="line">    String[] path() <span class="keyword">default</span> &#123;&#125;;</span><br><span class="line"></span><br><span class="line">    RequestMethod[] method() <span class="keyword">default</span> &#123;&#125;;</span><br><span class="line"></span><br><span class="line">    String[] params() <span class="keyword">default</span> &#123;&#125;;</span><br><span class="line"></span><br><span class="line">    String[] headers() <span class="keyword">default</span> &#123;&#125;;</span><br><span class="line"></span><br><span class="line">    String[] consumes() <span class="keyword">default</span> &#123;&#125;;</span><br><span class="line"></span><br><span class="line">    String[] produces() <span class="keyword">default</span> &#123;&#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>让我们把目光放到value()，method()，params()，headers()这几个变量上</li>
+</ul>
+<ol>
+<li>value（）是一个数组，证明一个RequestMapping可以有多个访问地址</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(value = &#123;&quot;/good&quot;,&quot;/ahahah&quot;&#125;)</span><span class="comment">//这是访问路径</span></span><br></pre></td></tr></table></figure>
+
+<p>2.methoed可当作条件</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(value = &quot;/good&quot;，method = &quot;RequestMethod.GET&quot;/*或者method=&quot;RequestMethod.POST&quot;*/)</span></span><br><span class="line"><span class="comment">//当然method也是一个数组，可以同时满足，就是说，get，post都可以</span></span><br></pre></td></tr></table></figure>
+
+<p>3,params()指定参数，必须每个都有才行，指定头部（这两不常用）</p>
+<h2 id="路径中的占位符"><a href="#路径中的占位符" class="headerlink" title="路径中的占位符"></a>路径中的占位符</h2><figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">?表示任意一个字符</span><br><span class="line"><span class="bullet">*</span> 表示任意多个字符，包括0</span><br><span class="line"><span class="strong">** 表示任意单层或者多层目录，只能单独用</span></span><br><span class="line"><span class="strong">例如/**</span>/......</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="springmvc获取请求参数"><a href="#springmvc获取请求参数" class="headerlink" title="springmvc获取请求参数"></a>springmvc获取请求参数</h2><p>咱们在html文件中写一个超链接指向自己</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">th:href</span>=<span class="string">&quot;@&#123;/good(id = 1,username = &#x27;zhangsan&#x27;)&#125;&quot;</span>&gt;</span>测试--&gt;/good<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--其中，id是一个参数，username是第二个参数--&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>该如何获取到它们？</p>
+<ul>
+<li>有以下几种方式</li>
+</ul>
+<ol>
+<li>通过老朋友servlet的API（不用）</li>
+<li>通过控制器形参获得</li>
+</ol>
+<ul>
+<li>下面我们来演示</li>
+</ul>
+<p>1.形参的名字和传入参数的名字一样</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(value = &quot;/good&quot;)</span></span><br><span class="line">  <span class="keyword">public</span> String <span class="title function_">doSome</span><span class="params">(Integer id,String name)</span>&#123;<span class="comment">//只需要保证形参的名字和传入参数的名字一样即可</span></span><br><span class="line">      System.out.println(id+<span class="string">&quot; &quot;</span>+name);</span><br><span class="line">      <span class="keyword">return</span> <span class="string">&quot;index&quot;</span>;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>结果，点击超链接之后</li>
+</ul>
+<p><img src="https://gitee.com/wszxr/cloudimages/raw/master/img/image-20220316221143282.png" alt="image-20220316221143282"></p>
+<p><img src="https://gitee.com/wszxr/cloudimages/raw/master/img/image-20220316221422104.png" alt="image-20220316221422104"></p>
+<ul>
+<li>很清楚的看到了结果</li>
+</ul>
+<p>2.上边是两边名字都一致的情况，要是不一致呢？</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!--我们把id改成myid--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">th:href</span>=<span class="string">&quot;@&#123;/good(myid = 1,username = &#x27;zhangsan&#x27;)&#125;&quot;</span>&gt;</span>测试--&gt;/good<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>我们只需要给形参加一个注解即可</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"> <span class="keyword">public</span> String <span class="title function_">doSome</span><span class="params">(<span class="meta">@RequestParam(value = &quot;myid&quot;,required = false,defaultValue = &quot;2&quot;)</span> Integer id,String username)</span>&#123;</span><br><span class="line">        System.out.println(id+<span class="string">&quot; &quot;</span>+username);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;index&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&lt;!--<span class="meta">@RequestParam</span>作用是把不相同的名字赋值给形参，required表示是否一定需要传入参数，defaultValue表示如果不传入那么默认值是多少--&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/wszxr/cloudimages/raw/master/img/image-20220316222028085.png" alt="image-20220316222028085"></p>
+<ul>
+<li>第一次没有参数，id默认值是2，username没有默认值，为空，第二次来自于点击超链接，我们前面赋给了参数</li>
+</ul>
+<p>3.还可以直接赋值给实体对象</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//我们设置一个User类，它的属性和html中参数名字一一对应，并实现get，set方法</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">User</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> Integer id;</span><br><span class="line">    <span class="keyword">private</span> String username;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> Integer <span class="title function_">getId</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> id;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setId</span><span class="params">(Integer id)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.id = id;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getUsername</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> username;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setUsername</span><span class="params">(String username)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.username = username;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">toString</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;User&#123;&quot;</span> +</span><br><span class="line">                <span class="string">&quot;id=&quot;</span> + id +</span><br><span class="line">                <span class="string">&quot;, username=&#x27;&quot;</span> + username + <span class="string">&#x27;\&#x27;&#x27;</span> +</span><br><span class="line">                <span class="string">&#x27;&#125;&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//控制器方法，这里传入一个实体类用于接收</span></span><br><span class="line">   <span class="meta">@RequestMapping(value = &quot;/good&quot;)</span></span><br><span class="line">   <span class="keyword">public</span> String <span class="title function_">doSome</span><span class="params">(User user)</span>&#123;</span><br><span class="line">       System.out.println(user.toString());</span><br><span class="line">       <span class="keyword">return</span> <span class="string">&quot;index&quot;</span>;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">th:href</span>=<span class="string">&quot;@&#123;/good(id = 1,username = &#x27;zhangsan&#x27;)&#125;&quot;</span>&gt;</span>测试--&gt;/good</span><br><span class="line"><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>结果</li>
+</ul>
+<p><img src="https://gitee.com/wszxr/cloudimages/raw/master/img/image-20220316223347407.png" alt="image-20220316223347407"></p>
+<ul>
+<li>可以看到user对象的属性成功被赋值了</li>
+</ul>
+<hr>
+<p>更新于：2022年3月16日22点35分</p>
+<h2 id="域对象共享数据"><a href="#域对象共享数据" class="headerlink" title="域对象共享数据"></a>域对象共享数据</h2><ol>
+<li>request域</li>
+<li>session域</li>
+<li>application域</li>
+</ol>
+<h3 id="request域对象共享"><a href="#request域对象共享" class="headerlink" title="request域对象共享"></a>request域对象共享</h3><ol>
+<li>使用servletApi(不建议使用)</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//servlet原生api把数值共享到request域中</span></span><br><span class="line">    <span class="meta">@RequestMapping(&quot;/index1&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">hah</span><span class="params">(HttpServletRequest request)</span>&#123;</span><br><span class="line">        request.setAttribute(<span class="string">&quot;name&quot;</span>,<span class="string">&quot;zhangsan&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;index1&quot;</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!--使用thymeleaf，通过键的名字获得request域中的值--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">th:text</span>=<span class="string">&quot;$&#123;name&#125;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>这样就可以在视图中获得设定好的request域中的值</li>
+</ul>
+<p>2.ModelAndView对象</p>
+<ul>
+<li>事实上，我们更建议使用这种</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//建议使用springmvc提供的ModelAndView对象</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/index1&quot;)</span></span><br><span class="line"><span class="keyword">public</span> ModelAndView <span class="title function_">aaa</span><span class="params">(HttpServletRequest request)</span>&#123;</span><br><span class="line">    <span class="type">ModelAndView</span> <span class="variable">modelAndView</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ModelAndView</span>();</span><br><span class="line">    modelAndView.addObject(<span class="string">&quot;name&quot;</span>,<span class="string">&quot;zhangsan&quot;</span>);</span><br><span class="line">    modelAndView.setViewName(<span class="string">&quot;index&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> modelAndView;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>同时设置视图和模型数据。mvc把视图和模型打包成一个modelAndView对象，返回即可。</li>
+</ul>
+<p>3.model，map，modelmap，这三种对象也可以，但是一般用ModelAndView就行</p>
+<h3 id="session域共享"><a href="#session域共享" class="headerlink" title="session域共享"></a>session域共享</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"> <span class="comment">//往session中共享数据</span></span><br><span class="line"> <span class="meta">@RequestMapping(&quot;/&quot;)</span></span><br><span class="line"><span class="keyword">public</span> String <span class="title function_">aa</span><span class="params">(HttpSession session)</span>&#123;</span><br><span class="line">     session.setAttribute(<span class="string">&quot;name&quot;</span>,<span class="string">&quot;lisi&quot;</span>);</span><br><span class="line">     <span class="keyword">return</span> <span class="string">&quot;index1&quot;</span>;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>HttpSession获得session对象就可以了</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!--通过键的名字获得session域中的值--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">th:text</span>=<span class="string">&quot;$&#123;session.name&#125;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>注意用session.name</li>
+</ul>
+<h3 id="application域共享"><a href="#application域共享" class="headerlink" title="application域共享"></a>application域共享</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//往application中共享数据,可以通过session获取application，当然，也可以使用request</span></span><br><span class="line">    <span class="meta">@RequestMapping(&quot;/&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">ss</span><span class="params">(HttpSession session)</span>&#123;</span><br><span class="line">        <span class="type">ServletContext</span> <span class="variable">servletContext</span> <span class="operator">=</span> session.getServletContext();</span><br><span class="line">        servletContext.setAttribute(<span class="string">&quot;name&quot;</span>,<span class="string">&quot;wangwu&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;index1&quot;</span>;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>需要注意的是，可以通过session获取，也可以通过request来获取</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!--通过键的名字获得application域中的值--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">th:text</span>=<span class="string">&quot;$&#123;application.name&#125;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>用application.name获取即可</li>
+</ul>
+<h2 id="Springmvc视图"><a href="#Springmvc视图" class="headerlink" title="Springmvc视图"></a>Springmvc视图</h2><ol>
+<li>当控制器方法中视图的名称没有任何的前缀，默认使用thymeleaf解析</li>
+<li>分类</li>
+</ol>
+<ul>
+<li>转发视图</li>
+<li>重定向视图</li>
+</ul>
+<h3 id="转发视图"><a href="#转发视图" class="headerlink" title="转发视图"></a>转发视图</h3><ul>
+<li>当我们的视图名加上了forward：前缀是，就是转发视图，但是我们thymeleaf默认就是转发视图，所以一般用不到，</li>
+</ul>
+<h3 id="重定向视图"><a href="#重定向视图" class="headerlink" title="重定向视图"></a>重定向视图</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//进入index视图后，重定向到/index请求中</span></span><br><span class="line">   <span class="meta">@RequestMapping(value = &quot;/good&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">doSome</span><span class="params">()</span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;redirect:/index&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@RequestMapping(&quot;/index&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">go</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;index1&quot;</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>注意默认thymeleaf就是转发视图，加上了这个redirect，变成重定向，注意重定向后地址栏会发生改变，转发则不会。</p>
+</li>
+<li><p>也不能通过重定向直接到一个视图，因为重定向是浏览器发出的，无法访问web-info下面的视图；通过重定向到一个请求，然后thymeleaf转发就可以了。</p>
+</li>
+</ul>
+<h3 id="视图控制器-view-controller"><a href="#视图控制器-view-controller" class="headerlink" title="视图控制器(view-controller)"></a>视图控制器(view-controller)</h3><p>当我们的控制器方法只需要设置使徒的名称时，就可以使用控制器视图，例如：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(&quot;/qq&quot;)</span></span><br><span class="line"><span class="keyword">public</span> String <span class="title function_">aa</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;index1&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们可以在配置文件中用视图控制器替代</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">mvc:view-controller</span> <span class="attr">path</span>=<span class="string">&quot;/qq&quot;</span> <span class="attr">view-name</span>=<span class="string">&quot;index1&quot;</span>/&gt;</span></span><br><span class="line"><span class="comment">&lt;!--一定要有这个，否则所有的注解控制器都会失效--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">mvc:annotation-driven</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>SpringMVC</category>
       </categories>
   </entry>
   <entry>
@@ -1816,189 +2383,6 @@ public void threadShow()&#123;
 ]]></content>
       <categories>
         <category>数据结构</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>springMVC</title>
-    <url>/2022/03/16/springMVC/</url>
-    <content><![CDATA[<h1 id="Springmvc"><a href="#Springmvc" class="headerlink" title="Springmvc"></a>Springmvc</h1><h2 id="创建方式"><a href="#创建方式" class="headerlink" title="创建方式"></a>创建方式</h2><ul>
-<li>maven工程加入web，导入如下的jar包</li>
-</ul>
-<span id="more"></span>
-
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--单元测试包，可选--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>4.13.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--mvc包，必须导入，会自己附带导入很多的Spring包--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-webmvc<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>5.3.16<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--mvc是基于servlet的，所以这个必须要--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>javax.servlet<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>javax.servlet-api<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>4.0.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!--Spring5 Thymeleaf整合，解析视图需要的--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.thymeleaf<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>thymeleaf-spring5<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.0.14.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.thymeleaf<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>thymeleaf<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.0.14.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--tomcat7，可以自己安装tomcat就不需要搞这个插件--&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.tomcat.maven<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>tomcat7-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>配置web.xml</li>
-</ul>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">web-app</span> <span class="attr">version</span>=<span class="string">&quot;2.4&quot;</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xmlns</span>=<span class="string">&quot;http://java.sun.com/xml/ns/j2ee&quot;</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xmlns:xsi</span>=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xsi:schemaLocation</span>=<span class="string">&quot;http://java.sun.com/xml/ns/j2ee</span></span></span><br><span class="line"><span class="string"><span class="tag">        http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">display-name</span>&gt;</span>Archetype Created Web Application<span class="tag">&lt;/<span class="name">display-name</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">&lt;!--监听器,获取参数的时候会出现乱码，所以在监听器中更改为 UTF-8--&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">filter</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>CharacterEncodingFilter<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-class</span>&gt;</span>org.springframework.web.filter.CharacterEncodingFilter<span class="tag">&lt;/<span class="name">filter-class</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">init-param</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>encoding<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>UTF-8<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">init-param</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">filter</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">filter-mapping</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>CharacterEncodingFilter<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/*<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">filter-mapping</span>&gt;</span></span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line"><span class="comment">&lt;!--声明核心对象--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">servlet</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--名字自己定，配置mvc的前端控制器，负责对浏览器发出的请求做统一处理--&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>springmvc<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--类名必须是这个--&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">servlet-class</span>&gt;</span>org.springframework.web.servlet.DispatcherServlet<span class="tag">&lt;/<span class="name">servlet-class</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!--设置配置文件的路径--&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">init-param</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>contextConfigLocation<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></span><br><span class="line">      <span class="comment">&lt;!--配置文件路径--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>classpath:springmvc.xml<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">init-param</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!--服务器创建对象的顺序，大于等于0，越小创建的越早,把初始化时间提到服务器启动时--&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">load-on-startup</span>&gt;</span>1<span class="tag">&lt;/<span class="name">load-on-startup</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">servlet</span>&gt;</span></span><br><span class="line">    </span><br><span class="line"> <span class="tag">&lt;<span class="name">servlet-mapping</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>springmvc<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">     <span class="comment">&lt;!--匹配所有的请求路径，jsp除外--&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">servlet-mapping</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">web-app</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>配置文件</li>
-</ul>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://www.springframework.org/schema/beans&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xmlns:xsi</span>=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xmlns:context</span>=<span class="string">&quot;http://www.springframework.org/schema/context&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xmlns:mvc</span>=<span class="string">&quot;http://www.springframework.org/schema/mvc&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xsi:schemaLocation</span>=<span class="string">&quot;http://www.springframework.org/schema/beans</span></span></span><br><span class="line"><span class="string"><span class="tag">http://www.springframework.org/schema/beans/spring-beans-4.2.xsd</span></span></span><br><span class="line"><span class="string"><span class="tag">http://www.springframework.org/schema/mvc</span></span></span><br><span class="line"><span class="string"><span class="tag">http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd</span></span></span><br><span class="line"><span class="string"><span class="tag">http://www.springframework.org/schema/context</span></span></span><br><span class="line"><span class="string"><span class="tag">http://www.springframework.org/schema/context/spring-context-4.2.xsd&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    <span class="comment">&lt;!--扫描组件,controller是我装类的包--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">context:component-scan</span> <span class="attr">base-package</span>=<span class="string">&quot;controller&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">context:component-scan</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--thymeleaf试图解析器--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;viewResolve&quot;</span> <span class="attr">class</span>=<span class="string">&quot;org.thymeleaf.spring5.view.ThymeleafViewResolver&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;order&quot;</span> <span class="attr">value</span>=<span class="string">&quot;1&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;characterEncoding&quot;</span> <span class="attr">value</span>=<span class="string">&quot;UTF-8&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;templateEngine&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">&quot;org.thymeleaf.spring5.SpringTemplateEngine&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;templateResolver&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">&quot;org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver&quot;</span>&gt;</span></span><br><span class="line">                    <span class="comment">&lt;!--前后都加上一段，等自己写的时候可以少点字--&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;prefix&quot;</span> <span class="attr">value</span>=<span class="string">&quot;/WEB-INF/templates/&quot;</span>/&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;suffix&quot;</span> <span class="attr">value</span>=<span class="string">&quot;.html&quot;</span>/&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;templateMode&quot;</span> <span class="attr">value</span>=<span class="string">&quot;HTML5&quot;</span>/&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;characterEncoding&quot;</span> <span class="attr">value</span>=<span class="string">&quot;UTF-8&quot;</span>/&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    <span class="tag">&lt;<span class="name">mvc:default-servlet-handler</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">mvc:annotation-driven</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">mvc:message-converters</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.http.converter.StringHttpMessageConverter&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;defaultCharset&quot;</span> <span class="attr">value</span>=<span class="string">&quot;UTF-8&quot;</span>/&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;supportedMediaTypes&quot;</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">list</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">value</span>&gt;</span>text/html<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">value</span>&gt;</span>application/json<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;/<span class="name">list</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">mvc:message-converters</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">mvc:annotation-driven</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="开发步骤"><a href="#开发步骤" class="headerlink" title="开发步骤"></a>开发步骤</h3><p>1.创建请求控制器，对浏览器发送的请求做统一处理</p>
-<p>2.测试</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//@Controller，将这个类看作一个控制器</span></span><br><span class="line"><span class="meta">@Controller</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyController</span> &#123;</span><br><span class="line">    <span class="comment">//控制器方法</span></span><br><span class="line">    <span class="meta">@RequestMapping(value = &quot;/good&quot;)</span><span class="comment">//这是访问路径</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">doSome</span><span class="params">()</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;haha&quot;</span>);</span><br><span class="line">        <span class="comment">//得利于thyemeleaf对前后的加工，我们只需要写文件名字就行</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;index&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>这是上边的index.html文件</li>
-</ul>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span> <span class="attr">xmlns:th</span>=<span class="string">&quot;http://www.thymeleaf.org&quot;</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--xmlns:th=&quot;http://www.thymeleaf.org这是thyemeleaf的配置，不加不能用--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>首页<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>首页<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>然后用tomcat启动就可以跳转到html界面</li>
-</ul>
-<p><img src="https://gitee.com/wszxr/cloudimages/raw/master/img/image-20220316214825125.png" alt="image-20220316214825125"></p>
-<p>至此，第一个mvc项目就做好了</p>
-<h2 id="关于-RequestMapping的深入"><a href="#关于-RequestMapping的深入" class="headerlink" title="关于@RequestMapping的深入"></a>关于@RequestMapping的深入</h2><ul>
-<li>这是该注解的源码</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Target(&#123;ElementType.TYPE, ElementType.METHOD&#125;)</span></span><br><span class="line"><span class="meta">@Retention(RetentionPolicy.RUNTIME)</span></span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Mapping</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> RequestMapping &#123;</span><br><span class="line">    String <span class="title function_">name</span><span class="params">()</span> <span class="keyword">default</span> <span class="string">&quot;&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@AliasFor(&quot;path&quot;)</span></span><br><span class="line">    String[] value() <span class="keyword">default</span> &#123;&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@AliasFor(&quot;value&quot;)</span></span><br><span class="line">    String[] path() <span class="keyword">default</span> &#123;&#125;;</span><br><span class="line"></span><br><span class="line">    RequestMethod[] method() <span class="keyword">default</span> &#123;&#125;;</span><br><span class="line"></span><br><span class="line">    String[] params() <span class="keyword">default</span> &#123;&#125;;</span><br><span class="line"></span><br><span class="line">    String[] headers() <span class="keyword">default</span> &#123;&#125;;</span><br><span class="line"></span><br><span class="line">    String[] consumes() <span class="keyword">default</span> &#123;&#125;;</span><br><span class="line"></span><br><span class="line">    String[] produces() <span class="keyword">default</span> &#123;&#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>让我们把目光放到value()，method()，params()，headers()这几个变量上</li>
-</ul>
-<ol>
-<li>value（）是一个数组，证明一个RequestMapping可以有多个访问地址</li>
-</ol>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(value = &#123;&quot;/good&quot;,&quot;/ahahah&quot;&#125;)</span><span class="comment">//这是访问路径</span></span><br></pre></td></tr></table></figure>
-
-<p>2.methoed可当作条件</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(value = &quot;/good&quot;，method = &quot;RequestMethod.GET&quot;/*或者method=&quot;RequestMethod.POST&quot;*/)</span></span><br><span class="line"><span class="comment">//当然method也是一个数组，可以同时满足，就是说，get，post都可以</span></span><br></pre></td></tr></table></figure>
-
-<p>3,params()指定参数，必须每个都有才行，指定头部（这两不常用）</p>
-<h2 id="路径中的占位符"><a href="#路径中的占位符" class="headerlink" title="路径中的占位符"></a>路径中的占位符</h2><figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">?表示任意一个字符</span><br><span class="line"><span class="bullet">*</span> 表示任意多个字符，包括0</span><br><span class="line"><span class="strong">** 表示任意单层或者多层目录，只能单独用</span></span><br><span class="line"><span class="strong">例如/**</span>/......</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="springmvc获取请求参数"><a href="#springmvc获取请求参数" class="headerlink" title="springmvc获取请求参数"></a>springmvc获取请求参数</h2><p>咱们在html文件中写一个超链接指向自己</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">th:href</span>=<span class="string">&quot;@&#123;/good(id = 1,username = &#x27;zhangsan&#x27;)&#125;&quot;</span>&gt;</span>测试--&gt;/good<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--其中，id是一个参数，username是第二个参数--&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>该如何获取到它们？</p>
-<ul>
-<li>有以下几种方式</li>
-</ul>
-<ol>
-<li>通过老朋友servlet的API（不用）</li>
-<li>通过控制器形参获得</li>
-</ol>
-<ul>
-<li>下面我们来演示</li>
-</ul>
-<p>1.形参的名字和传入参数的名字一样</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(value = &quot;/good&quot;)</span></span><br><span class="line">  <span class="keyword">public</span> String <span class="title function_">doSome</span><span class="params">(Integer id,String name)</span>&#123;<span class="comment">//只需要保证形参的名字和传入参数的名字一样即可</span></span><br><span class="line">      System.out.println(id+<span class="string">&quot; &quot;</span>+name);</span><br><span class="line">      <span class="keyword">return</span> <span class="string">&quot;index&quot;</span>;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>结果，点击超链接之后</li>
-</ul>
-<p><img src="https://gitee.com/wszxr/cloudimages/raw/master/img/image-20220316221143282.png" alt="image-20220316221143282"></p>
-<p><img src="https://gitee.com/wszxr/cloudimages/raw/master/img/image-20220316221422104.png" alt="image-20220316221422104"></p>
-<ul>
-<li>很清楚的看到了结果</li>
-</ul>
-<p>2.上边是两边名字都一致的情况，要是不一致呢？</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!--我们把id改成myid--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">th:href</span>=<span class="string">&quot;@&#123;/good(myid = 1,username = &#x27;zhangsan&#x27;)&#125;&quot;</span>&gt;</span>测试--&gt;/good<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>我们只需要给形参加一个注解即可</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"> <span class="keyword">public</span> String <span class="title function_">doSome</span><span class="params">(<span class="meta">@RequestParam(value = &quot;myid&quot;,required = false,defaultValue = &quot;2&quot;)</span> Integer id,String username)</span>&#123;</span><br><span class="line">        System.out.println(id+<span class="string">&quot; &quot;</span>+username);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;index&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&lt;!--<span class="meta">@RequestParam</span>作用是把不相同的名字赋值给形参，required表示是否一定需要传入参数，defaultValue表示如果不传入那么默认值是多少--&gt;</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://gitee.com/wszxr/cloudimages/raw/master/img/image-20220316222028085.png" alt="image-20220316222028085"></p>
-<ul>
-<li>第一次没有参数，id默认值是2，username没有默认值，为空，第二次来自于点击超链接，我们前面赋给了参数</li>
-</ul>
-<p>3.还可以直接赋值给实体对象</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//我们设置一个User类，它的属性和html中参数名字一一对应，并实现get，set方法</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">User</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> Integer id;</span><br><span class="line">    <span class="keyword">private</span> String username;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> Integer <span class="title function_">getId</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> id;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setId</span><span class="params">(Integer id)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.id = id;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getUsername</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> username;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setUsername</span><span class="params">(String username)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.username = username;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">toString</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;User&#123;&quot;</span> +</span><br><span class="line">                <span class="string">&quot;id=&quot;</span> + id +</span><br><span class="line">                <span class="string">&quot;, username=&#x27;&quot;</span> + username + <span class="string">&#x27;\&#x27;&#x27;</span> +</span><br><span class="line">                <span class="string">&#x27;&#125;&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//控制器方法，这里传入一个实体类用于接收</span></span><br><span class="line">   <span class="meta">@RequestMapping(value = &quot;/good&quot;)</span></span><br><span class="line">   <span class="keyword">public</span> String <span class="title function_">doSome</span><span class="params">(User user)</span>&#123;</span><br><span class="line">       System.out.println(user.toString());</span><br><span class="line">       <span class="keyword">return</span> <span class="string">&quot;index&quot;</span>;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">th:href</span>=<span class="string">&quot;@&#123;/good(id = 1,username = &#x27;zhangsan&#x27;)&#125;&quot;</span>&gt;</span>测试--&gt;/good</span><br><span class="line"><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>结果</li>
-</ul>
-<p><img src="https://gitee.com/wszxr/cloudimages/raw/master/img/image-20220316223347407.png" alt="image-20220316223347407"></p>
-<ul>
-<li>可以看到user对象的属性成功被赋值了</li>
-</ul>
-<hr>
-<p>更新于：2022年3月16日22点35分</p>
-<h2 id="域对象共享数据"><a href="#域对象共享数据" class="headerlink" title="域对象共享数据"></a>域对象共享数据</h2><ol>
-<li>request域</li>
-<li>session域</li>
-<li>application域</li>
-</ol>
-<h3 id="request域对象共享"><a href="#request域对象共享" class="headerlink" title="request域对象共享"></a>request域对象共享</h3><ol>
-<li>使用servletApi(不建议使用)</li>
-</ol>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//servlet原生api把数值共享到request域中</span></span><br><span class="line">    <span class="meta">@RequestMapping(&quot;/index1&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">hah</span><span class="params">(HttpServletRequest request)</span>&#123;</span><br><span class="line">        request.setAttribute(<span class="string">&quot;name&quot;</span>,<span class="string">&quot;zhangsan&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;index1&quot;</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!--使用thymeleaf，通过键的名字获得request域中的值--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">th:text</span>=<span class="string">&quot;$&#123;name&#125;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>这样就可以在视图中获得设定好的request域中的值</li>
-</ul>
-<p>2.ModelAndView对象</p>
-<ul>
-<li>事实上，我们更建议使用这种</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//建议使用springmvc提供的ModelAndView对象</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/index1&quot;)</span></span><br><span class="line"><span class="keyword">public</span> ModelAndView <span class="title function_">aaa</span><span class="params">(HttpServletRequest request)</span>&#123;</span><br><span class="line">    <span class="type">ModelAndView</span> <span class="variable">modelAndView</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ModelAndView</span>();</span><br><span class="line">    modelAndView.addObject(<span class="string">&quot;name&quot;</span>,<span class="string">&quot;zhangsan&quot;</span>);</span><br><span class="line">    modelAndView.setViewName(<span class="string">&quot;index&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> modelAndView;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>同时设置视图和模型数据。mvc把视图和模型打包成一个modelAndView对象，返回即可。</li>
-</ul>
-<p>3.model，map，modelmap，这三种对象也可以，但是一般用ModelAndView就行</p>
-<h3 id="session域共享"><a href="#session域共享" class="headerlink" title="session域共享"></a>session域共享</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"> <span class="comment">//往session中共享数据</span></span><br><span class="line"> <span class="meta">@RequestMapping(&quot;/&quot;)</span></span><br><span class="line"><span class="keyword">public</span> String <span class="title function_">aa</span><span class="params">(HttpSession session)</span>&#123;</span><br><span class="line">     session.setAttribute(<span class="string">&quot;name&quot;</span>,<span class="string">&quot;lisi&quot;</span>);</span><br><span class="line">     <span class="keyword">return</span> <span class="string">&quot;index1&quot;</span>;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>HttpSession获得session对象就可以了</li>
-</ul>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!--通过键的名字获得session域中的值--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">th:text</span>=<span class="string">&quot;$&#123;session.name&#125;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>注意用session.name</li>
-</ul>
-<h3 id="application域共享"><a href="#application域共享" class="headerlink" title="application域共享"></a>application域共享</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//往application中共享数据,可以通过session获取application，当然，也可以使用request</span></span><br><span class="line">    <span class="meta">@RequestMapping(&quot;/&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">ss</span><span class="params">(HttpSession session)</span>&#123;</span><br><span class="line">        <span class="type">ServletContext</span> <span class="variable">servletContext</span> <span class="operator">=</span> session.getServletContext();</span><br><span class="line">        servletContext.setAttribute(<span class="string">&quot;name&quot;</span>,<span class="string">&quot;wangwu&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;index1&quot;</span>;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>需要注意的是，可以通过session获取，也可以通过request来获取</li>
-</ul>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!--通过键的名字获得application域中的值--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">th:text</span>=<span class="string">&quot;$&#123;application.name&#125;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>用application.name获取即可</li>
-</ul>
-<h2 id="Springmvc视图"><a href="#Springmvc视图" class="headerlink" title="Springmvc视图"></a>Springmvc视图</h2><ol>
-<li>当控制器方法中视图的名称没有任何的前缀，默认使用thymeleaf解析</li>
-<li>分类</li>
-</ol>
-<ul>
-<li>转发视图</li>
-<li>重定向视图</li>
-</ul>
-<h3 id="转发视图"><a href="#转发视图" class="headerlink" title="转发视图"></a>转发视图</h3><ul>
-<li>当我们的视图名加上了forward：前缀是，就是转发视图，但是我们thymeleaf默认就是转发视图，所以一般用不到，</li>
-</ul>
-<h3 id="重定向视图"><a href="#重定向视图" class="headerlink" title="重定向视图"></a>重定向视图</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//进入index视图后，重定向到/index请求中</span></span><br><span class="line">   <span class="meta">@RequestMapping(value = &quot;/good&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">doSome</span><span class="params">()</span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;redirect:/index&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@RequestMapping(&quot;/index&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">go</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;index1&quot;</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><p>注意默认thymeleaf就是转发视图，加上了这个redirect，变成重定向，注意重定向后地址栏会发生改变，转发则不会。</p>
-</li>
-<li><p>也不能通过重定向直接到一个视图，因为重定向是浏览器发出的，无法访问web-info下面的视图；通过重定向到一个请求，然后thymeleaf转发就可以了。</p>
-</li>
-</ul>
-<h3 id="视图控制器-view-controller"><a href="#视图控制器-view-controller" class="headerlink" title="视图控制器(view-controller)"></a>视图控制器(view-controller)</h3><p>当我们的控制器方法只需要设置使徒的名称时，就可以使用控制器视图，例如：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(&quot;/qq&quot;)</span></span><br><span class="line"><span class="keyword">public</span> String <span class="title function_">aa</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;index1&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>我们可以在配置文件中用视图控制器替代</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">mvc:view-controller</span> <span class="attr">path</span>=<span class="string">&quot;/qq&quot;</span> <span class="attr">view-name</span>=<span class="string">&quot;index1&quot;</span>/&gt;</span></span><br><span class="line"><span class="comment">&lt;!--一定要有这个，否则所有的注解控制器都会失效--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">mvc:annotation-driven</span>/&gt;</span></span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>SpringMVC</category>
       </categories>
   </entry>
   <entry>
@@ -2386,70 +2770,37 @@ reverse();
 <li>thread1会为object申请一个Monitor（重量级锁），并使得object的markword由轻量级锁(thread0锁记录)的地址变成Monitor的地址，monitor的Owner指向thread0，thread1进入EntryList阻塞队列。</li>
 <li>这时如果需要释放资源，先尝试cas把markword恢复给对象头，肯定失败，进入重量级解锁流程，即按照 Monitor 地址找到 Monitor 对象，设置 Owner 为 null，唤醒 EntryList 中 BLOCKED 线程。</li>
 </ul>
+<p>5，自旋优化</p>
+<p>线程在争夺重量级锁资源的时候，当锁已经被获取了，其他线程过来，会先循环请求几次，如果循环时锁被释放了，那么这个线程就有机会直接获得锁，这样就避免了一次进入阻塞队列的操作(线程上下文切换会耗费资源)。</p>
+<p>注意：</p>
+<ul>
+<li>单核cpu自选就是纯纯浪费，抢夺了正在运行代码的cpu资源</li>
+<li>自旋会自适应，当自旋操作成功过，那么以后该线程就会多自旋几次，否则就会少几次。</li>
+</ul>
+<h5 id="wait-x2F-notify-x2F-notifyAll"><a href="#wait-x2F-notify-x2F-notifyAll" class="headerlink" title="wait&#x2F;notify&#x2F;notifyAll"></a>wait&#x2F;notify&#x2F;notifyAll</h5><p>1,wait():当获得了锁资源后，条件不满足了，Monitor的Owner会先释放锁，进入Monitor对象中的waitset，这时候状态是waiting;可以指定最大wait时间，这时是timedwating状态,过时间直接出来竞争。</p>
+<p>2，notify(),当Monitor里面的Owner线程调用了notify方法，会随机唤醒一个(notifyAll可以唤醒所有waitSet里面的线程)在waitset的线程，被唤醒的线程和处于entrylist中blocked状态的线程一起竞争锁资源。</p>
+<p>3,他们三个都属于线程间协作方法，因为是进入Monitor对象中的waitset，所以必须先获得锁资源再调用Monitor关联的锁对象的wait()&#x2F;notify&#x2F;notifyAll，也就是说只能写在临界区里面。</p>
+<p>4，wiat&#x2F;notify的正确使用</p>
+<ul>
+<li>wait和sleep的区别：<ul>
+<li>wait是object的方法，需要配合对象锁用</li>
+<li>sleep是Thread类的类方法，不需要获得锁。</li>
+<li>wiat释放锁，sleep不会释放锁</li>
+</ul>
+</li>
+</ul>
+<p>使用实例：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//线程t1条件</span></span><br><span class="line"><span class="keyword">static</span> <span class="type">boolean</span> <span class="variable">wrapperT1</span> <span class="operator">=</span> <span class="literal">false</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">    <span class="comment">//锁对象</span></span><br><span class="line">    <span class="keyword">final</span> <span class="type">Object</span> <span class="variable">lock</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Object</span>();</span><br><span class="line">    <span class="comment">//有条件的线程</span></span><br><span class="line">    <span class="type">Thread</span> <span class="variable">t1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Thread</span>() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">            <span class="keyword">synchronized</span> (lock) &#123;</span><br><span class="line">                <span class="comment">//只有当条件满足而且被唤醒，才会退出循环继续开始抢夺锁资源</span></span><br><span class="line">                <span class="keyword">while</span> (!wrapperT1) &#123;</span><br><span class="line">                    <span class="keyword">try</span> &#123;</span><br><span class="line">                        lock.wait();</span><br><span class="line">                    &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                        e.printStackTrace();</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                System.out.println(<span class="string">&quot;开始工作&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">    t1.start();</span><br><span class="line"></span><br><span class="line">    <span class="comment">//先设置条件正确再唤醒全部</span></span><br><span class="line">    <span class="type">Thread</span> <span class="variable">t2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Thread</span>() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">            wrapperT1 = <span class="literal">true</span>;</span><br><span class="line">            <span class="keyword">synchronized</span> (lock) &#123;</span><br><span class="line">                lock.notifyAll();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">    t2.start();</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>结果是t1可以开始工作：</p>
+<ul>
+<li>使用while循环可以保证 当既满足条件，又被Monitor的Owner线程唤醒的时候继续开始抢夺锁资源</li>
+<li>唤醒线程应当给予t1能运行的条件，而且使用notifyAll唤醒Monitor中所有的wiatSet线程。</li>
+<li>wait会释放锁资源，因此wait过程中有其他线程试图获取锁是可以的</li>
+</ul>
 ]]></content>
       <categories>
         <category>JAVASE</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>数据库</title>
-    <url>/2022/02/28/%E6%95%B0%E6%8D%AE%E5%BA%93/</url>
-    <content><![CDATA[<h1 id="mysql"><a href="#mysql" class="headerlink" title="mysql"></a>mysql</h1><p>在windows下不区分大小写</p>
-<p>mysql -uroot -p;登录</p>
-<p>show databases;看数据库</p>
-<p>use ····；转到某数据库</p>
-<p>show tables;</p>
-<p>net start sql;使用</p>
-<p>net stop sql;停用</p>
-<p>exit，\q，quit;退出数据库</p>
-<p>contal + c;结束本次语句输入</p>
-<h2 id="数据查询语言DQL"><a href="#数据查询语言DQL" class="headerlink" title="数据查询语言DQL"></a>数据查询语言DQL</h2><p>代表关键字：select</p>
-<h3 id="单表查询"><a href="#单表查询" class="headerlink" title="单表查询"></a>单表查询</h3><p>selct ··· 5</p>
-<p>from ···1</p>
-<p>where ···2</p>
-<p>group by···3</p>
-<p>having ···4</p>
-<p>order by···6</p>
-<h4 id="操作符：用于条件语句where下"><a href="#操作符：用于条件语句where下" class="headerlink" title="操作符：用于条件语句where下"></a>操作符：用于条件语句where下</h4><p>&lt;&gt;或者!&#x3D; (不等于)</p>
-<p>&lt; &gt; &#x3D; &gt;&#x3D; &lt;&#x3D;</p>
-<p>between ···and ···· []闭区间</p>
-<p>is null    null不能用等号，专门用 is null,is not null判断</p>
-<p>and or </p>
-<p>in         where ···in(···，···，···)；判断在不在集合内,相当于or的简洁写法。</p>
-<p>not 一般是 not in ,is not null</p>
-<p>like %代表多个字符，_代表一个字符,如果要使用原字符，前面加转移符号 \</p>
-<p>like’ ‘</p>
-<p>####表达式的优先级<br>and&gt;or······不用管，用括号即可</p>
-<p>###排序<br>order by···，····<br>升序 order by···asc（默认）<br>降序 ···········desc</p>
-]]></content>
-      <categories>
-        <category>数据库</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>链表篇</title>
-    <url>/2022/02/23/%E9%93%BE%E8%A1%A8/</url>
-    <content><![CDATA[<h1 id="链表和顺序表的优劣"><a href="#链表和顺序表的优劣" class="headerlink" title="链表和顺序表的优劣"></a>链表和顺序表的优劣</h1><span id="more"></span>
-<p>1,因为有数组下标的存在，顺序表在查找方面领先链表，时间复杂度为O(1),而链表查找需要遍历，因此时间复杂度为o(N)。</p>
-<p>2，增加或删除元素方面，链表优势，顺序表每次插入或者删除都需要移动大量元素O(N),链表需要查找到增加或删除的位置(通过指针)，也是O(N),但是插入的越频繁链表的优势体现的越大(指针移动的距离变少)。</p>
-<h1 id="双向链表"><a href="#双向链表" class="headerlink" title="双向链表"></a>双向链表</h1><p>1,除了data和next外，还有个指向前驱节点的prior指针。</p>
-<p>2,空间占用更多。用空间换时间效率。</p>
-<pre><code>插入操作：//找到插入位置的前一个位置temp
-        node.next = temp.next;//设置待插入节点的next
-        node.prior = temp;//设置待插入节点的prior
-        temp.next.prior = node;//将待插入节点的下一个节点的prior指向待插入节点
-        temp.next = node;//将temp指向待插入节点
-
-删除操作：//找到待删除的节点temp
-        //直接跳过删除节点
-        temp.prior.next = temp.next
-        temp.next.prior = temp.prior;
-        
-    
-</code></pre>
-]]></content>
-      <categories>
-        <category>数据结构</category>
       </categories>
   </entry>
   <entry>
@@ -2564,6 +2915,67 @@ public int pop(int number)&#123;
         return r;
     &#125;
 &#125;
+</code></pre>
+]]></content>
+      <categories>
+        <category>数据结构</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>数据库</title>
+    <url>/2022/02/28/%E6%95%B0%E6%8D%AE%E5%BA%93/</url>
+    <content><![CDATA[<h1 id="mysql"><a href="#mysql" class="headerlink" title="mysql"></a>mysql</h1><p>在windows下不区分大小写</p>
+<p>mysql -uroot -p;登录</p>
+<p>show databases;看数据库</p>
+<p>use ····；转到某数据库</p>
+<p>show tables;</p>
+<p>net start sql;使用</p>
+<p>net stop sql;停用</p>
+<p>exit，\q，quit;退出数据库</p>
+<p>contal + c;结束本次语句输入</p>
+<h2 id="数据查询语言DQL"><a href="#数据查询语言DQL" class="headerlink" title="数据查询语言DQL"></a>数据查询语言DQL</h2><p>代表关键字：select</p>
+<h3 id="单表查询"><a href="#单表查询" class="headerlink" title="单表查询"></a>单表查询</h3><p>selct ··· 5</p>
+<p>from ···1</p>
+<p>where ···2</p>
+<p>group by···3</p>
+<p>having ···4</p>
+<p>order by···6</p>
+<h4 id="操作符：用于条件语句where下"><a href="#操作符：用于条件语句where下" class="headerlink" title="操作符：用于条件语句where下"></a>操作符：用于条件语句where下</h4><p>&lt;&gt;或者!&#x3D; (不等于)</p>
+<p>&lt; &gt; &#x3D; &gt;&#x3D; &lt;&#x3D;</p>
+<p>between ···and ···· []闭区间</p>
+<p>is null    null不能用等号，专门用 is null,is not null判断</p>
+<p>and or </p>
+<p>in         where ···in(···，···，···)；判断在不在集合内,相当于or的简洁写法。</p>
+<p>not 一般是 not in ,is not null</p>
+<p>like %代表多个字符，_代表一个字符,如果要使用原字符，前面加转移符号 \</p>
+<p>like’ ‘</p>
+<p>####表达式的优先级<br>and&gt;or······不用管，用括号即可</p>
+<p>###排序<br>order by···，····<br>升序 order by···asc（默认）<br>降序 ···········desc</p>
+]]></content>
+      <categories>
+        <category>数据库</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>链表篇</title>
+    <url>/2022/02/23/%E9%93%BE%E8%A1%A8/</url>
+    <content><![CDATA[<h1 id="链表和顺序表的优劣"><a href="#链表和顺序表的优劣" class="headerlink" title="链表和顺序表的优劣"></a>链表和顺序表的优劣</h1><span id="more"></span>
+<p>1,因为有数组下标的存在，顺序表在查找方面领先链表，时间复杂度为O(1),而链表查找需要遍历，因此时间复杂度为o(N)。</p>
+<p>2，增加或删除元素方面，链表优势，顺序表每次插入或者删除都需要移动大量元素O(N),链表需要查找到增加或删除的位置(通过指针)，也是O(N),但是插入的越频繁链表的优势体现的越大(指针移动的距离变少)。</p>
+<h1 id="双向链表"><a href="#双向链表" class="headerlink" title="双向链表"></a>双向链表</h1><p>1,除了data和next外，还有个指向前驱节点的prior指针。</p>
+<p>2,空间占用更多。用空间换时间效率。</p>
+<pre><code>插入操作：//找到插入位置的前一个位置temp
+        node.next = temp.next;//设置待插入节点的next
+        node.prior = temp;//设置待插入节点的prior
+        temp.next.prior = node;//将待插入节点的下一个节点的prior指向待插入节点
+        temp.next = node;//将temp指向待插入节点
+
+删除操作：//找到待删除的节点temp
+        //直接跳过删除节点
+        temp.prior.next = temp.next
+        temp.next.prior = temp.prior;
+        
+    
 </code></pre>
 ]]></content>
       <categories>
