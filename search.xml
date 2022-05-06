@@ -1186,14 +1186,6 @@
       </categories>
   </entry>
   <entry>
-    <title>gateway</title>
-    <url>/2022/04/28/gateway/</url>
-    <content><![CDATA[]]></content>
-      <categories>
-        <category>春天的云</category>
-      </categories>
-  </entry>
-  <entry>
     <title>Docker</title>
     <url>/2022/04/24/docker/</url>
     <content><![CDATA[<h3 id="docker好处"><a href="#docker好处" class="headerlink" title="docker好处"></a>docker好处</h3><p>1.环境一致</p>
@@ -1492,6 +1484,14 @@
 ]]></content>
       <categories>
         <category>docker</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>gateway</title>
+    <url>/2022/04/28/gateway/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>春天的云</category>
       </categories>
   </entry>
   <entry>
@@ -2467,93 +2467,6 @@ public void threadShow()&#123;
       </categories>
   </entry>
   <entry>
-    <title>字符串</title>
-    <url>/2022/02/26/%E5%AD%97%E7%AC%A6%E4%B8%B2/</url>
-    <content><![CDATA[<h1 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h1><h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>多线程时用StringBuffer,单线程用StringBiulder,不需要可变用String</p>
-<p>效率：SBiulder&gt;SBuffer&gt;String<br>##String类</p>
-<span id="more"></span>
-<pre><code>//未初始化会报错
-        // String str;
-        //System.out.println(str);
-
-// 值为null时可以正常打印
-        //str = null;
-        //System.out.println(str);
-
-
-//但是调用 值为null 的字符串会空指针异常
-        // System.out.println(str.length());
-
-//创建方法
-        // 推荐，将常量池中的“aaaa”的引用赋给str
-        String str = &quot;aaaa&quot;;
-        //不推荐，实际上创建了两个String对象，浪费空间。
-        String str1 = new String(&quot;aaaa&quot;);
-
-        char[]arr1 =&#123;&#39;1&#39;,&#39;2&#39;,&#39;3&#39;,&#39;4&#39;&#125;;
-        String str2 = new String(arr1,2/*开始下标*/,2/*切片元素数量*/);
-
-        str2 = String.valueOf(arr1,2,2);
-
-        System.out.println(str2);//34
-
-//用String类中的静态方法String.valueOf(ElementType)将基本数据类型转换为字符串
-        //System.out.println(String.valueOf(5));
-        //System.out.println(String.valueOf(5.001));
-        //System.out.println(String.valueOf(str+&quot; &quot;+str1));//转换的是一个对象时，会调用对象的toString方法
-
-//强制类型转换不可行
-        //int i = 1;
-        //System.out.println((String) i);
-
-//拼接字符串,会把括号里的全部变成字符串类型
-        //System.out.println(&quot;111&quot;+&quot;222&quot;+10);
-
-//查找方法
-        //charAt(index)返回元素
-        //indexOf(ch/String)返回第一次出现下标
-        //lastIndexOf(ch/String)反向开始搜索，返回最后一次出现下标
-</code></pre>
-<hr>
-<p>待续···</p>
-<hr>
-<h2 id="StringBuilder和StringBuffer"><a href="#StringBuilder和StringBuffer" class="headerlink" title="StringBuilder和StringBuffer"></a>StringBuilder和StringBuffer</h2><p>长度都是可变的</p>
-<p>StringBuilder:非线程安全的</p>
-<p>StringBuffer:线程安全的</p>
-<h3 id="API"><a href="#API" class="headerlink" title="API"></a>API</h3><pre><code>//创建
-new ...();
-new ...(int 长度--默认16);
-new ...(String);
-new ...(char 序列--暂时粗略理解为字符串吧);
-
-//添加到字符串最后
-append(基本数据类型或者是char数组);
-
-//插入
-insert(下标，基本数据类型或字符数组);
-
-//删除[int ,int)内的所有字符，如果两值一样，不会删除任何元素
-delete(int,int);
-
-//返回元素
-charAt(int index)
-
-//返回当前容量(并非字符数量)，默认16，超过时自动扩容
-capacity(实例对象)；
-
-//替换[start,end)
-replace(int start,int end,String);
-
-//反转
-reverse();
-</code></pre>
-<hr>
-<h2 id="更新于-2-x2F-26-x2F-2022-5-35-28-PM"><a href="#更新于-2-x2F-26-x2F-2022-5-35-28-PM" class="headerlink" title="更新于 2&#x2F;26&#x2F;2022 5:35:28 PM "></a>更新于 2&#x2F;26&#x2F;2022 5:35:28 PM </h2>]]></content>
-      <categories>
-        <category>JAVASE</category>
-      </categories>
-  </entry>
-  <entry>
     <title>卖课项目</title>
     <url>/2022/04/26/%E5%8D%96%E8%AF%BE%E9%A1%B9%E7%9B%AE/</url>
     <content><![CDATA[<h1 id="某粒学苑"><a href="#某粒学苑" class="headerlink" title="某粒学苑"></a>某粒学苑</h1><h3 id="1-创建父工程"><a href="#1-创建父工程" class="headerlink" title="1.创建父工程"></a>1.创建父工程</h3><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!--项目分模块管理，一般父项目打包成pom，只用来传递依赖，--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">packaging</span>&gt;</span>pom<span class="tag">&lt;/<span class="name">packaging</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--可以在properties自定义，然后要用到的时候使用$&#123;&#125;引用就行，方便更改--&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">properties</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">java.version</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">java.version</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">guli.version</span>&gt;</span>0.0.1-SNAPSHOT<span class="tag">&lt;/<span class="name">guli.version</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">mybatis-plus.version</span>&gt;</span>3.0.5<span class="tag">&lt;/<span class="name">mybatis-plus.version</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">velocity.version</span>&gt;</span>2.0<span class="tag">&lt;/<span class="name">velocity.version</span>&gt;</span></span><br><span class="line">        ........</span><br><span class="line">    <span class="tag">&lt;/<span class="name">properties</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--锁定版本，当子项目未指定版本则使用此处指定的版本，子项目必须自己显示引入，这里只是起到一个锁定版本的作用--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependencyManagement</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>joda-time<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>joda-time<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;jodatime.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencyManagement</span>&gt;</span></span><br></pre></td></tr></table></figure>
@@ -2638,6 +2551,93 @@ reverse();
 ]]></content>
       <categories>
         <category>项目</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>字符串</title>
+    <url>/2022/02/26/%E5%AD%97%E7%AC%A6%E4%B8%B2/</url>
+    <content><![CDATA[<h1 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h1><h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>多线程时用StringBuffer,单线程用StringBiulder,不需要可变用String</p>
+<p>效率：SBiulder&gt;SBuffer&gt;String<br>##String类</p>
+<span id="more"></span>
+<pre><code>//未初始化会报错
+        // String str;
+        //System.out.println(str);
+
+// 值为null时可以正常打印
+        //str = null;
+        //System.out.println(str);
+
+
+//但是调用 值为null 的字符串会空指针异常
+        // System.out.println(str.length());
+
+//创建方法
+        // 推荐，将常量池中的“aaaa”的引用赋给str
+        String str = &quot;aaaa&quot;;
+        //不推荐，实际上创建了两个String对象，浪费空间。
+        String str1 = new String(&quot;aaaa&quot;);
+
+        char[]arr1 =&#123;&#39;1&#39;,&#39;2&#39;,&#39;3&#39;,&#39;4&#39;&#125;;
+        String str2 = new String(arr1,2/*开始下标*/,2/*切片元素数量*/);
+
+        str2 = String.valueOf(arr1,2,2);
+
+        System.out.println(str2);//34
+
+//用String类中的静态方法String.valueOf(ElementType)将基本数据类型转换为字符串
+        //System.out.println(String.valueOf(5));
+        //System.out.println(String.valueOf(5.001));
+        //System.out.println(String.valueOf(str+&quot; &quot;+str1));//转换的是一个对象时，会调用对象的toString方法
+
+//强制类型转换不可行
+        //int i = 1;
+        //System.out.println((String) i);
+
+//拼接字符串,会把括号里的全部变成字符串类型
+        //System.out.println(&quot;111&quot;+&quot;222&quot;+10);
+
+//查找方法
+        //charAt(index)返回元素
+        //indexOf(ch/String)返回第一次出现下标
+        //lastIndexOf(ch/String)反向开始搜索，返回最后一次出现下标
+</code></pre>
+<hr>
+<p>待续···</p>
+<hr>
+<h2 id="StringBuilder和StringBuffer"><a href="#StringBuilder和StringBuffer" class="headerlink" title="StringBuilder和StringBuffer"></a>StringBuilder和StringBuffer</h2><p>长度都是可变的</p>
+<p>StringBuilder:非线程安全的</p>
+<p>StringBuffer:线程安全的</p>
+<h3 id="API"><a href="#API" class="headerlink" title="API"></a>API</h3><pre><code>//创建
+new ...();
+new ...(int 长度--默认16);
+new ...(String);
+new ...(char 序列--暂时粗略理解为字符串吧);
+
+//添加到字符串最后
+append(基本数据类型或者是char数组);
+
+//插入
+insert(下标，基本数据类型或字符数组);
+
+//删除[int ,int)内的所有字符，如果两值一样，不会删除任何元素
+delete(int,int);
+
+//返回元素
+charAt(int index)
+
+//返回当前容量(并非字符数量)，默认16，超过时自动扩容
+capacity(实例对象)；
+
+//替换[start,end)
+replace(int start,int end,String);
+
+//反转
+reverse();
+</code></pre>
+<hr>
+<h2 id="更新于-2-x2F-26-x2F-2022-5-35-28-PM"><a href="#更新于-2-x2F-26-x2F-2022-5-35-28-PM" class="headerlink" title="更新于 2&#x2F;26&#x2F;2022 5:35:28 PM "></a>更新于 2&#x2F;26&#x2F;2022 5:35:28 PM </h2>]]></content>
+      <categories>
+        <category>JAVASE</category>
       </categories>
   </entry>
   <entry>
@@ -2858,9 +2858,58 @@ reverse();
 <li>唤醒线程应当给予t1能运行的条件，而且使用notifyAll唤醒Monitor中所有的wiatSet线程。</li>
 <li>wait会释放锁资源，因此wait过程中有其他线程试图获取锁是可以的</li>
 </ul>
+<h5 id="保护性暂停模式"><a href="#保护性暂停模式" class="headerlink" title="保护性暂停模式"></a>保护性暂停模式</h5><p>保护性暂停模式</p>
+<p>1,目的是通过两个线程关联同一个guardedObject对象，来完成一个线程的结果传递到另一线程的任务</p>
+<p>2，一方需要等待另一方的结果，归类于同步模式</p>
+<p>3，传入最大超时时间参数，时间到了break出循环，需要注意虚假唤醒的问题，要保证睡且只睡两秒</p>
+<ul>
+<li>GuardedObject对象，有等待资源获取和提供资源两个方法</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">GuardedObject</span> &#123;</span><br><span class="line"></span><br><span class="line">    Object object;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//获取资源才能继续执行</span></span><br><span class="line">    <span class="keyword">public</span> Object <span class="title function_">get</span><span class="params">(<span class="type">long</span> time)</span> &#123;</span><br><span class="line">        <span class="keyword">synchronized</span> (<span class="built_in">this</span>) &#123;</span><br><span class="line">            <span class="comment">//开始时间</span></span><br><span class="line">            <span class="type">long</span> <span class="variable">begin</span> <span class="operator">=</span> System.currentTimeMillis();</span><br><span class="line">            <span class="comment">//经历的时间</span></span><br><span class="line">            <span class="type">long</span> <span class="variable">pass</span> <span class="operator">=</span> <span class="number">0L</span>;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">while</span> (object == <span class="literal">null</span>) &#123;</span><br><span class="line">                <span class="comment">//就算被虚假唤醒后，也只要等剩余时间就可以了</span></span><br><span class="line">                <span class="type">long</span> <span class="variable">left</span> <span class="operator">=</span> time - pass;</span><br><span class="line">                <span class="keyword">if</span> (left &lt;= <span class="number">0</span>) &#123;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    <span class="comment">//等待剩余时间</span></span><br><span class="line">                    <span class="built_in">this</span>.wait(left);</span><br><span class="line">                &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                <span class="comment">//虚假唤醒后记录结束时间</span></span><br><span class="line">                <span class="type">long</span> <span class="variable">end</span> <span class="operator">=</span> System.currentTimeMillis();</span><br><span class="line">                <span class="comment">//已经等待的时间</span></span><br><span class="line">                pass = end - begin;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> object;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">provide</span><span class="params">(Object object)</span> &#123;</span><br><span class="line">        <span class="keyword">synchronized</span> (<span class="built_in">this</span>) &#123;</span><br><span class="line"></span><br><span class="line">            <span class="comment">//提供资源</span></span><br><span class="line">            <span class="built_in">this</span>.object = object;</span><br><span class="line">            <span class="comment">//唤醒所有等待线程，会造成虚假唤醒</span></span><br><span class="line">            <span class="built_in">this</span>.notifyAll();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>调用</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="comment">//两线程通过一个guardedObject连接</span></span><br><span class="line">        <span class="type">GuardedObject</span> <span class="variable">guardedObject</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">GuardedObject</span>();</span><br><span class="line"></span><br><span class="line">        <span class="comment">//获取资源才能执行的线程</span></span><br><span class="line">        <span class="type">Thread</span> <span class="variable">t1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Thread</span>(() -&gt; &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;等待获取资源&quot;</span>);</span><br><span class="line">            <span class="comment">//最多休眠5秒</span></span><br><span class="line">            <span class="type">Object</span> <span class="variable">o</span> <span class="operator">=</span> guardedObject.get(<span class="number">5000L</span>);</span><br><span class="line">            <span class="comment">//获取到资源了</span></span><br><span class="line">            System.out.println(<span class="string">&quot;获取到资源或提前结束了&quot;</span>);</span><br><span class="line">            <span class="keyword">if</span> (o != <span class="literal">null</span>) &#123;</span><br><span class="line">                System.out.println(o);</span><br><span class="line">               </span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="type">Thread</span> <span class="variable">t2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Thread</span>(() -&gt; &#123;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                Thread.sleep(<span class="number">10000</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">            List&lt;String&gt; strings = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">            strings.add(<span class="string">&quot;aa&quot;</span>);</span><br><span class="line">            guardedObject.provide(strings);</span><br><span class="line"></span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        t1.start();</span><br><span class="line">        t2.start();</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
 ]]></content>
       <categories>
         <category>JAVASE</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>数据库</title>
+    <url>/2022/02/28/%E6%95%B0%E6%8D%AE%E5%BA%93/</url>
+    <content><![CDATA[<h1 id="mysql"><a href="#mysql" class="headerlink" title="mysql"></a>mysql</h1><p>在windows下不区分大小写</p>
+<p>mysql -uroot -p;登录</p>
+<p>show databases;看数据库</p>
+<p>use ····；转到某数据库</p>
+<p>show tables;</p>
+<p>net start sql;使用</p>
+<p>net stop sql;停用</p>
+<p>exit，\q，quit;退出数据库</p>
+<p>contal + c;结束本次语句输入</p>
+<h2 id="数据查询语言DQL"><a href="#数据查询语言DQL" class="headerlink" title="数据查询语言DQL"></a>数据查询语言DQL</h2><p>代表关键字：select</p>
+<h3 id="单表查询"><a href="#单表查询" class="headerlink" title="单表查询"></a>单表查询</h3><p>selct ··· 5</p>
+<p>from ···1</p>
+<p>where ···2</p>
+<p>group by···3</p>
+<p>having ···4</p>
+<p>order by···6</p>
+<h4 id="操作符：用于条件语句where下"><a href="#操作符：用于条件语句where下" class="headerlink" title="操作符：用于条件语句where下"></a>操作符：用于条件语句where下</h4><p>&lt;&gt;或者!&#x3D; (不等于)</p>
+<p>&lt; &gt; &#x3D; &gt;&#x3D; &lt;&#x3D;</p>
+<p>between ···and ···· []闭区间</p>
+<p>is null    null不能用等号，专门用 is null,is not null判断</p>
+<p>and or </p>
+<p>in         where ···in(···，···，···)；判断在不在集合内,相当于or的简洁写法。</p>
+<p>not 一般是 not in ,is not null</p>
+<p>like %代表多个字符，_代表一个字符,如果要使用原字符，前面加转移符号 \</p>
+<p>like’ ‘</p>
+<p>####表达式的优先级<br>and&gt;or······不用管，用括号即可</p>
+<p>###排序<br>order by···，····<br>升序 order by···asc（默认）<br>降序 ···········desc</p>
+]]></content>
+      <categories>
+        <category>数据库</category>
       </categories>
   </entry>
   <entry>
@@ -2979,41 +3028,6 @@ public int pop(int number)&#123;
 ]]></content>
       <categories>
         <category>数据结构</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>数据库</title>
-    <url>/2022/02/28/%E6%95%B0%E6%8D%AE%E5%BA%93/</url>
-    <content><![CDATA[<h1 id="mysql"><a href="#mysql" class="headerlink" title="mysql"></a>mysql</h1><p>在windows下不区分大小写</p>
-<p>mysql -uroot -p;登录</p>
-<p>show databases;看数据库</p>
-<p>use ····；转到某数据库</p>
-<p>show tables;</p>
-<p>net start sql;使用</p>
-<p>net stop sql;停用</p>
-<p>exit，\q，quit;退出数据库</p>
-<p>contal + c;结束本次语句输入</p>
-<h2 id="数据查询语言DQL"><a href="#数据查询语言DQL" class="headerlink" title="数据查询语言DQL"></a>数据查询语言DQL</h2><p>代表关键字：select</p>
-<h3 id="单表查询"><a href="#单表查询" class="headerlink" title="单表查询"></a>单表查询</h3><p>selct ··· 5</p>
-<p>from ···1</p>
-<p>where ···2</p>
-<p>group by···3</p>
-<p>having ···4</p>
-<p>order by···6</p>
-<h4 id="操作符：用于条件语句where下"><a href="#操作符：用于条件语句where下" class="headerlink" title="操作符：用于条件语句where下"></a>操作符：用于条件语句where下</h4><p>&lt;&gt;或者!&#x3D; (不等于)</p>
-<p>&lt; &gt; &#x3D; &gt;&#x3D; &lt;&#x3D;</p>
-<p>between ···and ···· []闭区间</p>
-<p>is null    null不能用等号，专门用 is null,is not null判断</p>
-<p>and or </p>
-<p>in         where ···in(···，···，···)；判断在不在集合内,相当于or的简洁写法。</p>
-<p>not 一般是 not in ,is not null</p>
-<p>like %代表多个字符，_代表一个字符,如果要使用原字符，前面加转移符号 \</p>
-<p>like’ ‘</p>
-<p>####表达式的优先级<br>and&gt;or······不用管，用括号即可</p>
-<p>###排序<br>order by···，····<br>升序 order by···asc（默认）<br>降序 ···········desc</p>
-]]></content>
-      <categories>
-        <category>数据库</category>
       </categories>
   </entry>
   <entry>
