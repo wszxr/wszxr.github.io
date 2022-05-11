@@ -1090,55 +1090,13 @@
     <content><![CDATA[]]></content>
   </entry>
   <entry>
-    <title>jdbc</title>
-    <url>/2022/03/12/jdbc/</url>
-    <content><![CDATA[<h2 id="JDBC概述"><a href="#JDBC概述" class="headerlink" title="JDBC概述"></a>JDBC概述</h2><p>( Java DataBase Connectivity ) </p>
-<p>就是java连接数据库·····</p>
-<ul>
-<li><p>数据库的种类很多，不可能每换一个数据库都创建一套不同的java代码，因此，SUN公司开发了一套叫JDBC的东西，事实上 ，JDBC就是一套接口，然后让数据库厂家去写实现类，这样java程序员直接调用他们写的实现类就可以了，而这些实现类有个洋气的名字，叫做数据库驱动。</p>
-</li>
-<li><p>既然是一套接口，那我们知道怎样使用就行，也就是著名的面向API编程😂。</p>
-</li>
-</ul>
-<h2 id="实现步骤"><a href="#实现步骤" class="headerlink" title="实现步骤"></a>实现步骤</h2><p>我们在java中进行操作大致需要</p>
-<p>1.导包</p>
-<p>2.注册驱动</p>
-<p>3.获取连接</p>
-<p>4.定制要执行的sql语句</p>
-<p>5.获取执行语句的对象</p>
-<p>6.执行</p>
-<p>7.处理结果</p>
-<p>8.释放资源</p>
-<ul>
-<li>看着步骤多，实则很简单</li>
-</ul>
-<h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">    <span class="comment">//注册驱动</span></span><br><span class="line">    Class.forName(<span class="string">&quot;com.mysql.cj.jdbc.Driver&quot;</span>);</span><br><span class="line">    <span class="comment">//获得连接</span></span><br><span class="line">    <span class="type">Connection</span> <span class="variable">connection</span> <span class="operator">=</span> DriverManager.getConnection(<span class="string">&quot;jdbc:mysql:///mydatabase?useSSL = false&quot;</span>,<span class="string">&quot;root&quot;</span>,<span class="string">&quot;20010718&quot;</span>);</span><br><span class="line">    <span class="comment">//获得数据库操作对象</span></span><br><span class="line">    <span class="type">Statement</span> <span class="variable">statement</span> <span class="operator">=</span> connection.createStatement();</span><br><span class="line">    <span class="comment">//需要执行的sql语句</span></span><br><span class="line">    <span class="type">String</span> <span class="variable">sql</span> <span class="operator">=</span> <span class="string">&quot;select * from emp&quot;</span>;</span><br><span class="line">    <span class="comment">//statement.executeQuery(sql);执行DQL查询语句</span></span><br><span class="line">    <span class="comment">//statement.executeUpdate(sql);执行DDL,DML语句</span></span><br><span class="line">    <span class="type">ResultSet</span> <span class="variable">resultSet</span> <span class="operator">=</span> statement.executeQuery(sql);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//处理结果</span></span><br><span class="line">    <span class="keyword">while</span>(resultSet.next())&#123;</span><br><span class="line">        System.out.println(resultSet.getString(<span class="number">1</span>));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//释放资源，从后到前释放</span></span><br><span class="line">    resultSet.close();</span><br><span class="line">    statement.close();</span><br><span class="line">    connection.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>这是一套基本流程，既然是面向API编程，那我们把注意力移到API上</li>
-</ul>
-<h2 id="API"><a href="#API" class="headerlink" title="API"></a>API</h2><h3 id="DriverManager"><a href="#DriverManager" class="headerlink" title="DriverManager"></a>DriverManager</h3><p>这是一个驱动注册类，里面有一个registerDriver方法用于注册驱动，然而我们的代码是这样的</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//注册驱动</span></span><br><span class="line">    Class.forName(<span class="string">&quot;com.mysql.cj.jdbc.Driver&quot;</span>);</span><br></pre></td></tr></table></figure>
-
-<p>为什么呢？让我们打开Driver类看看</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Driver</span> <span class="keyword">extends</span> <span class="title class_">NonRegisteringDriver</span> <span class="keyword">implements</span> <span class="title class_">java</span>.sql.Driver &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Driver</span><span class="params">()</span> <span class="keyword">throws</span> SQLException &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            DriverManager.registerDriver(<span class="keyword">new</span> <span class="title class_">Driver</span>());</span><br><span class="line">        &#125; <span class="keyword">catch</span> (SQLException var1) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(<span class="string">&quot;Can&#x27;t register driver!&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>奥！！！！原来类里面有一个静态代码块，在我们Class加载的时候就完成了注册。</p>
-<ul>
-<li>甚至于，现在不用写注册的代码，因为驱动已经帮我们弄好了</li>
-</ul>
-<h2 id="Connection"><a href="#Connection" class="headerlink" title="Connection"></a>Connection</h2><p>获取连接的类，</p>
-]]></content>
-      <categories>
-        <category>javaweb系列</category>
-      </categories>
-  </entry>
-  <entry>
     <title>mybatis</title>
     <url>/2022/03/17/mybatis/</url>
     <content><![CDATA[<h1 id="Mybatis是啥？"><a href="#Mybatis是啥？" class="headerlink" title="Mybatis是啥？"></a>Mybatis是啥？</h1><p>事实上就是对jdbc操作的简化</p>
+<span id="more"></span>
+
 <h2 id="开发步骤"><a href="#开发步骤" class="headerlink" title="开发步骤"></a>开发步骤</h2><p>1.搭建maven环境</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">  <span class="comment">&lt;!--mybatis核心配置文件--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.mybatis<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mybatis<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.5.7<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--junit单元测试--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>4.13.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--mysql和java连接驱动--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>mysql<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mysql-connector-java<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>8.0.28<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!--mybatis核心配置文件--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.mybatis<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mybatis<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.5.7<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">&lt;!--mysql和java连接驱动--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>mysql<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mysql-connector-java<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>8.0.28<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    <span class="comment">&lt;!--前两个是必须的--&gt;</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">&lt;!--junit单元测试--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>4.13.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>2.创建mybatis核心文件</p>
 <figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!--表示默认development环境--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">environments</span> <span class="attr">default</span>=<span class="string">&quot;development&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">environment</span> <span class="attr">id</span>=<span class="string">&quot;development&quot;</span>&gt;</span></span><br><span class="line">                    <span class="comment">&lt;!--事务管理用JDBC--&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">transactionManager</span> <span class="attr">type</span>=<span class="string">&quot;JDBC&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">transactionManager</span>&gt;</span></span><br><span class="line">                    <span class="comment">&lt;!--连接池用POOLED--&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">dataSource</span> <span class="attr">type</span>=<span class="string">&quot;POOLED&quot;</span>&gt;</span></span><br><span class="line">                            <span class="comment">&lt;!--数据库连接所需要的驱动，url，用户名和密码，可以把它写到properties文件里边--&gt;</span></span><br><span class="line">                                <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;driver&quot;</span> <span class="attr">value</span>=<span class="string">&quot;com.mysql.cj.jdbc.Driver&quot;</span>/&gt;</span></span><br><span class="line">                                <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;url&quot;</span> <span class="attr">value</span>=<span class="string">&quot;jdbc:mysql://localhost:3306/mydatabase&quot;</span>/&gt;</span></span><br><span class="line">                                <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;username&quot;</span> <span class="attr">value</span>=<span class="string">&quot;root&quot;</span>/&gt;</span></span><br><span class="line">                                <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;password&quot;</span> <span class="attr">value</span>=<span class="string">&quot;20010718&quot;</span>/&gt;</span></span><br><span class="line">                        <span class="tag">&lt;/<span class="name">dataSource</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">environment</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">environments</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!--导入映射文件的功能--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">mappers</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">mapper</span>  <span class="attr">resource</span>=<span class="string">&quot;mappers/Usermapper.xml&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">mappers</span>&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
@@ -1399,7 +1357,47 @@ private String SName;
 <p>setting 中打开lazyLoadingEnabled为true，aggressiveLazyLoding &#x3D; false。</p>
 ]]></content>
       <categories>
-        <category>MyBatis</category>
+        <category>持久层</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>jdbc</title>
+    <url>/2022/03/12/jdbc/</url>
+    <content><![CDATA[<h2 id="JDBC概述"><a href="#JDBC概述" class="headerlink" title="JDBC概述"></a>JDBC概述</h2><span id="more"></span>
+
+<p>就是java连接数据库·····</p>
+<ul>
+<li><p>数据库的种类很多，不可能每换一个数据库都创建一套不同的java代码，因此，SUN公司开发了一套叫JDBC的东西，事实上 ，JDBC就是一套接口，然后让数据库厂家去写实现类，这样java就可以利用多态的性质，用接口调用实现类，而这些实现类有个洋气的名字，叫做数据库驱动。</p>
+</li>
+<li><p>既然是一套接口，那我们知道怎样使用就行，也就是著名的面向API编程😂。</p>
+</li>
+</ul>
+<h2 id="实现步骤"><a href="#实现步骤" class="headerlink" title="实现步骤"></a>实现步骤</h2><p>我们在java中进行操作大致需要</p>
+<p>1.导包,mysql-connector-java</p>
+<p>2.注册驱动</p>
+<p>3.获取连接</p>
+<p>4.定制要执行的sql语句</p>
+<p>5.获取执行语句的对象</p>
+<p>6开启事务</p>
+<p>7.执行</p>
+<p>8.提交事务</p>
+<p>9.处理结果</p>
+<p>10.出现异常回滚</p>
+<p>11.释放资源</p>
+<ul>
+<li>看着步骤多，实则很简单</li>
+</ul>
+<h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException &#123;、</span><br><span class="line">        <span class="comment">/*注册驱动</span></span><br><span class="line"><span class="comment">         * 1,第一种使用DriverManager的registerDriver注册，Driver是mysql提供的</span></span><br><span class="line"><span class="comment">         * 2,第二种，使用Class.forName让Driver类初始化，进而执行静态代码块的注册代码，</span></span><br><span class="line"><span class="comment">         *推荐，Class.forName传入一个字符串，可以把字符串写properties里解耦合</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">/*Driver driver = new Driver();</span></span><br><span class="line"><span class="comment">        DriverManager.registerDriver(driver);*/</span></span><br><span class="line"></span><br><span class="line">        Class.forName(<span class="string">&quot;com.mysql.cj.jdbc.Driver&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//获取连接对象，使用Connection接口接收DriverManager获取的连接</span></span><br><span class="line">        <span class="type">Connection</span> <span class="variable">conn</span> <span class="operator">=</span> DriverManager.getConnection(<span class="string">&quot;mysql:jdbc://localhost:3306&quot;</span>,<span class="string">&quot;root&quot;</span>,<span class="string">&quot;20010178&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//如果是增删改应该开启事务</span></span><br><span class="line">        <span class="comment">//conn.setAutoCommit(false);</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">//获取statement或preparedStatement的对象，用于执行sql语句</span></span><br><span class="line">        <span class="type">Statement</span> <span class="variable">statement</span> <span class="operator">=</span> conn.createStatement();</span><br><span class="line">        <span class="type">PreparedStatement</span> <span class="variable">preparedStatement</span> <span class="operator">=</span> conn.prepareStatement(<span class="string">&quot;select * from t_user where id = ?&quot;</span>);</span><br><span class="line">                                                           </span><br><span class="line">        <span class="comment">//preparedStatement的好处就是可以动态的设置参数，1是参数索引，4是?占位符的值</span></span><br><span class="line">        preparedStatement.setInt(<span class="number">1</span>,<span class="number">4</span>);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//执行statement,查询语句用executeQuery方法，会返回结果集，</span></span><br><span class="line">        <span class="comment">//非查询用executeUpdate,返回影响行数</span></span><br><span class="line">        <span class="type">ResultSet</span> <span class="variable">resultSet</span> <span class="operator">=</span> preparedStatement.executeQuery();</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//如果是增删改结束了要提交事务</span></span><br><span class="line">        <span class="comment">//conn.commit();</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment">//有结果集可以获取结果集</span></span><br><span class="line">        <span class="keyword">while</span>(resultSet.next())&#123;</span><br><span class="line">            <span class="type">String</span> <span class="variable">name</span> <span class="operator">=</span> resultSet.getString(<span class="string">&quot;name&quot;</span>);</span><br><span class="line">            <span class="type">Integer</span> <span class="variable">age</span> <span class="operator">=</span> resultSet.getInt(<span class="string">&quot;age&quot;</span>);</span><br><span class="line">            System.out.println(name+<span class="string">&quot; &quot;</span>+age);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//关闭statement和connection资源,statement由connection而来，所以先关闭statement</span></span><br><span class="line">        statement.close();</span><br><span class="line">        conn.close();</span><br><span class="line">                                                           </span><br><span class="line">        <span class="comment">//捕捉异常后回滚</span></span><br><span class="line">        conn.rollback();</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>以上语句的异常均未捕捉，只是为了记忆用，捕捉到异常后要在catch语句块执行conn.rollback()进行事务回滚</li>
+<li>资源的释放应该是在finally块中</li>
+</ul>
+<h2 id="JDBC缺点"><a href="#JDBC缺点" class="headerlink" title="JDBC缺点"></a>JDBC缺点</h2><p>获取大量连接，写大量sql，获取到的数据结果集操作起来不方便，因此，几乎不会再直接用到JDBC了。</p>
+<p>基于JDBC封装的框架很好用······</p>
+]]></content>
+      <categories>
+        <category>持久层</category>
       </categories>
   </entry>
   <entry>
@@ -1705,27 +1703,6 @@ private String SName;
 ]]></content>
       <categories>
         <category>SpringMVC</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>力扣刷题</title>
-    <url>/2022/03/10/%E5%8A%9B%E6%89%A3%E5%88%B7%E9%A2%98/</url>
-    <content><![CDATA[<h2 id="704-二分查找"><a href="#704-二分查找" class="headerlink" title="704. 二分查找"></a>704. 二分查找</h2><p>给定一个 n 个元素有序的（升序）整型数组 nums 和一个目标值 target  ，写一个函数搜索 nums 中的 target，如果目标值存在返回下标，否则返回 -1。<br>链接：<a href="https://leetcode-cn.com/problems/binary-search">https://leetcode-cn.com/problems/binary-search</a><br>1.有序数组</p>
-<p>2.无重复值</p>
-<p>可以直接遍历，但是二分查找更好</p>
-<ol>
-<li></li>
-</ol>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//左闭右开区间，left = right时无意义</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">search</span><span class="params">(<span class="type">int</span>[] nums, <span class="type">int</span> target)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span>(target&lt;nums[<span class="number">0</span>]||target&gt;nums[nums.length-<span class="number">1</span>])</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">        <span class="type">int</span> <span class="variable">left</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span> <span class="variable">right</span> <span class="operator">=</span> nums.length;</span><br><span class="line">        <span class="keyword">while</span>(left&lt;right)&#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">mid</span> <span class="operator">=</span> left+(right-left)/<span class="number">2</span>;</span><br><span class="line">            <span class="keyword">if</span>(nums[mid]==target)&#123;</span><br><span class="line">                <span class="keyword">return</span> mid;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(nums[mid]&lt;target)&#123;</span><br><span class="line">                left = mid+<span class="number">1</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(nums[mid]&gt;target)&#123;</span><br><span class="line">                right = mid;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li></li>
-</ol>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//左闭右闭区间，left == right时有意义</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">search</span><span class="params">(<span class="type">int</span>[] nums, <span class="type">int</span> target)</span> &#123;</span><br><span class="line">        <span class="comment">// 避免当 target 小于nums[0] nums[nums.length - 1]时多次循环运算</span></span><br><span class="line">        <span class="keyword">if</span> (target &lt; nums[<span class="number">0</span>] || target &gt; nums[nums.length - <span class="number">1</span>]) &#123;</span><br><span class="line">            <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">int</span> <span class="variable">left</span> <span class="operator">=</span> <span class="number">0</span>, right = nums.length - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span> (left &lt;= right) &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">mid</span> <span class="operator">=</span> left + ((right - left) &gt;&gt; <span class="number">1</span>);</span><br><span class="line">            <span class="keyword">if</span> (nums[mid] == target)</span><br><span class="line">                <span class="keyword">return</span> mid;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (nums[mid] &lt; target)</span><br><span class="line">                left = mid + <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (nums[mid] &gt; target)</span><br><span class="line">                right = mid - <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>刷题</category>
       </categories>
   </entry>
   <entry>
@@ -2057,90 +2034,24 @@ public void threadShow()&#123;
       </categories>
   </entry>
   <entry>
-    <title>字符串</title>
-    <url>/2022/02/26/%E5%AD%97%E7%AC%A6%E4%B8%B2/</url>
-    <content><![CDATA[<h1 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h1><h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>多线程时用StringBuffer,单线程用StringBiulder,不需要可变用String</p>
-<p>效率：SBiulder&gt;SBuffer&gt;String<br>##String类</p>
-<span id="more"></span>
-<pre><code>//未初始化会报错
-        // String str;
-        //System.out.println(str);
+    <title>力扣刷题</title>
+    <url>/2022/03/10/%E5%8A%9B%E6%89%A3%E5%88%B7%E9%A2%98/</url>
+    <content><![CDATA[<h2 id="704-二分查找"><a href="#704-二分查找" class="headerlink" title="704. 二分查找"></a>704. 二分查找</h2><p>给定一个 n 个元素有序的（升序）整型数组 nums 和一个目标值 target  ，写一个函数搜索 nums 中的 target，如果目标值存在返回下标，否则返回 -1。<br>链接：<a href="https://leetcode-cn.com/problems/binary-search">https://leetcode-cn.com/problems/binary-search</a><br>1.有序数组</p>
+<p>2.无重复值</p>
+<p>可以直接遍历，但是二分查找更好</p>
+<ol>
+<li></li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//左闭右开区间，left = right时无意义</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">search</span><span class="params">(<span class="type">int</span>[] nums, <span class="type">int</span> target)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span>(target&lt;nums[<span class="number">0</span>]||target&gt;nums[nums.length-<span class="number">1</span>])</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">        <span class="type">int</span> <span class="variable">left</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span> <span class="variable">right</span> <span class="operator">=</span> nums.length;</span><br><span class="line">        <span class="keyword">while</span>(left&lt;right)&#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">mid</span> <span class="operator">=</span> left+(right-left)/<span class="number">2</span>;</span><br><span class="line">            <span class="keyword">if</span>(nums[mid]==target)&#123;</span><br><span class="line">                <span class="keyword">return</span> mid;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(nums[mid]&lt;target)&#123;</span><br><span class="line">                left = mid+<span class="number">1</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(nums[mid]&gt;target)&#123;</span><br><span class="line">                right = mid;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-// 值为null时可以正常打印
-        //str = null;
-        //System.out.println(str);
+<ol start="2">
+<li></li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//左闭右闭区间，left == right时有意义</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">search</span><span class="params">(<span class="type">int</span>[] nums, <span class="type">int</span> target)</span> &#123;</span><br><span class="line">        <span class="comment">// 避免当 target 小于nums[0] nums[nums.length - 1]时多次循环运算</span></span><br><span class="line">        <span class="keyword">if</span> (target &lt; nums[<span class="number">0</span>] || target &gt; nums[nums.length - <span class="number">1</span>]) &#123;</span><br><span class="line">            <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">int</span> <span class="variable">left</span> <span class="operator">=</span> <span class="number">0</span>, right = nums.length - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span> (left &lt;= right) &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">mid</span> <span class="operator">=</span> left + ((right - left) &gt;&gt; <span class="number">1</span>);</span><br><span class="line">            <span class="keyword">if</span> (nums[mid] == target)</span><br><span class="line">                <span class="keyword">return</span> mid;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (nums[mid] &lt; target)</span><br><span class="line">                left = mid + <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (nums[mid] &gt; target)</span><br><span class="line">                right = mid - <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-
-//但是调用 值为null 的字符串会空指针异常
-        // System.out.println(str.length());
-
-//创建方法
-        // 推荐，将常量池中的“aaaa”的引用赋给str
-        String str = &quot;aaaa&quot;;
-        //不推荐，实际上创建了两个String对象，浪费空间。
-        String str1 = new String(&quot;aaaa&quot;);
-
-        char[]arr1 =&#123;&#39;1&#39;,&#39;2&#39;,&#39;3&#39;,&#39;4&#39;&#125;;
-        String str2 = new String(arr1,2/*开始下标*/,2/*切片元素数量*/);
-
-        str2 = String.valueOf(arr1,2,2);
-
-        System.out.println(str2);//34
-
-//用String类中的静态方法String.valueOf(ElementType)将基本数据类型转换为字符串
-        //System.out.println(String.valueOf(5));
-        //System.out.println(String.valueOf(5.001));
-        //System.out.println(String.valueOf(str+&quot; &quot;+str1));//转换的是一个对象时，会调用对象的toString方法
-
-//强制类型转换不可行
-        //int i = 1;
-        //System.out.println((String) i);
-
-//拼接字符串,会把括号里的全部变成字符串类型
-        //System.out.println(&quot;111&quot;+&quot;222&quot;+10);
-
-//查找方法
-        //charAt(index)返回元素
-        //indexOf(ch/String)返回第一次出现下标
-        //lastIndexOf(ch/String)反向开始搜索，返回最后一次出现下标
-</code></pre>
-<hr>
-<p>待续···</p>
-<hr>
-<h2 id="StringBuilder和StringBuffer"><a href="#StringBuilder和StringBuffer" class="headerlink" title="StringBuilder和StringBuffer"></a>StringBuilder和StringBuffer</h2><p>长度都是可变的</p>
-<p>StringBuilder:非线程安全的</p>
-<p>StringBuffer:线程安全的</p>
-<h3 id="API"><a href="#API" class="headerlink" title="API"></a>API</h3><pre><code>//创建
-new ...();
-new ...(int 长度--默认16);
-new ...(String);
-new ...(char 序列--暂时粗略理解为字符串吧);
-
-//添加到字符串最后
-append(基本数据类型或者是char数组);
-
-//插入
-insert(下标，基本数据类型或字符数组);
-
-//删除[int ,int)内的所有字符，如果两值一样，不会删除任何元素
-delete(int,int);
-
-//返回元素
-charAt(int index)
-
-//返回当前容量(并非字符数量)，默认16，超过时自动扩容
-capacity(实例对象)；
-
-//替换[start,end)
-replace(int start,int end,String);
-
-//反转
-reverse();
-</code></pre>
-<hr>
-<h2 id="更新于-2-x2F-26-x2F-2022-5-35-28-PM"><a href="#更新于-2-x2F-26-x2F-2022-5-35-28-PM" class="headerlink" title="更新于 2&#x2F;26&#x2F;2022 5:35:28 PM "></a>更新于 2&#x2F;26&#x2F;2022 5:35:28 PM </h2>]]></content>
+]]></content>
       <categories>
-        <category>JAVASE</category>
+        <category>刷题</category>
       </categories>
   </entry>
   <entry>
@@ -2231,38 +2142,88 @@ reverse();
       </categories>
   </entry>
   <entry>
-    <title>数据库</title>
-    <url>/2022/02/28/%E6%95%B0%E6%8D%AE%E5%BA%93/</url>
-    <content><![CDATA[<h1 id="mysql"><a href="#mysql" class="headerlink" title="mysql"></a>mysql</h1><p>在windows下不区分大小写</p>
-<p>mysql -uroot -p;登录</p>
-<p>show databases;看数据库</p>
-<p>use ····；转到某数据库</p>
-<p>show tables;</p>
-<p>net start sql;使用</p>
-<p>net stop sql;停用</p>
-<p>exit，\q，quit;退出数据库</p>
-<p>contal + c;结束本次语句输入</p>
-<h2 id="数据查询语言DQL"><a href="#数据查询语言DQL" class="headerlink" title="数据查询语言DQL"></a>数据查询语言DQL</h2><p>代表关键字：select</p>
-<h3 id="单表查询"><a href="#单表查询" class="headerlink" title="单表查询"></a>单表查询</h3><p>selct ··· 5</p>
-<p>from ···1</p>
-<p>where ···2</p>
-<p>group by···3</p>
-<p>having ···4</p>
-<p>order by···6</p>
-<h4 id="操作符：用于条件语句where下"><a href="#操作符：用于条件语句where下" class="headerlink" title="操作符：用于条件语句where下"></a>操作符：用于条件语句where下</h4><p>&lt;&gt;或者!&#x3D; (不等于)</p>
-<p>&lt; &gt; &#x3D; &gt;&#x3D; &lt;&#x3D;</p>
-<p>between ···and ···· []闭区间</p>
-<p>is null    null不能用等号，专门用 is null,is not null判断</p>
-<p>and or </p>
-<p>in         where ···in(···，···，···)；判断在不在集合内,相当于or的简洁写法。</p>
-<p>not 一般是 not in ,is not null</p>
-<p>like %代表多个字符，_代表一个字符,如果要使用原字符，前面加转移符号 \</p>
-<p>like’ ‘</p>
-<p>####表达式的优先级<br>and&gt;or······不用管，用括号即可</p>
-<p>###排序<br>order by···，····<br>升序 order by···asc（默认）<br>降序 ···········desc</p>
+    <title>字符串</title>
+    <url>/2022/02/26/%E5%AD%97%E7%AC%A6%E4%B8%B2/</url>
+    <content><![CDATA[<h1 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h1><h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>多线程时用StringBuffer,单线程用StringBiulder,不需要可变用String</p>
+<p>效率：SBiulder&gt;SBuffer&gt;String<br>##String类</p>
+<span id="more"></span>
+<pre><code>//未初始化会报错
+        // String str;
+        //System.out.println(str);
+
+// 值为null时可以正常打印
+        //str = null;
+        //System.out.println(str);
+</code></pre>
+<p>​<br>    &#x2F;&#x2F;但是调用 值为null 的字符串会空指针异常<br>            &#x2F;&#x2F; System.out.println(str.length());</p>
+<pre><code>//创建方法
+        // 推荐，将常量池中的“aaaa”的引用赋给str
+        String str = &quot;aaaa&quot;;
+        //不推荐，实际上创建了两个String对象，浪费空间。
+        String str1 = new String(&quot;aaaa&quot;);
+
+        char[]arr1 =&#123;&#39;1&#39;,&#39;2&#39;,&#39;3&#39;,&#39;4&#39;&#125;;
+        String str2 = new String(arr1,2/*开始下标*/,2/*切片元素数量*/);
+
+        str2 = String.valueOf(arr1,2,2);
+
+        System.out.println(str2);//34
+
+//用String类中的静态方法String.valueOf(ElementType)将基本数据类型转换为字符串
+        //System.out.println(String.valueOf(5));
+        //System.out.println(String.valueOf(5.001));
+        //System.out.println(String.valueOf(str+&quot; &quot;+str1));//转换的是一个对象时，会调用对象的toString方法
+
+//强制类型转换不可行
+        //int i = 1;
+        //System.out.println((String) i);
+
+//拼接字符串,会把括号里的全部变成字符串类型
+        //System.out.println(&quot;111&quot;+&quot;222&quot;+10);
+
+//查找方法
+        //charAt(index)返回元素
+        //indexOf(ch/String)返回第一次出现下标
+        //lastIndexOf(ch/String)反向开始搜索，返回最后一次出现下标
+</code></pre>
+<hr>
+<p>待续···</p>
+<hr>
+<h2 id="StringBuilder和StringBuffer"><a href="#StringBuilder和StringBuffer" class="headerlink" title="StringBuilder和StringBuffer"></a>StringBuilder和StringBuffer</h2><p>长度都是可变的</p>
+<p>StringBuilder:非线程安全的</p>
+<p>StringBuffer:线程安全的</p>
+<h3 id="API"><a href="#API" class="headerlink" title="API"></a>API</h3><pre><code>//创建
+new ...();
+new ...(int 长度--默认16);
+new ...(String);
+new ...(char 序列--暂时粗略理解为字符串吧);
+
+//添加到字符串最后
+append(基本数据类型或者是char数组);
+
+//插入
+insert(下标，基本数据类型或字符数组);
+
+//删除[int ,int)内的所有字符，如果两值一样，不会删除任何元素
+delete(int,int);
+
+//返回元素
+charAt(int index)
+
+//返回当前容量(并非字符数量)，默认16，超过时自动扩容
+capacity(实例对象)；
+
+//替换[start,end)
+replace(int start,int end,String);
+
+//反转
+reverse();
+</code></pre>
+<hr>
+<hr>
 ]]></content>
       <categories>
-        <category>数据库</category>
+        <category>JAVASE</category>
       </categories>
   </entry>
   <entry>
@@ -2514,9 +2475,46 @@ reverse();
       </categories>
   </entry>
   <entry>
+    <title>数据库</title>
+    <url>/2022/02/28/%E6%95%B0%E6%8D%AE%E5%BA%93/</url>
+    <content><![CDATA[<h1 id="mysql"><a href="#mysql" class="headerlink" title="mysql"></a>mysql</h1><p>在windows下不区分大小写</p>
+<p>mysql -uroot -p;登录</p>
+<p>show databases;看数据库</p>
+<p>use ····；转到某数据库</p>
+<p>show tables;</p>
+<p>net start sql;使用</p>
+<p>net stop sql;停用</p>
+<p>exit，\q，quit;退出数据库</p>
+<p>contal + c;结束本次语句输入</p>
+<h2 id="数据查询语言DQL"><a href="#数据查询语言DQL" class="headerlink" title="数据查询语言DQL"></a>数据查询语言DQL</h2><p>代表关键字：select</p>
+<h3 id="单表查询"><a href="#单表查询" class="headerlink" title="单表查询"></a>单表查询</h3><p>selct ··· 5</p>
+<p>from ···1</p>
+<p>where ···2</p>
+<p>group by···3</p>
+<p>having ···4</p>
+<p>order by···6</p>
+<h4 id="操作符：用于条件语句where下"><a href="#操作符：用于条件语句where下" class="headerlink" title="操作符：用于条件语句where下"></a>操作符：用于条件语句where下</h4><p>&lt;&gt;或者!&#x3D; (不等于)</p>
+<p>&lt; &gt; &#x3D; &gt;&#x3D; &lt;&#x3D;</p>
+<p>between ···and ···· []闭区间</p>
+<p>is null    null不能用等号，专门用 is null,is not null判断</p>
+<p>and or </p>
+<p>in         where ···in(···，···，···)；判断在不在集合内,相当于or的简洁写法。</p>
+<p>not 一般是 not in ,is not null</p>
+<p>like %代表多个字符，_代表一个字符,如果要使用原字符，前面加转移符号 \</p>
+<p>like’ ‘</p>
+<p>####表达式的优先级<br>and&gt;or······不用管，用括号即可</p>
+<p>###排序<br>order by···，····<br>升序 order by···asc（默认）<br>降序 ···········desc</p>
+]]></content>
+      <categories>
+        <category>数据库</category>
+      </categories>
+  </entry>
+  <entry>
     <title>春天-事务管理</title>
     <url>/2022/05/09/%E6%98%A5%E5%A4%A9-%E4%BA%8B%E5%8A%A1%E7%AE%A1%E7%90%86/</url>
     <content><![CDATA[<h1 id="Spring事务管理"><a href="#Spring事务管理" class="headerlink" title="Spring事务管理"></a>Spring事务管理</h1><p>spring通过aop的方式进行事务开发：</p>
+<span id="more"></span>
+
 <p>底层还是使用jdbc的Connection对象开启，关闭，回滚事务，回滚在catch语句块里边。所以需要连接池创建连接。</p>
 <p>spring封装了dataSource</p>
 <p>1，原始对象 serviceImpl类</p>
@@ -2584,6 +2582,8 @@ reverse();
     <title>春天-切面编程(aop)</title>
     <url>/2022/05/07/%E6%98%A5%E5%A4%A9-%E5%88%87%E9%9D%A2%E7%BC%96%E7%A8%8B/</url>
     <content><![CDATA[<h1 id="AOP"><a href="#AOP" class="headerlink" title="AOP"></a>AOP</h1><h2 id="1，后置处理Bean"><a href="#1，后置处理Bean" class="headerlink" title="1，后置处理Bean"></a>1，后置处理Bean</h2><p>BeanPostProcessor接口</p>
+<span id="more"></span>
+
 <p>作用：对bean再次加工</p>
 <p><img src="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220507224254005.png" alt="image-20220507224254005"></p>
 <p>实现步骤：</p>
@@ -2807,7 +2807,9 @@ reverse();
   <entry>
     <title>春天-控制反转(ioc)</title>
     <url>/2022/05/07/%E6%98%A5%E5%A4%A9-%E6%8E%A7%E5%88%B6%E5%8F%8D%E8%BD%AC/</url>
-    <content><![CDATA[<h1 id="springFramework-春天"><a href="#springFramework-春天" class="headerlink" title="springFramework(春天)"></a>springFramework(春天)</h1><h2 id="1-为什么要有spring，什么是spring"><a href="#1-为什么要有spring，什么是spring" class="headerlink" title="1,为什么要有spring，什么是spring"></a>1,为什么要有spring，什么是spring</h2><h3 id="EJB-Enterprise-Java-Bean-的问题"><a href="#EJB-Enterprise-Java-Bean-的问题" class="headerlink" title="EJB(Enterprise Java Bean)的问题"></a>EJB(Enterprise Java Bean)的问题</h3><p>1，运行环境苛刻，无法在tomcat中运行，需要在EJB容器中才能运行，并且是收费的。</p>
+    <content><![CDATA[<h1 id="springFramework-春天"><a href="#springFramework-春天" class="headerlink" title="springFramework(春天)"></a>springFramework(春天)</h1><h2 id="1-为什么要有spring，什么是spring"><a href="#1-为什么要有spring，什么是spring" class="headerlink" title="1,为什么要有spring，什么是spring"></a>1,为什么要有spring，什么是spring</h2><span id="more"></span>
+
+<h3 id="EJB-Enterprise-Java-Bean-的问题"><a href="#EJB-Enterprise-Java-Bean-的问题" class="headerlink" title="EJB(Enterprise Java Bean)的问题"></a>EJB(Enterprise Java Bean)的问题</h3><p>1，运行环境苛刻，无法在tomcat中运行，需要在EJB容器中才能运行，并且是收费的。</p>
 <p><img src="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220507120055947.png" alt="image-20220507120055947"></p>
 <p>2，代码移植性差，实现了固定容器的接口，所以没法在其他环境运行。</p>
 <p>3，综上所述，EJB是重量级的框架。</p>
@@ -3098,7 +3100,9 @@ reverse();
   <entry>
     <title>春天-注解编程</title>
     <url>/2022/05/09/%E6%98%A5%E5%A4%A9-%E6%B3%A8%E8%A7%A3%E7%BC%96%E7%A8%8B/</url>
-    <content><![CDATA[<h1 id="spring注解编程"><a href="#spring注解编程" class="headerlink" title="spring注解编程"></a>spring注解编程</h1><h2 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h2><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!--包扫描:com.zxr包及其子包的注解会被扫描到--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">context:component-scan</span> <span class="attr">base-package</span>=<span class="string">&quot;com.zxr&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+    <content><![CDATA[<h1 id="spring注解编程"><a href="#spring注解编程" class="headerlink" title="spring注解编程"></a>spring注解编程</h1><h2 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h2><span id="more"></span>
+
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!--包扫描:com.zxr包及其子包的注解会被扫描到--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">context:component-scan</span> <span class="attr">base-package</span>=<span class="string">&quot;com.zxr&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
 
 <ul>
 <li>配置文件可以覆盖注解，以达到更改时解耦合。</li>
@@ -3247,9 +3251,15 @@ reverse();
 <p>2，额外方法 @Around</p>
 <p>3，切入点 @Pointcut</p>
 <p>4，开启注解编程，创建切面类对象:@EnableAspectJAutoProxya,@Conmponent</p>
+<p>+ </p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//默认proxyTargetClass = false,采用JDK动态代理，true就是cglib</span></span><br><span class="line"><span class="meta">@EnableAspectJAutoProxy(proxyTargetClass = false)</span></span><br></pre></td></tr></table></figure>
+
 <ul>
-<li>&#96;&#96;&#96;java<br>&#x2F;&#x2F;默认proxyTargetClass &#x3D; false,采用JDK动态代理，true就是cglib<br>@EnableAspectJAutoProxy(proxyTargetClass &#x3D; false)<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">+ 在springboot中@EnableAspectJAutoProxya默认开启，而且是true，默认cglib代理</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 纯注解事务编程</span><br><span class="line"></span><br><span class="line">1，配置bean</span><br><span class="line"></span><br><span class="line">```java</span><br><span class="line">@Configuration</span><br><span class="line">@ComponentScan(basePackages = &quot;com.zxr&quot;)</span><br><span class="line">@EnableTransactionManagement//相当于这个&lt;tx:annotation-driven transaction-manager=&quot;dataSourceTransactionManager&quot;/&gt;，不过是由自己指定变成了通过注解扫描</span><br><span class="line">public class Config &#123;</span><br><span class="line"></span><br><span class="line">    @Resource</span><br><span class="line">    private DataSource dataSource;</span><br><span class="line">    //DataSourceTransactionManager需要连接池</span><br><span class="line">    @Bean</span><br><span class="line">    public DataSourceTransactionManager dataSourceTransactionManager()&#123;</span><br><span class="line"></span><br><span class="line">        DataSourceTransactionManager dst = new DataSourceTransactionManager();</span><br><span class="line">        dst.setDataSource(dataSource);</span><br><span class="line">        return dst;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">   </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>在springboot中@EnableAspectJAutoProxya默认开启，而且是true，默认cglib代理</li>
 </ul>
+<h2 id="纯注解事务编程"><a href="#纯注解事务编程" class="headerlink" title="纯注解事务编程"></a>纯注解事务编程</h2><p>1，配置bean</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@ComponentScan(basePackages = &quot;com.zxr&quot;)</span></span><br><span class="line"><span class="meta">@EnableTransactionManagement</span><span class="comment">//相当于这个&lt;tx:annotation-driven transaction-manager=&quot;dataSourceTransactionManager&quot;/&gt;，不过是由自己指定变成了通过注解扫描</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Config</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Resource</span></span><br><span class="line">    <span class="keyword">private</span> DataSource dataSource;</span><br><span class="line">    <span class="comment">//DataSourceTransactionManager需要连接池</span></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="keyword">public</span> DataSourceTransactionManager <span class="title function_">dataSourceTransactionManager</span><span class="params">()</span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="type">DataSourceTransactionManager</span> <span class="variable">dst</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">DataSourceTransactionManager</span>();</span><br><span class="line">        dst.setDataSource(dataSource);</span><br><span class="line">        <span class="keyword">return</span> dst;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">   </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>2，service</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="meta">@Transactional</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserServiceImpl</span>  &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
