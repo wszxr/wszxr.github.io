@@ -1090,6 +1090,46 @@
     <content><![CDATA[]]></content>
   </entry>
   <entry>
+    <title>jdbc</title>
+    <url>/2022/03/12/jdbc/</url>
+    <content><![CDATA[<h2 id="JDBC概述"><a href="#JDBC概述" class="headerlink" title="JDBC概述"></a>JDBC概述</h2><span id="more"></span>
+
+<p>就是java连接数据库·····</p>
+<ul>
+<li><p>数据库的种类很多，不可能每换一个数据库都创建一套不同的java代码，因此，SUN公司开发了一套叫JDBC的东西，事实上 ，JDBC就是一套接口，然后让数据库厂家去写实现类，这样java就可以利用多态的性质，用接口调用实现类，而这些实现类有个洋气的名字，叫做数据库驱动。</p>
+</li>
+<li><p>既然是一套接口，那我们知道怎样使用就行，也就是著名的面向API编程😂。</p>
+</li>
+</ul>
+<h2 id="实现步骤"><a href="#实现步骤" class="headerlink" title="实现步骤"></a>实现步骤</h2><p>我们在java中进行操作大致需要</p>
+<p>1.导包,mysql-connector-java</p>
+<p>2.注册驱动</p>
+<p>3.获取连接</p>
+<p>4.定制要执行的sql语句</p>
+<p>5.获取执行语句的对象</p>
+<p>6开启事务</p>
+<p>7.执行</p>
+<p>8.提交事务</p>
+<p>9.处理结果</p>
+<p>10.出现异常回滚</p>
+<p>11.释放资源</p>
+<ul>
+<li>看着步骤多，实则很简单</li>
+</ul>
+<h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException &#123;、</span><br><span class="line">        <span class="comment">/*注册驱动</span></span><br><span class="line"><span class="comment">         * 1,第一种使用DriverManager的registerDriver注册，Driver是mysql提供的</span></span><br><span class="line"><span class="comment">         * 2,第二种，使用Class.forName让Driver类初始化，进而执行静态代码块的注册代码，</span></span><br><span class="line"><span class="comment">         *推荐，Class.forName传入一个字符串，可以把字符串写properties里解耦合</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">/*Driver driver = new Driver();</span></span><br><span class="line"><span class="comment">        DriverManager.registerDriver(driver);*/</span></span><br><span class="line"></span><br><span class="line">        Class.forName(<span class="string">&quot;com.mysql.cj.jdbc.Driver&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//获取连接对象，使用Connection接口接收DriverManager获取的连接</span></span><br><span class="line">        <span class="type">Connection</span> <span class="variable">conn</span> <span class="operator">=</span> DriverManager.getConnection(<span class="string">&quot;mysql:jdbc://localhost:3306&quot;</span>,<span class="string">&quot;root&quot;</span>,<span class="string">&quot;20010178&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//如果是增删改应该开启事务</span></span><br><span class="line">        <span class="comment">//conn.setAutoCommit(false);</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">//获取statement或preparedStatement的对象，用于执行sql语句</span></span><br><span class="line">        <span class="type">Statement</span> <span class="variable">statement</span> <span class="operator">=</span> conn.createStatement();</span><br><span class="line">        <span class="type">PreparedStatement</span> <span class="variable">preparedStatement</span> <span class="operator">=</span> conn.prepareStatement(<span class="string">&quot;select * from t_user where id = ?&quot;</span>);</span><br><span class="line">                                                           </span><br><span class="line">        <span class="comment">//preparedStatement的好处就是可以动态的设置参数，1是参数索引，4是?占位符的值</span></span><br><span class="line">        preparedStatement.setInt(<span class="number">1</span>,<span class="number">4</span>);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//执行statement,查询语句用executeQuery方法，会返回结果集，</span></span><br><span class="line">        <span class="comment">//非查询用executeUpdate,返回影响行数</span></span><br><span class="line">        <span class="type">ResultSet</span> <span class="variable">resultSet</span> <span class="operator">=</span> preparedStatement.executeQuery();</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//如果是增删改结束了要提交事务</span></span><br><span class="line">        <span class="comment">//conn.commit();</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment">//有结果集可以获取结果集</span></span><br><span class="line">        <span class="keyword">while</span>(resultSet.next())&#123;</span><br><span class="line">            <span class="type">String</span> <span class="variable">name</span> <span class="operator">=</span> resultSet.getString(<span class="string">&quot;name&quot;</span>);</span><br><span class="line">            <span class="type">Integer</span> <span class="variable">age</span> <span class="operator">=</span> resultSet.getInt(<span class="string">&quot;age&quot;</span>);</span><br><span class="line">            System.out.println(name+<span class="string">&quot; &quot;</span>+age);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//关闭statement和connection资源,statement由connection而来，所以先关闭statement</span></span><br><span class="line">        statement.close();</span><br><span class="line">        conn.close();</span><br><span class="line">                                                           </span><br><span class="line">        <span class="comment">//捕捉异常后回滚</span></span><br><span class="line">        conn.rollback();</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>以上语句的异常均未捕捉，只是为了记忆用，捕捉到异常后要在catch语句块执行conn.rollback()进行事务回滚</li>
+<li>资源的释放应该是在finally块中</li>
+</ul>
+<h2 id="JDBC缺点"><a href="#JDBC缺点" class="headerlink" title="JDBC缺点"></a>JDBC缺点</h2><p>获取大量连接，写大量sql，获取到的数据结果集操作起来不方便，因此，几乎不会再直接用到JDBC了。</p>
+<p>基于JDBC封装的框架很好用······</p>
+]]></content>
+      <categories>
+        <category>持久层</category>
+      </categories>
+  </entry>
+  <entry>
     <title>mybatis</title>
     <url>/2022/03/17/mybatis/</url>
     <content><![CDATA[<h1 id="Mybatis是啥？"><a href="#Mybatis是啥？" class="headerlink" title="Mybatis是啥？"></a>Mybatis是啥？</h1><p>事实上就是对jdbc操作的简化</p>
@@ -1361,46 +1401,6 @@ private String SName;
       </categories>
   </entry>
   <entry>
-    <title>jdbc</title>
-    <url>/2022/03/12/jdbc/</url>
-    <content><![CDATA[<h2 id="JDBC概述"><a href="#JDBC概述" class="headerlink" title="JDBC概述"></a>JDBC概述</h2><span id="more"></span>
-
-<p>就是java连接数据库·····</p>
-<ul>
-<li><p>数据库的种类很多，不可能每换一个数据库都创建一套不同的java代码，因此，SUN公司开发了一套叫JDBC的东西，事实上 ，JDBC就是一套接口，然后让数据库厂家去写实现类，这样java就可以利用多态的性质，用接口调用实现类，而这些实现类有个洋气的名字，叫做数据库驱动。</p>
-</li>
-<li><p>既然是一套接口，那我们知道怎样使用就行，也就是著名的面向API编程😂。</p>
-</li>
-</ul>
-<h2 id="实现步骤"><a href="#实现步骤" class="headerlink" title="实现步骤"></a>实现步骤</h2><p>我们在java中进行操作大致需要</p>
-<p>1.导包,mysql-connector-java</p>
-<p>2.注册驱动</p>
-<p>3.获取连接</p>
-<p>4.定制要执行的sql语句</p>
-<p>5.获取执行语句的对象</p>
-<p>6开启事务</p>
-<p>7.执行</p>
-<p>8.提交事务</p>
-<p>9.处理结果</p>
-<p>10.出现异常回滚</p>
-<p>11.释放资源</p>
-<ul>
-<li>看着步骤多，实则很简单</li>
-</ul>
-<h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException &#123;、</span><br><span class="line">        <span class="comment">/*注册驱动</span></span><br><span class="line"><span class="comment">         * 1,第一种使用DriverManager的registerDriver注册，Driver是mysql提供的</span></span><br><span class="line"><span class="comment">         * 2,第二种，使用Class.forName让Driver类初始化，进而执行静态代码块的注册代码，</span></span><br><span class="line"><span class="comment">         *推荐，Class.forName传入一个字符串，可以把字符串写properties里解耦合</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">/*Driver driver = new Driver();</span></span><br><span class="line"><span class="comment">        DriverManager.registerDriver(driver);*/</span></span><br><span class="line"></span><br><span class="line">        Class.forName(<span class="string">&quot;com.mysql.cj.jdbc.Driver&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//获取连接对象，使用Connection接口接收DriverManager获取的连接</span></span><br><span class="line">        <span class="type">Connection</span> <span class="variable">conn</span> <span class="operator">=</span> DriverManager.getConnection(<span class="string">&quot;mysql:jdbc://localhost:3306&quot;</span>,<span class="string">&quot;root&quot;</span>,<span class="string">&quot;20010178&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//如果是增删改应该开启事务</span></span><br><span class="line">        <span class="comment">//conn.setAutoCommit(false);</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">//获取statement或preparedStatement的对象，用于执行sql语句</span></span><br><span class="line">        <span class="type">Statement</span> <span class="variable">statement</span> <span class="operator">=</span> conn.createStatement();</span><br><span class="line">        <span class="type">PreparedStatement</span> <span class="variable">preparedStatement</span> <span class="operator">=</span> conn.prepareStatement(<span class="string">&quot;select * from t_user where id = ?&quot;</span>);</span><br><span class="line">                                                           </span><br><span class="line">        <span class="comment">//preparedStatement的好处就是可以动态的设置参数，1是参数索引，4是?占位符的值</span></span><br><span class="line">        preparedStatement.setInt(<span class="number">1</span>,<span class="number">4</span>);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//执行statement,查询语句用executeQuery方法，会返回结果集，</span></span><br><span class="line">        <span class="comment">//非查询用executeUpdate,返回影响行数</span></span><br><span class="line">        <span class="type">ResultSet</span> <span class="variable">resultSet</span> <span class="operator">=</span> preparedStatement.executeQuery();</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//如果是增删改结束了要提交事务</span></span><br><span class="line">        <span class="comment">//conn.commit();</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment">//有结果集可以获取结果集</span></span><br><span class="line">        <span class="keyword">while</span>(resultSet.next())&#123;</span><br><span class="line">            <span class="type">String</span> <span class="variable">name</span> <span class="operator">=</span> resultSet.getString(<span class="string">&quot;name&quot;</span>);</span><br><span class="line">            <span class="type">Integer</span> <span class="variable">age</span> <span class="operator">=</span> resultSet.getInt(<span class="string">&quot;age&quot;</span>);</span><br><span class="line">            System.out.println(name+<span class="string">&quot; &quot;</span>+age);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//关闭statement和connection资源,statement由connection而来，所以先关闭statement</span></span><br><span class="line">        statement.close();</span><br><span class="line">        conn.close();</span><br><span class="line">                                                           </span><br><span class="line">        <span class="comment">//捕捉异常后回滚</span></span><br><span class="line">        conn.rollback();</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>以上语句的异常均未捕捉，只是为了记忆用，捕捉到异常后要在catch语句块执行conn.rollback()进行事务回滚</li>
-<li>资源的释放应该是在finally块中</li>
-</ul>
-<h2 id="JDBC缺点"><a href="#JDBC缺点" class="headerlink" title="JDBC缺点"></a>JDBC缺点</h2><p>获取大量连接，写大量sql，获取到的数据结果集操作起来不方便，因此，几乎不会再直接用到JDBC了。</p>
-<p>基于JDBC封装的框架很好用······</p>
-]]></content>
-      <categories>
-        <category>持久层</category>
-      </categories>
-  </entry>
-  <entry>
     <title>mybatisplus</title>
     <url>/2022/03/23/mybatisplus/</url>
     <content><![CDATA[<h1 id="mybatis——plus"><a href="#mybatis——plus" class="headerlink" title="mybatis——plus"></a>mybatis——plus</h1><h2 id="开发步骤"><a href="#开发步骤" class="headerlink" title="开发步骤"></a>开发步骤</h2><h3 id="1-创建了一张user表"><a href="#1-创建了一张user表" class="headerlink" title="1.创建了一张user表"></a>1.创建了一张user表</h3><p><img src="https://gitee.com/wszxr/cloudimages/raw/master/img/image-20220323204917651.png" alt="image-20220323204917651"></p>
@@ -1523,9 +1523,187 @@ private String SName;
       </categories>
   </entry>
   <entry>
+    <title>mysql</title>
+    <url>/2022/05/12/mysql/</url>
+    <content><![CDATA[<h1 id="mysql"><a href="#mysql" class="headerlink" title="mysql"></a>mysql</h1><h2 id="1-事务"><a href="#1-事务" class="headerlink" title="1,事务"></a>1,事务</h2><h3 id="事务操作"><a href="#事务操作" class="headerlink" title="事务操作"></a>事务操作</h3><p>1，mysql事务默认自动提交，可以手动设置提交方式</p>
+<p>查看事务提交方式，select@@autocommit;</p>
+<p>@@autocommit&#x3D;1时代表自动提交，</p>
+<p>可以手动设置，set @@autocommit&#x3D;0;改为手动控制事务</p>
+<p>开启事务：start transaction&#x2F;begin</p>
+<p>提交：commit</p>
+<p>回滚：rollback</p>
+<h3 id="事务特性"><a href="#事务特性" class="headerlink" title="事务特性"></a>事务特性</h3><p>1，原子性(Atomicity)：事务是不可分割的最小单位，同时成功失败</p>
+<p>2，一致性(Consistency)：事务完成时是所有的数据都保持一致状态</p>
+<p>3，隔离性(Isolation)：隔离机制保证不受外在并发影响</p>
+<p>4，持久性(Durability)：事务一旦提交或者是回滚，对数据的改变就是永久的,持久化到磁盘当中</p>
+<h3 id="并发事务"><a href="#并发事务" class="headerlink" title="并发事务"></a>并发事务</h3><p>1，脏读：一个事务读取到另一个事务还未提交的数据</p>
+<p>2，不可重复读：同一个事务查询同一行两次，两次的结果不一样</p>
+<p>3，幻读：查询时没查到这条数据，插入时却已存在，好像是有个幻影</p>
+<h3 id="事务隔离级别"><a href="#事务隔离级别" class="headerlink" title="事务隔离级别"></a>事务隔离级别</h3><p>解决并发事务引发的问题。</p>
+<p><img src="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220512205105337.png" alt="image-20220512205105337"></p>
+<p>1，读未提交（三种问题都可能出现)</p>
+<p>2，读已提交(解决脏读问题)</p>
+<p>3，可重复读(解决脏读不可重复读，mysql默认)</p>
+<p>4，串行化，全部解决</p>
+<p><img src="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220512205529448.png" alt="image-20220512205529448"></p>
+<h2 id="2，存储引擎"><a href="#2，存储引擎" class="headerlink" title="2，存储引擎"></a>2，存储引擎</h2><h3 id="mysql体系结构"><a href="#mysql体系结构" class="headerlink" title="mysql体系结构"></a>mysql体系结构</h3><p><img src="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220512210823534.png" alt="image-20220512210823534"></p>
+<ul>
+<li>注意索引是在存储引擎层确定，也就是说不同的引擎的索引是不一样的。</li>
+</ul>
+<p><img src="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220512211208771.png" alt="image-20220512211208771"></p>
+<h3 id="存储引擎简介"><a href="#存储引擎简介" class="headerlink" title="存储引擎简介"></a>存储引擎简介</h3><p>1，是存储数据，建立索引，更新&#x2F;查询数据等技术的实现</p>
+<p>2，单位是表，每张表都可以单独指定存储引擎，所以也被叫做表类型</p>
+<p>3，Mysql在V5.1之前默认存储引擎是MyISAM；在此之后默认存储引擎是InnoDB，不指定就是默认的</p>
+<ul>
+<li>show create table 表名;可以查看建表语句</li>
+<li>show engines;可以查看所有引擎。</li>
+</ul>
+<p>4，创建表的时候直接指定就行</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">create table t_test(age int)engine = innodb;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="存储引擎特点"><a href="#存储引擎特点" class="headerlink" title="存储引擎特点"></a>存储引擎特点</h3><h4 id="1-innodb"><a href="#1-innodb" class="headerlink" title="1,innodb:"></a>1,innodb:</h4><p>特点：</p>
+<ul>
+<li>支持事务，DML（增删改)遵循ACID(事务四大特性)模型</li>
+<li>支持行级锁</li>
+<li>支持外键约束</li>
+</ul>
+<p>总结：事务，外键，行级锁</p>
+<p>文件：</p>
+<ul>
+<li>innodb_file_per_table默认打开，表示每一张表都有自己的表空间文件</li>
+<li>每一张innodb表对应一个.ibd(表空间文件)，存储数据，表结构，索引。</li>
+</ul>
+<p><img src="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220512213302831.png" alt="image-20220512213302831"></p>
+<h4 id="2，myisam"><a href="#2，myisam" class="headerlink" title="2，myisam"></a>2，myisam</h4><p>1，是早期mysql默认引擎</p>
+<p>2，特点：</p>
+<ul>
+<li>不支持事务和外键</li>
+<li>不支持行锁，支持表锁</li>
+<li>访问速度快</li>
+</ul>
+<p>3，文件：</p>
+<ul>
+<li>.sdi：存储表结构信息</li>
+<li>.MYD：存储数据</li>
+<li>.MYI：存储索引</li>
+</ul>
+<h4 id="3，Memory"><a href="#3，Memory" class="headerlink" title="3，Memory"></a>3，Memory</h4><p>1，存储在内存中，断电就会消失，只适合存储临时表或者是缓存</p>
+<p>2，特点：</p>
+<ul>
+<li>内存中，速度快</li>
+<li>支持hash索引</li>
+</ul>
+<p>文件：</p>
+<p>.sdi</p>
+<p><img src="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220512213948044.png" alt="image-20220512213948044"></p>
+<ul>
+<li>以上，记住这三个就行：</li>
+</ul>
+<p>事务，外键，行级锁</p>
+<h2 id="3，存储引擎选择"><a href="#3，存储引擎选择" class="headerlink" title="3，存储引擎选择"></a>3，存储引擎选择</h2><h4 id="innodb-绝大部分场景"><a href="#innodb-绝大部分场景" class="headerlink" title="innodb(绝大部分场景)"></a>innodb(绝大部分场景)</h4><p>对数据完整性要求高，有较多的并发增删改操作，只能用这个，因为只有他支持事务</p>
+<h4 id="myisam-被mongodb替代"><a href="#myisam-被mongodb替代" class="headerlink" title="myisam(被mongodb替代)"></a>myisam(被mongodb替代)</h4><p>对数据完整性要求不高，增删改操作少，例如：日志，点赞，评论，这种少几条数据没关系的，用这个很合适，会比innodb快一些</p>
+<h4 id="memory-被redis替代"><a href="#memory-被redis替代" class="headerlink" title="memory(被redis替代)"></a>memory(被redis替代)</h4><p>常用于缓存，临时表</p>
+<h2 id="4，索引"><a href="#4，索引" class="headerlink" title="4，索引"></a>4，索引</h2><h4 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h4><p><img src="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220512220829113.png" alt="image-20220512220829113"></p>
+<h4 id="索引结构"><a href="#索引结构" class="headerlink" title="索引结构"></a>索引结构</h4><p><img src="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220512220952762.png" alt="image-20220512220952762"></p>
+<ul>
+<li>支持情况</li>
+</ul>
+<p><img src="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220512221050281.png" alt="image-20220512221050281"></p>
+<p><img src="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220512221411941.png" alt="image-20220512221411941"></p>
+<p><img src="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220512222346351.png" alt="image-20220512222346351"></p>
+<h4 id="问题：为什么采用b-tree？"><a href="#问题：为什么采用b-tree？" class="headerlink" title="问题：为什么采用b+tree？"></a>问题：为什么采用b+tree？</h4><p>1，相比于二叉树，层级更少查询效率高</p>
+<p>2，相比于btree，btree叶子节点和非叶子节点都会保存数据，这样就导致每一页存的节点的量比b+tree少，那么在相同数据量下，btree的高度会高于b+tree，查询效率较慢。</p>
+<p>3，相比于hash索引，hash索引不支持范围匹配，也不支持排序</p>
+<h4 id="索引分类"><a href="#索引分类" class="headerlink" title="索引分类"></a>索引分类</h4><h1 id=""><a href="#" class="headerlink" title=""></a><img src="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220513090826079.png" alt="image-20220513090826079"></h1><p>1，主键索引，默认创建且只能有一个</p>
+<p>2，唯一索引，字段是UNIQUE时会创建索引</p>
+<p>3，常规索引，快速定位</p>
+<p>4，全文索引，查找文本中的关键字</p>
+<h5 id="innodb"><a href="#innodb" class="headerlink" title="innodb"></a>innodb</h5><p><img src="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220513091343486.png" alt="image-20220513091343486"></p>
+<ul>
+<li>聚集索引，只能有一个，b+tree的叶子节点保存了整行的数据</li>
+<li>二级索引(非聚集索引)：可以有多个，叶子节点存的是每一行的主键id</li>
+<li>如果有主键，那么主键索引就是聚集索引</li>
+<li>没有主键，把第一个UNIQUE索引作为聚集索引</li>
+<li>没有主键也没有UNIQUE索引，innodb会自动生成一个rowid作为隐藏聚集索引</li>
+</ul>
+<h5 id="回表查询"><a href="#回表查询" class="headerlink" title="回表查询"></a>回表查询</h5><p><img src="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220513091742327.png" alt="image-20220513091742327"></p>
+<ul>
+<li>非聚集索引查到行id时，会根据这个id去查聚集索引以获得行数据</li>
+</ul>
+<h5 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h5><p><img src="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220513091829037.png" alt="image-20220513091829037"></p>
+<p>答：第一个</p>
+<ul>
+<li>第一个需要行数据，直接走id也就是聚集索引就可以拿到</li>
+<li>第二个走二级索引，查到了id后还得回表查询id索引去获得行数据</li>
+</ul>
+<h4 id="索引使用"><a href="#索引使用" class="headerlink" title="索引使用"></a>索引使用</h4><h5 id="最左前缀法则"><a href="#最左前缀法则" class="headerlink" title="最左前缀法则"></a>最左前缀法则</h5><ul>
+<li>联合索引查询必须从索引中最左边的列必须存在，否则索引全部失效</li>
+<li>中间的列不可跳过，跳过之后部分失效(此列右边的全部列的索引都将失效)</li>
+</ul>
+<h5 id="索引失效"><a href="#索引失效" class="headerlink" title="索引失效"></a>索引失效</h5><p>1，不要在索引列上进行函数操作，不然索引会失效</p>
+<p>2，字符串不加单引号会导致那一行索引失效</p>
+<p>3，前面的模糊查询(%在最前面)会导致索引失效,包括前后都有%也会失效</p>
+<p><img src="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220513151911774.png" alt="image-20220513151911774"></p>
+<p>4，or用于条件分割，只有当所有的条件列都有索引的情况下，索引才会生效，有一列没有索引，那么所有索引都会失效</p>
+<p>5，数据分布影响，mysql会判断走索引和不走索引那个更快，例如is null,is not null</p>
+<p>6，范围查询</p>
+<p>范围查询右边的列索引失效，尽量使用&gt;&#x3D;,&lt;&#x3D;</p>
+<p><img src="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220513151241349.png" alt="image-20220513151241349"></p>
+<h4 id="-1"><a href="#-1" class="headerlink" title=""></a></h4><h5 id="sql提示"><a href="#sql提示" class="headerlink" title="sql提示"></a>sql提示</h5><p>定义：在sql中加一些认为的提示，来达到优化的目的</p>
+<p><img src="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220513153242280.png" alt="image-20220513153242280"></p>
+<ul>
+<li>use index,ignore index,force index</li>
+</ul>
+<h5 id="覆盖索引"><a href="#覆盖索引" class="headerlink" title="覆盖索引"></a>覆盖索引</h5><p>虽然不是通过聚集索引查询，但是二级索引的结构中包含了要查询到的所有信息，就不需要回表查询了，就叫覆盖索引。</p>
+<p>尽量别使用select*，极高可能会产生回表查询，</p>
+<p><img src="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220513154941375.png" alt="image-20220513154941375"></p>
+<ul>
+<li>答：username和password建立联合索引即可，不会产生回表查询</li>
+</ul>
+<h5 id="前缀索引"><a href="#前缀索引" class="headerlink" title="前缀索引"></a>前缀索引</h5><p>如果字符串很大的情况，把字符串存进b+tree中会耗费大量磁盘io，可以把字符串的一部分拿出来存进索引中，</p>
+<h5 id="索引设计原则"><a href="#索引设计原则" class="headerlink" title="索引设计原则"></a>索引设计原则</h5><p><img src="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220513161021315.png" alt="image-20220513161021315"></p>
+<h4 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h4><p><img src="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220513161522483.png" alt="image-20220513161522483"></p>
+<p><img src="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220513161835778.png" alt="image-20220513161835778"></p>
+<h3 id="5，sql优化"><a href="#5，sql优化" class="headerlink" title="5，sql优化"></a>5，sql优化</h3><h5 id="1，insertt："><a href="#1，insertt：" class="headerlink" title="1，insertt："></a>1，insertt：</h5><ul>
+<li>建议批量插入，手动提交事务，就不会频繁的建立连接和开启事务</li>
+<li>一次插入大量数据用load指令加载本地文件而不是insert</li>
+<li>load</li>
+</ul>
+<p><img src="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220513171408573.png" alt="image-20220513171408573"></p>
+<h5 id="2，主键优化"><a href="#2，主键优化" class="headerlink" title="2，主键优化"></a>2，主键优化</h5><ul>
+<li>innodb的数据都是按主键顺序存放的，这种存储方式的表叫索引组织表。</li>
+</ul>
+<p><img src="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220513172236662.png" alt="image-20220513172236662"></p>
+<ul>
+<li>主键乱序插入可能页分裂</li>
+</ul>
+<p><img src="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220513172617310.png" alt="image-20220513172617310"></p>
+<p>主键设计原则</p>
+<ul>
+<li>尽量降低长度，因为为放到了索引里面</li>
+<li>尽量使用自增主键</li>
+<li>尽量不要使用UUID和身份证号</li>
+<li>尽量不要修改主键</li>
+</ul>
+<h5 id="3，orderby优化"><a href="#3，orderby优化" class="headerlink" title="3，orderby优化"></a>3，orderby优化</h5>]]></content>
+      <categories>
+        <category>数据库</category>
+      </categories>
+  </entry>
+  <entry>
     <title>springMVC</title>
     <url>/2022/03/16/springMVC/</url>
-    <content><![CDATA[<h1 id="Springmvc"><a href="#Springmvc" class="headerlink" title="Springmvc"></a>Springmvc</h1><h2 id="创建方式"><a href="#创建方式" class="headerlink" title="创建方式"></a>创建方式</h2><ul>
+    <content><![CDATA[<h1 id="Springmvc"><a href="#Springmvc" class="headerlink" title="Springmvc"></a>Springmvc</h1><h2 id="什么是springmvc"><a href="#什么是springmvc" class="headerlink" title="什么是springmvc"></a>什么是springmvc</h2><p>1，springmvc本质上是web开发时mvc架构的控制器，类似于servlet，struts2。</p>
+<p>2，三层架构</p>
+<p>M:模型model，包括业务层和持久层</p>
+<p>V:View视图，jsp等</p>
+<p>C:控制器，servlet</p>
+<h2 id="springmvc的好处"><a href="#springmvc的好处" class="headerlink" title="springmvc的好处"></a>springmvc的好处</h2><p>1，spring的流行程度高，和spring整合时方便</p>
+<p>2，运行效率高于struts2</p>
+<p>3，它的注解式开发高效灵活</p>
+<h2 id="创建方式"><a href="#创建方式" class="headerlink" title="创建方式"></a>创建方式</h2><ul>
 <li>maven工程加入web，导入如下的jar包</li>
 </ul>
 <span id="more"></span>
@@ -3273,6 +3451,120 @@ reverse();
       </categories>
   </entry>
   <entry>
+    <title>春天的靴子</title>
+    <url>/2022/05/12/%E6%98%A5%E5%A4%A9%E7%9A%84%E9%9D%B4%E5%AD%90/</url>
+    <content><![CDATA[<h1 id="springboot"><a href="#springboot" class="headerlink" title="springboot"></a>springboot</h1><p>springboot旨在于简化spring开发</p>
+<h2 id="约定"><a href="#约定" class="headerlink" title="约定"></a>约定</h2><p>1，配置文件名字只能叫application，只能在resource目录下</p>
+<p>2，入口类需要放在子包最外层，要保证能扫描到其他的包</p>
+<h2 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h2><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!--springboot父项目，控制版本--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">parent</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-parent<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.2.1.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">parent</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--只需要引入这一个，spring系列的依赖就都引入了--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>spring-boot-starter-web依赖包括了spring和springmvc所有的包</li>
+</ul>
+<p><img src="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220513185642845.png" alt="image-20220513185642845"></p>
+<h2 id="第一个springboot程序"><a href="#第一个springboot程序" class="headerlink" title="第一个springboot程序"></a>第一个springboot程序</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">HelloController</span> &#123;</span><br><span class="line">    <span class="comment">//springboot启动直接到8080根目录，没有项目名字</span></span><br><span class="line">    <span class="meta">@RequestMapping</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">hello</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;hello world&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>启动类</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">1,@SpringBootApplication只能用在入口类上，标志是一个springboot入口类</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Application</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="comment">//启动springboot</span></span><br><span class="line">        SpringApplication.run(Application.class,args);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">http://localhost:8080可以直接访问到</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>springboot内嵌了tomcat，通过启动类可以直接在内嵌tomcat上运行</li>
+<li>可以在配置文件中指定启动端口和默认上下文路径</li>
+</ul>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">8080</span></span><br><span class="line">  <span class="attr">servlet:</span></span><br><span class="line">    <span class="attr">context-path:</span> <span class="string">/test</span></span><br><span class="line"><span class="comment">#上下文路径必须/开头    </span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="相关注解说明"><a href="#相关注解说明" class="headerlink" title="相关注解说明"></a>相关注解说明</h2><p>@SpringBootApplication</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@SpringBootConfiguration</span></span><br><span class="line"><span class="meta">@EnableAutoConfiguration</span></span><br><span class="line"><span class="comment">//扫描当前包和子包</span></span><br><span class="line"><span class="meta">@ComponentScan(</span></span><br><span class="line"><span class="meta">    excludeFilters = &#123;@Filter(</span></span><br><span class="line"><span class="meta">    type = FilterType.CUSTOM,</span></span><br><span class="line"><span class="meta">    classes = &#123;TypeExcludeFilter.class&#125;</span></span><br><span class="line"><span class="meta">), @Filter(</span></span><br><span class="line"><span class="meta">    type = FilterType.CUSTOM,</span></span><br><span class="line"><span class="meta">    classes = &#123;AutoConfigurationExcludeFilter.class&#125;</span></span><br><span class="line"><span class="meta">)&#125;</span></span><br><span class="line"><span class="meta">)</span></span><br></pre></td></tr></table></figure>
+
+<p>是一个复合注解</p>
+<h1 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h1><h3 id="配置文件的拆分"><a href="#配置文件的拆分" class="headerlink" title="配置文件的拆分"></a>配置文件的拆分</h3><p>满足不同环境下需要不同配置文件的需求</p>
+<ul>
+<li>application-dev.yml，dev(测试)可以改成prod(生产)，或者是任意，但是必须是这种格式；</li>
+<li>公共部分放application.yml(主配置文件)</li>
+<li>在公共配置文件中指定生效的环境</li>
+</ul>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">profiles:</span></span><br><span class="line">    <span class="attr">active:</span> <span class="string">dev</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="启动时指定外部的配置文件"><a href="#启动时指定外部的配置文件" class="headerlink" title="启动时指定外部的配置文件"></a>启动时指定外部的配置文件</h3><ul>
+<li>启动jar包时指定绝对路径</li>
+</ul>
+<p>java -jar –spring.config.location&#x3D;绝对路径  xxx.jar</p>
+<h2 id="工厂创建对象"><a href="#工厂创建对象" class="headerlink" title="工厂创建对象"></a>工厂创建对象</h2><p>springboot &#x3D; spring(工厂) + springmvc(控制器)</p>
+<p>和spring一样</p>
+<p>1,</p>
+<ul>
+<li>@component</li>
+<li>@service</li>
+<li>@conrtoller</li>
+<li>@repository</li>
+</ul>
+<p>2，</p>
+<ul>
+<li>@configration+@bean</li>
+</ul>
+<h2 id="属性注入"><a href="#属性注入" class="headerlink" title="属性注入"></a>属性注入</h2><p>和spring一样</p>
+<h3 id="JDK类型"><a href="#JDK类型" class="headerlink" title="JDK类型"></a>JDK类型</h3><ul>
+<li><p>@value直接指定</p>
+</li>
+<li><p>@value+@PropertySource</p>
+</li>
+</ul>
+<h3 id="自定义类型"><a href="#自定义类型" class="headerlink" title="自定义类型"></a>自定义类型</h3><ul>
+<li>@autowired</li>
+<li>@resource</li>
+</ul>
+<h3 id="yml格式"><a href="#yml格式" class="headerlink" title="yml格式"></a>yml格式</h3><p><img src="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220513202809865.png" alt="image-20220513202809865"></p>
+<h3 id="指定前缀"><a href="#指定前缀" class="headerlink" title="指定前缀"></a>指定前缀</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@ConfigurationProperties(prefix = &quot;user2&quot;)</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">user2:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">lisi</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>会找到前缀对应的对象，如果属性和类中的属性一样就会自动赋值，需要提供set方法</li>
+</ul>
+<p>注意：</p>
+<ul>
+<li>可以使用这个注解指定自定义文件，但是仅限于properties后缀的文件，具体原因我也不知道，可能是版本问题</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@PropertySource(value = &quot;classpath:test1.properties&quot;,encoding = &quot;utf-8&quot;)</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>如果没有指定文件默认是springboot的主配置文件，只要是主配置文件，yml&#x2F;yaml&#x2F;properties后缀都可以赋值到</li>
+</ul>
+<p>锦上添花：</p>
+<ul>
+<li>可以导入这个processor包</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">   <span class="comment">&lt;!--构建元数据--&gt;</span> <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-configuration-processor<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">optional</span>&gt;</span>true<span class="tag">&lt;/<span class="name">optional</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>配合这个注解，这个注解可以不写</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@EnableConfigurationProperties</span></span><br></pre></td></tr></table></figure>
+
+<p>这样在配置文件中写起来就会有提示prefix指定的前缀</p>
+<h2 id="整合mybatis"><a href="#整合mybatis" class="headerlink" title="整合mybatis"></a>整合mybatis</h2><p>1，引入依赖</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!--阿里巴巴连接池--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>druid<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.2.9<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--mysql驱动--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>mysql<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mysql-connector-java<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>8.0.29<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--包括了mybatis和mybatis-spring--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.mybatis.spring.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mybatis-spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.2.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>2，配置文件</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment">#连接池创建</span></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">datasource:</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">com.alibaba.druid.pool.DruidDataSource</span></span><br><span class="line">    <span class="attr">driver-class-name:</span> <span class="string">com.mysql.cj.jdbc.Driver</span></span><br><span class="line">    <span class="attr">url:</span> <span class="string">jdbc:mysql://localhost:3306/guli?charactEncoding=utf-8</span></span><br><span class="line">    <span class="attr">username:</span> <span class="string">root</span></span><br><span class="line">    <span class="attr">password:</span> <span class="number">20010718</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="attr">mybatis:</span></span><br><span class="line"><span class="comment">#mapper扫描位置</span></span><br><span class="line">  <span class="attr">mapper-locations:</span> <span class="string">classpath:com/zxr/mapper/*.xml</span></span><br><span class="line">  <span class="comment">#别名的包，默认别名是类名，并不是类的首字母小写</span></span><br><span class="line">  <span class="attr">type-aliases-package:</span> <span class="string">com.zxr.entity</span></span><br></pre></td></tr></table></figure>
+
+<p>3，dao接口扫描并创建对象</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@MapperScan(&quot;com.zxr.dao&quot;)</span></span><br><span class="line"><span class="comment">//可以在需要创建对象的dao接口上加@Mapper注解</span></span><br></pre></td></tr></table></figure>
+
+<p>4，事务约定俗成，省略不写</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//默认开启</span></span><br><span class="line"><span class="meta">@EnableTransactionManagement</span></span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>春天系列</category>
+      </categories>
+  </entry>
+  <entry>
     <title>栈篇</title>
     <url>/2022/02/23/%E6%A0%88/</url>
     <content><![CDATA[<p>栈是一种后进先出结构(FILO)</p>
@@ -3388,6 +3680,19 @@ public int pop(int number)&#123;
 ]]></content>
       <categories>
         <category>数据结构</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>泛型</title>
+    <url>/2022/05/12/%E6%B3%9B%E5%9E%8B/</url>
+    <content><![CDATA[<h1 id="泛型"><a href="#泛型" class="headerlink" title="泛型"></a>泛型</h1><p>1，编译式检查类型，避免使用object类型时的类型转换</p>
+<p>2，类型参数化，把类型当作参数传递过来</p>
+<p>好处</p>
+<p>1，类型安全</p>
+<p>2，消除强制类型转化</p>
+<h2 id="泛型类"><a href="#泛型类" class="headerlink" title="泛型类"></a>泛型类</h2>]]></content>
+      <categories>
+        <category>JAVASE</category>
       </categories>
   </entry>
   <entry>
