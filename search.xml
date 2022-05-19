@@ -1,6 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>AJAX</title>
+    <url>/2022/05/18/AJAX/</url>
+    <content><![CDATA[<h1 id="AJAX-Asynchronous-Javascript-And-Xml"><a href="#AJAX-Asynchronous-Javascript-And-Xml" class="headerlink" title="AJAX(Asynchronous Javascript And Xml)"></a>AJAX(Asynchronous Javascript And Xml)</h1><h2 id="传统请求的缺点"><a href="#传统请求的缺点" class="headerlink" title="传统请求的缺点"></a>传统请求的缺点</h2><span id="more"></span>
+
+<h3 id="传统请求："><a href="#传统请求：" class="headerlink" title="传统请求："></a>传统请求：</h3><ul>
+<li>地址栏直接输入url</li>
+<li>form表单提交</li>
+<li>href超链接</li>
+<li>javascript代码</li>
+</ul>
+<h3 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h3><ul>
+<li>这些请求都需要刷新整个页面，把原先页面清空然后响应一个全新的页面</li>
+</ul>
+<h2 id="AJAX"><a href="#AJAX" class="headerlink" title="AJAX"></a>AJAX</h2><p>特点：</p>
+<ul>
+<li>异步，每个请求之间是异步的，不需要互相等待</li>
+<li>返回的数据格式可能是普通文本，xml格式文本，或者是json</li>
+<li>ajax使用JavaScript代码</li>
+<li>ajax可以局部刷新页面</li>
+</ul>
+]]></content>
+  </entry>
+  <entry>
+    <title>IO</title>
+    <url>/2022/05/17/IO/</url>
+    <content><![CDATA[<h1 id="IO流"><a href="#IO流" class="headerlink" title="IO流"></a>IO流</h1><p><img src="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220517152547799.png" alt="image-20220517152547799"></p>
+<h2 id="FileInputStream-x2F-FileOutputStream"><a href="#FileInputStream-x2F-FileOutputStream" class="headerlink" title="FileInputStream&#x2F;FileOutputStream"></a>FileInputStream&#x2F;FileOutputStream</h2><ul>
+<li>隶属于字节流，以字节为单位</li>
+<li>read()&#x2F;write()</li>
+</ul>
+<h3 id="FileInputStream"><a href="#FileInputStream" class="headerlink" title="FileInputStream"></a>FileInputStream</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">    <span class="type">FileInputStream</span> <span class="variable">inputStream</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="comment">//idea的当前路径是左侧项目最外层，不确定可以查看</span></span><br><span class="line">        inputStream = <span class="keyword">new</span> <span class="title class_">FileInputStream</span>(<span class="string">&quot;src/test.txt&quot;</span>);</span><br><span class="line">        <span class="comment">//用于接受每一次读取到的数量</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">readData</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="comment">//用byte数组解决一个一个读带来的内存和硬盘频繁交互问题</span></span><br><span class="line">        <span class="type">byte</span>[] bytes = <span class="keyword">new</span> <span class="title class_">byte</span>[<span class="number">5</span>];</span><br><span class="line">        <span class="comment">//当读取到-1的时候就停止，read(byte)的返回值是这一次读取到的数量</span></span><br><span class="line">        <span class="keyword">while</span> ((readData = inputStream.read(bytes)) != -<span class="number">1</span>) &#123;</span><br><span class="line">            <span class="comment">//由于共用同一个byte[]，所以后一次读的总会覆盖前一次读的，</span></span><br><span class="line">            <span class="comment">// 当后一次读的个数不足以填满byte[]时，就会打印出前一次还没能被覆盖到的，</span></span><br><span class="line">            <span class="comment">//如果全部输出，就会输出前一次已经输出的内容，</span></span><br><span class="line">            <span class="comment">// 所以，这一次读取到几个，就应该输出几个</span></span><br><span class="line">            System.out.print(<span class="keyword">new</span> <span class="title class_">String</span>(bytes, <span class="number">0</span>, readData));</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">        <span class="comment">//如果inputString不为空就得关闭</span></span><br><span class="line">        <span class="keyword">if</span> (inputStream != <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                inputStream.close();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>FileInputStream&#x2F;FileOutputStream都是字节流，可以传输任意文件，包括图片，音频等。</li>
+<li>需要一个byte[]数组作为缓冲区，避免了每一次读入都要使内存和磁盘交互一次</li>
+</ul>
+<h3 id="InputStream-available"><a href="#InputStream-available" class="headerlink" title="InputStream.available()"></a>InputStream.available()</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * inputStream.available()</span></span><br><span class="line"><span class="comment"> * 1,可以用inputStream.available()获取当前文件中还剩下没读得字节数，可以在读之前使用，就能获得总字节数</span></span><br><span class="line"><span class="comment"> * 2,这种方式仅限于小文件，因为inputStream.available()返回一个int值，是有上限的</span></span><br><span class="line"><span class="comment"> * 3，inputStream.skip(long n)方法可以跳过指定数量的字节</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">ava</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="comment">//</span></span><br><span class="line">    <span class="type">FileInputStream</span> <span class="variable">inputStream</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        inputStream = <span class="keyword">new</span> <span class="title class_">FileInputStream</span>(<span class="string">&quot;src/test.txt&quot;</span>);</span><br><span class="line">        <span class="comment">//获取剩余字节数,指定byte[]大小</span></span><br><span class="line">        <span class="type">byte</span>[] bytes = <span class="keyword">new</span> <span class="title class_">byte</span>[inputStream.available()];</span><br><span class="line"></span><br><span class="line">        <span class="comment">//这样不需要循环就能全取出来</span></span><br><span class="line">        inputStream.read(bytes);</span><br><span class="line">        System.out.println(<span class="keyword">new</span> <span class="title class_">String</span>(bytes));</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (inputStream != <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                inputStream.close();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>inputStream.available()</p>
+<ul>
+<li>可以用inputStream.available()获取当前文件中还剩下没读的字节数，可以在读之前使用，就能获得总字节数</li>
+<li>这种方式仅限于小文件，因为inputStream.available()返回一个int值，是有上限的</li>
+<li>inputStream.skip(long n)方法可以跳过指定数量的字节</li>
+</ul>
+<h3 id="FileOutputStream"><a href="#FileOutputStream" class="headerlink" title="FileOutputStream"></a>FileOutputStream</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * FileOutputStream</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">out</span><span class="params">()</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="type">FileOutputStream</span> <span class="variable">outputStream</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="comment">//没有这个文件会新建,</span></span><br><span class="line">        <span class="comment">//构造的append默认false代表每次写入都会先清除原文件的内容，指定为true则是拼接原文件内容</span></span><br><span class="line">        outputStream = <span class="keyword">new</span> <span class="title class_">FileOutputStream</span>(<span class="string">&quot;out.txt&quot;</span>, <span class="literal">true</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//把字符串转换成字符</span></span><br><span class="line">        <span class="type">byte</span>[] bytes1 = <span class="keyword">new</span> <span class="title class_">String</span>(<span class="string">&quot;我是个大牛🐎&quot;</span>).getBytes();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// byte[] bytes = &#123;&#x27;a&#x27;, &#x27;b&#x27;&#125;;</span></span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">        <span class="comment">//写出byte数组</span></span><br><span class="line">        outputStream.write(bytes1);</span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">        <span class="comment">//写完记得要刷新</span></span><br><span class="line">        outputStream.flush();</span><br><span class="line">    &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (outputStream != <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                outputStream.close();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>没有这个文件会新建</li>
+<li>构造的append默认false代表每次写入都会先清除原文件的内容，指定为true则是拼接原文件内容</li>
+<li>输出流写完记得调用flush方法，强制清空管道</li>
+<li>需要把字符串转成字符数组</li>
+</ul>
+<h3 id="文件拷贝"><a href="#文件拷贝" class="headerlink" title="文件拷贝"></a>文件拷贝</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">copyFile</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">FileInputStream</span> <span class="variable">inputStream</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="type">FileOutputStream</span> <span class="variable">outputStream</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        inputStream = <span class="keyword">new</span> <span class="title class_">FileInputStream</span>(<span class="string">&quot;e:\\Temp\\可爱.jpg&quot;</span>);</span><br><span class="line">        outputStream = <span class="keyword">new</span> <span class="title class_">FileOutputStream</span>(<span class="string">&quot;e:\\Temp\\复制的可爱.jpg&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="type">int</span> <span class="variable">readData</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="comment">//每次读取一兆</span></span><br><span class="line">        <span class="type">byte</span>[] bytes = <span class="keyword">new</span> <span class="title class_">byte</span>[<span class="number">1024</span> * <span class="number">1024</span>];</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> ((readData = inputStream.read(bytes)) != -<span class="number">1</span>) &#123;</span><br><span class="line"></span><br><span class="line">            <span class="comment">//读取到byte后立马写出，边读取边写出</span></span><br><span class="line">            <span class="comment">//要防止读到写出byte中写出过但是还是没有被覆盖的</span></span><br><span class="line">            outputStream.write(bytes, <span class="number">0</span>, readData);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//输出流结束前要记得刷新</span></span><br><span class="line">        outputStream.flush();</span><br><span class="line"></span><br><span class="line">    &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">        <span class="comment">//不同的流关闭需要放在不同的try语句块，防止有一个出现了异常导致后续的流无法正常关闭</span></span><br><span class="line">        <span class="keyword">if</span> (inputStream != <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                inputStream.close();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (outputStream != <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                outputStream.close();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>边读边写</li>
+<li>每一次写的数量和读的数量需要相等，inputStream.read(bytes)的返回值就是</li>
+<li>不同的流关闭需要放在不同的try语句块，防止有一个出现了异常导致后续的流无法正常关闭</li>
+</ul>
+<h2 id="FileReader和FileWriter"><a href="#FileReader和FileWriter" class="headerlink" title="FileReader和FileWriter"></a>FileReader和FileWriter</h2><ul>
+<li>以字符为单位</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 字符输入输出流FileReader和FileWriter</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">copyChar</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">FileReader</span> <span class="variable">reader</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">    <span class="type">FileWriter</span> <span class="variable">writer</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        writer = <span class="keyword">new</span> <span class="title class_">FileWriter</span>(<span class="string">&quot;src/copy.txt&quot;</span>, <span class="literal">true</span>);</span><br><span class="line">        reader = <span class="keyword">new</span> <span class="title class_">FileReader</span>(<span class="string">&quot;src/test.txt&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="type">char</span>[] chars = <span class="keyword">new</span> <span class="title class_">char</span>[<span class="number">5</span>];</span><br><span class="line">        <span class="type">int</span> <span class="variable">readData</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> ((readData = reader.read(chars)) != -<span class="number">1</span>) &#123;</span><br><span class="line">            <span class="comment">//一边读一边写</span></span><br><span class="line">            writer.write(chars, <span class="number">0</span>, readData);</span><br><span class="line">        &#125;</span><br><span class="line">        writer.write(<span class="string">&quot;/n&quot;</span>);</span><br><span class="line">        writer.write(<span class="string">&quot;hioaBNDFLJKANFLKNMALKFNL;KSangklnalg&quot;</span>);</span><br><span class="line">        writer.flush();</span><br><span class="line"></span><br><span class="line">    &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (writer != <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                writer.close();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (reader != <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                reader.close();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>和字节流的差别：<ul>
+<li>缓冲数组是char类型</li>
+<li>可以直接写字符串，不用转换成数组</li>
+</ul>
+</li>
+</ul>
+<h2 id="BufferedReader-x2F-BufferedWriter"><a href="#BufferedReader-x2F-BufferedWriter" class="headerlink" title="BufferedReader&#x2F;BufferedWriter"></a>BufferedReader&#x2F;BufferedWriter</h2><ul>
+<li>包装流</li>
+<li>read()&#x2F;write()</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span>  <span class="title function_">Buffer</span><span class="params">()</span> <span class="keyword">throws</span> IOException&#123;</span><br><span class="line">    <span class="comment">//FileReader reader = new FileReader(&quot;aa&quot;);</span></span><br><span class="line">    <span class="comment">//注意构造参数只能是FileReader对象</span></span><br><span class="line">    <span class="comment">//BufferedReader bufferedReader = new BufferedReader(reader);</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//FileInputStream in = new FileInputStream(&quot;qq&quot;);</span></span><br><span class="line">    <span class="comment">//可以用转换流把fileInputStream转换成FileReader</span></span><br><span class="line">    <span class="comment">//InputStreamReader inputStreamReader = new InputStreamReader(in);</span></span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    <span class="comment">//然后就可以使用BufferedReader了</span></span><br><span class="line">    <span class="comment">//BufferedReader bufferedReader = new BufferedReader(inputStreamReader);</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//直接套娃写法就行，里面的叫节点流，外面的叫包装流，节点和包装是相对的概念</span></span><br><span class="line">    <span class="type">BufferedReader</span> <span class="variable">bufferedReader</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">BufferedReader</span>(<span class="keyword">new</span> <span class="title class_">InputStreamReader</span>(<span class="keyword">new</span> <span class="title class_">FileInputStream</span>(<span class="string">&quot;aa&quot;</span>)));</span><br><span class="line">    <span class="comment">//只需要关闭最外层的bufferedReader流，里面的流也都会关闭,</span></span><br><span class="line">    bufferedReader.close();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">//好处是自带缓存，可以直接读一行，换行符不会读取</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>不用指定缓存数组，而且可以读取一整行(不包括换行)，bufferedReader.readLine()</li>
+<li>构造中只能传入Writer或者是Reader等字符流，不能传入字节流对象</li>
+<li>要用InputStreamReader和OutputStreamWriter转换以下把字节流转换成字符流</li>
+</ul>
+<h2 id="ObjectOutputStream-x2F-ObjectInputStream"><a href="#ObjectOutputStream-x2F-ObjectInputStream" class="headerlink" title="ObjectOutputStream&#x2F;ObjectInputStream"></a>ObjectOutputStream&#x2F;ObjectInputStream</h2><ul>
+<li><p>writeObject&#x2F;readObject()</p>
+</li>
+<li><p>User类</p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">User</span> <span class="keyword">implements</span> <span class="title class_">Serializable</span> &#123;</span><br><span class="line">    <span class="comment">//手动指定序列化版本号，防止源代码修改后硬盘的文件无法反序列化回来</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">long</span> <span class="variable">serialVersionUID</span> <span class="operator">=</span> <span class="number">1L</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> String name;</span><br><span class="line"><span class="keyword">private</span> <span class="type">int</span> age;</span><br><span class="line"><span class="keyword">transient</span> <span class="keyword">private</span> <span class="type">char</span> sex;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>序列化</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 序列化反序列化</span></span><br><span class="line"><span class="comment"> * ObjectInputStream</span></span><br><span class="line"><span class="comment"> * ObjectOutputStream</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"> </span><br><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="comment">//方便测验异常直接抛出了</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">serial</span><span class="params">()</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="type">User</span> <span class="variable">user</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">User</span>(<span class="string">&quot;zhangxuerui&quot;</span>,<span class="number">12</span>);</span><br><span class="line"></span><br><span class="line">    <span class="type">FileOutputStream</span> <span class="variable">outputStream</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">FileOutputStream</span>(<span class="string">&quot;user&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//需要在构造方法中传入outputStream接口的实现类，包括FileOutputStream</span></span><br><span class="line">    <span class="type">ObjectOutputStream</span> <span class="variable">objectOutputStream</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ObjectOutputStream</span>(outputStream);</span><br><span class="line"></span><br><span class="line">    objectOutputStream.writeObject(user);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//输入完清空管道</span></span><br><span class="line">    objectOutputStream.flush();</span><br><span class="line"></span><br><span class="line">    objectOutputStream.close();</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>反序列化</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">serialBack</span><span class="params">()</span> <span class="keyword">throws</span> IOException, ClassNotFoundException &#123;</span><br><span class="line"></span><br><span class="line">    <span class="type">ObjectInputStream</span> <span class="variable">objectInputStream</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ObjectInputStream</span>(<span class="keyword">new</span> <span class="title class_">FileInputStream</span>(<span class="string">&quot;user&quot;</span>));</span><br><span class="line">    <span class="comment">//反序列化</span></span><br><span class="line">    <span class="type">User</span> <span class="variable">user</span> <span class="operator">=</span> (User) objectInputStream.readObject();</span><br><span class="line"></span><br><span class="line">    System.out.println(user);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>序列化的类需要实现Serializable接口，最好是自己指定序列化版本号private static final long serialVersionUID &#x3D; 1L;防止源码更改后磁盘的文件无法反序列化</li>
+<li>一个文件只能序列化进一个对象，如果需要实现多文件序列化，把对象放在list集合中，在序列化list即可</li>
+<li>transient可以保证该变量不被序列化</li>
+</ul>
+]]></content>
+      <categories>
+        <category>JAVASE</category>
+      </categories>
+  </entry>
+  <entry>
     <title>JVMMMM</title>
     <url>/2022/04/21/JVMMMM/</url>
     <content><![CDATA[<h1 id="JVM"><a href="#JVM" class="headerlink" title="JVM"></a>JVM</h1><h2 id="1，内存结构（运行时数据区"><a href="#1，内存结构（运行时数据区" class="headerlink" title="1，内存结构（运行时数据区)"></a>1，内存结构（运行时数据区)</h2><p><img src="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220505163009880.png" alt="image-20220505163009880"></p>
@@ -1687,7 +1800,8 @@ private String SName;
 <li>尽量不要使用UUID和身份证号</li>
 <li>尽量不要修改主键</li>
 </ul>
-<h5 id="3，orderby优化"><a href="#3，orderby优化" class="headerlink" title="3，orderby优化"></a>3，orderby优化</h5>]]></content>
+<h5 id="3，orderby优化"><a href="#3，orderby优化" class="headerlink" title="3，orderby优化"></a>3，orderby优化</h5><p>1，use</p>
+]]></content>
       <categories>
         <category>数据库</category>
       </categories>
@@ -1805,9 +1919,9 @@ private String SName;
 <p><img src="https://gitee.com/wszxr/cloudimages/raw/master/img/image-20220316223347407.png" alt="image-20220316223347407"></p>
 <ul>
 <li>可以看到user对象的属性成功被赋值了</li>
+<li>集合类型需要包装到对象中接收，最放入vo对象中，不会污染实体。</li>
 </ul>
 <hr>
-<p>更新于：2022年3月16日22点35分</p>
 <h2 id="域对象共享数据"><a href="#域对象共享数据" class="headerlink" title="域对象共享数据"></a>域对象共享数据</h2><ol>
 <li>request域</li>
 <li>session域</li>
@@ -1872,12 +1986,21 @@ private String SName;
 <li><p>也不能通过重定向直接到一个视图，因为重定向是浏览器发出的，无法访问web-info下面的视图；通过重定向到一个请求，然后thymeleaf转发就可以了。</p>
 </li>
 </ul>
-<h3 id="视图控制器-view-controller"><a href="#视图控制器-view-controller" class="headerlink" title="视图控制器(view-controller)"></a>视图控制器(view-controller)</h3><p>当我们的控制器方法只需要设置使徒的名称时，就可以使用控制器视图，例如：</p>
+<h3 id="视图控制器-view-controller"><a href="#视图控制器-view-controller" class="headerlink" title="视图控制器(view-controller)"></a>视图控制器(view-controller)</h3><p>当我们的控制器方法只需要设置视图的名称时，就可以使用控制器视图，例如：</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(&quot;/qq&quot;)</span></span><br><span class="line"><span class="keyword">public</span> String <span class="title function_">aa</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;index1&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>我们可以在配置文件中用视图控制器替代</p>
 <figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">mvc:view-controller</span> <span class="attr">path</span>=<span class="string">&quot;/qq&quot;</span> <span class="attr">view-name</span>=<span class="string">&quot;index1&quot;</span>/&gt;</span></span><br><span class="line"><span class="comment">&lt;!--一定要有这个，否则所有的注解控制器都会失效--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">mvc:annotation-driven</span>/&gt;</span></span><br></pre></td></tr></table></figure>
 
+
+
+<h2 id="解决请求乱码"><a href="#解决请求乱码" class="headerlink" title="解决请求乱码"></a>解决请求乱码</h2><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">    <span class="comment">&lt;!--=================字符编码过滤器===============================--&gt;</span></span><br><span class="line"> </span><br><span class="line"><span class="tag">&lt;<span class="name">filter</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>characterEncoding<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-class</span>&gt;</span>org.springframework.web.filter.CharacterEncodingFilter<span class="tag">&lt;/<span class="name">filter-class</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">init-param</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>charSet<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>utf-8<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">init-param</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">filter</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">filter-mapping</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>characterEncoding<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/*<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">filter-mapping</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--================================================================--&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="拦截器"><a href="#拦截器" class="headerlink" title="拦截器"></a>拦截器</h2><p>1，只能拦截控制器请求，这是它和过滤器的区别，jsp和静态资源不能拦截</p>
+<p>2，把控制器的公共代码可以放拦截器中，减少控制器代码冗余</p>
+<p>3，和过滤器一样，请求来去都要经过</p>
 ]]></content>
       <categories>
         <category>SpringMVC</category>
@@ -3276,6 +3399,85 @@ reverse();
       </categories>
   </entry>
   <entry>
+    <title>春天-整合</title>
+    <url>/2022/05/19/%E6%98%A5%E5%A4%A9-%E6%95%B4%E5%90%88/</url>
+    <content><![CDATA[<h2 id="spring和springmvc的整合"><a href="#spring和springmvc的整合" class="headerlink" title="spring和springmvc的整合"></a>spring和springmvc的整合</h2><p>1，自动创建工厂：</p>
+<p>使用监听器：</p>
+<p>通过ServletContextListener接口，在应用域创建的同时，也就是应用启动的时候，创建工厂，并放到应用域中。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">ServletContextListener</span> <span class="keyword">extends</span> <span class="title class_">EventListener</span> &#123;</span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">contextInitialized</span><span class="params">(ServletContextEvent var1)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">contextDestroyed</span><span class="params">(ServletContextEvent var1)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>这样可以保证工厂只被创建一次，保证了唯一性</li>
+<li>应用域的东西只要应用是开启状态就全局共享，保证了共享性</li>
+</ul>
+<p>2，ContextLoaderListener：</p>
+<p>Java中提供的ContextLoaderListener类实现了ServletContextListener接口，封装了创建工厂的代码，但是使用此对象需要创建实例，创建工厂也需要spring的配置文件。</p>
+<ul>
+<li>它是一个listener，在web.xml文件中配置</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">listener</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">listener-class</span>&gt;</span>org.springframework.web.context.ContextLoaderListener<span class="tag">&lt;/<span class="name">listener-class</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">listener</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>需要告诉spring配置文件的位置用于创建工厂</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">context-param</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>contextConfigLocation<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>classpath:springmvc.xml<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">context-param</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="spring和mybatis的整合"><a href="#spring和mybatis的整合" class="headerlink" title="spring和mybatis的整合"></a>spring和mybatis的整合</h2><ul>
+<li>用两个类封装了获取sqlsession的步骤，并把mybatis.xml配置文件的内容作为类的属性配置</li>
+</ul>
+<p>1，原mybatis</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>mysql<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mysql-connector-java<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">version</span>&gt;</span>8.0.29<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.mybatis<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mybatis<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.5.9<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--mybatis使用自己的POOLED连接池--&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>+ </p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">configuration</span></span></span><br><span class="line"><span class="meta">        <span class="keyword">PUBLIC</span> <span class="string">&quot;-//mybatis.org//DTD Config 3.0//EN&quot;</span></span></span><br><span class="line"><span class="meta">        <span class="string">&quot;http://mybatis.org/dtd/mybatis-3-config.dtd&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--别名--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">typeAliases</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">typeAlias</span> <span class="attr">type</span>=<span class="string">&quot;com.zxr.User&quot;</span> <span class="attr">alias</span>=<span class="string">&quot;user&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">package</span> <span class="attr">name</span>=<span class="string">&quot;com.zxr&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">typeAliases</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!--环境配置，可以配置多个，只能使用一个--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">environments</span> <span class="attr">default</span>=<span class="string">&quot;mysql&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">environment</span> <span class="attr">id</span>=<span class="string">&quot;mysql&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">transactionManager</span> <span class="attr">type</span>=<span class="string">&quot;jdbc&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">transactionManager</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">dataSource</span> <span class="attr">type</span>=<span class="string">&quot;POOLED&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;driver&quot;</span> <span class="attr">value</span>=<span class="string">&quot;com.mysql.cj.jdbc.Driver&quot;</span>/&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;url&quot;</span> <span class="attr">value</span>=<span class="string">&quot;jdbc:mysql://localhost:3306/test?characterEncoding=ytf-8&quot;</span>/&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;username&quot;</span> <span class="attr">value</span>=<span class="string">&quot;root&quot;</span>/&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;password&quot;</span> <span class="attr">value</span>=<span class="string">&quot;20010718&quot;</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">dataSource</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">environment</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">environments</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!--mapper注册--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">mappers</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">mapper</span> <span class="attr">resource</span>=<span class="string">&quot;user.xml&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">mappers</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>+ </p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">    <span class="type">InputStream</span> <span class="variable">inputStream</span> <span class="operator">=</span> Resources.getResourceAsStream(<span class="string">&quot;mybatis.xml&quot;</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//创建SqlSessionFactory对象</span></span><br><span class="line">    <span class="type">SqlSessionFactory</span> <span class="variable">build</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SqlSessionFactoryBuilder</span>().build(inputStream);</span><br><span class="line">    <span class="comment">//获取sqlSession，true表示自动提交事务</span></span><br><span class="line">    <span class="type">SqlSession</span> <span class="variable">sqlSession</span> <span class="operator">=</span> build.openSession(<span class="literal">true</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//根据接口获取mapper对象，进而可以调用里面的方法</span></span><br><span class="line">    <span class="type">User</span> <span class="variable">mapper</span> <span class="operator">=</span> sqlSession.getMapper(User.class);</span><br><span class="line">    mapper.getAge();</span><br><span class="line">    sqlSession.commit();</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>2，</p>
+<ul>
+<li>spring提供了SqlSessionFactoryBean类来封装下面两行，可以产出SqlSessionFactory：</li>
+<li>需要mybatis配置文件，里面有连接池，别名，mapper注册等等</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="type">InputStream</span> <span class="variable">inputStream</span> <span class="operator">=</span> Resources.getResourceAsStream(<span class="string">&quot;mybatis.xml&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//创建SqlSessionFactory对象</span></span><br><span class="line"><span class="type">SqlSessionFactory</span> <span class="variable">build</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SqlSessionFactoryBuilder</span>().build(inputStream);</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>spring提供了MapperScannerConfigure类来封装下面两行，可以产出dao的实现类的对象</li>
+<li>此对象需要SqlSessionFactory和dao接口的类对象</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//获取sqlSession，true</span></span><br><span class="line"><span class="type">SqlSession</span> <span class="variable">sqlSession</span> <span class="operator">=</span> build.openSession(<span class="literal">true</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//根据接口获取mapper对象，进而可以调用里面的方法</span></span><br><span class="line"><span class="type">User</span> <span class="variable">mapper</span> <span class="operator">=</span> sqlSession.getMapper(User.class);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>创建的到对象在工厂之中，通过dao接口的首字母小写作为id可以获得dao对象</li>
+</ul>
+<p>实例：</p>
+<ul>
+<li>配置文件</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!--配置连接池，用的是druid--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;dataSource&quot;</span> <span class="attr">class</span>=<span class="string">&quot;com.alibaba.druid.pool.DruidDataSource&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;driverClassName&quot;</span> <span class="attr">value</span>=<span class="string">&quot;com.mysql.cj.jdbc.Driver&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;url&quot;</span> <span class="attr">value</span>=<span class="string">&quot;jdbc:mysql://localhost:3306/test?characterEncoding=utf-8&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;username&quot;</span> <span class="attr">value</span>=<span class="string">&quot;root&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;password&quot;</span> <span class="attr">value</span>=<span class="string">&quot;20010718&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--sqlSessionFactoryBean需要连接池，因为需要连接对象--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;ssfb&quot;</span> <span class="attr">class</span>=<span class="string">&quot;org.mybatis.spring.SqlSessionFactoryBean&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;dataSource&quot;</span> <span class="attr">ref</span>=<span class="string">&quot;dataSource&quot;</span>/&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--设置别名，设置mapper的位置，注意用/分隔--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;typeAliasesPackage&quot;</span> <span class="attr">value</span>=<span class="string">&quot;com.zxr.entity&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;mapperLocations&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">list</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">value</span>&gt;</span>classpath:com/zxr/mapper/*.xml<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">list</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--MapperScannerConfigurer需要SqlSessionFactoryBean和DAO接口，因为要通过dao接口获取对应的对象--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;msc&quot;</span> <span class="attr">class</span>=<span class="string">&quot;org.mybatis.spring.mapper.MapperScannerConfigurer&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!--sqlSessionFactoryBean--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;sqlSessionFactoryBeanName&quot;</span> <span class="attr">value</span>=<span class="string">&quot;ssfb&quot;</span>/&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--扫描dao接口用于创建对象--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;basePackage&quot;</span> <span class="attr">value</span>=<span class="string">&quot;com.zxr.dao&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>pom：</li>
+<li>mysql驱动，jdbc和spring整合，mybatis，mybatis和spring整合，druid连接池</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>mysql<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mysql-connector-java<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>8.0.29<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-jdbc<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>5.3.20<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>druid<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.2.9<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.mybatis<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mybatis<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.5.9<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.mybatis<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mybatis-spring<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.0.7<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>直接创建了dao对象到了工厂里边，直接获取就可以了</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="type">ApplicationContext</span> <span class="variable">ctx</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ClassPathXmlApplicationContext</span>(<span class="string">&quot;/springmvc.xml&quot;</span>);</span><br><span class="line"><span class="type">UserDao</span> <span class="variable">user</span> <span class="operator">=</span> (UserDao) ctx.getBean(<span class="string">&quot;userDao&quot;</span>);</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>春天系类</category>
+      </categories>
+  </entry>
+  <entry>
     <title>春天-注解编程</title>
     <url>/2022/05/09/%E6%98%A5%E5%A4%A9-%E6%B3%A8%E8%A7%A3%E7%BC%96%E7%A8%8B/</url>
     <content><![CDATA[<h1 id="spring注解编程"><a href="#spring注解编程" class="headerlink" title="spring注解编程"></a>spring注解编程</h1><h2 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h2><span id="more"></span>
@@ -3454,6 +3656,8 @@ reverse();
     <title>春天的靴子</title>
     <url>/2022/05/12/%E6%98%A5%E5%A4%A9%E7%9A%84%E9%9D%B4%E5%AD%90/</url>
     <content><![CDATA[<h1 id="springboot"><a href="#springboot" class="headerlink" title="springboot"></a>springboot</h1><p>springboot旨在于简化spring开发</p>
+<span id="more"></span>
+
 <h2 id="约定"><a href="#约定" class="headerlink" title="约定"></a>约定</h2><p>1，配置文件名字只能叫application，只能在resource目录下</p>
 <p>2，入口类需要放在子包最外层，要保证能扫描到其他的包</p>
 <h2 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h2><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!--springboot父项目，控制版本--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">parent</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-parent<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.2.1.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">parent</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--只需要引入这一个，spring系列的依赖就都引入了--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br></pre></td></tr></table></figure>
@@ -3478,10 +3682,25 @@ reverse();
 
 
 <h2 id="相关注解说明"><a href="#相关注解说明" class="headerlink" title="相关注解说明"></a>相关注解说明</h2><p>@SpringBootApplication</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@SpringBootConfiguration</span></span><br><span class="line"><span class="meta">@EnableAutoConfiguration</span></span><br><span class="line"><span class="comment">//扫描当前包和子包</span></span><br><span class="line"><span class="meta">@ComponentScan(</span></span><br><span class="line"><span class="meta">    excludeFilters = &#123;@Filter(</span></span><br><span class="line"><span class="meta">    type = FilterType.CUSTOM,</span></span><br><span class="line"><span class="meta">    classes = &#123;TypeExcludeFilter.class&#125;</span></span><br><span class="line"><span class="meta">), @Filter(</span></span><br><span class="line"><span class="meta">    type = FilterType.CUSTOM,</span></span><br><span class="line"><span class="meta">    classes = &#123;AutoConfigurationExcludeFilter.class&#125;</span></span><br><span class="line"><span class="meta">)&#125;</span></span><br><span class="line"><span class="meta">)</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//相当于configratiopn，入口类也是一个configration</span></span><br><span class="line"><span class="meta">@SpringBootConfiguration</span></span><br><span class="line"><span class="comment">//@EnableAutoConfiguration是全场景的自动配置，很多的配置类，但是是按需加载，也就是导入了需要的依赖才会加载到该自动配置，就是在配置bean中用@bean注解，例如dispatcherservlet就是springboot自动配置好放到容器的。</span></span><br><span class="line"><span class="comment">//springboot配置类配置了大量的组件，但是都加上了@ConditionalOnMissingBean注解，意思就是用户配置了就关闭spring的这个组件的配置。</span></span><br><span class="line"><span class="meta">@EnableAutoConfiguration</span></span><br><span class="line"><span class="comment">//扫描当前包和子包</span></span><br><span class="line"><span class="meta">@ComponentScan(</span></span><br><span class="line"><span class="meta">    excludeFilters = &#123;@Filter(</span></span><br><span class="line"><span class="meta">    type = FilterType.CUSTOM,</span></span><br><span class="line"><span class="meta">    classes = &#123;TypeExcludeFilter.class&#125;</span></span><br><span class="line"><span class="meta">), @Filter(</span></span><br><span class="line"><span class="meta">    type = FilterType.CUSTOM,</span></span><br><span class="line"><span class="meta">    classes = &#123;AutoConfigurationExcludeFilter.class&#125;</span></span><br><span class="line"><span class="meta">)&#125;</span></span><br><span class="line"><span class="meta">)</span></span><br></pre></td></tr></table></figure>
 
 <p>是一个复合注解</p>
-<h1 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h1><h3 id="配置文件的拆分"><a href="#配置文件的拆分" class="headerlink" title="配置文件的拆分"></a>配置文件的拆分</h3><p>满足不同环境下需要不同配置文件的需求</p>
+<ul>
+<li>@EnableAutoConfiguration是全场景的自动配置，很多的配置类，但是是按需加载，也就是导入了需要的依赖才会加载到该自动配置</li>
+<li>springboot配置类配置了大量的组件，但是都加上了@ConditionalOnMissingBean注解，意思就是用户配置了就关闭spring的这个组件的配置。</li>
+<li>这些springboot的配置bean里的@bean组件把能变动的值都放在了springboot的XXX.properties文件里面，然后把这些properties文件又和我们写的application.yml&#x2F;yaml&#x2F;properties进行了绑定，所以我们可以通过修改配置文件来达到对springboot创建的@bean对象里的内容修改的目的</li>
+<li>当然也可以通过自己用@bean重写自己需要的组件来修改，以用户定义的为准</li>
+</ul>
+<h2 id="使用推荐"><a href="#使用推荐" class="headerlink" title="使用推荐"></a>使用推荐</h2><p>1，引入场景依赖</p>
+<ul>
+<li>spring-boot-starter-场景</li>
+</ul>
+<p>2，参照文档在application.yaml中修改配置即可</p>
+<p>ps：</p>
+<p><em><strong>改banner</strong></em>hhhhhhh</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">banner:</span></span><br><span class="line">  <span class="attr">image:</span></span><br><span class="line">    <span class="attr">location:</span> <span class="string">classpath:红衣.jpg</span></span><br><span class="line">    <span class="comment">#banner就是springboot启动时加载的那个图标</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h2><h3 id="配置文件的拆分"><a href="#配置文件的拆分" class="headerlink" title="配置文件的拆分"></a>配置文件的拆分</h3><p>满足不同环境下需要不同配置文件的需求</p>
 <ul>
 <li>application-dev.yml，dev(测试)可以改成prod(生产)，或者是任意，但是必须是这种格式；</li>
 <li>公共部分放application.yml(主配置文件)</li>
@@ -3508,6 +3727,12 @@ reverse();
 <ul>
 <li>@configration+@bean</li>
 </ul>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">@Configuration(proxyBeanMethods = false)</span><br><span class="line"></span><br><span class="line">proxyBeanMethods默认是true</span><br><span class="line">1，等于false(lite模式)代表某组件除了容器创建外，别的地方调用都不检查该组件是否存在，直接创建，</span><br><span class="line">如果除了容器外在没有人调用@Bean方法，那就用false</span><br><span class="line">2，等于true(full模式)，在每次调用的时候总会检查容器中是否有这个实例了，有的话就返回这个实例，没有的话再创建，</span><br><span class="line">除了容器外其他地方还依赖了这个Bean，就用这个</span><br></pre></td></tr></table></figure>
+
+
+
+
+
 <h2 id="属性注入"><a href="#属性注入" class="headerlink" title="属性注入"></a>属性注入</h2><p>和spring一样</p>
 <h3 id="JDK类型"><a href="#JDK类型" class="headerlink" title="JDK类型"></a>JDK类型</h3><ul>
 <li><p>@value直接指定</p>
@@ -3518,9 +3743,13 @@ reverse();
 <h3 id="自定义类型"><a href="#自定义类型" class="headerlink" title="自定义类型"></a>自定义类型</h3><ul>
 <li>@autowired</li>
 <li>@resource</li>
+<li>@Import({User.class})，默认名字是全限定名</li>
 </ul>
 <h3 id="yml格式"><a href="#yml格式" class="headerlink" title="yml格式"></a>yml格式</h3><p><img src="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220513202809865.png" alt="image-20220513202809865"></p>
-<h3 id="指定前缀"><a href="#指定前缀" class="headerlink" title="指定前缀"></a>指定前缀</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@ConfigurationProperties(prefix = &quot;user2&quot;)</span></span><br></pre></td></tr></table></figure>
+<h3 id="把旧的配置文件导入注解开发"><a href="#把旧的配置文件导入注解开发" class="headerlink" title="把旧的配置文件导入注解开发"></a>把旧的配置文件导入注解开发</h3><p>随便在哪写上：</p>
+<p>@ImportResource(“classpath:application.xml”)</p>
+<p>只需要写一次即可</p>
+<h3 id="指定前缀自动为类属性复制"><a href="#指定前缀自动为类属性复制" class="headerlink" title="指定前缀自动为类属性复制"></a>指定前缀自动为类属性复制</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@ConfigurationProperties(prefix = &quot;user2&quot;)</span></span><br><span class="line"><span class="comment">//放到要注入的类上，这个类的对象必须在容器之中，在类上加一个@component就可以了，prefix是前缀</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//有时候并不会拥有类的源码，没法加，可以选择在配置bean上加</span></span><br><span class="line"><span class="meta">@EnableConfigurationProperties(User.class)</span></span><br><span class="line"><span class="comment">//这个直接会自动把指定的类放到容器中并且开启属性注入，但是它又不能指定前缀，暂且没能想到它的作用</span></span><br></pre></td></tr></table></figure>
 
 <figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">user2:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">lisi</span></span><br></pre></td></tr></table></figure>
 
@@ -3559,6 +3788,56 @@ reverse();
 
 <p>4，事务约定俗成，省略不写</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//默认开启</span></span><br><span class="line"><span class="meta">@EnableTransactionManagement</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="使用日志"><a href="#使用日志" class="headerlink" title="使用日志"></a>使用日志</h2><p>1，springboot默认集成了lomback，在配置文件中直接配置就可以了</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">logging:</span></span><br><span class="line">  <span class="attr">level:</span></span><br><span class="line">    <span class="comment">#springboot根日志，建议默认info</span></span><br><span class="line">    <span class="attr">root:</span> <span class="string">info</span></span><br><span class="line">    <span class="comment">#子日志可以指定包,例如mybatis用debug可以输出sql语句</span></span><br><span class="line">    <span class="attr">com.zxr.dao:</span> <span class="string">debug</span></span><br><span class="line">    </span><br><span class="line">  <span class="attr">file:</span></span><br><span class="line">    <span class="comment">#指定输出的日志文件名字</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">a.log</span></span><br><span class="line">    <span class="comment">#指定输出的文件路径， ./代表当前模块根目录，</span></span><br><span class="line">    <span class="attr">path:</span> <span class="string">./</span></span><br></pre></td></tr></table></figure>
+
+<p>2，可以在程序中替换sout,sout使用完需要删除</p>
+<ul>
+<li>需要先声明日志对象</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//声明日志对象</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">Logger</span> <span class="variable">log</span> <span class="operator">=</span> LoggerFactory.getLogger(HelloController.class);</span><br><span class="line"></span><br><span class="line"><span class="comment">//在类上加@Slf4j注解会自动创建一个名为log的对象，就不用声明了</span></span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>替换，{}是占位符，</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">log.info(<span class="string">&quot;名字是:&#123;&#125;&quot;</span>,name);</span><br><span class="line">System.out.println(name);</span><br></pre></td></tr></table></figure>
+
+<p>注意：log.info()相当于产生一个info级别的日志信息，long.debug()也同理；要想这些日志信息在控制台能输出，不可或缺的是，配置文件中指定这个包子日志的级别低于产生的日志，也就是说，只有高于配置文件指定的日志级别，才会输出到控制台上。</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">logging:</span></span><br><span class="line">  <span class="attr">level:</span></span><br><span class="line">    <span class="comment">#springboot根日志，建议默认info</span></span><br><span class="line">    <span class="attr">root:</span> <span class="string">info</span></span><br><span class="line">    <span class="comment">#子日志可以指定包,例如mybatis用debug可以输出sql语句</span></span><br><span class="line">    <span class="attr">com.zxr.dao:</span> <span class="string">debug</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>当然，这样我们通过更改配置文件的级别就能有效控制日志信息打印还是不打印，非常的灵活。</li>
+</ul>
+<h2 id="AOP编程"><a href="#AOP编程" class="headerlink" title="AOP编程"></a>AOP编程</h2><p>除了依赖不同其它和spring的AOP没区别</p>
+<p>首先导入依赖</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-aop<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>1，原始类</p>
+<p>2，切面类:</p>
+<ul>
+<li>@Aspect+@congigration</li>
+</ul>
+<p>额外功能：配合joinpoint参数使用</p>
+<ul>
+<li>@ARound</li>
+<li>@before</li>
+<li>@after</li>
+</ul>
+<p>切入点：</p>
+<ul>
+<li>@pointcut</li>
+</ul>
+<p>3，开启注解切面编程，这个注解不写也可以</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@EnableAspectJAutoProxy(proxyTargetClass = true,exposeProxy = true)</span></span><br></pre></td></tr></table></figure>
+
+<p>注意：</p>
+<ul>
+<li>proxyTargetClass为true表示使用cglib代理，springboot默认使用cglib</li>
+<li>exposeProxy &#x3D; true，表示暴露出动态代理的类，AopContext.currentProxy()可以拿到代理对象，是Object的，需要强转，一般用于service内部的调用，也就是service自己调自己的方法，可以通过这个拿到代理方法，不然拿到的就是原始方法。</li>
+</ul>
 ]]></content>
       <categories>
         <category>春天系列</category>

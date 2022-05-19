@@ -20,17 +20,17 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="springbootspringboot旨在于简化spring开发 约定1，配置文件名字只能叫application，只能在resource目录下 2，入口类需要放在子包最外层，要保证能扫描到其他的包 环境搭建1234567891011121314&lt;!--springboot父项目，控制版本--&gt;&lt;parent&gt;    &lt;artifactId&gt;spring-bo">
+  <meta name="description" content="springbootspringboot旨在于简化spring开发">
 <meta property="og:type" content="article">
 <meta property="og:title" content="春天的靴子">
 <meta property="og:url" content="http://example.com/2022/05/12/%E6%98%A5%E5%A4%A9%E7%9A%84%E9%9D%B4%E5%AD%90/index.html">
 <meta property="og:site_name" content="大森林">
-<meta property="og:description" content="springbootspringboot旨在于简化spring开发 约定1，配置文件名字只能叫application，只能在resource目录下 2，入口类需要放在子包最外层，要保证能扫描到其他的包 环境搭建1234567891011121314&lt;!--springboot父项目，控制版本--&gt;&lt;parent&gt;    &lt;artifactId&gt;spring-bo">
+<meta property="og:description" content="springbootspringboot旨在于简化spring开发">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220513185642845.png">
 <meta property="og:image" content="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220513202809865.png">
 <meta property="article:published_time" content="2022-05-12T04:28:29.000Z">
-<meta property="article:modified_time" content="2022-05-13T15:18:49.751Z">
+<meta property="article:modified_time" content="2022-05-19T15:20:43.138Z">
 <meta property="article:author" content="你好">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220513185642845.png">
@@ -193,7 +193,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-05-13 23:18:49" itemprop="dateModified" datetime="2022-05-13T23:18:49+08:00">2022-05-13</time>
+                <time title="修改时间：2022-05-19 23:20:43" itemprop="dateModified" datetime="2022-05-19T23:20:43+08:00">2022-05-19</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -217,6 +217,8 @@
 
       
         <h1 id="springboot"><a href="#springboot" class="headerlink" title="springboot"></a>springboot</h1><p>springboot旨在于简化spring开发</p>
+<span id="more"></span>
+
 <h2 id="约定"><a href="#约定" class="headerlink" title="约定"></a>约定</h2><p>1，配置文件名字只能叫application，只能在resource目录下</p>
 <p>2，入口类需要放在子包最外层，要保证能扫描到其他的包</p>
 <h2 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--springboot父项目，控制版本--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">parent</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-parent<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.2.1.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">parent</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--只需要引入这一个，spring系列的依赖就都引入了--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br></pre></td></tr></table></figure>
@@ -241,10 +243,25 @@
 
 
 <h2 id="相关注解说明"><a href="#相关注解说明" class="headerlink" title="相关注解说明"></a>相关注解说明</h2><p>@SpringBootApplication</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SpringBootConfiguration</span></span><br><span class="line"><span class="meta">@EnableAutoConfiguration</span></span><br><span class="line"><span class="comment">//扫描当前包和子包</span></span><br><span class="line"><span class="meta">@ComponentScan(</span></span><br><span class="line"><span class="meta">    excludeFilters = &#123;@Filter(</span></span><br><span class="line"><span class="meta">    type = FilterType.CUSTOM,</span></span><br><span class="line"><span class="meta">    classes = &#123;TypeExcludeFilter.class&#125;</span></span><br><span class="line"><span class="meta">), @Filter(</span></span><br><span class="line"><span class="meta">    type = FilterType.CUSTOM,</span></span><br><span class="line"><span class="meta">    classes = &#123;AutoConfigurationExcludeFilter.class&#125;</span></span><br><span class="line"><span class="meta">)&#125;</span></span><br><span class="line"><span class="meta">)</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//相当于configratiopn，入口类也是一个configration</span></span><br><span class="line"><span class="meta">@SpringBootConfiguration</span></span><br><span class="line"><span class="comment">//@EnableAutoConfiguration是全场景的自动配置，很多的配置类，但是是按需加载，也就是导入了需要的依赖才会加载到该自动配置，就是在配置bean中用@bean注解，例如dispatcherservlet就是springboot自动配置好放到容器的。</span></span><br><span class="line"><span class="comment">//springboot配置类配置了大量的组件，但是都加上了@ConditionalOnMissingBean注解，意思就是用户配置了就关闭spring的这个组件的配置。</span></span><br><span class="line"><span class="meta">@EnableAutoConfiguration</span></span><br><span class="line"><span class="comment">//扫描当前包和子包</span></span><br><span class="line"><span class="meta">@ComponentScan(</span></span><br><span class="line"><span class="meta">    excludeFilters = &#123;@Filter(</span></span><br><span class="line"><span class="meta">    type = FilterType.CUSTOM,</span></span><br><span class="line"><span class="meta">    classes = &#123;TypeExcludeFilter.class&#125;</span></span><br><span class="line"><span class="meta">), @Filter(</span></span><br><span class="line"><span class="meta">    type = FilterType.CUSTOM,</span></span><br><span class="line"><span class="meta">    classes = &#123;AutoConfigurationExcludeFilter.class&#125;</span></span><br><span class="line"><span class="meta">)&#125;</span></span><br><span class="line"><span class="meta">)</span></span><br></pre></td></tr></table></figure>
 
 <p>是一个复合注解</p>
-<h1 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h1><h3 id="配置文件的拆分"><a href="#配置文件的拆分" class="headerlink" title="配置文件的拆分"></a>配置文件的拆分</h3><p>满足不同环境下需要不同配置文件的需求</p>
+<ul>
+<li>@EnableAutoConfiguration是全场景的自动配置，很多的配置类，但是是按需加载，也就是导入了需要的依赖才会加载到该自动配置</li>
+<li>springboot配置类配置了大量的组件，但是都加上了@ConditionalOnMissingBean注解，意思就是用户配置了就关闭spring的这个组件的配置。</li>
+<li>这些springboot的配置bean里的@bean组件把能变动的值都放在了springboot的XXX.properties文件里面，然后把这些properties文件又和我们写的application.yml&#x2F;yaml&#x2F;properties进行了绑定，所以我们可以通过修改配置文件来达到对springboot创建的@bean对象里的内容修改的目的</li>
+<li>当然也可以通过自己用@bean重写自己需要的组件来修改，以用户定义的为准</li>
+</ul>
+<h2 id="使用推荐"><a href="#使用推荐" class="headerlink" title="使用推荐"></a>使用推荐</h2><p>1，引入场景依赖</p>
+<ul>
+<li>spring-boot-starter-场景</li>
+</ul>
+<p>2，参照文档在application.yaml中修改配置即可</p>
+<p>ps：</p>
+<p><em><strong>改banner</strong></em>hhhhhhh</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">banner:</span></span><br><span class="line">  <span class="attr">image:</span></span><br><span class="line">    <span class="attr">location:</span> <span class="string">classpath:红衣.jpg</span></span><br><span class="line">    <span class="comment">#banner就是springboot启动时加载的那个图标</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h2><h3 id="配置文件的拆分"><a href="#配置文件的拆分" class="headerlink" title="配置文件的拆分"></a>配置文件的拆分</h3><p>满足不同环境下需要不同配置文件的需求</p>
 <ul>
 <li>application-dev.yml，dev(测试)可以改成prod(生产)，或者是任意，但是必须是这种格式；</li>
 <li>公共部分放application.yml(主配置文件)</li>
@@ -271,6 +288,12 @@
 <ul>
 <li>@configration+@bean</li>
 </ul>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@Configuration(proxyBeanMethods = false)</span><br><span class="line"></span><br><span class="line">proxyBeanMethods默认是true</span><br><span class="line">1，等于false(lite模式)代表某组件除了容器创建外，别的地方调用都不检查该组件是否存在，直接创建，</span><br><span class="line">如果除了容器外在没有人调用@Bean方法，那就用false</span><br><span class="line">2，等于true(full模式)，在每次调用的时候总会检查容器中是否有这个实例了，有的话就返回这个实例，没有的话再创建，</span><br><span class="line">除了容器外其他地方还依赖了这个Bean，就用这个</span><br></pre></td></tr></table></figure>
+
+
+
+
+
 <h2 id="属性注入"><a href="#属性注入" class="headerlink" title="属性注入"></a>属性注入</h2><p>和spring一样</p>
 <h3 id="JDK类型"><a href="#JDK类型" class="headerlink" title="JDK类型"></a>JDK类型</h3><ul>
 <li><p>@value直接指定</p>
@@ -281,9 +304,13 @@
 <h3 id="自定义类型"><a href="#自定义类型" class="headerlink" title="自定义类型"></a>自定义类型</h3><ul>
 <li>@autowired</li>
 <li>@resource</li>
+<li>@Import({User.class})，默认名字是全限定名</li>
 </ul>
 <h3 id="yml格式"><a href="#yml格式" class="headerlink" title="yml格式"></a>yml格式</h3><p><img src="https://zxrs.oss-cn-beijing.aliyuncs.com/image-20220513202809865.png" alt="image-20220513202809865"></p>
-<h3 id="指定前缀"><a href="#指定前缀" class="headerlink" title="指定前缀"></a>指定前缀</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@ConfigurationProperties(prefix = &quot;user2&quot;)</span></span><br></pre></td></tr></table></figure>
+<h3 id="把旧的配置文件导入注解开发"><a href="#把旧的配置文件导入注解开发" class="headerlink" title="把旧的配置文件导入注解开发"></a>把旧的配置文件导入注解开发</h3><p>随便在哪写上：</p>
+<p>@ImportResource(“classpath:application.xml”)</p>
+<p>只需要写一次即可</p>
+<h3 id="指定前缀自动为类属性复制"><a href="#指定前缀自动为类属性复制" class="headerlink" title="指定前缀自动为类属性复制"></a>指定前缀自动为类属性复制</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@ConfigurationProperties(prefix = &quot;user2&quot;)</span></span><br><span class="line"><span class="comment">//放到要注入的类上，这个类的对象必须在容器之中，在类上加一个@component就可以了，prefix是前缀</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//有时候并不会拥有类的源码，没法加，可以选择在配置bean上加</span></span><br><span class="line"><span class="meta">@EnableConfigurationProperties(User.class)</span></span><br><span class="line"><span class="comment">//这个直接会自动把指定的类放到容器中并且开启属性注入，但是它又不能指定前缀，暂且没能想到它的作用</span></span><br></pre></td></tr></table></figure>
 
 <figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">user2:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">lisi</span></span><br></pre></td></tr></table></figure>
 
@@ -322,6 +349,56 @@
 
 <p>4，事务约定俗成，省略不写</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//默认开启</span></span><br><span class="line"><span class="meta">@EnableTransactionManagement</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="使用日志"><a href="#使用日志" class="headerlink" title="使用日志"></a>使用日志</h2><p>1，springboot默认集成了lomback，在配置文件中直接配置就可以了</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">logging:</span></span><br><span class="line">  <span class="attr">level:</span></span><br><span class="line">    <span class="comment">#springboot根日志，建议默认info</span></span><br><span class="line">    <span class="attr">root:</span> <span class="string">info</span></span><br><span class="line">    <span class="comment">#子日志可以指定包,例如mybatis用debug可以输出sql语句</span></span><br><span class="line">    <span class="attr">com.zxr.dao:</span> <span class="string">debug</span></span><br><span class="line">    </span><br><span class="line">  <span class="attr">file:</span></span><br><span class="line">    <span class="comment">#指定输出的日志文件名字</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">a.log</span></span><br><span class="line">    <span class="comment">#指定输出的文件路径， ./代表当前模块根目录，</span></span><br><span class="line">    <span class="attr">path:</span> <span class="string">./</span></span><br></pre></td></tr></table></figure>
+
+<p>2，可以在程序中替换sout,sout使用完需要删除</p>
+<ul>
+<li>需要先声明日志对象</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//声明日志对象</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">Logger</span> <span class="variable">log</span> <span class="operator">=</span> LoggerFactory.getLogger(HelloController.class);</span><br><span class="line"></span><br><span class="line"><span class="comment">//在类上加@Slf4j注解会自动创建一个名为log的对象，就不用声明了</span></span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>替换，{}是占位符，</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">log.info(<span class="string">&quot;名字是:&#123;&#125;&quot;</span>,name);</span><br><span class="line">System.out.println(name);</span><br></pre></td></tr></table></figure>
+
+<p>注意：log.info()相当于产生一个info级别的日志信息，long.debug()也同理；要想这些日志信息在控制台能输出，不可或缺的是，配置文件中指定这个包子日志的级别低于产生的日志，也就是说，只有高于配置文件指定的日志级别，才会输出到控制台上。</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">logging:</span></span><br><span class="line">  <span class="attr">level:</span></span><br><span class="line">    <span class="comment">#springboot根日志，建议默认info</span></span><br><span class="line">    <span class="attr">root:</span> <span class="string">info</span></span><br><span class="line">    <span class="comment">#子日志可以指定包,例如mybatis用debug可以输出sql语句</span></span><br><span class="line">    <span class="attr">com.zxr.dao:</span> <span class="string">debug</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>当然，这样我们通过更改配置文件的级别就能有效控制日志信息打印还是不打印，非常的灵活。</li>
+</ul>
+<h2 id="AOP编程"><a href="#AOP编程" class="headerlink" title="AOP编程"></a>AOP编程</h2><p>除了依赖不同其它和spring的AOP没区别</p>
+<p>首先导入依赖</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-aop<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>1，原始类</p>
+<p>2，切面类:</p>
+<ul>
+<li>@Aspect+@congigration</li>
+</ul>
+<p>额外功能：配合joinpoint参数使用</p>
+<ul>
+<li>@ARound</li>
+<li>@before</li>
+<li>@after</li>
+</ul>
+<p>切入点：</p>
+<ul>
+<li>@pointcut</li>
+</ul>
+<p>3，开启注解切面编程，这个注解不写也可以</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@EnableAspectJAutoProxy(proxyTargetClass = true,exposeProxy = true)</span></span><br></pre></td></tr></table></figure>
+
+<p>注意：</p>
+<ul>
+<li>proxyTargetClass为true表示使用cglib代理，springboot默认使用cglib</li>
+<li>exposeProxy &#x3D; true，表示暴露出动态代理的类，AopContext.currentProxy()可以拿到代理对象，是Object的，需要强转，一般用于service内部的调用，也就是service自己调自己的方法，可以通过这个拿到代理方法，不然拿到的就是原始方法。</li>
+</ul>
 
     </div>
 
@@ -402,7 +479,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#springboot"><span class="nav-number">1.</span> <span class="nav-text">springboot</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%A6%E5%AE%9A"><span class="nav-number">1.1.</span> <span class="nav-text">约定</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="nav-number">1.2.</span> <span class="nav-text">环境搭建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E4%B8%AAspringboot%E7%A8%8B%E5%BA%8F"><span class="nav-number">1.3.</span> <span class="nav-text">第一个springboot程序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E6%B3%A8%E8%A7%A3%E8%AF%B4%E6%98%8E"><span class="nav-number">1.4.</span> <span class="nav-text">相关注解说明</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">2.</span> <span class="nav-text">配置文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E7%9A%84%E6%8B%86%E5%88%86"><span class="nav-number">2.0.1.</span> <span class="nav-text">配置文件的拆分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8%E6%97%B6%E6%8C%87%E5%AE%9A%E5%A4%96%E9%83%A8%E7%9A%84%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">2.0.2.</span> <span class="nav-text">启动时指定外部的配置文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B7%A5%E5%8E%82%E5%88%9B%E5%BB%BA%E5%AF%B9%E8%B1%A1"><span class="nav-number">2.1.</span> <span class="nav-text">工厂创建对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B1%9E%E6%80%A7%E6%B3%A8%E5%85%A5"><span class="nav-number">2.2.</span> <span class="nav-text">属性注入</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#JDK%E7%B1%BB%E5%9E%8B"><span class="nav-number">2.2.1.</span> <span class="nav-text">JDK类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E7%B1%BB%E5%9E%8B"><span class="nav-number">2.2.2.</span> <span class="nav-text">自定义类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#yml%E6%A0%BC%E5%BC%8F"><span class="nav-number">2.2.3.</span> <span class="nav-text">yml格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%87%E5%AE%9A%E5%89%8D%E7%BC%80"><span class="nav-number">2.2.4.</span> <span class="nav-text">指定前缀</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B4%E5%90%88mybatis"><span class="nav-number">2.3.</span> <span class="nav-text">整合mybatis</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#springboot"><span class="nav-number">1.</span> <span class="nav-text">springboot</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%A6%E5%AE%9A"><span class="nav-number">1.1.</span> <span class="nav-text">约定</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="nav-number">1.2.</span> <span class="nav-text">环境搭建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E4%B8%AAspringboot%E7%A8%8B%E5%BA%8F"><span class="nav-number">1.3.</span> <span class="nav-text">第一个springboot程序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E6%B3%A8%E8%A7%A3%E8%AF%B4%E6%98%8E"><span class="nav-number">1.4.</span> <span class="nav-text">相关注解说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%8E%A8%E8%8D%90"><span class="nav-number">1.5.</span> <span class="nav-text">使用推荐</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">1.6.</span> <span class="nav-text">配置文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E7%9A%84%E6%8B%86%E5%88%86"><span class="nav-number">1.6.1.</span> <span class="nav-text">配置文件的拆分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8%E6%97%B6%E6%8C%87%E5%AE%9A%E5%A4%96%E9%83%A8%E7%9A%84%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">1.6.2.</span> <span class="nav-text">启动时指定外部的配置文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B7%A5%E5%8E%82%E5%88%9B%E5%BB%BA%E5%AF%B9%E8%B1%A1"><span class="nav-number">1.7.</span> <span class="nav-text">工厂创建对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B1%9E%E6%80%A7%E6%B3%A8%E5%85%A5"><span class="nav-number">1.8.</span> <span class="nav-text">属性注入</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#JDK%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.8.1.</span> <span class="nav-text">JDK类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.8.2.</span> <span class="nav-text">自定义类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#yml%E6%A0%BC%E5%BC%8F"><span class="nav-number">1.8.3.</span> <span class="nav-text">yml格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8A%8A%E6%97%A7%E7%9A%84%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%AF%BC%E5%85%A5%E6%B3%A8%E8%A7%A3%E5%BC%80%E5%8F%91"><span class="nav-number">1.8.4.</span> <span class="nav-text">把旧的配置文件导入注解开发</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%87%E5%AE%9A%E5%89%8D%E7%BC%80%E8%87%AA%E5%8A%A8%E4%B8%BA%E7%B1%BB%E5%B1%9E%E6%80%A7%E5%A4%8D%E5%88%B6"><span class="nav-number">1.8.5.</span> <span class="nav-text">指定前缀自动为类属性复制</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B4%E5%90%88mybatis"><span class="nav-number">1.9.</span> <span class="nav-text">整合mybatis</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%97%A5%E5%BF%97"><span class="nav-number">1.10.</span> <span class="nav-text">使用日志</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AOP%E7%BC%96%E7%A8%8B"><span class="nav-number">1.11.</span> <span class="nav-text">AOP编程</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -418,14 +495,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-count">26</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
   </nav>
