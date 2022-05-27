@@ -157,6 +157,171 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/27/jvm%E9%A2%98%E7%9B%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="你好">
+      <meta itemprop="description" content="也许是风太小了，没能把我的思念带给你">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大森林">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/05/27/jvm%E9%A2%98%E7%9B%AE/" class="post-title-link" itemprop="url">jvm题目</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-05-27 21:49:39 / 修改时间：23:13:35" itemprop="dateCreated datePublished" datetime="2022-05-27T21:49:39+08:00">2022-05-27</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%A2%98%E7%9B%AE/" itemprop="url" rel="index"><span itemprop="name">题目</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="jvm题目"><a href="#jvm题目" class="headerlink" title="jvm题目"></a>jvm题目</h1><p>1，jvm的主要组成部分？</p>
+<p>答：</p>
+<p>分为4部分：</p>
+<ul>
+<li>类加载器，负责把编译好的字节码文件加载到运行时数据区</li>
+<li>运行时数据区</li>
+<li>执行引擎，执行运行时数据区的指令</li>
+<li>本地方法库接口</li>
+</ul>
+<p>运行时数据区详情：</p>
+<p>分类：</p>
+<ul>
+<li>线程共享：<ul>
+<li>堆，存储对象</li>
+<li>方法区，存储类信息，包括方法中的代码</li>
+</ul>
+</li>
+<li>线程私有<ul>
+<li>虚拟机栈，由栈帧组成，栈帧中有局部变量表，存储基本类型变量以及对象的引用</li>
+<li>本地方法栈，hotspot中和虚拟机栈合二为一了</li>
+<li>程序计数器，存放下一条指令的行号，行号指的是偏移量而不是真正的行号；当线程发生上下文切换的时候，依靠这个来找到阻塞前运行的位置</li>
+</ul>
+</li>
+</ul>
+<p>2，堆和栈的区别是什么？</p>
+<p>答：</p>
+<ul>
+<li>堆中的内容是线程共享的，栈是线程私有的</li>
+<li>堆中存放的是对象，栈中存放的是基本类型变量和对象的引用(4byte)</li>
+</ul>
+<p>3,java是值传递还是引用传递？</p>
+<p>答：</p>
+<p>引用传递：</p>
+<p>因为Java所有的运算都是在栈中完成的，栈中只保存了对象的引用，所以无论是基本类型还是引用类型都是值传递，引用类型的值就是对象的引用的值。</p>
+<p>4，Java中对象大小的计算？</p>
+<p>答：</p>
+<ul>
+<li>一个空对象是8byte，在加上存在局部变量表里面的4byte的引用，所以一个空对像是，8+4 &#x3D; 12byte</li>
+<li>如果对象里面有内容(基本数据类型或者是对象引用)，在加上里面的内容的大小就行，注意如果有引用类型变量，也只算引用的大小4byte</li>
+<li>java对象的内存分配都是按照8的倍数分配的，所&#x3D;所以就算大小计算到12也是16</li>
+</ul>
+<p>ps：Java基本类型大小，单位-&gt;byte(字节)，1byte&#x3D;8bit</p>
+<ul>
+<li>byte 1byte</li>
+<li>char 2byte</li>
+<li>short 2byte</li>
+<li>int 4byte</li>
+<li>long 8byte</li>
+<li>float 5byte</li>
+<li>double 8byte</li>
+<li>boolean 1或者4</li>
+</ul>
+<p>关于boolean的大小，Java虚拟机规范规定：</p>
+<ul>
+<li>由于没有具体的指令对应boolean，所以在编译之后会按照int类型数值代替，也就是4byte</li>
+<li>在boolean类型的数组中，每一个boolean占1byte</li>
+</ul>
+<p>5，对java中引用的了解？</p>
+<p>答：</p>
+<p>java中有四种引用，强引用，软引用，弱引用，虚引用；</p>
+<ul>
+<li>强引用：被强引用引用的对象不会被垃圾回收掉，普通的引用都是强引用</li>
+<li>软引用：内存溢出之前，第一次垃圾回收后还是无法解决，会进行第二次垃圾回收，第二此就会把软引用引用的对象回收掉，如果还是没法解决，才会outOfMemory</li>
+<li>弱引用：只要发生垃圾回收，就会把被弱引用引用的对象给回收掉</li>
+<li>虚引用：虚引用和被引用对象的存活并没有关系，设置它的唯一的作用就是在被引用对象被回收时收到一个系统的通知</li>
+</ul>
+<p>ps：关于java的引用到底是什么</p>
+<ul>
+<li>Java的引用就是某一块内存的起始地址</li>
+</ul>
+<p>例如：Object obj &#x3D; new Objecta();</p>
+<ul>
+<li>obj存放的就是这个对象起始地址的值，使用Object的toString()可以获得</li>
+</ul>
+<p>6，判断垃圾回收的方法？</p>
+<p>答：</p>
+<ul>
+<li><p>引用计数法：对象中存放引用计数器，当计数器为0时，标记为可回收；可能出现循环引用，也就是当两个对象互相引用，那么这两个对象都不会被标记为可回收</p>
+</li>
+<li><p>可达性分析法(java中使用)：有一系列的对象叫gcRoots，如果对象和gcRoots没有引用链，也就是没有被gcRoots直接或间接引用，那么就可以标记成可回收状态</p>
+</li>
+</ul>
+<p>ps：gcRoots可以是哪些对象</p>
+<ul>
+<li>本地变量表中引用的对象</li>
+<li>方法表区静态的引用型变量</li>
+<li>本地方法中引用的变量</li>
+<li>被同步锁持有的对象</li>
+<li>··························</li>
+</ul>
+<p>7，可达性分析算法中被标为垃圾的对象一定会被回收吗？</p>
+<p>答：</p>
+<p>不一定：</p>
+<ul>
+<li>当可达性分析算法分析到没有引用链时，标记一次</li>
+<li>然后会判断，有没有必要执行该对象的finalize方法，没有覆写finalize方法或者是finalize方法已经被调用过了(finalize方法只能调用一次)，就会直接回收</li>
+<li>如果覆写了finalize方法，那么该对象会被放进一个F-QUEUE队列，虚拟机会创建一个Finalizer线程区执行它们的finalize方法，只保证执行，不保证结束，因为怕某个方法执行时间过久；如果某对象在finalize方法中把自己的引用(this)赋值给了应该存活的对象的成员变量，那么在稍后的第二次标记中，他将会被移出即将回收的集合，完成自救。</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/22/%E6%98%A5%E5%A4%A9%E7%9A%84%E4%BA%91/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1114,87 +1279,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/07/%E6%98%A5%E5%A4%A9-%E6%8E%A7%E5%88%B6%E5%8F%8D%E8%BD%AC/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="你好">
-      <meta itemprop="description" content="也许是风太小了，没能把我的思念带给你">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大森林">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/05/07/%E6%98%A5%E5%A4%A9-%E6%8E%A7%E5%88%B6%E5%8F%8D%E8%BD%AC/" class="post-title-link" itemprop="url">春天-控制反转(ioc)</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-05-07 11:52:33" itemprop="dateCreated datePublished" datetime="2022-05-07T11:52:33+08:00">2022-05-07</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-05-11 16:40:47" itemprop="dateModified" datetime="2022-05-11T16:40:47+08:00">2022-05-11</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%98%A5%E5%A4%A9%E7%B3%BB%E5%88%97/" itemprop="url" rel="index"><span itemprop="name">春天系列</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="springFramework-春天"><a href="#springFramework-春天" class="headerlink" title="springFramework(春天)"></a>springFramework(春天)</h1><h2 id="1-为什么要有spring，什么是spring"><a href="#1-为什么要有spring，什么是spring" class="headerlink" title="1,为什么要有spring，什么是spring"></a>1,为什么要有spring，什么是spring</h2>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/05/07/%E6%98%A5%E5%A4%A9-%E6%8E%A7%E5%88%B6%E5%8F%8D%E8%BD%AC/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1266,14 +1350,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">27</span>
+          <span class="site-state-item-count">28</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-count">13</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
   </nav>
