@@ -188,7 +188,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-05-28 22:50:17" itemprop="dateModified" datetime="2022-05-28T22:50:17+08:00">2022-05-28</time>
+                <time title="修改时间：2022-05-30 19:51:53" itemprop="dateModified" datetime="2022-05-30T19:51:53+08:00">2022-05-30</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -476,6 +476,143 @@
 <ul>
 <li>关于如何使卡表变脏：使用了写屏障，也就是AOP环绕编程，普通卡表只使用了写后屏障，也就是Around中的After；在对象被引用时，也就是变量赋值的时候，更新卡表，让引用放所在的卡页对应的数组元素的值变成1</li>
 </ul>
+<p>15，谈谈内存分配原则？</p>
+<p>答：</p>
+<p>分为五部分：</p>
+<ul>
+<li>对象优先在Eden区分配，Eden没有足够空间时会发起minor gc</li>
+<li>大对象直接进入老年代：例如很长的字符串和元素很多的数组，我们要保证避免朝生夕灭的大对象的产生，因为会导致在还有许多但是不连续的空间时提前发生垃圾收集</li>
+<li>长期存活的对象进入老年代，默认15，可以指定</li>
+<li>动态年龄判定：不一定要对象年龄到了指定值才进入老年代，当survival空间中同一年龄的对象大小总和大于survival的一半，那么大于等于该年龄的对象会直接进入老年代</li>
+<li>空间分配担保：在minor gc发生之前，为了防止新生代所有对象都进入老年代这种极端情况，会先检查老年代有没有大小在新生代之上的连续空间，如果没有，就会直接进行一次full gc；或者，可以指定开启冒险测策略：就是取之前每一次通过minor gc进入到老年代的对象的大小之和的平均值，和老年代剩余的连续最大空间比较，如果老年代连续空间大，那么就会冒险minor gc；如果判断失误，也就是这次minor gc进入老年代的对象大小远大于平均值，那么就会担保失败，进入full gc。</li>
+</ul>
+<p>​                                                                                                                                                </p>
+<p>16，类文件结构有哪些组成部分？</p>
+<p>答：</p>
+<ul>
+<li>魔数：用于判断文件类型</li>
+<li>版本号：分为大版本和小版本号</li>
+<li>常量池：主要存放字面量和引用</li>
+<li>访问标志：是类还是接口？是否public，是否抽象？</li>
+<li>类索引，父类索引，接口索引集合</li>
+<li>字段表集合</li>
+<li>方法表集合</li>
+<li>属性表集合</li>
+</ul>
+<p>ps：正常来说，一个class文件对应一个类或者是一个接口</p>
+<p>17，类加载机制？</p>
+<p>答：</p>
+<p>类加载是把class文件加载到运行时数据区的过程</p>
+<p>步骤：</p>
+<ul>
+<li>加载</li>
+<li>连接：包括验证，准备，解析</li>
+<li>初始化</li>
+</ul>
+<p>顺序：</p>
+<ul>
+<li>除了解析之外，其他的步骤都是按上面的顺序开始的，但是仅仅是开始顺序，并不是完成顺序</li>
+<li>无法准确的知道解析何时开始，但可以保证它在初始化之前会结束</li>
+</ul>
+<p>18，类加载各阶段的作用？</p>
+<p>答：</p>
+<p>加载：</p>
+<ul>
+<li>通过类的全限定名获取二进制字节流文件，不一定是class文件的形式</li>
+<li>将字节流的静态数据结构加载到运行时数据区变为运行时数据结构</li>
+<li>堆中生成一个类的Class对象，作为方法区的入口，需要靠这个Class对象才能new 这个类的对象。</li>
+</ul>
+<p>验证：确保字节流的信息符合当前虚拟机的要求</p>
+<ul>
+<li>文件格式验证，验证是否符合class文件规范</li>
+<li>元数据验证：语义分析</li>
+<li>字节码验证：数据流和控制流的分析</li>
+<li>符号引用验证：确保解析动作顺利执行，在解析的时候发生</li>
+</ul>
+<p>准备：为类变量分配空间以及赋初值</p>
+<p>解析：将常量池的符号引用替换为内存中的直接引用</p>
+<p>初始化：执行类构造方法<clinit>,这个方法就是把静态赋值语句和静态代码块按顺序合在一起，会最终给静态变量赋值以及完成静态代码块的资源的初始化(如果有的话)</p>
+<p>19，有哪些类加载器，作用是什么？</p>
+<ul>
+<li>启动类加载器(BootStrap ClassLoader)：加载java home&#x2F;lib下的类，c++编写，想要引用直接使用null代替</li>
+<li>扩展类加载器：加载java home&#x2F;lib&#x2F;ext目录中的类</li>
+<li>应用程序类加载器(系统类加载器):加载用户路径ClassPath下的类</li>
+</ul>
+<p>20，类和类加载器的关系？</p>
+<p>答：</p>
+<p>对于任意一个类，都需要类本身和类加载器一起确定其唯一性</p>
+<p>21，双亲委派机制过程是怎样？为什么要使用双亲委派机制？</p>
+<p>答：</p>
+<p>过程：</p>
+<ul>
+<li>类加载器接收到加载类的请求，他不会直接加载，而是先检查以前有没有加载过(有没有缓存)，有就不用加载了，如果没有，就会调用loadClass方法(它是入口方法)，该方法会先委托(loadclass方法的递归）给父加载器(并不是继承关系，有个parent属性指向父加载器)，父加载器也执行一样的操作。</li>
+<li>可以知道，最终所有类的加载请求都会到启动类加载器上，然后一步步向下委派，父加载器无法加载时会调用findclass，默认实现就是报classNotFoundException异常，这时该父加载器loadClass结束，回到上一层递归，继续调用上一层加载器的findClass方法，直到某加载器的findclass方法能处理该类的加载为止。</li>
+</ul>
+<p>好处：</p>
+<p>双亲委派保证了类总是从启动类加载器开始，逐层往下尝试加载，这样能保证，同一个类(位置，内容都一样)被同一个加载器加载。</p>
+<p>22，如何实现一个自定义类加载器，并且打破双亲委派机制？</p>
+<p>答：</p>
+<ul>
+<li>实现自定义加载器只需要继承ClassLoader类，并重写findclass作为加载器的具体实现就可以了</li>
+<li>打破双亲委派机制只需要重写loadclass方法就可以了</li>
+</ul>
+<p>23，举例需要打破双亲委派机制的场景？</p>
+<p>答：</p>
+<p>JNDI(Java Naming and Directory Interface)，Java命名和目录接口</p>
+<p>JNDI的目的是对资源进行集中管理和查找，JNDI是由启动类加载器加载，但是调用的资源的代码往往是在classpath下的，启动类加载器无法识别这些资源代码；类似JDBC的API和它在class path下的mysql实现。</p>
+<p>如何解决：</p>
+<p>Java团队引入了上下文加载器，通过Thread.setContextClassLoader方法进行设置，如果没设置，就从父线程继承一个，如果全局都没设置，默认是系统类加载器。这样就可以在当前线程中随时获取需要的类加载器来加载代码。</p>
+<p>ps：这是违背了双亲委派模型的</p>
+<p>24，为什么采用解释器和编译器(指的是即时编译器)并存的架构？</p>
+<p>答：</p>
+<ul>
+<li>解释器的优势：消耗内存少，程序可以快速启动</li>
+<li>编译器：重复执行次数多的热点代码，会直接编译成平台相关的机器指令，后续再调用减少了解释器的中间损耗，就很快了</li>
+</ul>
+<p>结论：结合使用效率高，程序运行之初，使用解释器快速启动，到了后期，编译器发挥作用。</p>
+<p>25,编译期优化和编译优化(即时编译器)？</p>
+<p>编译期是把java源代码转换成class文件的过程，主要优化就是各种语法糖。</p>
+<p>编译优化是运行期间即时编译器把指令编译成本地机器码的过程的优化，例如：</p>
+<ul>
+<li>方法内联：把被调用方法代码原封不动的放到调用方法里</li>
+<li>方法逃逸：是一个分析技术，分析在方法中定义的对象是否会逃逸到方法外，甚至是线程外，通过逃逸程度来指定优化</li>
+<li>公共子表达式消除：一个表达式里有一样的部分，例如：c &#x3D; a<em>b+a</em>b+a,可以优化成，E+E+a，就不用计算两个ab了。</li>
+<li>数组边界检查消除：在一些一定不会越界的地方取消数组越界检查，例如</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> []array = <span class="keyword">new</span> <span class="title class_">array</span>[<span class="number">7</span>];</span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>;i&lt;<span class="number">6</span>;i++)&#123;</span><br><span class="line">    array·······</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>上面的代码永远不会出现数组越界，编译器会取消它的数组越界检查。</li>
+</ul>
+<p>26，Java内存模型？</p>
+<p>答：</p>
+<ul>
+<li>物理计算机内存模型：cpu和内存的计算速率差别过大，需要在他们之间加一个高速缓存，每一个处理器都要一个告诉缓存，并通过缓存一致性协议解决缓存之间的数据不一致问题。</li>
+<li>jvm中的内存模型和这个类似，每一个线程都有一个工作空间，工作空间通过save和load操作和主存建立联系。</li>
+</ul>
+<p><img src="https://zxrs.oss-cn-beijing.aliyuncs.com/v2-037270b0876b6af680d1832bcc9dca32_r.jpg" alt="preview"></p>
+<ul>
+<li>工作空间之间的联系只能通过主存间接进行</li>
+</ul>
+<p>ps：内存协议所有的内存都是jvm堆中的内存</p>
+<p>27，内存模型交互的操作以及规则？</p>
+<p>答：</p>
+<p>操作：</p>
+<ul>
+<li>lock&#x2F;unlock:加锁&#x2F;解锁</li>
+<li>read&#x2F;load&#x2F;use:从主存中读取：read-&gt;主存到工作空间，load-&gt;工作空间-&gt;赋值到工作空间的拷贝变量中,use-&gt;拷贝变量到执行引擎</li>
+<li>assign&#x2F;store&#x2F;write:从工作空间载入：assign-&gt;为工作空间的变量赋值，store-&gt;从工作空间到主存，write&#x3D;&gt;从主存到为主存变量赋值</li>
+</ul>
+<p>规则：</p>
+<ul>
+<li>read&#x2F;load和store&#x2F;write这两队必须成对出现</li>
+<li>不能丢弃assign：也就是只赋值，不存回主存</li>
+<li>新变量只能在主存中产生：也就是不能使用没赋值的变量，也就是不能再没有assign或load的情况下使用store或use</li>
+<li>变量同一时刻只允许一条线程加锁，lock可重入，要解锁相应次数才能解锁成功</li>
+<li>lock操作会清空该变量的值，只有再次assign或load才可以给执行引擎继续使用；没有lock，不能执行unlock</li>
+<li>unlock前要把变量先同步回主存中</li>
+</ul>
+<p>ps：变量指的普通java变量或者是对象</p>
 
       
     </div>

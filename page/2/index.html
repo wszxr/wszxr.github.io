@@ -407,7 +407,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-05-26 19:48:02" itemprop="dateModified" datetime="2022-05-26T19:48:02+08:00">2022-05-26</time>
+                <time title="修改时间：2022-05-30 23:34:31" itemprop="dateModified" datetime="2022-05-30T23:34:31+08:00">2022-05-30</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -787,6 +787,103 @@
 
 
 
+<h2 id="concurrentHashMap"><a href="#concurrentHashMap" class="headerlink" title="concurrentHashMap"></a>concurrentHashMap</h2><h3 id="1-基本属性介绍"><a href="#1-基本属性介绍" class="headerlink" title="1,基本属性介绍"></a>1,基本属性介绍</h3><p>volatile Node&lt;K,V&gt;[] table</p>
+<ul>
+<li>hash桶数组，懒加载，第一次put时初始化</li>
+</ul>
+<p>volatile Node&lt;K,V&gt;[] nextTable</p>
+<ul>
+<li>扩容后的数组</li>
+</ul>
+<p>volatile int sizeCtl</p>
+<ul>
+<li>值为负数：-N表示有n-1个线程在扩容，-1表示正在初始化</li>
+<li>值为正数：若table未初始化(table&#x3D;&#x3D;null)，代表需要新建的长度；若已经初始化，代表可用长度(加载因子*table长度)</li>
+</ul>
+<p>sun.misc.Unsafe U</p>
+<ul>
+<li>cas操作用的unsafe对象，实现原理是底层CMPXCHG指令</li>
+</ul>
+<p>ForwardingNode</p>
+<ul>
+<li>是在扩容的时候占位在原来table的空位中</li>
+<li>&lt;K,V&gt;，hash是MOVED&#x3D;-1，留有指向新数组的引用</li>
+</ul>
+<h3 id="2，内部类"><a href="#2，内部类" class="headerlink" title="2，内部类"></a>2，内部类</h3><p>Node</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">实现Entry接口</span></span><br><span class="line"><span class="comment">存放hash值，&lt;K,V&gt;键值对，next域</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">class</span> <span class="title class_">Node</span>&lt;K,V&gt; <span class="keyword">implements</span> <span class="title class_">Map</span>.Entry&lt;K,V&gt; &#123;</span><br><span class="line">        <span class="keyword">final</span> <span class="type">int</span> hash;</span><br><span class="line">        <span class="keyword">final</span> K key;</span><br><span class="line">        <span class="keyword">volatile</span> V val;</span><br><span class="line">        <span class="keyword">volatile</span> Node&lt;K,V&gt; next;</span><br><span class="line">		......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>TreeNode</p>
+<ul>
+<li>树节点</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">**</span><br><span class="line"> * Nodes <span class="keyword">for</span> use in TreeBins</span><br><span class="line"> */</span><br><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">class</span> <span class="title class_">TreeNode</span>&lt;K,V&gt; <span class="keyword">extends</span> <span class="title class_">Node</span>&lt;K,V&gt; &#123;</span><br><span class="line">        TreeNode&lt;K,V&gt; parent;  <span class="comment">// red-black tree links</span></span><br><span class="line">        TreeNode&lt;K,V&gt; left;</span><br><span class="line">        TreeNode&lt;K,V&gt; right;</span><br><span class="line">        TreeNode&lt;K,V&gt; prev;    <span class="comment">// needed to unlink next upon deletion</span></span><br><span class="line">        <span class="type">boolean</span> red;</span><br><span class="line">		......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>TreeBin</p>
+<ul>
+<li>对各个树节点的封装</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">class</span> <span class="title class_">TreeBin</span>&lt;K,V&gt; <span class="keyword">extends</span> <span class="title class_">Node</span>&lt;K,V&gt; &#123;</span><br><span class="line">        TreeNode&lt;K,V&gt; root;</span><br><span class="line">        <span class="keyword">volatile</span> TreeNode&lt;K,V&gt; first;</span><br><span class="line">        <span class="keyword">volatile</span> Thread waiter;</span><br><span class="line">        <span class="keyword">volatile</span> <span class="type">int</span> lockState;</span><br><span class="line">        <span class="comment">// values for lockState</span></span><br><span class="line">        <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">WRITER</span> <span class="operator">=</span> <span class="number">1</span>; <span class="comment">// set while holding write lock</span></span><br><span class="line">        <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">WAITER</span> <span class="operator">=</span> <span class="number">2</span>; <span class="comment">// set when waiting for write lock</span></span><br><span class="line">        <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">READER</span> <span class="operator">=</span> <span class="number">4</span>; <span class="comment">// increment value for setting read lock</span></span><br><span class="line">		......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>ps：TreeNode,TreeBin都继承自Node，根据多态原则，当链表变了红黑树后，table中存的是TreeBin对象</p>
+<h3 id="3，几个常用的cas算法"><a href="#3，几个常用的cas算法" class="headerlink" title="3，几个常用的cas算法"></a>3，几个常用的cas算法</h3><p>tableAt(Node&lt;K,V&gt;[] table,int i)</p>
+<ul>
+<li>获取数组中的i号元素</li>
+</ul>
+<p>casTabAt</p>
+<ul>
+<li>利用cas设置table中索引为i的元素</li>
+</ul>
+<p>setTabAt</p>
+<ul>
+<li>普通设置table中索引为i的元素</li>
+</ul>
+<h3 id="4，重点方法"><a href="#4，重点方法" class="headerlink" title="4，重点方法"></a>4，重点方法</h3><h4 id="构造方法"><a href="#构造方法" class="headerlink" title="构造方法"></a>构造方法</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. 构造一个空的map，即table数组还未初始化，初始化放在第一次插入数据时，默认大小为16</span></span><br><span class="line">ConcurrentHashMap()</span><br><span class="line"><span class="comment">// 2. 给定map的大小</span></span><br><span class="line">ConcurrentHashMap(<span class="type">int</span> initialCapacity) </span><br><span class="line"><span class="comment">// 3. 给定一个map</span></span><br><span class="line">ConcurrentHashMap(Map&lt;? <span class="keyword">extends</span> <span class="title class_">K</span>, ? <span class="keyword">extends</span> <span class="title class_">V</span>&gt; m)</span><br><span class="line"><span class="comment">// 4. 给定map的大小以及加载因子</span></span><br><span class="line">ConcurrentHashMap(<span class="type">int</span> initialCapacity, <span class="type">float</span> loadFactor)</span><br><span class="line"><span class="comment">// 5. 给定map大小，加载因子以及并发度（预计同时操作数据的线程）</span></span><br><span class="line">ConcurrentHashMap(<span class="type">int</span> initialCapacity,<span class="type">float</span> loadFactor, <span class="type">int</span> concurrencyLevel)</span><br></pre></td></tr></table></figure>
+
+<p>重点在第二种构造：</p>
+<ul>
+<li>如果传入初始大小小于0，直接异常</li>
+<li>不能超过int最大值，超过了就取最大值</li>
+<li>传入的数会被转换成2的幂次方</li>
+<li>转换后赋值给sizeCtl作为table的长度</li>
+<li>到此为止只是计算了长度，在第一次put才会初始化</li>
+</ul>
+<h4 id="初始化方法initTable"><a href="#初始化方法initTable" class="headerlink" title="初始化方法initTable"></a>初始化方法initTable</h4><ul>
+<li>如果有线程在初始化会调用U.compareAndSwapInt把sizeCtl变成-1，其他线程不能初始化，调用yield让出时间片</li>
+<li>会真的new一个数组</li>
+<li>无参构造直接new的大小默认是16</li>
+<li>会计算出table可用大小，也就是负载因子(默认0.75)*数组实际大小</li>
+</ul>
+<h4 id="put方法"><a href="#put方法" class="headerlink" title="put方法"></a>put方法</h4><ul>
+<li>计算hash值，两次hash，第一次用hashcode方法，第二次用第一次的结果h，调用spreed(h)</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//将低8位和高8位进行异或</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="title function_">spread</span><span class="params">(<span class="type">int</span> h)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> (h ^ (h &gt;&gt;&gt; <span class="number">16</span>)) &amp; HASH_BITS;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>判断是否初始化，没有则进行初始化</li>
+<li>计算出table[i]的i，也就是该插入的桶，使用spread的结果对数组长度取模</li>
+<li>使用tabAt查看table[i]上是null，是链表头，还是树的根节点，或者是特殊节点forwardingNode(这个节点是在扩容时占位空桶用的，hash值是-1)</li>
+<li>如果是null，用cas直接放入</li>
+<li>如果hash值&gt;0则是链表头，这是用synchronied锁住头节点，遍历插入，key相同则覆盖，没有相同key就尾插；插入后，如果该链表长度&gt;&#x3D;8而且table[]的长度&gt;&#x3D;64，就把该链转成红黑树，如果table[]!&gt;&#x3D;64，就会扩容一次</li>
+<li>判断if(f instanceof TreeBin)，如果为true就是红黑树根，按红黑树方式遍历，key相同覆盖，否则追加新节点</li>
+<li>最后对当前容量进行检查，当元素个数超过了数组可用大小，就扩容。</li>
+</ul>
+<h4 id="get方法"><a href="#get方法" class="headerlink" title="get方法"></a>get方法</h4><p>和put差不多，hash到桶，判断节点类型，遍历</p>
+<h4 id="transfer扩容方法"><a href="#transfer扩容方法" class="headerlink" title="transfer扩容方法"></a>transfer扩容方法</h4><ul>
+<li>创建一个原先table两倍大小的nextTable数组</li>
+<li>创建forwardingNode引用</li>
+<li>遍历table，使用tableAt逐个获取table的node并判断类型</li>
+<li>如果table[i]是null，就把forwardingNode放进去；</li>
+<li>如果table[i]是链表节点，反序后，把原链表放在nextTable[i],反序后的放在nextTable[i+n],然后把table[i]放入forwardingNode</li>
+<li>如果是树根节点，也反序，并判断要不要解除树化，原先的放nextTable[i],反序后的放[i+n]</li>
+<li>遍历完毕后，更新sizeCtl为新容量的0.75</li>
+</ul>
+<p>ps：遍历过的桶放上forwardingNode，就是告诉其他线程这个桶已经被复制过了，跳过这个节点</p>
+<h4 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h4><p>jdk1.8和1.6的区别是</p>
+<ul>
+<li>不采用segment，而是锁住node</li>
+<li>使用cas替代了锁，只在遍历链表或者是树的时候使用了synchronized</li>
+<li>设计了MOVED状态 当resize的中过程中 线程2还在put数据，线程2会帮助resize。</li>
+</ul>
 
       
     </div>
