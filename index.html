@@ -157,6 +157,206 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/19/%E6%B1%87%E7%BC%96%E5%92%8C%E8%AE%A1%E7%BB%84/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="你好">
+      <meta itemprop="description" content="也许是风太小了，没能把我的思念带给你">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大森林">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/06/19/%E6%B1%87%E7%BC%96%E5%92%8C%E8%AE%A1%E7%BB%84/" class="post-title-link" itemprop="url">汇编和计组</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-06-19 21:32:29 / 修改时间：22:07:18" itemprop="dateCreated datePublished" datetime="2022-06-19T21:32:29+08:00">2022-06-19</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%96%B0%E4%B8%96%E7%95%8C/" itemprop="url" rel="index"><span itemprop="name">新世界</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h2><h3 id="1，存储器：存放程序和数据的器件，包括高速缓存catch，Ram，Rom等···"><a href="#1，存储器：存放程序和数据的器件，包括高速缓存catch，Ram，Rom等···" class="headerlink" title="1，存储器：存放程序和数据的器件，包括高速缓存catch，Ram，Rom等···"></a>1，存储器：存放程序和数据的器件，包括高速缓存catch，Ram，Rom等···</h3><ul>
+<li>ram是随机存储存储器(random access memory)，比如内存,可以由cpu直接修改。</li>
+<li>rom是只读存储(read only memory)，例如磁盘，cpu不可以直接修改磁盘的内容，需要先加载到内存中才可以。</li>
+<li>catch是速度特别快的ram。</li>
+</ul>
+<h3 id="2，存储单元"><a href="#2，存储单元" class="headerlink" title="2，存储单元"></a>2，存储单元</h3><p>微型计算机的存储单元都是1B(Byte)，8位(bit),如果某存储器有100个内存单元，表示有100B。</p>
+<h3 id="3-cpu对器件的读写-总线结构"><a href="#3-cpu对器件的读写-总线结构" class="headerlink" title="3,cpu对器件的读写+总线结构"></a>3,cpu对器件的读写+总线结构</h3><p>小型和微型机(我们家用的都是)一般采用总线结构，而大型的一般采用通道结构(略)；计算机的各个部件之间通过总线连接，这里的总线是指的逻辑上的总线(一根根总线的集合)而不是一条确定的线。</p>
+<p>总线按功能分为：控制总线，地址总线，数据总线</p>
+<ul>
+<li>控制总线：cpu在操作某个器件之前会先通过控制总线告诉该器件，并且会指明要进行的操作，一般每一根控制总线对应一个器件。</li>
+<li>地址总线：在指定的器件的某个地址操作，这个地址需要由cpu发出到器件之中。</li>
+<li>数据总线：cpu和器件之间传输数据，双向。</li>
+</ul>
+<p>ps：</p>
+<ul>
+<li>地址总线的宽度：也就是地址总线的根数(N)，每一根可以有高低电平两种状态(0&#x2F;1)；如果N&#x3D;10，代表有十根，那就可以排列出2的10次方个不同的数，就可以代表2的10次方个不同地址的内存单位。也就是1024B&#x3D;&#x3D;1kB。那么该cpu最多可以操作1kB的内存。</li>
+<li>数据总线的宽度：代表每次数据传输的量，如果宽度为16(16根)，那么每次可以传输16b也就是两字节的数据；如果有大于两字节的数需要传输，就选择多次传输。</li>
+</ul>
+<h3 id="4，内存地址空间"><a href="#4，内存地址空间" class="headerlink" title="4，内存地址空间"></a>4，内存地址空间</h3><p>把各个器件的内存组合成一个逻辑内存，并且分配内存地址空间，比如在一段连续空间00000~FFFFF中，规定主存储空间(Ram类)为0000-9FFFF，显存(显卡中的Ram)为A0000-C0000，各类Rom放C0000-FFFFF；那么cpu在操作时就能分辨得出来；例如：尝试使用cpu直接更改C0000-FFFFF中的数据会失败，它是Rom空间，不可以被cpu直接更改。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/19/%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="你好">
+      <meta itemprop="description" content="也许是风太小了，没能把我的思念带给你">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大森林">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/06/19/%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80/" class="post-title-link" itemprop="url">汇编语言</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-06-19 21:31:53" itemprop="dateCreated datePublished" datetime="2022-06-19T21:31:53+08:00">2022-06-19</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/19/%E6%96%B0%E4%B8%96%E7%95%8C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="你好">
+      <meta itemprop="description" content="也许是风太小了，没能把我的思念带给你">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大森林">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/06/19/%E6%96%B0%E4%B8%96%E7%95%8C/" class="post-title-link" itemprop="url">新世界</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-06-19 21:29:37" itemprop="dateCreated datePublished" datetime="2022-06-19T21:29:37+08:00">2022-06-19</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/27/jvm%E9%A2%98%E7%9B%AE/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1346,253 +1546,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/12/%E6%98%A5%E5%A4%A9%E7%9A%84%E9%9D%B4%E5%AD%90/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="你好">
-      <meta itemprop="description" content="也许是风太小了，没能把我的思念带给你">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大森林">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/05/12/%E6%98%A5%E5%A4%A9%E7%9A%84%E9%9D%B4%E5%AD%90/" class="post-title-link" itemprop="url">春天的靴子</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-05-12 12:28:29" itemprop="dateCreated datePublished" datetime="2022-05-12T12:28:29+08:00">2022-05-12</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-05-21 17:47:05" itemprop="dateModified" datetime="2022-05-21T17:47:05+08:00">2022-05-21</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%98%A5%E5%A4%A9%E7%B3%BB%E5%88%97/" itemprop="url" rel="index"><span itemprop="name">春天系列</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="springboot"><a href="#springboot" class="headerlink" title="springboot"></a>springboot</h1><p>springboot旨在于简化spring开发</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/05/12/%E6%98%A5%E5%A4%A9%E7%9A%84%E9%9D%B4%E5%AD%90/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/09/%E6%98%A5%E5%A4%A9-%E6%B3%A8%E8%A7%A3%E7%BC%96%E7%A8%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="你好">
-      <meta itemprop="description" content="也许是风太小了，没能把我的思念带给你">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大森林">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/05/09/%E6%98%A5%E5%A4%A9-%E6%B3%A8%E8%A7%A3%E7%BC%96%E7%A8%8B/" class="post-title-link" itemprop="url">春天-注解编程</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-05-09 20:15:17" itemprop="dateCreated datePublished" datetime="2022-05-09T20:15:17+08:00">2022-05-09</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-05-11 16:41:52" itemprop="dateModified" datetime="2022-05-11T16:41:52+08:00">2022-05-11</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%98%A5%E5%A4%A9%E7%B3%BB%E5%88%97/" itemprop="url" rel="index"><span itemprop="name">春天系列</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="spring注解编程"><a href="#spring注解编程" class="headerlink" title="spring注解编程"></a>spring注解编程</h1><h2 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h2>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/05/09/%E6%98%A5%E5%A4%A9-%E6%B3%A8%E8%A7%A3%E7%BC%96%E7%A8%8B/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/09/%E6%98%A5%E5%A4%A9-%E4%BA%8B%E5%8A%A1%E7%AE%A1%E7%90%86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="你好">
-      <meta itemprop="description" content="也许是风太小了，没能把我的思念带给你">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大森林">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/05/09/%E6%98%A5%E5%A4%A9-%E4%BA%8B%E5%8A%A1%E7%AE%A1%E7%90%86/" class="post-title-link" itemprop="url">春天-事务管理</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-05-09 15:12:01" itemprop="dateCreated datePublished" datetime="2022-05-09T15:12:01+08:00">2022-05-09</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-05-11 16:41:31" itemprop="dateModified" datetime="2022-05-11T16:41:31+08:00">2022-05-11</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%98%A5%E5%A4%A9%E7%B3%BB%E5%88%97/" itemprop="url" rel="index"><span itemprop="name">春天系列</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="Spring事务管理"><a href="#Spring事务管理" class="headerlink" title="Spring事务管理"></a>Spring事务管理</h1><p>spring通过aop的方式进行事务开发：</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/05/09/%E6%98%A5%E5%A4%A9-%E4%BA%8B%E5%8A%A1%E7%AE%A1%E7%90%86/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1660,14 +1617,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-count">31</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
   </nav>
