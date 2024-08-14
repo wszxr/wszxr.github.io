@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>操作系统 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="1,给解压好的bochs配置安装文件,make编译，make install安装12345678.&#x2F;configure \ --prefix&#x3D;&#x2F;home&#x2F;zxr&#x2F;bochs_install \ #安装路径--enable-debugger \ #启用bochs自带的调试功能--enable-disasm \ #支持反汇编--enable-iodebug \ #开启io调试接口--enable-x8">
+<meta property="og:type" content="article">
+<meta property="og:title" content="操作系统">
+<meta property="og:url" content="http://example.com/2024/08/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="1,给解压好的bochs配置安装文件,make编译，make install安装12345678.&#x2F;configure \ --prefix&#x3D;&#x2F;home&#x2F;zxr&#x2F;bochs_install \ #安装路径--enable-debugger \ #启用bochs自带的调试功能--enable-disasm \ #支持反汇编--enable-iodebug \ #开启io调试接口--enable-x8">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20240813235503043.png">
+<meta property="og:image" content="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20240814235303276.png">
+<meta property="article:published_time" content="2024-08-13T14:55:25.000Z">
+<meta property="article:modified_time" content="2024-08-14T15:54:37.061Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="自制操作系统">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20240813235503043.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-操作系统" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/08/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" class="article-date">
+  <time class="dt-published" datetime="2024-08-13T14:55:25.000Z" itemprop="datePublished">2024-08-13</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/">计算机</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      操作系统
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h4 id="1-给解压好的bochs配置安装文件-make编译，make-install安装"><a href="#1-给解压好的bochs配置安装文件-make编译，make-install安装" class="headerlink" title="1,给解压好的bochs配置安装文件,make编译，make install安装"></a>1,给解压好的bochs配置安装文件,make编译，make install安装</h4><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">./configure</span> <span class="string">\</span> </span><br><span class="line"><span class="string">--prefix=/home/zxr/bochs_install</span> <span class="string">\</span> <span class="comment">#安装路径</span></span><br><span class="line"><span class="string">--enable-debugger</span> <span class="string">\</span> <span class="comment">#启用bochs自带的调试功能</span></span><br><span class="line"><span class="string">--enable-disasm</span> <span class="string">\</span> <span class="comment">#支持反汇编</span></span><br><span class="line"><span class="string">--enable-iodebug</span> <span class="string">\</span> <span class="comment">#开启io调试接口</span></span><br><span class="line"><span class="string">--enable-x86-debugger</span> <span class="string">\</span> <span class="comment">#支持x86调试器</span></span><br><span class="line"><span class="string">--with-x</span> <span class="string">\</span> <span class="comment">#使用xwindows</span></span><br><span class="line"><span class="string">--with-x11</span> <span class="comment">#x11图形用户界面</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>注意安装c和c++编译器，否则会编译失败</li>
+</ul>
+<h4 id="2-配置bochs的启动文件"><a href="#2-配置bochs的启动文件" class="headerlink" title="2,配置bochs的启动文件"></a>2,配置bochs的启动文件</h4><ul>
+<li>启动文件不限定名字和后缀，使用bochsrc.disk放置安装根路径即可(输入的时候方便，只需要输入文件名)，也可以不在根，只不过要输入相对路径</li>
+<li>配置虚拟计算机内存，硬盘启动，BIOS，VGABIOS，日志文件，鼠标，键盘映射，硬盘设置</li>
+</ul>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">megs:</span> <span class="number">32</span> <span class="comment">#内存大小</span></span><br><span class="line"><span class="comment">#BIOS</span></span><br><span class="line"><span class="attr">romimage:</span> <span class="string">file=/home/zxr/bochs_install/bochs/share/bochs/BIOS-bochs-latest</span> </span><br><span class="line"><span class="comment">#VGABIOS</span></span><br><span class="line"><span class="attr">vgaromimage:</span> <span class="string">file=/home/zxr/bochs_install/bochs/share/bochs/VGABIOS-lgpl-latest</span> </span><br><span class="line"><span class="comment">#硬盘启动</span></span><br><span class="line"><span class="attr">boot:</span> <span class="string">disk</span></span><br><span class="line"><span class="comment">#日志输出文件路径，根目录&#x27;/&#x27;省略了</span></span><br><span class="line"><span class="attr">log:</span> <span class="string">bochs.out</span></span><br><span class="line"><span class="comment">#禁用鼠标</span></span><br><span class="line"><span class="attr">mouse:</span> <span class="string">enabled=0</span></span><br><span class="line"><span class="comment">#keyboard_mapping: enabled=1</span></span><br><span class="line"><span class="comment">#键盘映射</span></span><br><span class="line"><span class="string">keyboard:keymap=/home/zxr/bochs_install/bochs/share/bochs/keymaps/x11-pc-us.map</span></span><br><span class="line"><span class="comment">#硬盘设置</span></span><br><span class="line"><span class="attr">ata0:</span> <span class="string">enabled=1,ioaddr1=0x1f0,ioaddr2=0x3f0,irq=14</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>在安装根键入 bin&#x2F;bochs,打开程序</li>
+</ul>
+<p><img src="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20240813235503043.png" alt="image-20240813235503043"></p>
+<ul>
+<li>输入2选择bochs配置文件，输入配置文件路径，读取成功</li>
+</ul>
+<h4 id="创建启动盘"><a href="#创建启动盘" class="headerlink" title="创建启动盘"></a>创建启动盘</h4><ul>
+<li>使用bochs虚拟机自带的bin&#x2F;bximage指令</li>
+</ul>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">bin/bximage</span> <span class="string">.</span></span><br><span class="line"><span class="string">-fd创建软盘。</span></span><br><span class="line"><span class="string">-hd</span> <span class="string">创建硬盘。</span></span><br><span class="line"><span class="string">-mode</span> <span class="string">创建硬盘的类型，有flat</span> <span class="string">、sparse</span> <span class="string">、growing</span> <span class="string">三种。</span></span><br><span class="line"><span class="string">-size</span> <span class="string">指创建多大的硬盘，以MB</span> <span class="string">为单位。</span></span><br><span class="line"><span class="string">-q</span> <span class="string">以静默模式创建，创建过程中不会和用户交互。</span></span><br><span class="line"><span class="comment">#bin/bochs -hd -mode=&quot;flat&quot; -size=60 -q hdM60.img</span></span><br><span class="line"><span class="comment">#创建启动硬盘，大小60m，静默创造，名字叫hdM60.img</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>输入指令后，bochs会把需要写进配置文件的内容输出，复制进bochsrc.disk(配置文件)即可</li>
+</ul>
+<p><img src="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20240814235303276.png" alt="image-20240814235303276"></p>
+<ul>
+<li>启动硬盘创建完毕，注意，进入时是调试模式，输入c放行，q退出</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/08/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" data-id="clzu18qku00044cvcdh3d69g1" data-title="操作系统" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%87%AA%E5%88%B6%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" rel="tag">自制操作系统</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2024/08/03/amazon/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">amazon</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/DianShang/">DianShang</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/">计算机</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Amazon/" rel="tag">Amazon</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%87%AA%E5%88%B6%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" rel="tag">自制操作系统</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Amazon/" style="font-size: 10px;">Amazon</a> <a href="/tags/%E8%87%AA%E5%88%B6%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" style="font-size: 10px;">自制操作系统</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">August 2024</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2024/08/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>
+          </li>
+        
+          <li>
+            <a href="/2024/08/03/amazon/">amazon</a>
+          </li>
+        
+          <li>
+            <a href="/2024/08/03/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2024 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
