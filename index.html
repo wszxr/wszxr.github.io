@@ -95,11 +95,43 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        
+        <p>1，通过合作第三方获取资讯</p>
+<p>新浪，百度，UC等</p>
+<p>2，通过广告微服务，远程rpc获取要插入资讯的广告</p>
+<ul>
+<li>广告表：广告id，广告位置，广告名称，广告类型，广告状态</li>
+<li>类型<ul>
+<li>sdk广告：由客户端直接请求</li>
+<li>api广告：由后端请求</li>
+</ul>
+</li>
+</ul>
+<p>3，获取第三方广告需要的时间长，可以和获取资讯两个任务并发执行，利用future，并把结果存到一个map里</p>
+<p>4，插入自己公司想插入的信息流，一般增删改查</p>
+<p>5，在最后需要广告的时候，可以使用future.get等待500ms，之后把map的广告插进信息流，不管map里是否有四个</p>
+<p>6，话术：</p>
+<ul>
+<li>用户反馈切换页面时相应时间长</li>
+<li>组长分配需求</li>
+<li>公司的运维开发的链路追踪工具，可以一层一层看出接口的耗时</li>
+<li>同步请求uc资讯和4个广告，耗时3秒左右</li>
+<li>引入多线程，异步并行获取广告，放进map里</li>
+<li>最后需要广告时判断map是否有，没有的话使用futrue的get方法多等待500ms，还是没有直接放弃广告</li>
+<li>优化后结果，获取资讯0.6秒，广告并发0.5秒，总共1秒左右</li>
+</ul>
+<p>7，项目书写</p>
+<ul>
+<li>负责日常需求的开发和迭代(新的第三方资讯引入，banner菜单开发，快应用菜单开发)<ul>
+<li>就是写banner表单&#x2F;快应用表单，提交后载入到管理系统</li>
+<li>快应用就是点击直达的应用推荐</li>
+</ul>
+</li>
+</ul>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2024/11/17/%E9%87%8D%E8%A6%81/" data-id="cm3l6pwdd0004asvc8eycfvvq" data-title="重要" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2024/11/17/%E9%87%8D%E8%A6%81/" data-id="cm3lsozdc000fn8vceiej7y5l" data-title="重要" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -144,7 +176,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2024/11/12/%E5%95%86%E5%9F%8E%E6%94%AF%E4%BB%98/" data-id="cm3l6pwda0001asvc9rlxhu8o" data-title="商城支付" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2024/11/12/%E5%95%86%E5%9F%8E%E6%94%AF%E4%BB%98/" data-id="cm3lsozd9000an8vc0yle2qim" data-title="商城支付" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -204,7 +236,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2024/10/18/JP%E5%A4%A7%E5%AD%A6%E4%B9%A0/" data-id="cm3l6pwd60000asvchtgg0wy2" data-title="JP大学习" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2024/10/18/JP%E5%A4%A7%E5%AD%A6%E4%B9%A0/" data-id="cm3lsozd00000n8vc346qhcbs" data-title="JP大学习" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -272,7 +304,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2024/09/10/%E4%BA%9A%E9%A9%AC%E9%80%8A%E8%87%AA%E5%AD%A6/" data-id="cm37j0mvd0002bwvcfkxuef9l" data-title="亚马逊自学" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2024/09/10/%E4%BA%9A%E9%A9%AC%E9%80%8A%E8%87%AA%E5%AD%A6/" data-id="cm3lsozd80005n8vc1o63cbu1" data-title="亚马逊自学" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -342,7 +374,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2024/08/19/%E5%8D%96%E5%AE%B6%E5%A4%A7%E5%AD%A6/" data-id="cm37j0mve0005bwvcgtttf0fv" data-title="卖家大学" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2024/08/19/%E5%8D%96%E5%AE%B6%E5%A4%A7%E5%AD%A6/" data-id="cm3lsozd80006n8vc06g37urs" data-title="卖家大学" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -421,7 +453,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2024/08/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" data-id="cm37j0mvf0006bwvc87h31k0x" data-title="操作系统" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2024/08/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" data-id="cm3lsozda000bn8vc5la20riy" data-title="操作系统" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -492,7 +524,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2024/08/03/amazon/" data-id="cm37j0mvb0001bwvc6xh03xo7" data-title="amazon" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2024/08/03/amazon/" data-id="cm3lsozd50001n8vce452cp9v" data-title="amazon" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -549,7 +581,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2024/08/03/hello-world/" data-id="cm37j0mv70000bwvcgwvqa0om" data-title="Hello World" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2024/08/03/hello-world/" data-id="cm3lsozd70004n8vc2b7qf226" data-title="Hello World" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
