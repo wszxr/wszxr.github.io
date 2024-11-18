@@ -124,14 +124,31 @@
 <li>负责日常需求的开发和迭代(新的第三方资讯引入，banner菜单开发，快应用菜单开发)<ul>
 <li>就是写banner表单&#x2F;快应用表单，提交后载入到管理系统</li>
 <li>快应用就是点击直达的应用推荐</li>
+<li>第三方返回的资讯字段：标题，副标题，资讯url，资讯分类，作者，图片，图片类型，创建时间</li>
+<li>使用工厂和模板方法，优化第三方资讯拉取的方法<ul>
+<li>之前是写死uc的资讯</li>
+<li>改为工厂模式通过渠道(入参)获取不同实例，不同实例实现统一接口也就是模板方法模式</li>
+<li>模板方法用于封装资讯，因为不同渠道讯息关键字不同，要统一封装一层返回给前端<ul>
+<li>注意要把工厂的实例注入到spring，之后在工厂里直接get，否则会导致aop失效</li>
 </ul>
 </li>
+</ul>
+</li>
+</ul>
+</li>
+<li>和uc对接：<ul>
+<li>带着密钥和频道id访问uc的验证接口，获取到token（为什么要给一个方法给他们调用才能获取token，那边直接http返回不行吗），存到redis，token和此频道id一一对应</li>
+<li>访问时从redis根据频道id取token，然后拿着频道id和token访问uc接口拿资讯</li>
+<li>设置定时任务10分钟访问一次验证接口获取token(?，必要性？直接token过期后再请求不好吗)，当访问资讯接口显示token过期时，手动调用验证接口获取token，并刷新redis的频道id+token</li>
+</ul>
+</li>
+<li>导入黑名单，从在用户手机上匹配，到在redis中匹配，减少了用户的内存压力(?资讯app中的黑名单作用是什么，是否是浏览器话术遗留)</li>
 </ul>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2024/11/17/%E9%87%8D%E8%A6%81/" data-id="cm3lsozdc000fn8vceiej7y5l" data-title="重要" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2024/11/17/%E9%87%8D%E8%A6%81/" data-id="cm3n6w4jq000rtkvc7olvbqpy" data-title="重要" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -176,7 +193,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2024/11/12/%E5%95%86%E5%9F%8E%E6%94%AF%E4%BB%98/" data-id="cm3lsozd9000an8vc0yle2qim" data-title="商城支付" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2024/11/12/%E5%95%86%E5%9F%8E%E6%94%AF%E4%BB%98/" data-id="cm3n6w4ji000atkvc75rl1qw2" data-title="商城支付" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -236,7 +253,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2024/10/18/JP%E5%A4%A7%E5%AD%A6%E4%B9%A0/" data-id="cm3lsozd00000n8vc346qhcbs" data-title="JP大学习" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2024/10/18/JP%E5%A4%A7%E5%AD%A6%E4%B9%A0/" data-id="cm3n6w4j40000tkvcbm7ye7wb" data-title="JP大学习" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -304,7 +321,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2024/09/10/%E4%BA%9A%E9%A9%AC%E9%80%8A%E8%87%AA%E5%AD%A6/" data-id="cm3lsozd80005n8vc1o63cbu1" data-title="亚马逊自学" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2024/09/10/%E4%BA%9A%E9%A9%AC%E9%80%8A%E8%87%AA%E5%AD%A6/" data-id="cm3n6w4jf0005tkvceyz22ydo" data-title="亚马逊自学" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -374,7 +391,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2024/08/19/%E5%8D%96%E5%AE%B6%E5%A4%A7%E5%AD%A6/" data-id="cm3lsozd80006n8vc06g37urs" data-title="卖家大学" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2024/08/19/%E5%8D%96%E5%AE%B6%E5%A4%A7%E5%AD%A6/" data-id="cm3n6w4jg0006tkvcd56913g6" data-title="卖家大学" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -453,7 +470,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2024/08/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" data-id="cm3lsozda000bn8vc5la20riy" data-title="操作系统" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2024/08/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" data-id="cm3n6w4ji000btkvch0510fsc" data-title="操作系统" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -524,7 +541,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2024/08/03/amazon/" data-id="cm3lsozd50001n8vce452cp9v" data-title="amazon" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2024/08/03/amazon/" data-id="cm3n6w4je0004tkvcfm7qbot7" data-title="amazon" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -581,7 +598,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2024/08/03/hello-world/" data-id="cm3lsozd70004n8vc2b7qf226" data-title="Hello World" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2024/08/03/hello-world/" data-id="cm3n6w4ja0001tkvcef5sf201" data-title="Hello World" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
