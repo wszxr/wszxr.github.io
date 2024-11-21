@@ -14,7 +14,7 @@
 <meta property="og:description" content="1，通过合作第三方获取资讯 新浪，百度，UC等 2，通过广告微服务，远程rpc获取要插入资讯的广告  广告表：广告id，广告位置，广告名称，广告类型，广告状态 类型 sdk广告：由客户端直接请求 api广告：由后端请求    3，获取第三方广告需要的时间长，可以和获取资讯两个任务并发执行，利用future，并把结果存到一个map里 4，插入自己公司想插入的信息流，一般增删改查 5，在最后需要广告的">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-11-17T05:56:13.000Z">
-<meta property="article:modified_time" content="2024-11-19T15:46:48.027Z">
+<meta property="article:modified_time" content="2024-11-21T15:09:25.388Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="话术">
 <meta name="twitter:card" content="summary">
@@ -147,8 +147,7 @@
 </li>
 <li>导入黑名单，从在用户手机上匹配，到在redis中匹配，减少了用户的内存压力(?资讯app中的黑名单作用是什么，是否是浏览器话术遗留)</li>
 </ul>
-<h3 id="问点解析"><a href="#问点解析" class="headerlink" title="问点解析"></a>问点解析</h3><p>咨询获取</p>
-<p>1，参数为渠道，子渠道，密钥 请求uc的token；提供接口供uc调用，接口内容为把渠道，子渠道，子渠道对应的token，作为hash结构保存到redis；再通过渠道，子渠道，+token的方式去获取uc的资讯；</p>
+<h3 id="问点解析"><a href="#问点解析" class="headerlink" title="问点解析"></a>问点解析</h3><h4 id="咨询获取"><a href="#咨询获取" class="headerlink" title="咨询获取"></a>咨询获取</h4><p>1，参数为渠道，子渠道，密钥 请求uc的token；提供接口供uc调用，接口内容为把渠道，子渠道，子渠道对应的token，作为hash结构保存到redis；再通过渠道，子渠道，+token的方式去获取uc的资讯；</p>
 <p>2，问题</p>
 <ul>
 <li>为什么要分两步？<ul>
@@ -168,9 +167,50 @@
 <li>请求时间不超过5分钟</li>
 <li>对参数进行数据加密，使用非堆成加密，客户端使用公钥对参数加密，服务端使用私钥对参数进行解密</li>
 <li>使用https协议，了解https为什么安全</li>
+<li>把大数据曝光前50的快应用，以及通过省份和分类区分前50的快应用，今年和去年减少量，这个月和上个月减少量；写进xml文件，打压缩包ftp发送到目录<ul>
+<li>快应用是展示事件，展示给用户后存快应用包名，通过count能排序出前50</li>
 </ul>
 </li>
 </ul>
+</li>
+<li>资讯拉取引入了什么设计模式？<ul>
+<li>工厂模式+模板方法模式</li>
+<li>之前同事对接时，写死了uc，现在改用模板方法模式，写一个抽象类，提供验证和获取资讯两个模板抽象方法</li>
+<li>每个资讯方写一个类继承抽象类，实现方法，使用applicationcontext.getBeanOfType(抽象类.class);可以把抽象类的实现类全部按照类名驼峰加载到spring里面，还会返回一个map，k是名字，v是载入的bean，这样就形成一个工厂，传入参数这个map就可以根据k找到不同的实现类；</li>
+<li>了解三个工厂的知识，还知道哪些设计模式？</li>
+</ul>
+</li>
+</ul>
+<h4 id="后台反馈内容显示刷新资讯耗时过长"><a href="#后台反馈内容显示刷新资讯耗时过长" class="headerlink" title="后台反馈内容显示刷新资讯耗时过长"></a>后台反馈内容显示刷新资讯耗时过长</h4><p>1，问题</p>
+<ul>
+<li>在哪里反馈？<ul>
+<li>应用反馈，直接存到数据库，运营在后台可以看到</li>
+</ul>
+</li>
+<li>拿到优化需求后，怎么定位问题？<ul>
+<li>链路追踪工具：利用postman模拟刷新资讯的请求，通过公司的链路追踪工具可以看到具体接口的耗时，发现在资讯里面插入广告时耗时严重，rpc请求每一个广告的时间在0.8秒左右，请求15条资讯的接口只要0.6s</li>
+</ul>
+</li>
+<li>怎么保证拉取的资讯不重复？<ul>
+<li>uc在返回资讯的时候，资讯列表里加一个游标(可能是字符串)，后端收到后连带游标发给前端，前端再次发请求时也带上这个游标，作用是UC标记资讯返回到哪个位置，防止返回重复的资讯</li>
+</ul>
+</li>
+<li>如何优化时间过长问题？<ul>
+<li>背景：运营可能会配置0-4个广告不等，广告模块提供的接口是请求单个广告，当运营配置插入4条广告时，会请求0.8*4&#x3D;3.2秒左右，他和拉取资讯串行，0.6+3.2&#x3D;3.8秒</li>
+<li>优化：利用多线程<ul>
+<li>将拉取资讯和拉取广告并发执行，最多耗时3.2秒广告时间，拉取资讯在这3.2s已经完成</li>
+<li>将每次请求广告接口并发执行，拉取广告最多仅耗时0.8s，总耗时也就0.8s</li>
+<li>在资讯和广告组装时，也就是接口快结束时，利用future.get()获取广告结果，如果广告执行过长，get()只等400ms，超过了没有get到就丢弃广告</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>优化广告代码逻辑</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//并行获取广告</span></span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span><span class="number">0</span>;i&lt;<span class="number">4</span>;i++)&#123;</span><br><span class="line">    Futrue&lt;String&gt; f = Executors.newfixedThreadPool(<span class="number">10</span>).submit((广告id)-&gt;&#123;</span><br><span class="line">        <span class="comment">//获取广告</span></span><br><span class="line">        <span class="comment">//返回广告，json格式</span></span><br><span class="line">        <span class="keyword">return</span> ···;</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="comment">//将广告id对应的future加入map，future里面有执行结果</span></span><br><span class="line">    map.put(广告id,f)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//获取资讯</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//资讯中插入自营内容，banner，卡片等</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//获取广告</span></span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span><span class="number">0</span>,i&lt;<span class="number">4</span>;i++)&#123;</span><br><span class="line">    <span class="comment">//遍历map，map.get(广告id).get(400ms)</span></span><br><span class="line">    <span class="comment">//将广告插入资讯</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//优化完成，时间=0.6s获取资讯，每个广告最多等待400ms，加起来最多2.2s</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
 
       
     </div>
