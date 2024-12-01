@@ -1,839 +1,551 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  
-  
-  <title>Hexo</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://example.com/index.html">
-<meta property="og:site_name" content="Hexo">
-<meta property="og:locale" content="en_US">
-<meta property="article:author" content="John Doe">
-<meta name="twitter:card" content="summary">
-  
-    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
-  
-  
-    <link rel="shortcut icon" href="/favicon.png">
-  
-  
-  
-<link rel="stylesheet" href="/css/style.css">
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><title>Hexo</title><meta name="author" content="John Doe"><meta name="copyright" content="John Doe"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#f7f9fe"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-touch-fullscreen" content="yes"><meta name="apple-mobile-web-app-title" content="Hexo"><meta name="application-name" content="Hexo"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="#f7f9fe"><meta property="og:type" content="website"><meta property="og:title" content="Hexo"><meta property="og:url" content="http://example.com/index.html"><meta property="og:site_name" content="Hexo"><meta property="og:description"><meta property="og:locale" content="en"><meta property="og:image" content="https://bu.dusays.com/2023/04/27/64496e511b09c.jpg"><meta property="article:author" content="John Doe"><meta property="article:tag"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://bu.dusays.com/2023/04/27/64496e511b09c.jpg"><meta name="description"><link rel="shortcut icon" href="/favicon.ico"><link rel="canonical" href="http://example.com/"><link rel="preconnect" href="//cdn.cbd.int"/><meta name="google-site-verification" content="xxx"/><meta name="baidu-site-verification" content="code-xxx"/><meta name="msvalidate.01" content="xxx"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/@fancyapps/ui@5.0.28/dist/fancybox/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  linkPageTop: undefined,
+  peoplecanvas: {"enable":true,"img":"https://upload-bbs.miyoushe.com/upload/2024/07/27/125766904/ba62475f396df9de3316a08ed9e65d86_5680958632268053399..png"},
+  postHeadAiDescription: {"enable":true,"gptName":"AnZhiYu","mode":"local","switchBtn":false,"btnLink":"https://afdian.net/item/886a79d4db6711eda42a52540025c377","randomNum":3,"basicWordCount":1000,"key":"xxxx","Referer":"https://xx.xx/"},
+  diytitle: {"enable":true,"leaveTitle":"w(ﾟДﾟ)w 不要走！再看看嘛！","backTitle":"♪(^∇^*)欢迎肥来！"},
+  LA51: undefined,
+  greetingBox: undefined,
+  twikooEnvId: '',
+  commentBarrageConfig:undefined,
+  music_page_default: "nav_music",
+  root: '/',
+  preloader: {"source":3},
+  friends_vue_info: undefined,
+  navMusic: true,
+  mainTone: undefined,
+  authorStatus: undefined,
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"简","rightMenuMsgToTraditionalChinese":"转为繁体","rightMenuMsgToSimplifiedChinese":"转为简体"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":330},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    simplehomepage: true,
+    post: false
+  },
+  runtime: 'days',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: {"copy":true,"copyrightEbable":false,"limitCount":50,"languages":{"author":"Author: John Doe","link":"Link: ","source":"Source: Hexo","info":"Copyright is owned by the author. For commercial reprints, please contact the author for authorization. For non-commercial reprints, please indicate the source.","copySuccess":"Copy success, copy and reprint please mark the address of this article"}},
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"Traditional Chinese Activated Manually","cht_to_chs":"Simplified Chinese Activated Manually","day_to_night":"Dark Mode Activated Manually","night_to_day":"Light Mode Activated Manually","bgLight":"#425AEF","bgDark":"#1f1f1f","position":"top-center"},
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.cbd.int/flickr-justified-gallery@2.1.2/dist/fjGallery.min.js',
+      css: 'https://cdn.cbd.int/flickr-justified-gallery@2.1.2/dist/fjGallery.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false,
+  shortcutKey: undefined,
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  configTitle: 'Hexo',
+  title: 'Hexo',
+  postAI: '',
+  pageFillDescription: '',
+  isPost: false,
+  isHome: true,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2024-12-01 08:58:32',
+  postMainColor: '',
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
 
-  
-    
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
-
-  
-  
-<meta name="generator" content="Hexo 7.3.0"></head>
-
-<body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">Hexo</a>
-      </h1>
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
       
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#18171d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#f7f9fe')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+          if (t === undefined) {
+            if (isLightMode) activateLightMode()
+            else if (isDarkMode) activateDarkMode()
+            else if (isNotSpecified || hasNoSupport) {
+              const now = new Date()
+              const hour = now.getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addListener(e => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.3.0"></head><body data-type="anzhiyu"><div id="web_bg"></div><div id="an_music_bg"></div><div id="loading-box" onclick="document.getElementById(&quot;loading-box&quot;).classList.add(&quot;loaded&quot;)"><div class="loading-bg"><img class="loading-img nolazyload" alt="加载头像" src="https://npm.elemecdn.com/anzhiyu-blog-static@1.0.4/img/avatar.jpg"/><div class="loading-image-dot"></div></div></div><script>const preloader = {
+  endLoading: () => {
+    document.getElementById('loading-box').classList.add("loaded");
+  },
+  initLoading: () => {
+    document.getElementById('loading-box').classList.remove("loaded")
+  }
+}
+window.addEventListener('load',()=> { preloader.endLoading() })
+setTimeout(function(){preloader.endLoading();},10000)
+
+if (true) {
+  document.addEventListener('pjax:send', () => { preloader.initLoading() })
+  document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+}</script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.10/progress_bar/progress_bar.css"/><script async="async" src="https://cdn.cbd.int/pace-js@1.2.4/pace.min.js" data-pace-options="{ &quot;restartOnRequestAfter&quot;:false,&quot;eventLag&quot;:false}"></script><div class="page" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><div id="nav-group"><span id="blog_name"><a id="site-name" href="/" accesskey="h"><div class="title">Hexo</div><i class="anzhiyufont anzhiyu-icon-house-chimney"></i></a></span><div class="mask-name-container"><div id="name-container"><a id="page-name" href="javascript:anzhiyu.scrollToDest(0, 500)">PAGE_NAME</a></div></div><div id="menus"></div><div id="nav-right"><div class="nav-button" id="randomPost_button"><a class="site-page" onclick="toRandomPost()" title="随机前往一个文章" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-dice"></i></a></div><input id="center-console" type="checkbox"/><label class="widget" for="center-console" title="中控台" onclick="anzhiyu.switchConsole();"><i class="left"></i><i class="widget center"></i><i class="widget right"></i></label><div id="console"><div class="console-card-group-reward"><ul class="reward-all console-card"><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png" target="_blank"><img class="post-qr-code-img" alt="微信" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png" target="_blank"><img class="post-qr-code-img" alt="支付宝" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div><div class="console-card-group"><div class="console-card-group-left"><div class="console-card" id="card-newest-comments"><div class="card-content"><div class="author-content-item-tips">互动</div><span class="author-content-item-title"> Newest Comments</span></div><div class="aside-list"><span>loading...</span></div></div></div><div class="console-card-group-right"><div class="console-card tags"><div class="card-content"><div class="author-content-item-tips">兴趣点</div><span class="author-content-item-title">寻找你感兴趣的领域</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/Amazon/" style="font-size: 1.05rem;">Amazon<sup>3</sup></a><a href="/tags/java/" style="font-size: 1.05rem;">java<sup>1</sup></a><a href="/tags/street-fighter-6/" style="font-size: 1.05rem;">street fighter 6<sup>1</sup></a><a href="/tags/%E8%87%AA%E5%88%B6%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" style="font-size: 1.05rem;">自制操作系统<sup>1</sup></a><a href="/tags/%E8%AF%9D%E6%9C%AF/" style="font-size: 1.05rem;">话术<sup>1</sup></a></div></div><hr/></div></div><div class="console-card history"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-box-archiv"></i><span>文章</span></div><div class="card-archives"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-archive"></i><span>Archives</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/11/"><span class="card-archive-list-date">November 2024</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">3</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/10/"><span class="card-archive-list-date">October 2024</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">1</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/09/"><span class="card-archive-list-date">September 2024</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">1</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/08/"><span class="card-archive-list-date">August 2024</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">4</span><span>篇</span></div></a></li></ul></div><hr/></div></div></div><div class="button-group"><div class="console-btn-item"><a class="darkmode_switchbutton" title="显示模式切换" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-moon"></i></a></div><div class="console-btn-item" id="consoleHideAside" onclick="anzhiyu.hideAsideBtn()" title="边栏显示控制"><a class="asideSwitch"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></a></div><div class="console-btn-item" id="consoleMusic" onclick="anzhiyu.musicToggle()" title="音乐开关"><a class="music-switch"><i class="anzhiyufont anzhiyu-icon-music"></i></a></div></div><div class="console-mask" onclick="anzhiyu.hideConsole()" href="javascript:void(0);"></div></div><div class="nav-button" id="nav-totop"><a class="totopbtn" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i><span id="percent" onclick="anzhiyu.scrollToDest(0,500)">0</span></a></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);" title="切换"><i class="anzhiyufont anzhiyu-icon-bars"></i></a></div></div></div></nav></header><main id="blog-container"><div id="home_top"><div class="swiper_container_card" style="height: auto;width: 100%"><div id="bannerGroup"><div id="random-banner"><canvas id="peoplecanvas"></canvas><a id="random-hover" href="javascript:toRandomPost()"><i class="anzhiyufont anzhiyu-icon-paper-plane"></i><div class="bannerText">随便逛逛<i class="anzhiyufont anzhiyu-icon-arrow-right"></i></div></a></div><div class="categoryGroup"><div class="categoryItem" style="box-shadow:var(--anzhiyu-shadow-blue)"><a class="categoryButton blue" href="/categories/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/"><span class="categoryButtonText">前端</span><i class="anzhiyufont anzhiyu-icon-dove"></i></a></div><div class="categoryItem" style="box-shadow:var(--anzhiyu-shadow-red)"><a class="categoryButton red" href="/categories/%E5%A4%A7%E5%AD%A6%E7%94%9F%E6%B6%AF/"><span class="categoryButtonText">大学</span><i class="anzhiyufont anzhiyu-icon-fire"></i></a></div><div class="categoryItem" style="box-shadow:var(--anzhiyu-shadow-green)"><a class="categoryButton green" href="/categories/%E7%94%9F%E6%B4%BB%E6%97%A5%E5%B8%B8/"><span class="categoryButtonText">生活</span><i class="anzhiyufont anzhiyu-icon-book"></i></a></div></div></div><div class="topGroup"><div class="recent-post-item" onclick="pjax.loadUrl(&quot;/2024/10/18/JP%E5%A4%A7%E5%AD%A6%E4%B9%A0/&quot;)"><div class="post_cover left_radius"><a href="2024/10/18/JP大学习/" title="JP大学习"><span class="recent-post-top-text">荐</span><img class="post_bg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="cover"></a></div><div class="recent-post-info"><a class="article-title" href="2024/10/18/JP大学习/" title="JP大学习">JP大学习</a></div></div><div class="recent-post-item" onclick="pjax.loadUrl(&quot;/2024/08/03/amazon/&quot;)"><div class="post_cover left_radius"><a href="2024/08/03/amazon/" title="amazon"><span class="recent-post-top-text">荐</span><img class="post_bg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="cover"></a></div><div class="recent-post-info"><a class="article-title" href="2024/08/03/amazon/" title="amazon">amazon</a></div></div><div class="recent-post-item" onclick="pjax.loadUrl(&quot;/2024/08/03/hello-world/&quot;)"><div class="post_cover left_radius"><a href="2024/08/03/hello-world/" title="Hello World"><span class="recent-post-top-text">荐</span><img class="post_bg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="cover"></a></div><div class="recent-post-info"><a class="article-title" href="2024/08/03/hello-world/" title="Hello World">Hello World</a></div></div><div class="recent-post-item" onclick="pjax.loadUrl(&quot;/2024/11/29/%E4%BC%98%E5%85%88%E5%87%86%E5%A4%87/&quot;)"><div class="post_cover left_radius"><a href="2024/11/29/优先准备/" title="优先准备"><span class="recent-post-top-text">荐</span><img class="post_bg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="cover"></a></div><div class="recent-post-info"><a class="article-title" href="2024/11/29/优先准备/" title="优先准备">优先准备</a></div></div><div class="recent-post-item" onclick="pjax.loadUrl(&quot;/2024/09/10/%E4%BA%9A%E9%A9%AC%E9%80%8A%E8%87%AA%E5%AD%A6/&quot;)"><div class="post_cover left_radius"><a href="2024/09/10/亚马逊自学/" title="亚马逊自学"><span class="recent-post-top-text">荐</span><img class="post_bg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="cover"></a></div><div class="recent-post-info"><a class="article-title" href="2024/09/10/亚马逊自学/" title="亚马逊自学">亚马逊自学</a></div></div><div class="recent-post-item" onclick="pjax.loadUrl(&quot;/2024/08/19/%E5%8D%96%E5%AE%B6%E5%A4%A7%E5%AD%A6/&quot;)"><div class="post_cover left_radius"><a href="2024/08/19/卖家大学/" title="卖家大学"><span class="recent-post-top-text">荐</span><img class="post_bg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="cover"></a></div><div class="recent-post-info"><a class="article-title" href="2024/08/19/卖家大学/" title="卖家大学">卖家大学</a></div></div><a class="todayCard" id="todayCard" target="_blank" rel="noopener" href="https://docs.anheyu.com/" style="z-index: 1;"><div class="todayCard-info"><div class="todayCard-tips">新品主题</div><div class="todayCard-title">Theme-AnZhiYu</div></div><img class="todayCard-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://bu.dusays.com/2023/05/13/645fa3cf90d70.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="封面"><div class="banner-button-group"><div class="banner-button" onclick="event.stopPropagation();event.preventDefault();anzhiyu.hideTodayCard();"><i class="anzhiyufont anzhiyu-icon-arrow-circle-right"></i><span class="banner-button-text">更多推荐</span></div></div></a></div><link rel="stylesheet"></div></div><div class="layout" id="content-inner"><div class="recent-posts" id="recent-posts"><div id="categoryBar"><div class="category-bar" id="category-bar"><div id="catalog-bar"><div id="catalog-list"><div class="catalog-list-item" id="首页"><a href="/">首页</a></div>
+    <div class="catalog-list-item" id="/categories/happy/">
+      <a href="/categories/happy/">
+        happy
+      </a>
     </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
-        
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-        
-          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
-        
-        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
-      </div>
+    
+    <div class="catalog-list-item" id="/categories/DianShang/">
+      <a href="/categories/DianShang/">
+        DianShang
+      </a>
     </div>
-  </div>
-</header>
-
-      <div class="outer">
-        <section id="main">
-  
-    <article id="post-重要" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2024/11/17/%E9%87%8D%E8%A6%81/" class="article-date">
-  <time class="dt-published" datetime="2024-11-17T05:56:13.000Z" itemprop="datePublished">2024-11-17</time>
-</a>
     
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/">计算机</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2024/11/17/%E9%87%8D%E8%A6%81/">重要</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p>1，通过合作第三方获取资讯</p>
-<p>新浪，百度，UC等</p>
-<p>2，通过广告微服务，远程rpc获取要插入资讯的广告</p>
-<ul>
-<li>广告表：广告id，广告位置，广告名称，广告类型，广告状态</li>
-<li>类型<ul>
-<li>sdk广告：由客户端直接请求</li>
-<li>api广告：由后端请求</li>
-</ul>
-</li>
-</ul>
-<p>3，获取第三方广告需要的时间长，可以和获取资讯两个任务并发执行，利用future，并把结果存到一个map里</p>
-<p>4，插入自己公司想插入的信息流，一般增删改查</p>
-<p>5，在最后需要广告的时候，可以使用future.get等待500ms，之后把map的广告插进信息流，不管map里是否有四个</p>
-<p>6，话术：</p>
-<ul>
-<li>用户反馈切换页面时相应时间长</li>
-<li>组长分配需求</li>
-<li>公司的运维开发的链路追踪工具，可以一层一层看出接口的耗时</li>
-<li>同步请求uc资讯和4个广告，耗时3秒左右</li>
-<li>引入多线程，异步并行获取广告，放进map里</li>
-<li>最后需要广告时判断map是否有，没有的话使用futrue的get方法多等待500ms，还是没有直接放弃广告</li>
-<li>优化后结果，获取资讯0.6秒，广告并发0.5秒，总共1秒左右</li>
-</ul>
-<p>7，项目书写</p>
-<ul>
-<li>负责日常需求的开发和迭代(新的第三方资讯引入，banner菜单开发，快应用菜单开发)<ul>
-<li>就是写banner表单&#x2F;快应用表单，提交后载入到管理系统</li>
-<li>快应用就是点击直达的应用推荐</li>
-<li>第三方返回的资讯字段：标题，副标题，资讯url，资讯分类，作者，图片，图片类型，创建时间</li>
-<li>使用工厂和模板方法，优化第三方资讯拉取的方法<ul>
-<li>之前是写死uc的资讯</li>
-<li>改为工厂模式通过渠道(入参)获取不同实例，不同实例实现统一接口也就是模板方法模式</li>
-<li>模板方法用于封装资讯，因为不同渠道讯息关键字不同，要统一封装一层返回给前端<ul>
-<li>注意要把工厂的实例注入到spring，之后在工厂里直接get，否则会导致aop失效</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>和uc对接：<ul>
-<li>带着密钥和频道id访问uc的验证接口，获取到token（为什么要给一个方法给他们调用才能获取token，那边直接http返回不行吗），存到redis，token和此频道id一一对应</li>
-<li>访问时从redis根据频道id取token，然后拿着频道id和token访问uc接口拿资讯</li>
-<li>设置定时任务10分钟访问一次验证接口获取token(?，必要性？直接token过期后再请求不好吗)，当访问资讯接口显示token过期时，手动调用验证接口获取token，并刷新redis的频道id+token</li>
-</ul>
-</li>
-<li>导入黑名单，从在用户手机上匹配，到在redis中匹配，减少了用户的内存压力(?资讯app中的黑名单作用是什么，是否是浏览器话术遗留)</li>
-</ul>
-<h3 id="问点解析"><a href="#问点解析" class="headerlink" title="问点解析"></a>问点解析</h3><h4 id="咨询获取"><a href="#咨询获取" class="headerlink" title="咨询获取"></a>咨询获取</h4><p>1，参数为渠道（区分），子渠道，密钥 请求uc的token；提供接口供uc调用，接口内容为把渠道，子渠道，子渠道对应的token，作为hash结构保存到redis；再通过渠道，子渠道，+token的方式去获取uc的资讯；</p>
-<p>2，问题</p>
-<ul>
-<li>为什么要分两步？<ul>
-<li>使用token对比直接使用密钥，提高了安全性</li>
-</ul>
-</li>
-<li>token会变，变了怎么办<ul>
-<li>token变了之后，用户访问时拉取资讯会504，当出现504时，重新访问请求token接口</li>
-</ul>
-</li>
-<li>返回的参数？<ul>
-<li>资讯标题，副标题，分类，标题，作者名称，发版时间，缩略图，图片类型，修改时间</li>
-</ul>
-</li>
-<li>接口安全性保证<ul>
-<li>约定算法，根据客户端的参数计算出一个sign值，前端带入参数+sign值；后端拿到参数计算sign值，一样就好</li>
-<li>请求时间不超过5分钟</li>
-<li>对参数进行数据加密，使用非堆成加密，客户端使用公钥对参数加密，服务端使用私钥对参数进行解密</li>
-<li>使用https协议，了解https为什么安全</li>
-<li>把大数据曝光前50的快应用，以及通过省份和分类区分前50的快应用，今年和去年减少量，这个月和上个月减少量；写进xml文件，打压缩包ftp发送到目录<ul>
-<li>快应用是展示事件，展示给用户后存快应用包名，通过count能排序出前50</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>资讯拉取引入了什么设计模式？<ul>
-<li>工厂模式+模板方法模式</li>
-<li>之前同事对接时，写死了uc，现在改用模板方法模式，写一个抽象类，提供验证和获取资讯两个模板抽象方法</li>
-<li>每个资讯方写一个类继承抽象类，实现方法，使用applicationcontext.getBeanOfType(抽象类.class);可以把抽象类的实现类全部按照类名驼峰加载到spring里面，还会返回一个map，k是名字，v是载入的bean，这样就形成一个工厂，传入参数这个map就可以根据k找到不同的实现类；</li>
-<li>了解三个工厂的知识，还知道哪些设计模式？</li>
-</ul>
-</li>
-</ul>
-<h4 id="后台反馈内容显示刷新资讯耗时过长"><a href="#后台反馈内容显示刷新资讯耗时过长" class="headerlink" title="后台反馈内容显示刷新资讯耗时过长"></a>后台反馈内容显示刷新资讯耗时过长</h4><p>1，问题</p>
-<ul>
-<li>在哪里反馈？<ul>
-<li>应用反馈，直接存到数据库，运营在后台可以看到</li>
-</ul>
-</li>
-<li>拿到优化需求后，怎么定位问题？<ul>
-<li>链路追踪工具：利用postman模拟刷新资讯的请求，通过公司的链路追踪工具可以看到具体接口的耗时，发现在资讯里面插入广告时耗时严重，rpc请求每一个广告的时间在0.8秒左右，请求15条资讯的接口只要0.6s</li>
-</ul>
-</li>
-<li>怎么保证拉取的资讯不重复？<ul>
-<li>uc在返回资讯的时候，资讯列表里加一个游标(可能是字符串)，后端收到后连带游标发给前端，前端再次发请求时也带上这个游标，作用是UC标记资讯返回到哪个位置，防止返回重复的资讯</li>
-</ul>
-</li>
-<li>如何优化时间过长问题？<ul>
-<li>背景：运营可能会配置0-4个广告不等，广告模块提供的接口是请求单个广告，当运营配置插入4条广告时，会请求0.8*4&#x3D;3.2秒左右，他和拉取资讯串行，0.6+3.2&#x3D;3.8秒</li>
-<li>优化：利用多线程<ul>
-<li>将拉取资讯和拉取广告并发执行，最多耗时3.2秒广告时间，拉取资讯在这3.2s已经完成</li>
-<li>将每次请求广告接口并发执行，拉取广告最多仅耗时0.8s，总耗时也就0.8s</li>
-<li>在资讯和广告组装时，也就是接口快结束时，利用future.get()获取广告结果，如果广告执行过长，get()只等400ms，超过了没有get到就丢弃广告</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>优化广告代码逻辑</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//并行获取广告</span></span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span><span class="number">0</span>;i&lt;<span class="number">4</span>;i++)&#123;</span><br><span class="line">    Futrue&lt;String&gt; f = Executors.newfixedThreadPool(<span class="number">10</span>).submit((广告id)-&gt;&#123;</span><br><span class="line">        <span class="comment">//获取广告</span></span><br><span class="line">        <span class="comment">//返回广告，json格式</span></span><br><span class="line">        <span class="keyword">return</span> ···;</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="comment">//将广告id对应的future加入map，future里面有执行结果</span></span><br><span class="line">    map.put(广告id,f)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//获取资讯</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//资讯中插入自营内容，banner，卡片等</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//获取广告</span></span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span><span class="number">0</span>,i&lt;<span class="number">4</span>;i++)&#123;</span><br><span class="line">    <span class="comment">//遍历map，map.get(广告id).get(400ms)</span></span><br><span class="line">    <span class="comment">//将广告插入资讯</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//优化完成，时间=0.6s获取资讯，每个广告最多等待400ms，加起来最多2.2s</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-<h4 id="负责bi报表的制作"><a href="#负责bi报表的制作" class="headerlink" title="负责bi报表的制作"></a>负责bi报表的制作</h4><p>事件：点击，曝光，不喜欢，阅读时长，视频播放时长</p>
-<h4 id="配置黑名单"><a href="#配置黑名单" class="headerlink" title="配置黑名单"></a>配置黑名单</h4><ul>
-<li><p>把运营给的黑名单网站存到redis里面，key会过大，拆封key，通过计算计算每个网站的hashcode，取模key的数量，计算出黑名单网站应该对应的key，会出现分布不均匀的问题，暂未找到更优解决；十万网址拆10个key，20w网址拆20个key;在点击资讯时，计算出hashcode取模拆分的key的个数，可以知道存在了那个key里面，之后在拿那个key对应的网址set进行ismembers操作。</p>
-<ul>
-<li>问题：扩容的时候重计算吗，不重计算出现扩容前后算法不一致问题，之前的数据无法读取到？</li>
-</ul>
-</li>
-<li><p>使用的redis数据结构</p>
-<p>string存储hash，渠道，子渠道，token</p>
-<p>set 存黑名单网站，ismembers可以方便的查出是否在黑名单</p>
-<p>zset 给广告点击量排名，在黄金时间7-9点放排名高的广告</p>
-<ul>
-<li>学习string，hash，zset的底层数据结构</li>
-</ul>
-</li>
-<li><p>使用redis存储替代客户端存储的好处</p>
-<ul>
-<li>减少手机客户端大小</li>
-<li>请求时在redis里面判断速度快</li>
-<li>实时性问题，黑名单更新后需要重进客户端；使用redis则不需要用户重启软件</li>
-</ul>
-</li>
-<li><p>逻辑升级：</p>
-<ul>
-<li>使用手机物理内存作黑名单时，在应用启动的时候去拉取黑名单保存在手机，等点击资讯时直接在手机内存中判断是否在黑名单网址集合中</li>
-<li>使用redis作黑名单时：把黑名单存到redis的set集合，每一次点击资讯都判断资讯网址是否是在这个黑名单set里，是的话进行拦截</li>
-</ul>
-</li>
-</ul>
-<h4 id="定位redisoom问题"><a href="#定位redisoom问题" class="headerlink" title="定位redisoom问题"></a>定位redisoom问题</h4><p>问题：定位比较难的线上问题</p>
-<h4 id="服务告警，防止异常无感知"><a href="#服务告警，防止异常无感知" class="headerlink" title="服务告警，防止异常无感知"></a>服务告警，防止异常无感知</h4><ul>
-<li>公司的平台只能监控用户调用服务端的接口，服务端请求uc的接口没办法监控；</li>
-<li>uc拉黑了公司的子渠道；导致线上资讯不展示</li>
-<li>可以把每次服务端请求uc资讯的结果状态码通过大数据api存储到大数据平台（数据量过大不宜使用本地数据库），之后写一个定时任务，几分钟去计算下异常状态码的比率，大于5%的时候就发警告，通过短信，邮件，和电话</li>
-</ul>
-<h4 id="分布式锁的使用"><a href="#分布式锁的使用" class="headerlink" title="分布式锁的使用"></a>分布式锁的使用</h4><ul>
-<li><p>浏览器模块和控制中台模块的同步问题</p>
-</li>
-<li><p>对某个用户推送资讯的时候，需要先去写申请，去审批中台审批，当审批提交时，中台正在处理，这时浏览器方面决定放弃推送，同时点击撤销，此时中台还在审批，过一会后审批成功；出现了浏览器端不推送，审批中台推送，的不一致的情况</p>
-</li>
-<li><p>解决，按照请求审批编号加分布式锁，保证撤销审批操作和中台审批操作串行执行；也就是撤销中途阻塞中台审批；中台审批的时候阻塞撤销操作</p>
-</li>
-</ul>
-<h3 id="项目答疑"><a href="#项目答疑" class="headerlink" title="项目答疑"></a>项目答疑</h3>
-      
+    <div class="catalog-list-item" id="/categories/计算机/">
+      <a href="/categories/计算机/">
+        计算机
+      </a>
     </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2024/11/17/%E9%87%8D%E8%A6%81/" data-id="cm44v5rhq000fzcvchhj3fn4p" data-title="重要" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%AF%9D%E6%9C%AF/" rel="tag">话术</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
+    </div><div class="category-bar-next" id="category-bar-next" onclick="anzhiyu.scrollCategoryBarToRight()"><i class="anzhiyufont anzhiyu-icon-angle-double-right"></i></div><a class="catalog-more" href="/categories/">更多</a></div></div></div><div class="recent-post-item lastestpost-item" onclick="pjax.loadUrl('/2024/11/29/%E4%BC%98%E5%85%88%E5%87%86%E5%A4%87/')"><div class="recent-post-info no-cover"><div class="recent-post-info-top"><div class="recent-post-info-top-tips"><div class="article-categories-original">计算机</div><span class="newPost">最新</span><a class="unvisited-post" href="/2024/11/29/%E4%BC%98%E5%85%88%E5%87%86%E5%A4%87/" title="优先准备">未读</a></div><a class="article-title" href="/2024/11/29/%E4%BC%98%E5%85%88%E5%87%86%E5%A4%87/" title="优先准备">优先准备</a></div><div class="article-meta-wrap"><span class="post-meta-date"><i class="anzhiyufont anzhiyu-icon-calendar-days" style="font-size: 15px; display:none"></i><span class="article-meta-label">Created</span><time datetime="2024-11-29T02:50:45.000Z" title="Created 2024-11-29 10:50:45" time="2024-11-29 10:50:45">2024-11-29</time><time class="time_hidden" datetime="2024-12-01T00:57:49.428Z" title="Updated 2024-12-01 08:57:49" time="2024-12-01 08:57:49">2024-12-01</time></span><span class="article-meta tags"><a class="article-meta__tags" href="/tags/java/" event.cancelbubble onclick="window.event.cancelBubble=true;"><span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>java</span></a></span></div><div class="content">java基础1，get 和 post请求的区别延申：弄清楚http种常用不同请求的区别
+get：
+参数显示在地址栏，不安全，参数有长度限制，常用于获取资源，幂等
 
 
+post：
+参数放在请求体，也需要对参数加密，长度无限制，常用于增删改资源，不幂等
 
-  
-    <article id="post-商城支付" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2024/11/12/%E5%95%86%E5%9F%8E%E6%94%AF%E4%BB%98/" class="article-date">
-  <time class="dt-published" datetime="2024-11-12T14:56:04.000Z" itemprop="datePublished">2024-11-12</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+
+put：
+参数放请求体，用于更新
+
+
+delete：
+参数放请求头，用于删除指定位置的资源
+
+
+head
+
+2，面向对象三个基本特征
+封装：把成员变量控制为私有，提供方法访问
+继承：子类可以继承父类的变量和方法，复用代码
+多态：重写或重载，根据子类自己的实现
+
+3，&#x3D;&#x3D;和equals的区别
+&#x3D;&#x3D;可以作用与基本数据类型和引用类型
+基本数据类型，比较的是值是否相等
+引用类型，比较的是对象的地址是否相等，无关对象内的内容
+
+
+equals只能作用于引用类型
+在不重写的情况下，方法内使用的是&#x3D;&#x3D;来判断
+
+
+注意：
+在使用对象当hashmap的key时：重写equals方法必须要重写hashcode方法，要保证对象相等的时候hashcode必须相同
+原因：在hashmap中先根据hash ...</div></div></div><div class="recent-post-item" onclick="pjax.loadUrl('/2024/11/17/%E9%87%8D%E8%A6%81/')"><div class="recent-post-info no-cover"><div class="recent-post-info-top"><div class="recent-post-info-top-tips"><div class="article-categories-original">计算机</div><a class="unvisited-post" href="/2024/11/17/%E9%87%8D%E8%A6%81/" title="重要">未读</a></div><a class="article-title" href="/2024/11/17/%E9%87%8D%E8%A6%81/" title="重要">重要</a></div><div class="article-meta-wrap"><span class="post-meta-date"><i class="anzhiyufont anzhiyu-icon-calendar-days" style="font-size: 15px; display:none"></i><span class="article-meta-label">Created</span><time datetime="2024-11-17T05:56:13.000Z" title="Created 2024-11-17 13:56:13" time="2024-11-17 13:56:13">2024-11-17</time><time class="time_hidden" datetime="2024-11-24T07:03:49.564Z" title="Updated 2024-11-24 15:03:49" time="2024-11-24 15:03:49">2024-11-24</time></span><span class="article-meta tags"><a class="article-meta__tags" href="/tags/%E8%AF%9D%E6%9C%AF/" event.cancelbubble onclick="window.event.cancelBubble=true;"><span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>话术</span></a></span></div><div class="content">1，通过合作第三方获取资讯
+新浪，百度，UC等
+2，通过广告微服务，远程rpc获取要插入资讯的广告
+
+广告表：广告id，广告位置，广告名称，广告类型，广告状态
+类型
+sdk广告：由客户端直接请求
+api广告：由后端请求
+
+
+
+3，获取第三方广告需要的时间长，可以和获取资讯两个任务并发执行，利用future，并把结果存到一个map里
+4，插入自己公司想插入的信息流，一般增删改查
+5，在最后需要广告的时候，可以使用future.get等待500ms，之后把map的广告插进信息流，不管map里是否有四个
+6，话术：
+
+用户反馈切换页面时相应时间长
+组长分配需求
+公司的运维开发的链路追踪工具，可以一层一层看出接口的耗时
+同步请求uc资讯和4个广告，耗时3秒左右
+引入多线程，异步并行获取广告，放进map里
+最后需要广告时判断map是否有，没有的话使用futrue的get方法多等待500ms，还是没有直接放弃广告
+优化后结果，获取资讯0.6秒，广告并发0.5秒，总共1秒左右
+
+7，项目书写
+
+负责日常需求的开发和迭代(新的第三方资讯引入，banner菜单开发，快应用菜单开发)
+就是写banner表 ...</div></div></div><div class="recent-post-item" onclick="pjax.loadUrl('/2024/11/12/%E5%95%86%E5%9F%8E%E6%94%AF%E4%BB%98/')"><div class="recent-post-info no-cover"><div class="recent-post-info-top"><div class="recent-post-info-top-tips"><a class="unvisited-post" href="/2024/11/12/%E5%95%86%E5%9F%8E%E6%94%AF%E4%BB%98/" title="商城支付">未读</a></div><a class="article-title" href="/2024/11/12/%E5%95%86%E5%9F%8E%E6%94%AF%E4%BB%98/" title="商城支付">商城支付</a></div><div class="article-meta-wrap"><span class="post-meta-date"><i class="anzhiyufont anzhiyu-icon-calendar-days" style="font-size: 15px; display:none"></i><span class="article-meta-label">Created</span><time datetime="2024-11-12T14:56:04.000Z" title="Created 2024-11-12 22:56:04" time="2024-11-12 22:56:04">2024-11-12</time><time class="time_hidden" datetime="2024-11-12T15:47:21.568Z" title="Updated 2024-11-12 23:47:21" time="2024-11-12 23:47:21">2024-11-12</time></span></div><div class="content">1，内网穿透 natapp1，使用netapp，获取公网ip
+https://natapp.cn/
+
+购买
+
+</div></div></div><div class="recent-post-item" onclick="pjax.loadUrl('/2024/10/18/JP%E5%A4%A7%E5%AD%A6%E4%B9%A0/')"><div class="recent-post-info no-cover"><div class="recent-post-info-top"><div class="recent-post-info-top-tips"><div class="article-categories-original">happy</div><a class="unvisited-post" href="/2024/10/18/JP%E5%A4%A7%E5%AD%A6%E4%B9%A0/" title="JP大学习">未读</a></div><a class="article-title" href="/2024/10/18/JP%E5%A4%A7%E5%AD%A6%E4%B9%A0/" title="JP大学习">JP大学习</a></div><div class="article-meta-wrap"><span class="post-meta-date"><i class="anzhiyufont anzhiyu-icon-calendar-days" style="font-size: 15px; display:none"></i><span class="article-meta-label">Created</span><time datetime="2024-10-18T15:40:00.000Z" title="Created 2024-10-18 23:40:00" time="2024-10-18 23:40:00">2024-10-18</time><time class="time_hidden" datetime="2024-11-17T05:56:47.023Z" title="Updated 2024-11-17 13:56:47" time="2024-11-17 13:56:47">2024-11-17</time></span><span class="article-meta tags"><a class="article-meta__tags" href="/tags/street-fighter-6/" event.cancelbubble onclick="window.event.cancelBubble=true;"><span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>street fighter 6</span></a></span></div><div class="content">l m h 轻中重
+p k 拳脚
+板边压制关于站重拳5hp打到后的后续1，低点5hp取消普通裂隙，+15，选择放帧用12f的5hk打乱动
+2，低点5hp取消地刺，接od裂隙，+4，
+
+最速投择
+2mk取消26mk打乱动
+
+3，低点5hp取消od裂隙，偷帧地刺+2，5hp打点越高加越多
+
+偷帧地刺可以破凹一气
+被防+2，站&#x2F;蹲轻拳取消中下波择，择到(放帧)6hk踢起来取消26mp
+
+连段选择
+1，版中确反，5hk取消24lphp 5mk取消26mp jhk 5hk 22mk
+2，确反换边，5hk取消24lphp 前走反向 6hk踢起来
+3，版中一气斩杀，26hp起飞，66 绿冲5hp取消5hk 5hp取消一气
+4，重风神od地刺接2气，22kk取消二气，24hp，66，前跳，26mp 26mp
+</div></div></div><div class="recent-post-item" onclick="pjax.loadUrl('/2024/09/10/%E4%BA%9A%E9%A9%AC%E9%80%8A%E8%87%AA%E5%AD%A6/')"><div class="recent-post-info no-cover"><div class="recent-post-info-top"><div class="recent-post-info-top-tips"><div class="article-categories-original">DianShang</div><a class="unvisited-post" href="/2024/09/10/%E4%BA%9A%E9%A9%AC%E9%80%8A%E8%87%AA%E5%AD%A6/" title="亚马逊自学">未读</a></div><a class="article-title" href="/2024/09/10/%E4%BA%9A%E9%A9%AC%E9%80%8A%E8%87%AA%E5%AD%A6/" title="亚马逊自学">亚马逊自学</a></div><div class="article-meta-wrap"><span class="post-meta-date"><i class="anzhiyufont anzhiyu-icon-calendar-days" style="font-size: 15px; display:none"></i><span class="article-meta-label">Created</span><time datetime="2024-09-10T05:20:45.000Z" title="Created 2024-09-10 13:20:45" time="2024-09-10 13:20:45">2024-09-10</time><time class="time_hidden" datetime="2024-09-10T15:18:04.871Z" title="Updated 2024-09-10 23:18:04" time="2024-09-10 23:18:04">2024-09-10</time></span><span class="article-meta tags"><a class="article-meta__tags" href="/tags/Amazon/" event.cancelbubble onclick="window.event.cancelBubble=true;"><span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>Amazon</span></a></span></div><div class="content">关键词库1，搜集竞品的asin，在搜索框搜关键词，取头部的竞品asin，10个
+2，使用卖家精灵下载关键词
+
+关键词反查，单个单个查，多个需要在表里去重
+流量词拓展，多个asin一起查，自动去重
+
+3，对关键词指标分析，排序，例如月搜索量
+TODO 搞清各个指标对关键词的影响
+4，词频分析，判断频率最高的单个，两个单词组成短语，三个词汇组成短语
+
+AMZ123词频统计工具：https://www.amz123.com/tools-wordcounter、
+单个单词词频卖家精灵自动完成
+
+5,相关性查询，直接在亚马逊前台搜索看相关性
+
+强相关会出现在listing和广告
+不相关要否定并且不能出现在listing
+
+6，细分关键词
+
+例如：蓝牙无线耳机-&gt;蓝牙，无线，耳机做词根
+
+7，不同语种，同义词
+8，TODO，用H10进行关键词反查
+</div></div></div><div class="recent-post-item" onclick="pjax.loadUrl('/2024/08/19/%E5%8D%96%E5%AE%B6%E5%A4%A7%E5%AD%A6/')"><div class="recent-post-info no-cover"><div class="recent-post-info-top"><div class="recent-post-info-top-tips"><div class="article-categories-original">DianShang</div><a class="unvisited-post" href="/2024/08/19/%E5%8D%96%E5%AE%B6%E5%A4%A7%E5%AD%A6/" title="卖家大学">未读</a></div><a class="article-title" href="/2024/08/19/%E5%8D%96%E5%AE%B6%E5%A4%A7%E5%AD%A6/" title="卖家大学">卖家大学</a></div><div class="article-meta-wrap"><span class="post-meta-date"><i class="anzhiyufont anzhiyu-icon-calendar-days" style="font-size: 15px; display:none"></i><span class="article-meta-label">Created</span><time datetime="2024-08-19T14:11:37.000Z" title="Created 2024-08-19 22:11:37" time="2024-08-19 22:11:37">2024-08-19</time><time class="time_hidden" datetime="2024-08-19T15:10:58.690Z" title="Updated 2024-08-19 23:10:58" time="2024-08-19 23:10:58">2024-08-19</time></span><span class="article-meta tags"><a class="article-meta__tags" href="/tags/Amazon/" event.cancelbubble onclick="window.event.cancelBubble=true;"><span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>Amazon</span></a></span></div><div class="content">listing组成
+listing: 对商品的具体介绍
+
+1，分类
+2，关键词
+3，图片
+4，品牌
+5，标题
+6，5点
+7，描述(有A+会被A+顶替)
+8，A+图文详情
+北美产品认证
+
+食品药品安全
+
+儿童安全
+
+无线电通讯产品
+
+蓝牙产品
+
+机动车和配件
+
+ic？
+
+
+</div></div></div><div class="recent-post-item" onclick="pjax.loadUrl('/2024/08/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/')"><div class="recent-post-info no-cover"><div class="recent-post-info-top"><div class="recent-post-info-top-tips"><div class="article-categories-original">计算机</div><a class="unvisited-post" href="/2024/08/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" title="操作系统">未读</a></div><a class="article-title" href="/2024/08/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" title="操作系统">操作系统</a></div><div class="article-meta-wrap"><span class="post-meta-date"><i class="anzhiyufont anzhiyu-icon-calendar-days" style="font-size: 15px; display:none"></i><span class="article-meta-label">Created</span><time datetime="2024-08-13T14:55:25.000Z" title="Created 2024-08-13 22:55:25" time="2024-08-13 22:55:25">2024-08-13</time><time class="time_hidden" datetime="2024-09-17T14:50:41.965Z" title="Updated 2024-09-17 22:50:41" time="2024-09-17 22:50:41">2024-09-17</time></span><span class="article-meta tags"><a class="article-meta__tags" href="/tags/%E8%87%AA%E5%88%B6%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" event.cancelbubble onclick="window.event.cancelBubble=true;"><span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>自制操作系统</span></a></span></div><div class="content">1,给解压好的bochs配置安装文件,make编译，make install安装12345678./configure \ --prefix=/home/zxr/bochs_install \ #安装路径--enable-debugger \ #启用bochs自带的调试功能--enable-disasm \ #支持反汇编--enable-iodebug \ #开启io调试接口--enable-x86-debugger \ #支持x86调试器--with-x \ #使用xwindows--with-x11 #x11图形用户界面
+
+
+注意安装c和c++编译器，否则会编译失败
+
+2,配置bochs的启动文件
+启动文件不限定名字和后缀，使用bochsrc.disk放置安装根路径即可(输入的时候方便，只需要输入文件名)，也可以不在根，只不过要输入相对路径
+配置虚拟计算机内存，硬盘启动，BIOS，VGABIOS，日志文件，鼠标，键盘映射，硬盘设置
+
+12345678910111213141516megs: 32 #内存大小#BIOSromimage: file=/home/zxr/bochs_in ...</div></div></div><div class="recent-post-item" onclick="pjax.loadUrl('/2024/08/03/amazon/')"><div class="recent-post-info no-cover"><div class="recent-post-info-top"><div class="recent-post-info-top-tips"><div class="article-categories-original">DianShang</div><a class="unvisited-post" href="/2024/08/03/amazon/" title="amazon">未读</a></div><a class="article-title" href="/2024/08/03/amazon/" title="amazon">amazon</a></div><div class="article-meta-wrap"><span class="post-meta-date"><i class="anzhiyufont anzhiyu-icon-calendar-days" style="font-size: 15px; display:none"></i><span class="article-meta-label">Created</span><time datetime="2024-08-03T14:24:00.000Z" title="Created 2024-08-03 22:24:00" time="2024-08-03 22:24:00">2024-08-03</time><time class="time_hidden" datetime="2024-08-15T15:54:30.471Z" title="Updated 2024-08-15 23:54:30" time="2024-08-15 23:54:30">2024-08-15</time></span><span class="article-meta tags"><a class="article-meta__tags" href="/tags/Amazon/" event.cancelbubble onclick="window.event.cancelBubble=true;"><span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>Amazon</span></a></span></div><div class="content">货物运输状态管理在shipment管理里面，用运单号查询运输状态：
+
+
+
+1，注意选择后台的站点
+
+2，点进shipment-&gt;manage Shipments，根据运单号搜要看的运单
+
+
+
+运输状态
+
+working是没有确认，点击4，进去填上这个确认号：
+
+
+
+shipped是已发货
+
+in transit是运输中，可以查询系统的到货时间，提交到表格：
+
+
+
+设置到货时间为系统预测时间，并且更新时间到企业微信表格，日更···
+
+
+
+
+</div></div></div><div class="recent-post-item" onclick="pjax.loadUrl('/2024/08/03/hello-world/')"><div class="recent-post-info no-cover"><div class="recent-post-info-top"><div class="recent-post-info-top-tips"><a class="unvisited-post" href="/2024/08/03/hello-world/" title="Hello World">未读</a></div><a class="article-title" href="/2024/08/03/hello-world/" title="Hello World">Hello World</a></div><div class="article-meta-wrap"><span class="post-meta-date"><i class="anzhiyufont anzhiyu-icon-calendar-days" style="font-size: 15px; display:none"></i><span class="article-meta-label">Created</span><time datetime="2024-08-03T13:56:15.437Z" title="Created 2024-08-03 21:56:15" time="2024-08-03 21:56:15">2024-08-03</time><time class="time_hidden" datetime="2024-08-14T15:52:03.214Z" title="Updated 2024-08-14 23:52:03" time="2024-08-14 23:52:03">2024-08-14</time></span></div><div class="content">Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
+Quick StartCreate a new post1$ hexo new &quot;My New Post&quot;
+
+More info: Writing
+Run server1$ hexo server
+
+More info: Server
+Generate static files1$ hexo generate
+
+More info: Generating
+Deploy to remote sites1$ hexo deploy
+
+More info: Deployment
+AccessKey ID：zxrLTAI5tJ2X5xUgPqRDLZNLbfy
+AccessKey Secre ...</div></div></div><nav id="pagination"><div class="pagination"><span class="page-number current">1</span><div class="toPageGroup"><input id="toPageText" oninput="value=value.replace(/[^0-9]/g,'')" maxlength="3" onkeyup="this.value=this.value.replace(/[^u4e00-u9fa5w]/g,'')" aria-label="toPage"><a id="toPageButton" onclick="anzhiyu.toPage()"><i class="anzhiyufont anzhiyu-icon-angles-right" style="font-weight: inherit; font-size: 1rem;"></i></a></div></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-content"><div class="author-info-avatar"><img class="avatar-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://bu.dusays.com/2023/04/27/64496e511b09c.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__description"></div></div></div><div class="card-widget anzhiyu-right-widget" id="card-wechat" onclick="null"><div id="flip-wrapper"><div id="flip-content"><div class="face" style="background: url(https://bu.dusays.com/2023/01/13/63c02edf44033.png) center center / 100% no-repeat"></div><div class="back face" style="background: url(https://bu.dusays.com/2023/05/13/645fa415e8694.png) center center / 100% no-repeat"></div></div></div></div><div class="sticky_layout"><div class="card-widget"><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/Amazon/" style="font-size: 1.05rem;">Amazon<sup>3</sup></a><a href="/tags/java/" style="font-size: 1.05rem;">java<sup>1</sup></a><a href="/tags/street-fighter-6/" style="font-size: 1.05rem;">street fighter 6<sup>1</sup></a><a href="/tags/%E8%87%AA%E5%88%B6%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" style="font-size: 1.05rem;">自制操作系统<sup>1</sup></a><a href="/tags/%E8%AF%9D%E6%9C%AF/" style="font-size: 1.05rem;">话术<sup>1</sup></a></div></div><hr/><div class="card-archives"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-archive"></i><span>Archives</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/11/"><span class="card-archive-list-date">November 2024</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">3</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/10/"><span class="card-archive-list-date">October 2024</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">1</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/09/"><span class="card-archive-list-date">September 2024</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">1</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/08/"><span class="card-archive-list-date">August 2024</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">4</span><span>篇</span></div></a></li></ul></div><hr/><div class="card-webinfo"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-chart-line"></i><span>Info</span></div><div class="webinfo"><div class="webinfo-item"><div class="webinfo-item-title"><i class="anzhiyufont anzhiyu-icon-file-lines"></i><div class="item-name">Article :</div></div><div class="item-count">9</div></div><div class="webinfo-item"><div class="webinfo-item-title"><i class="anzhiyufont anzhiyu-icon-stopwatch"></i><div class="item-name">Run time :</div></div><div class="item-count" id="runtimeshow" data-publishDate="2021-03-31T16:00:00.000Z"><i class="anzhiyufont anzhiyu-icon-spinner anzhiyu-spin"></i></div></div></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"></div><div id="footer-bar"><div class="footer-bar-links"><div class="footer-bar-left"><div id="footer-bar-tips"><div class="copyright">&copy;2020 - 2024 By <a class="footer-bar-link" href="/" title="John Doe" target="_blank">John Doe</a></div></div><div id="footer-type-tips"></div></div><div class="footer-bar-right"><a class="footer-bar-link" target="_blank" rel="noopener" href="https://github.com/anzhiyu-c/hexo-theme-anzhiyu" title="主题">主题</a></div></div></div></footer></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="sidebar-site-data site-data is-center"><a href="/archives/" title="archive"><div class="headline">Articles</div><div class="length-num">9</div></a><a href="/tags/" title="tag"><div class="headline">Tags</div><div class="length-num">5</div></a><a href="/categories/" title="category"><div class="headline">Categories</div><div class="length-num">3</div></a></div><span class="sidebar-menu-item-title">Function</span><div class="sidebar-menu-item"><a class="darkmode_switchbutton menu-child" href="javascript:void(0);" title="Display Mode"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span>Display Mode</span></a></div><div class="back-menu-list-groups"><div class="back-menu-list-group"><div class="back-menu-list-title">网页</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://blog.anheyu.com/" title="博客"><img class="back-menu-item-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/favicon.ico" alt="博客"/><span class="back-menu-item-text">博客</span></a></div></div><div class="back-menu-list-group"><div class="back-menu-list-title">项目</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://image.anheyu.com/" title="安知鱼图床"><img class="back-menu-item-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://image.anheyu.com/favicon.ico" alt="安知鱼图床"/><span class="back-menu-item-text">安知鱼图床</span></a></div></div></div><span class="sidebar-menu-item-title">标签</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/Amazon/" style="font-size: 0.88rem;">Amazon<sup>3</sup></a><a href="/tags/java/" style="font-size: 0.88rem;">java<sup>1</sup></a><a href="/tags/street-fighter-6/" style="font-size: 0.88rem;">street fighter 6<sup>1</sup></a><a href="/tags/%E8%87%AA%E5%88%B6%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" style="font-size: 0.88rem;">自制操作系统<sup>1</sup></a><a href="/tags/%E8%AF%9D%E6%9C%AF/" style="font-size: 0.88rem;">话术<sup>1</sup></a></div></div><hr/></div></div><div id="rightside"><div id="rightside-config-hide"><button id="translateLink" type="button" title="Switch Between Traditional Chinese And Simplified Chinese">繁</button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Setting"><i class="anzhiyufont anzhiyu-icon-gear"></i></button><button id="go-up" type="button" title="Back To Top"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></button></div></div><div id="nav-music"><a id="nav-music-hoverTips" onclick="anzhiyu.musicToggle()" accesskey="m">播放音乐</a><div id="console-music-bg"></div><meting-js id="8152976493" server="netease" type="playlist" mutex="true" preload="none" theme="var(--anzhiyu-main)" data-lrctype="0" order="random" volume="0.7"></meting-js></div><div id="rightMenu"><div class="rightMenu-group rightMenu-small"><div class="rightMenu-item" id="menu-backward"><i class="anzhiyufont anzhiyu-icon-arrow-left"></i></div><div class="rightMenu-item" id="menu-forward"><i class="anzhiyufont anzhiyu-icon-arrow-right"></i></div><div class="rightMenu-item" id="menu-refresh"><i class="anzhiyufont anzhiyu-icon-arrow-rotate-right" style="font-size: 1rem;"></i></div><div class="rightMenu-item" id="menu-top"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></div></div><div class="rightMenu-group rightMenu-line rightMenuPlugin"><div class="rightMenu-item" id="menu-copytext"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制选中文本</span></div><div class="rightMenu-item" id="menu-pastetext"><i class="anzhiyufont anzhiyu-icon-paste"></i><span>粘贴文本</span></div><a class="rightMenu-item" id="menu-commenttext"><i class="anzhiyufont anzhiyu-icon-comment-medical"></i><span>引用到评论</span></a><div class="rightMenu-item" id="menu-newwindow"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开</span></div><div class="rightMenu-item" id="menu-copylink"><i class="anzhiyufont anzhiyu-icon-link"></i><span>复制链接地址</span></div><div class="rightMenu-item" id="menu-copyimg"><i class="anzhiyufont anzhiyu-icon-images"></i><span>复制此图片</span></div><div class="rightMenu-item" id="menu-downloadimg"><i class="anzhiyufont anzhiyu-icon-download"></i><span>下载此图片</span></div><div class="rightMenu-item" id="menu-newwindowimg"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开图片</span></div><div class="rightMenu-item" id="menu-search"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>站内搜索</span></div><div class="rightMenu-item" id="menu-searchBaidu"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>百度搜索</span></div><div class="rightMenu-item" id="menu-music-toggle"><i class="anzhiyufont anzhiyu-icon-play"></i><span>播放音乐</span></div><div class="rightMenu-item" id="menu-music-back"><i class="anzhiyufont anzhiyu-icon-backward"></i><span>切换到上一首</span></div><div class="rightMenu-item" id="menu-music-forward"><i class="anzhiyufont anzhiyu-icon-forward"></i><span>切换到下一首</span></div><div class="rightMenu-item" id="menu-music-playlist" onclick="window.open(&quot;https://y.qq.com/n/ryqq/playlist/8802438608&quot;, &quot;_blank&quot;);" style="display: none;"><i class="anzhiyufont anzhiyu-icon-radio"></i><span>查看所有歌曲</span></div><div class="rightMenu-item" id="menu-music-copyMusicName"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制歌名</span></div></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item menu-link" id="menu-randomPost"><i class="anzhiyufont anzhiyu-icon-shuffle"></i><span>随便逛逛</span></a><a class="rightMenu-item menu-link" href="/categories/"><i class="anzhiyufont anzhiyu-icon-cube"></i><span>博客分类</span></a><a class="rightMenu-item menu-link" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags"></i><span>文章标签</span></a></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item" id="menu-copy" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制地址</span></a><a class="rightMenu-item" id="menu-commentBarrage" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-message"></i><span class="menu-commentBarrage-text">关闭热评</span></a><a class="rightMenu-item" id="menu-darkmode" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span class="menu-darkmode-text">深色模式</span></a><a class="rightMenu-item" id="menu-translate" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-language"></i><span>轉為繁體</span></a></div></div><div id="rightmenu-mask"></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.cbd.int/@fancyapps/ui@5.0.28/dist/fancybox/fancybox.umd.js"></script><script src="https://cdn.cbd.int/instant.page@5.2.0/instantpage.js" type="module"></script><script src="https://cdn.cbd.int/vanilla-lazyload@17.8.5/dist/lazyload.iife.min.js"></script><script src="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.js"></script><canvas id="universe"></canvas><script async src="https://npm.elemecdn.com/anzhiyu-theme-static@1.0.0/dark/dark.js"></script><script>// 消除控制台打印
+var HoldLog = console.log;
+console.log = function () {};
+let now1 = new Date();
+queueMicrotask(() => {
+  const Log = function () {
+    HoldLog.apply(console, arguments);
+  }; //在恢复前输出日志
+  const grt = new Date("04/01/2021 00:00:00"); //此处修改你的建站时间或者网站上线时间
+  now1.setTime(now1.getTime() + 250);
+  const days = (now1 - grt) / 1000 / 60 / 60 / 24;
+  const dnum = Math.floor(days);
+  const ascll = [
+    `欢迎使用安知鱼!`,
+    `生活明朗, 万物可爱`,
+    `
         
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2024/11/12/%E5%95%86%E5%9F%8E%E6%94%AF%E4%BB%98/">商城支付</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h2 id="1，内网穿透-natapp"><a href="#1，内网穿透-natapp" class="headerlink" title="1，内网穿透 natapp"></a>1，内网穿透 natapp</h2><p>1，使用netapp，获取公网ip</p>
-<p><a target="_blank" rel="noopener" href="https://natapp.cn/">https://natapp.cn/</a></p>
-<ul>
-<li>购买</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2024/11/12/%E5%95%86%E5%9F%8E%E6%94%AF%E4%BB%98/" data-id="cm44v5rho000azcvcb23wg5uo" data-title="商城支付" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-JP大学习" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2024/10/18/JP%E5%A4%A7%E5%AD%A6%E4%B9%A0/" class="article-date">
-  <time class="dt-published" datetime="2024-10-18T15:40:00.000Z" itemprop="datePublished">2024-10-18</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/happy/">happy</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+       █████╗ ███╗   ██╗███████╗██╗  ██╗██╗██╗   ██╗██╗   ██╗
+      ██╔══██╗████╗  ██║╚══███╔╝██║  ██║██║╚██╗ ██╔╝██║   ██║
+      ███████║██╔██╗ ██║  ███╔╝ ███████║██║ ╚████╔╝ ██║   ██║
+      ██╔══██║██║╚██╗██║ ███╔╝  ██╔══██║██║  ╚██╔╝  ██║   ██║
+      ██║  ██║██║ ╚████║███████╗██║  ██║██║   ██║   ╚██████╔╝
+      ╚═╝  ╚═╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝╚═╝   ╚═╝    ╚═════╝
         
+        `,
+    "已上线",
+    dnum,
+    "天",
+    "©2020 By 安知鱼 V1.6.14",
+  ];
+  const ascll2 = [`NCC2-036`, `调用前置摄像头拍照成功，识别为【小笨蛋】.`, `Photo captured: `, `🤪`];
+
+  setTimeout(
+    Log.bind(
+      console,
+      `\n%c${ascll[0]} %c ${ascll[1]} %c ${ascll[2]} %c${ascll[3]}%c ${ascll[4]}%c ${ascll[5]}\n\n%c ${ascll[6]}\n`,
+      "color:#425AEF",
+      "",
+      "color:#425AEF",
+      "color:#425AEF",
+      "",
+      "color:#425AEF",
+      ""
+    )
+  );
+  setTimeout(
+    Log.bind(
+      console,
+      `%c ${ascll2[0]} %c ${ascll2[1]} %c \n${ascll2[2]} %c\n${ascll2[3]}\n`,
+      "color:white; background-color:#4fd953",
+      "",
+      "",
+      'background:url("https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/tinggge.gif") no-repeat;font-size:450%'
+    )
+  );
+
+  setTimeout(Log.bind(console, "%c WELCOME %c 你好，小笨蛋.", "color:white; background-color:#4f90d9", ""));
+
+  setTimeout(
+    console.warn.bind(
+      console,
+      "%c ⚡ Powered by 安知鱼 %c 你正在访问 John Doe 的博客.",
+      "color:white; background-color:#f0ad4e",
+      ""
+    )
+  );
+
+  setTimeout(Log.bind(console, "%c W23-12 %c 你已打开控制台.", "color:white; background-color:#4f90d9", ""));
+
+  setTimeout(
+    console.warn.bind(console, "%c S013-782 %c 你现在正处于监控中.", "color:white; background-color:#d9534f", "")
+  );
+});</script><script async src="/anzhiyu/random.js"></script><div class="js-pjax"><script>if (typeof gsap === "object") {
+  getScript("/js/anzhiyu/people.js", {defer:true})
+} else {
+  getScript("https://cdn.cbd.int/anzhiyu-theme-static@1.0.0/gsap/gsap.min.js").then(()=>{
+    getScript("/js/anzhiyu/people.js", {defer:true})
+  });
+}</script><input type="hidden" name="page-type" id="page-type" value="anzhiyu"></div><script>var visitorMail = "";
+</script><script async data-pjax src="https://cdn.cbd.int/anzhiyu-theme-static@1.0.0/waterfall/waterfall.js"></script><script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/qrcodejs/1.0.0/qrcode.min.js"></script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.9/icon/ali_iconfont_css.css"><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.0.0/aplayer/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.cbd.int/anzhiyu-blog-static@1.0.1/js/APlayer.min.js"></script><script src="https://cdn.cbd.int/hexo-anzhiyu-music@1.0.1/assets/js/Meting2.min.js"></script><script src="https://cdn.cbd.int/pjax@0.2.8/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+  // removeEventListener scroll 
+  anzhiyu.removeGlobalFnEvent('pjax')
+  anzhiyu.removeGlobalFnEvent('themeChange')
+
+  document.getElementById('rightside').classList.remove('rightside-show')
   
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2024/10/18/JP%E5%A4%A7%E5%AD%A6%E4%B9%A0/">JP大学习</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p>l m h 轻中重</p>
-<p>p k 拳脚</p>
-<h3 id="板边压制"><a href="#板边压制" class="headerlink" title="板边压制"></a>板边压制</h3><h4 id="关于站重拳5hp打到后的后续"><a href="#关于站重拳5hp打到后的后续" class="headerlink" title="关于站重拳5hp打到后的后续"></a>关于站重拳5hp打到后的后续</h4><p>1，低点5hp取消普通裂隙，+15，选择放帧用12f的5hk打乱动</p>
-<p>2，低点5hp取消地刺，接od裂隙，+4，</p>
-<ul>
-<li>最速投择</li>
-<li>2mk取消26mk打乱动</li>
-</ul>
-<p>3，低点5hp取消od裂隙，偷帧地刺+2，5hp打点越高加越多</p>
-<ul>
-<li>偷帧地刺可以破凹一气</li>
-<li>被防+2，站&#x2F;蹲轻拳取消中下波择，择到(放帧)6hk踢起来取消26mp</li>
-</ul>
-<p>连段选择</p>
-<p>1，版中确反，5hk取消24lphp 5mk取消26mp jhk 5hk 22mk</p>
-<p>2，确反换边，5hk取消24lphp 前走反向 6hk踢起来</p>
-<p>3，版中一气斩杀，26hp起飞，66 绿冲5hp取消5hk 5hp取消一气</p>
-<p>4，重风神od地刺接2气，22kk取消二气，24hp，66，前跳，26mp 26mp</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2024/10/18/JP%E5%A4%A7%E5%AD%A6%E4%B9%A0/" data-id="cm44v5rhf0000zcvcagswbbng" data-title="JP大学习" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/street-fighter-6/" rel="tag">street fighter 6</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-亚马逊自学" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2024/09/10/%E4%BA%9A%E9%A9%AC%E9%80%8A%E8%87%AA%E5%AD%A6/" class="article-date">
-  <time class="dt-published" datetime="2024-09-10T05:20:45.000Z" itemprop="datePublished">2024-09-10</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/DianShang/">DianShang</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2024/09/10/%E4%BA%9A%E9%A9%AC%E9%80%8A%E8%87%AA%E5%AD%A6/">亚马逊自学</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h2 id="关键词库"><a href="#关键词库" class="headerlink" title="关键词库"></a>关键词库</h2><p>1，搜集竞品的asin，在搜索框搜关键词，取头部的竞品asin，10个</p>
-<p>2，使用卖家精灵下载关键词</p>
-<ul>
-<li>关键词反查，单个单个查，多个需要在表里去重</li>
-<li>流量词拓展，多个asin一起查，自动去重</li>
-</ul>
-<p>3，对关键词指标分析，排序，例如月搜索量</p>
-<p>TODO 搞清各个指标对关键词的影响</p>
-<p>4，词频分析，判断频率最高的单个，两个单词组成短语，三个词汇组成短语</p>
-<ul>
-<li>AMZ123词频统计工具：<a target="_blank" rel="noopener" href="https://www.amz123.com/tools-wordcounter%E3%80%81">https://www.amz123.com/tools-wordcounter、</a></li>
-<li>单个单词词频卖家精灵自动完成</li>
-</ul>
-<p>5,相关性查询，直接在亚马逊前台搜索看相关性</p>
-<ul>
-<li>强相关会出现在listing和广告</li>
-<li>不相关要否定并且不能出现在listing</li>
-</ul>
-<p>6，细分关键词</p>
-<ul>
-<li>例如：蓝牙无线耳机-&gt;蓝牙，无线，耳机做词根</li>
-</ul>
-<p>7，不同语种，同义词</p>
-<p>8，TODO，用H10进行关键词反查</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2024/09/10/%E4%BA%9A%E9%A9%AC%E9%80%8A%E8%87%AA%E5%AD%A6/" data-id="cm44v5rhn0006zcvc43et26m2" data-title="亚马逊自学" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Amazon/" rel="tag">Amazon</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-卖家大学" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2024/08/19/%E5%8D%96%E5%AE%B6%E5%A4%A7%E5%AD%A6/" class="article-date">
-  <time class="dt-published" datetime="2024-08-19T14:11:37.000Z" itemprop="datePublished">2024-08-19</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/DianShang/">DianShang</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2024/08/19/%E5%8D%96%E5%AE%B6%E5%A4%A7%E5%AD%A6/">卖家大学</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h3 id="listing组成"><a href="#listing组成" class="headerlink" title="listing组成"></a>listing组成</h3><ul>
-<li>listing: 对商品的具体介绍</li>
-</ul>
-<p>1，分类</p>
-<p>2，关键词</p>
-<p>3，图片</p>
-<p>4，品牌</p>
-<p>5，标题</p>
-<p>6，5点</p>
-<p>7，描述(有A+会被A+顶替)</p>
-<p>8，A+图文详情</p>
-<h3 id="北美产品认证"><a href="#北美产品认证" class="headerlink" title="北美产品认证"></a>北美产品认证</h3><p><img src="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20240819222904797.png" alt="image-20240819222904797"></p>
-<ul>
-<li><p>食品药品安全</p>
-</li>
-<li><p>儿童安全</p>
-</li>
-<li><p>无线电通讯产品</p>
-</li>
-<li><p>蓝牙产品</p>
-</li>
-<li><p>机动车和配件</p>
-</li>
-<li><p>ic？</p>
-</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2024/08/19/%E5%8D%96%E5%AE%B6%E5%A4%A7%E5%AD%A6/" data-id="cm44v5rhm0005zcvc4r0yfxzh" data-title="卖家大学" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Amazon/" rel="tag">Amazon</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-操作系统" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2024/08/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" class="article-date">
-  <time class="dt-published" datetime="2024-08-13T14:55:25.000Z" itemprop="datePublished">2024-08-13</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/">计算机</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2024/08/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h4 id="1-给解压好的bochs配置安装文件-make编译，make-install安装"><a href="#1-给解压好的bochs配置安装文件-make编译，make-install安装" class="headerlink" title="1,给解压好的bochs配置安装文件,make编译，make install安装"></a>1,给解压好的bochs配置安装文件,make编译，make install安装</h4><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">./configure</span> <span class="string">\</span> </span><br><span class="line"><span class="string">--prefix=/home/zxr/bochs_install</span> <span class="string">\</span> <span class="comment">#安装路径</span></span><br><span class="line"><span class="string">--enable-debugger</span> <span class="string">\</span> <span class="comment">#启用bochs自带的调试功能</span></span><br><span class="line"><span class="string">--enable-disasm</span> <span class="string">\</span> <span class="comment">#支持反汇编</span></span><br><span class="line"><span class="string">--enable-iodebug</span> <span class="string">\</span> <span class="comment">#开启io调试接口</span></span><br><span class="line"><span class="string">--enable-x86-debugger</span> <span class="string">\</span> <span class="comment">#支持x86调试器</span></span><br><span class="line"><span class="string">--with-x</span> <span class="string">\</span> <span class="comment">#使用xwindows</span></span><br><span class="line"><span class="string">--with-x11</span> <span class="comment">#x11图形用户界面</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>注意安装c和c++编译器，否则会编译失败</li>
-</ul>
-<h4 id="2-配置bochs的启动文件"><a href="#2-配置bochs的启动文件" class="headerlink" title="2,配置bochs的启动文件"></a>2,配置bochs的启动文件</h4><ul>
-<li>启动文件不限定名字和后缀，使用bochsrc.disk放置安装根路径即可(输入的时候方便，只需要输入文件名)，也可以不在根，只不过要输入相对路径</li>
-<li>配置虚拟计算机内存，硬盘启动，BIOS，VGABIOS，日志文件，鼠标，键盘映射，硬盘设置</li>
-</ul>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">megs:</span> <span class="number">32</span> <span class="comment">#内存大小</span></span><br><span class="line"><span class="comment">#BIOS</span></span><br><span class="line"><span class="attr">romimage:</span> <span class="string">file=/home/zxr/bochs_install/bochs/share/bochs/BIOS-bochs-latest</span> </span><br><span class="line"><span class="comment">#VGABIOS</span></span><br><span class="line"><span class="attr">vgaromimage:</span> <span class="string">file=/home/zxr/bochs_install/bochs/share/bochs/VGABIOS-lgpl-latest</span> </span><br><span class="line"><span class="comment">#硬盘启动</span></span><br><span class="line"><span class="attr">boot:</span> <span class="string">disk</span></span><br><span class="line"><span class="comment">#日志输出文件路径，根目录&#x27;/&#x27;省略了</span></span><br><span class="line"><span class="attr">log:</span> <span class="string">bochs.out</span></span><br><span class="line"><span class="comment">#禁用鼠标</span></span><br><span class="line"><span class="attr">mouse:</span> <span class="string">enabled=0</span></span><br><span class="line"><span class="comment">#keyboard_mapping: enabled=1</span></span><br><span class="line"><span class="comment">#键盘映射</span></span><br><span class="line"><span class="string">keyboard:keymap=/home/zxr/bochs_install/bochs/share/bochs/keymaps/x11-pc-us.map</span></span><br><span class="line"><span class="comment">#硬盘设置</span></span><br><span class="line"><span class="attr">ata0:</span> <span class="string">enabled=1,ioaddr1=0x1f0,ioaddr2=0x3f0,irq=14</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>在安装根键入 bin&#x2F;bochs,打开程序</li>
-</ul>
-<p><img src="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20240813235503043.png" alt="image-20240813235503043"></p>
-<ul>
-<li>输入2选择bochs配置文件，输入配置文件路径，读取成功</li>
-</ul>
-<h4 id="创建启动盘"><a href="#创建启动盘" class="headerlink" title="创建启动盘"></a>创建启动盘</h4><ul>
-<li>使用bochs虚拟机自带的bin&#x2F;bximage指令</li>
-</ul>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">bin/bximage</span> <span class="string">.</span></span><br><span class="line"><span class="string">-fd创建软盘。</span></span><br><span class="line"><span class="string">-hd</span> <span class="string">创建硬盘。</span></span><br><span class="line"><span class="string">-mode</span> <span class="string">创建硬盘的类型，有flat</span> <span class="string">、sparse</span> <span class="string">、growing</span> <span class="string">三种。</span></span><br><span class="line"><span class="string">-size</span> <span class="string">指创建多大的硬盘，以MB</span> <span class="string">为单位。</span></span><br><span class="line"><span class="string">-q</span> <span class="string">以静默模式创建，创建过程中不会和用户交互。</span></span><br><span class="line"><span class="comment">#bin/bochs -hd -mode=&quot;flat&quot; -size=60 -q hdM60.img</span></span><br><span class="line"><span class="comment">#创建启动硬盘，大小60m，静默创造，名字叫hdM60.img</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>输入指令后，bochs会把需要写进配置文件的内容输出，复制进bochsrc.disk(配置文件)即可</li>
-</ul>
-<p><img src="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20240814235303276.png" alt="image-20240814235303276"></p>
-<ul>
-<li>启动硬盘创建完毕，注意，进入时是调试模式，输入c放行，q退出</li>
-</ul>
-<h3 id="编写mbr"><a href="#编写mbr" class="headerlink" title="编写mbr"></a>编写mbr</h3><p>1，为什么要把操作系统载入内存？</p>
-<ul>
-<li>内存的运行速度快</li>
-<li>操作系统可以存在硬盘，软盘各种媒介，如果不统一放到一个地方，就会有对媒介的适配问题</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2024/08/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" data-id="cm44v5rhp000bzcvc8r5p0h45" data-title="操作系统" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%87%AA%E5%88%B6%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" rel="tag">自制操作系统</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-amazon" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2024/08/03/amazon/" class="article-date">
-  <time class="dt-published" datetime="2024-08-03T14:24:00.000Z" itemprop="datePublished">2024-08-03</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/DianShang/">DianShang</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2024/08/03/amazon/">amazon</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h3 id="货物运输状态管理"><a href="#货物运输状态管理" class="headerlink" title="货物运输状态管理"></a>货物运输状态管理</h3><p>在shipment管理里面，用运单号查询运输状态：</p>
-<img src="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20240806154722502.png" alt="image-20240806154722502" style="zoom:50%;" />
-
-<ul>
-<li><p>1，注意选择后台的站点</p>
-</li>
-<li><p>2，点进shipment-&gt;manage Shipments，根据运单号搜要看的运单</p>
-</li>
-<li><p><img src="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20240806155433695.png" alt="image-20240806155433695"></p>
-</li>
-<li><p>运输状态</p>
-<ul>
-<li><p>working是没有确认，点击4，进去填上这个确认号：</p>
-</li>
-<li><p><img src="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20240806155602064.png" alt="image-20240806155602064"></p>
-</li>
-<li><p>shipped是已发货</p>
-</li>
-<li><p>in transit是运输中，可以查询系统的到货时间，提交到表格：</p>
-</li>
-<li><p><img src="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/%E6%97%A0%E6%A0%87%E9%A2%98.png" alt="无标题"></p>
-</li>
-<li><p>设置到货时间为系统预测时间，并且更新时间到企业微信表格，日更···</p>
-</li>
-</ul>
-</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2024/08/03/amazon/" data-id="cm44v5rhj0001zcvc3lvweqbz" data-title="amazon" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Amazon/" rel="tag">Amazon</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-hello-world" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2024/08/03/hello-world/" class="article-date">
-  <time class="dt-published" datetime="2024-08-03T13:56:15.437Z" itemprop="datePublished">2024-08-03</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2024/08/03/hello-world/">Hello World</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-<p>AccessKey ID：zxrLTAI5tJ2X5xUgPqRDLZNLbfy</p>
-<p>AccessKey Secret: zxrhXjVwZVaKBcswugf9kRJyMfQbzi8wF</p>
-<p>bucketname:zxrpicbed</p>
-<p>地域:oss-cn-guangzhou</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2024/08/03/hello-world/" data-id="cm44v5rhm0004zcvc3gsu26vy" data-title="Hello World" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-
-
-</section>
-        
-          <aside id="sidebar">
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Categories</h3>
-    <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/DianShang/">DianShang</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/happy/">happy</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/">计算机</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
-    <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Amazon/" rel="tag">Amazon</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/street-fighter-6/" rel="tag">street fighter 6</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%87%AA%E5%88%B6%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" rel="tag">自制操作系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%9D%E6%9C%AF/" rel="tag">话术</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
-    <div class="widget tagcloud">
-      <a href="/tags/Amazon/" style="font-size: 20px;">Amazon</a> <a href="/tags/street-fighter-6/" style="font-size: 10px;">street fighter 6</a> <a href="/tags/%E8%87%AA%E5%88%B6%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" style="font-size: 10px;">自制操作系统</a> <a href="/tags/%E8%AF%9D%E6%9C%AF/" style="font-size: 10px;">话术</a>
-    </div>
-  </div>
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/11/">November 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/10/">October 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/09/">September 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">August 2024</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2024/11/17/%E9%87%8D%E8%A6%81/">重要</a>
-          </li>
-        
-          <li>
-            <a href="/2024/11/12/%E5%95%86%E5%9F%8E%E6%94%AF%E4%BB%98/">商城支付</a>
-          </li>
-        
-          <li>
-            <a href="/2024/10/18/JP%E5%A4%A7%E5%AD%A6%E4%B9%A0/">JP大学习</a>
-          </li>
-        
-          <li>
-            <a href="/2024/09/10/%E4%BA%9A%E9%A9%AC%E9%80%8A%E8%87%AA%E5%AD%A6/">亚马逊自学</a>
-          </li>
-        
-          <li>
-            <a href="/2024/08/19/%E5%8D%96%E5%AE%B6%E5%A4%A7%E5%AD%A6/">卖家大学</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-  
-</aside>
-        
-      </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      
-      &copy; 2024 John Doe<br>
-      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
-    </div>
-  </div>
-</footer>
-
-    </div>
-    <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-</nav>
-    
-
-
-<script src="/js/jquery-3.6.4.min.js"></script>
-
-
-
-  
-<script src="/fancybox/jquery.fancybox.min.js"></script>
-
-
-
-
-<script src="/js/script.js"></script>
-
-
-
-
-
-  </div>
-</body>
-</html>
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', e => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script charset="UTF-8" src="https://cdn.cbd.int/anzhiyu-theme-static@1.1.5/accesskey/accesskey.js"></script></div><div id="popup-window"><div class="popup-window-title">通知</div><div class="popup-window-divider"></div><div class="popup-window-content"><div class="popup-tip">你好呀</div><div class="popup-link"><i class="anzhiyufont anzhiyu-icon-arrow-circle-right"></i></div></div></div></body></html>
