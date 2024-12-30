@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
@@ -17,13 +17,13 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha256-5eIC48iZUHmSlSUz9XtjRyK2mzQkHScZY1WdMaoz74E=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.21.1","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"always","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.21.1","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"always","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
     <meta property="og:type" content="website">
 <meta property="og:title" content="Hexo">
 <meta property="og:url" content="http://example.com/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:locale" content="en_US">
+<meta property="og:locale" content="zh_CN">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
 
@@ -31,7 +31,7 @@
 <link rel="canonical" href="http://example.com/">
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":true,"isPost":false,"lang":"en","comments":"","permalink":"","path":"index.html","title":""}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":true,"isPost":false,"lang":"zh-CN","comments":"","permalink":"","path":"index.html","title":""}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
 <title>Hexo</title>
@@ -56,7 +56,10 @@
     <div class="column">
       <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
   <div class="site-nav-toggle">
-    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
     </div>
   </div>
 
@@ -70,16 +73,47 @@
   </div>
 
   <div class="site-nav-right">
-    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
 
 
 
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
 
 
 
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
 
 </header>
         
@@ -89,10 +123,10 @@
     <div class="sidebar-inner sidebar-overview-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
-          Table of Contents
+          文章目录
         </li>
         <li class="sidebar-nav-overview">
-          Overview
+          站点概览
         </li>
       </ul>
 
@@ -111,17 +145,19 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">14</span>
-          <span class="site-state-item-name">posts</span>
+          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
+          <a href="/categories/">
         <span class="site-state-item-count">4</span>
-        <span class="site-state-item-name">categories</span>
+        <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">10</span>
-        <span class="site-state-item-name">tags</span>
+          <a href="/tags/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
 </div>
@@ -137,6 +173,84 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/12/30/redis/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/12/30/redis/" class="post-title-link" itemprop="url">redis</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2024-12-30 21:45:35 / 修改时间：21:52:42" itemprop="dateCreated datePublished" datetime="2024-12-30T21:45:35+08:00">2024-12-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/" itemprop="url" rel="index"><span itemprop="name">计算机</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -173,22 +287,22 @@
       <span class="post-meta-item-icon">
         <i class="far fa-calendar"></i>
       </span>
-      <span class="post-meta-item-text">Posted on</span>
+      <span class="post-meta-item-text">发表于</span>
 
-      <time title="Created: 2024-12-25 22:25:55" itemprop="dateCreated datePublished" datetime="2024-12-25T22:25:55+08:00">2024-12-25</time>
+      <time title="创建时间：2024-12-25 22:25:55" itemprop="dateCreated datePublished" datetime="2024-12-25T22:25:55+08:00">2024-12-25</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2024-12-26 23:43:04" itemprop="dateModified" datetime="2024-12-26T23:43:04+08:00">2024-12-26</time>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-12-29 22:53:58" itemprop="dateModified" datetime="2024-12-29T22:53:58+08:00">2024-12-29</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
       </span>
-      <span class="post-meta-item-text">In</span>
+      <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
           <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/" itemprop="url" rel="index"><span itemprop="name">计算机</span></a>
         </span>
@@ -425,6 +539,41 @@
 </li>
 </ul>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.itheima.consumer.config;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="comment">//只有开启了消费者重试机制，才需要对重试后还是失败的消息进行处理</span></span><br><span class="line"><span class="meta">@ConditionalOnProperty(name = &quot;spring.rabbitmq.listener.simple.retry.enabled&quot;, havingValue = &quot;true&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ErrorMessageConfig</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//创建交换机</span></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="keyword">public</span> DirectExchange <span class="title function_">errorMessageExchange</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">DirectExchange</span>(<span class="string">&quot;error.direct&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//创建队列</span></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="keyword">public</span> Queue <span class="title function_">errorQueue</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Queue</span>(<span class="string">&quot;error.queue&quot;</span>, <span class="literal">true</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//绑定交换机和队列</span></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="keyword">public</span> Binding <span class="title function_">errorBinding</span><span class="params">(Queue errorQueue, DirectExchange errorMessageExchange)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> BindingBuilder.bind(errorQueue).to(errorMessageExchange).with(<span class="string">&quot;error&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//创建一个MessageRecoverer对象，实现类为RepublishMessageRecoverer，也就是重试次数用完后，发送到指定交换机，需要指定客户端，交换机，以及发送消息时的key</span></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="keyword">public</span> MessageRecoverer <span class="title function_">republishMessageRecoverer</span><span class="params">(RabbitTemplate rabbitTemplate)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">RepublishMessageRecoverer</span>(rabbitTemplate, <span class="string">&quot;error.direct&quot;</span>, <span class="string">&quot;error&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="12-幂等性保证"><a href="#12-幂等性保证" class="headerlink" title="12,幂等性保证"></a>12,幂等性保证</h2><ul>
+<li>1，在消息放一个id，可以使用JacksonMessageConvertor生成，也可以使用自己生成的id在发送的时候带上<ul>
+<li>当消费者拿到消息，判断redis或者mysql里面是不是有这个id，有的话代表执行过，没有的话这次才能执行</li>
+</ul>
+</li>
+</ul>
+<h2 id="13-延迟消息的实现"><a href="#13-延迟消息的实现" class="headerlink" title="13,延迟消息的实现"></a>13,延迟消息的实现</h2><ul>
+<li>1，使用插件，下载插件放在rabbitmq的插件目录，在创建交换机的时候设置delay属性为true，发送的时候使用setdelay方法设置时间(ms)，就会自动在交换机里等时间到了才会放到队列</li>
+<li>2，使用死信队列，可以为一个队列设置死信交换机<ul>
+<li>死信：<ul>
+<li>队列中过期的消息</li>
+<li>队列超过设置的最大值，待得最久的消息</li>
+<li>rejecte或者nack的，并且设置不能重入队的消息</li>
+</ul>
+</li>
+<li>某个队列的死信消息会直接发往死信交换机，只需要设置一个死信交换机，给它榜一个队列就可以操作死信</li>
+</ul>
+</li>
+<li>3，利用两个交换机和两个队列<ul>
+<li>第一组交换机和队列，队列不设置消费者，给消息设置定时时间，让它在队列里过期成为死信</li>
+<li>第二组设置为死信交换机，以及用队列绑定该交换机，在设置的时间过了之后消息会被送到死信交换机，达到延迟消息的效果</li>
+</ul>
+</li>
+</ul>
+<h2 id="12-消息丢失"><a href="#12-消息丢失" class="headerlink" title="12,消息丢失"></a>12,消息丢失</h2><ul>
+<li>1，三个可靠性</li>
+</ul>
+<h2 id="13，重复消费幂等性"><a href="#13，重复消费幂等性" class="headerlink" title="13，重复消费幂等性"></a>13，重复消费幂等性</h2><ul>
+<li>1，使用uuid或者Jackson转换器生成id，利用redis或mysql暂存，执行前判断，已经有id存进去了表示执行过了</li>
+</ul>
+<h2 id="14，顺序发送"><a href="#14，顺序发送" class="headerlink" title="14，顺序发送"></a>14，顺序发送</h2><ul>
+<li>1，把需要按顺序的放在一个额外的队列里面</li>
+</ul>
+
       
     </div>
 
@@ -477,22 +626,22 @@
       <span class="post-meta-item-icon">
         <i class="far fa-calendar"></i>
       </span>
-      <span class="post-meta-item-text">Posted on</span>
+      <span class="post-meta-item-text">发表于</span>
 
-      <time title="Created: 2024-12-18 00:09:36" itemprop="dateCreated datePublished" datetime="2024-12-18T00:09:36+08:00">2024-12-18</time>
+      <time title="创建时间：2024-12-18 00:09:36" itemprop="dateCreated datePublished" datetime="2024-12-18T00:09:36+08:00">2024-12-18</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2024-12-22 23:51:05" itemprop="dateModified" datetime="2024-12-22T23:51:05+08:00">2024-12-22</time>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-12-22 23:51:05" itemprop="dateModified" datetime="2024-12-22T23:51:05+08:00">2024-12-22</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
       </span>
-      <span class="post-meta-item-text">In</span>
+      <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
           <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/" itemprop="url" rel="index"><span itemprop="name">计算机</span></a>
         </span>
@@ -1106,22 +1255,22 @@ ScheduledThreadPoolExecutor scheduledThreadPoolExecutor =
       <span class="post-meta-item-icon">
         <i class="far fa-calendar"></i>
       </span>
-      <span class="post-meta-item-text">Posted on</span>
+      <span class="post-meta-item-text">发表于</span>
 
-      <time title="Created: 2024-12-09 22:52:33" itemprop="dateCreated datePublished" datetime="2024-12-09T22:52:33+08:00">2024-12-09</time>
+      <time title="创建时间：2024-12-09 22:52:33" itemprop="dateCreated datePublished" datetime="2024-12-09T22:52:33+08:00">2024-12-09</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2024-12-13 23:43:49" itemprop="dateModified" datetime="2024-12-13T23:43:49+08:00">2024-12-13</time>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-12-13 23:43:49" itemprop="dateModified" datetime="2024-12-13T23:43:49+08:00">2024-12-13</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
       </span>
-      <span class="post-meta-item-text">In</span>
+      <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
           <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/" itemprop="url" rel="index"><span itemprop="name">计算机</span></a>
         </span>
@@ -1354,22 +1503,22 @@ ScheduledThreadPoolExecutor scheduledThreadPoolExecutor =
       <span class="post-meta-item-icon">
         <i class="far fa-calendar"></i>
       </span>
-      <span class="post-meta-item-text">Posted on</span>
+      <span class="post-meta-item-text">发表于</span>
 
-      <time title="Created: 2024-12-07 00:05:22" itemprop="dateCreated datePublished" datetime="2024-12-07T00:05:22+08:00">2024-12-07</time>
+      <time title="创建时间：2024-12-07 00:05:22" itemprop="dateCreated datePublished" datetime="2024-12-07T00:05:22+08:00">2024-12-07</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2024-12-24 23:56:46" itemprop="dateModified" datetime="2024-12-24T23:56:46+08:00">2024-12-24</time>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-12-24 23:56:46" itemprop="dateModified" datetime="2024-12-24T23:56:46+08:00">2024-12-24</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
       </span>
-      <span class="post-meta-item-text">In</span>
+      <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
           <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/" itemprop="url" rel="index"><span itemprop="name">计算机</span></a>
         </span>
@@ -1596,22 +1745,22 @@ ScheduledThreadPoolExecutor scheduledThreadPoolExecutor =
       <span class="post-meta-item-icon">
         <i class="far fa-calendar"></i>
       </span>
-      <span class="post-meta-item-text">Posted on</span>
+      <span class="post-meta-item-text">发表于</span>
 
-      <time title="Created: 2024-11-29 10:50:45" itemprop="dateCreated datePublished" datetime="2024-11-29T10:50:45+08:00">2024-11-29</time>
+      <time title="创建时间：2024-11-29 10:50:45" itemprop="dateCreated datePublished" datetime="2024-11-29T10:50:45+08:00">2024-11-29</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2024-12-04 22:33:12" itemprop="dateModified" datetime="2024-12-04T22:33:12+08:00">2024-12-04</time>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-12-04 22:33:12" itemprop="dateModified" datetime="2024-12-04T22:33:12+08:00">2024-12-04</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
       </span>
-      <span class="post-meta-item-text">In</span>
+      <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
           <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/" itemprop="url" rel="index"><span itemprop="name">计算机</span></a>
         </span>
@@ -1970,22 +2119,22 @@ ScheduledThreadPoolExecutor scheduledThreadPoolExecutor =
       <span class="post-meta-item-icon">
         <i class="far fa-calendar"></i>
       </span>
-      <span class="post-meta-item-text">Posted on</span>
+      <span class="post-meta-item-text">发表于</span>
 
-      <time title="Created: 2024-11-17 13:56:13" itemprop="dateCreated datePublished" datetime="2024-11-17T13:56:13+08:00">2024-11-17</time>
+      <time title="创建时间：2024-11-17 13:56:13" itemprop="dateCreated datePublished" datetime="2024-11-17T13:56:13+08:00">2024-11-17</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2024-11-24 15:03:49" itemprop="dateModified" datetime="2024-11-24T15:03:49+08:00">2024-11-24</time>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-11-24 15:03:49" itemprop="dateModified" datetime="2024-11-24T15:03:49+08:00">2024-11-24</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
       </span>
-      <span class="post-meta-item-text">In</span>
+      <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
           <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/" itemprop="url" rel="index"><span itemprop="name">计算机</span></a>
         </span>
@@ -2210,10 +2359,10 @@ ScheduledThreadPoolExecutor scheduledThreadPoolExecutor =
       <span class="post-meta-item-icon">
         <i class="far fa-calendar"></i>
       </span>
-      <span class="post-meta-item-text">Posted on</span>
+      <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="Created: 2024-11-12 22:56:04 / Modified: 23:47:21" itemprop="dateCreated datePublished" datetime="2024-11-12T22:56:04+08:00">2024-11-12</time>
+      <time title="创建时间：2024-11-12 22:56:04 / 修改时间：23:47:21" itemprop="dateCreated datePublished" datetime="2024-11-12T22:56:04+08:00">2024-11-12</time>
     </span>
 
   
@@ -2284,22 +2433,22 @@ ScheduledThreadPoolExecutor scheduledThreadPoolExecutor =
       <span class="post-meta-item-icon">
         <i class="far fa-calendar"></i>
       </span>
-      <span class="post-meta-item-text">Posted on</span>
+      <span class="post-meta-item-text">发表于</span>
 
-      <time title="Created: 2024-10-18 23:40:00" itemprop="dateCreated datePublished" datetime="2024-10-18T23:40:00+08:00">2024-10-18</time>
+      <time title="创建时间：2024-10-18 23:40:00" itemprop="dateCreated datePublished" datetime="2024-10-18T23:40:00+08:00">2024-10-18</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2024-11-17 13:56:47" itemprop="dateModified" datetime="2024-11-17T13:56:47+08:00">2024-11-17</time>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-11-17 13:56:47" itemprop="dateModified" datetime="2024-11-17T13:56:47+08:00">2024-11-17</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
       </span>
-      <span class="post-meta-item-text">In</span>
+      <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
           <a href="/categories/happy/" itemprop="url" rel="index"><span itemprop="name">happy</span></a>
         </span>
@@ -2386,16 +2535,16 @@ ScheduledThreadPoolExecutor scheduledThreadPoolExecutor =
       <span class="post-meta-item-icon">
         <i class="far fa-calendar"></i>
       </span>
-      <span class="post-meta-item-text">Posted on</span>
+      <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="Created: 2024-09-10 13:20:45 / Modified: 23:18:04" itemprop="dateCreated datePublished" datetime="2024-09-10T13:20:45+08:00">2024-09-10</time>
+      <time title="创建时间：2024-09-10 13:20:45 / 修改时间：23:18:04" itemprop="dateCreated datePublished" datetime="2024-09-10T13:20:45+08:00">2024-09-10</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
       </span>
-      <span class="post-meta-item-text">In</span>
+      <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
           <a href="/categories/DianShang/" itemprop="url" rel="index"><span itemprop="name">DianShang</span></a>
         </span>
@@ -2453,112 +2602,8 @@ ScheduledThreadPoolExecutor scheduledThreadPoolExecutor =
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/08/19/%E5%8D%96%E5%AE%B6%E5%A4%A7%E5%AD%A6/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Hexo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/08/19/%E5%8D%96%E5%AE%B6%E5%A4%A7%E5%AD%A6/" class="post-title-link" itemprop="url">卖家大学</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2024-08-19 22:11:37 / Modified: 23:10:58" itemprop="dateCreated datePublished" datetime="2024-08-19T22:11:37+08:00">2024-08-19</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/DianShang/" itemprop="url" rel="index"><span itemprop="name">DianShang</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="listing组成"><a href="#listing组成" class="headerlink" title="listing组成"></a>listing组成</h3><ul>
-<li>listing: 对商品的具体介绍</li>
-</ul>
-<p>1，分类</p>
-<p>2，关键词</p>
-<p>3，图片</p>
-<p>4，品牌</p>
-<p>5，标题</p>
-<p>6，5点</p>
-<p>7，描述(有A+会被A+顶替)</p>
-<p>8，A+图文详情</p>
-<h3 id="北美产品认证"><a href="#北美产品认证" class="headerlink" title="北美产品认证"></a>北美产品认证</h3><p><img src="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20240819222904797.png" alt="image-20240819222904797"></p>
-<ul>
-<li><p>食品药品安全</p>
-</li>
-<li><p>儿童安全</p>
-</li>
-<li><p>无线电通讯产品</p>
-</li>
-<li><p>蓝牙产品</p>
-</li>
-<li><p>机动车和配件</p>
-</li>
-<li><p>ic？</p>
-</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" title="Next page" aria-label="Next page" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>
@@ -2575,8 +2620,10 @@ ScheduledThreadPoolExecutor scheduledThreadPoolExecutor =
     </span>
     <span class="author" itemprop="copyrightHolder">John Doe</span>
   </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
-  </div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div> -->
 
     </div>
   </footer>
@@ -2588,7 +2635,7 @@ ScheduledThreadPoolExecutor scheduledThreadPoolExecutor =
     <span class="toggle-line"></span>
   </div>
   <div class="sidebar-dimmer"></div>
-  <div class="back-to-top" role="button" aria-label="Back to top">
+  <div class="back-to-top" role="button" aria-label="返回顶部">
     <i class="fa fa-arrow-up fa-lg"></i>
     <span>0%</span>
   </div>
@@ -2602,7 +2649,9 @@ ScheduledThreadPoolExecutor scheduledThreadPoolExecutor =
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
 <script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
 
-  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
 
 
 
