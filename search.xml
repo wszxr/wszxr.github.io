@@ -30,6 +30,175 @@
       </tags>
   </entry>
   <entry>
+    <title>mybatis</title>
+    <url>/2024/12/07/mybatis/</url>
+    <content><![CDATA[<p>mybatis配置文件</p>
+<ul>
+<li><p>配置环境，数据源：environments&lt;environment标签</p>
+</li>
+<li><p>配置mapper文件的位置 ：mappers&lt;mapper标签</p>
+<ul>
+<li>按包扫描mapper文件时mappers&lt;package name&#x3D;，xml的名字还起着和mapper接口对应的作用，所以在使用时要注意：<ul>
+<li>1，mapper文件放的层级和mapper接口的层级一样,也就是包一致</li>
+<li>2，mapper文件的名字和接口名一致</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>配置properties文件的位置，引用使用${}：properties标签</p>
+</li>
+<li><p>设置类型别名typeAlias&lt;typeAlia type&#x3D;;alias&#x3D;;可以有效避免由于resultType需要的全限定名过长难写的问题，别名不区分大小写</p>
+<ul>
+<li>除了上面为单个类设置别名的方式，还可以指定某个包所有类以类名为别名，不区分大小写typealais&lt;package name&#x3D;；</li>
+</ul>
+</li>
+</ul>
+<p>mybatis mapper文件和接口的对应</p>
+<ul>
+<li>一张表，对应一个mapper接口，对应一个mapper文件，对应一个实体类</li>
+<li>mapper接口对应mapper文件的命名空间</li>
+<li>mapper接口的方法，对应mapper文件的sql id</li>
+</ul>
+<p>接口中的参数如何传递到sql语句？</p>
+<ul>
+<li>${},#{}</li>
+<li>单个字面量的传递，大括号随便填就可以</li>
+<li>多个字面量，mybatis会存到一个map中，默认的键是arg0，arg1····，或者param0，param1···；值就是参数顺序的参数值<ul>
+<li>获取的时候，直接大括号里写arg0或param0这种就可以获取到值了</li>
+</ul>
+</li>
+<li>多个字面量，为避免使用默认的arg0这种键，可以先在service把参数手动打包成map，再直接传入map类型的参数<ul>
+<li>这样获取的时候，就可以通过大括号中写自己定义的键获取自己定义的值</li>
+</ul>
+</li>
+<li>多个字面量，可以使用@Param注解，给每个参数指定mybatis存储的键<ul>
+<li>大括号里填注解指定的键可以获取值</li>
+</ul>
+</li>
+<li>对象类性，mybatis自动使用属性的名字为键，属性值为值，创建map<ul>
+<li>大括号填属性名即可</li>
+</ul>
+</li>
+</ul>
+<p>结论：参数的获取实际上和接口方法声明的参数名没有关系</p>
+<p>结果集如何指定返回格式？</p>
+<ul>
+<li>单条数据用对象接收，或者用map(接口和resultType都是)，key是属性名，v是值</li>
+<li>多条在接口用List接收，resulttype是list元素类型</li>
+<li>多条也可以用map接收，必须接口@MapKey()指定map的key，每一条记录的json作为v；或者直接使用map列表，返回多个map</li>
+</ul>
+<p>默认使用#{}，什么时候只能用${}？</p>
+<ul>
+<li><p>主要是有没有单引号的关系</p>
+</li>
+<li><p>模糊查询，使用like ‘%${}%’;like “%”#{}”%”;like concat(‘%’,#{},’%’)</p>
+</li>
+<li><p>批量删除使用了in，in ${ids},#{}会为每个id加单引号，执行没结果</p>
+</li>
+<li><p>动态表名使用参数作为表名，表名是不可以有单引号的</p>
+</li>
+</ul>
+<p>如何同时修改有关联的两张表？</p>
+<p>例子：往班级表插入一个班级，分配一些学生(把学生的班级改为插入的班级)</p>
+<p>步骤：</p>
+<ul>
+<li>插入班级</li>
+<li>查询该班级的自增id(插入之前这个值是空，自动生成的)，所以必须查</li>
+<li>根据条件获取一部分学生，更改他们的班级id</li>
+</ul>
+<p>优化：在插入后自动回调将id返回给对象</p>
+<ul>
+<li>设置insert标签参数，useGeneratedKeys&#x3D;”true”,keyProperty&#x3D;”id”(对象的自增主键属性名)</li>
+<li>在执行insert之后，再去看传入的班级对象参数，已经把id属性设置成了插入了的班级的id</li>
+<li>直接用这个id修改学生班级id</li>
+</ul>
+<p>字段名和属性名不同咋办？</p>
+<ul>
+<li>设置underScoreToCamelCase完成下划线和驼峰转换</li>
+<li>在sql语句查询的时候为字段设置别名</li>
+<li>@TableField(“user_name”)注解在实体类属性上，和表字段对应</li>
+<li>使用resultmap</li>
+</ul>
+<p>1对多咋办？</p>
+<p>例子，一个班级对应多个学生，在班级类应当有一个list<student>属性，难以对此属性赋值，因为要通过班级id关联查询</p>
+<ul>
+<li>使用collection标签，记忆：集合属性用collection标签</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">id</span>=<span class="string">&quot;classAndStudentResultMap&quot;</span> <span class="attr">type</span>=<span class="string">&quot;Class&quot;</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">id</span> <span class="attr">property</span>=<span class="string">&quot;cid&quot;</span> <span class="attr">column</span>=<span class="string">&quot;cid&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;className&quot;</span> <span class="attr">column</span>=<span class="string">&quot;class_name&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">result</span>&gt;</span></span><br><span class="line">    再封装学生列表，指定list属性名，指定list元素类型</span><br><span class="line">	<span class="tag">&lt;<span class="name">collection</span> <span class="attr">property</span>=<span class="string">&quot;students&quot;</span> <span class="attr">ofType</span>=<span class="string">&quot;student&quot;</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">id</span> <span class="attr">property</span>=<span class="string">&quot;studentId&quot;</span> <span class="attr">column</span>=<span class="string">&quot;student_id&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;age&quot;</span> <span class="attr">column</span>=<span class="string">&quot;age&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">result</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;sex&quot;</span> <span class="attr">column</span>=<span class="string">&quot;sex&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">result</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;email&quot;</span> <span class="attr">column</span>=<span class="string">&quot;email&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">result</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">collection</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>使用分步操作+懒加载</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">id</span>=<span class="string">&quot;DeptAndEmpByStepOneResultMap&quot;</span> <span class="attr">type</span>=<span class="string">&quot;Dept&quot;</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">id</span> <span class="attr">property</span>=<span class="string">&quot;did&quot;</span> <span class="attr">column</span>=<span class="string">&quot;did&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;deptName&quot;</span> <span class="attr">column</span>=<span class="string">&quot;dept_name&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">result</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">collection</span> <span class="attr">property</span>=<span class="string">&quot;emps&quot;</span></span></span><br><span class="line"><span class="tag">		</span></span><br><span class="line"><span class="tag">      <span class="attr">指定第二步对应的接口</span>          <span class="attr">select</span>=<span class="string">&quot;com.atguigu.mybatis.mapper.EmpMapper.getDeptAndEmpByStepTwo&quot;</span></span></span><br><span class="line"><span class="tag">                <span class="attr">指定第二步接口需要的参数</span></span></span><br><span class="line"><span class="tag">				<span class="attr">column</span>=<span class="string">&quot;did&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">collection</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--Dept getDeptAndEmpByStepOne(@Param(&quot;did&quot;) Integer did);--&gt;</span></span><br><span class="line">第二步</span><br><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;getDeptAndEmpByStepOne&quot;</span> <span class="attr">resultMap</span>=<span class="string">&quot;DeptAndEmpByStepOneResultMap&quot;</span>&gt;</span></span><br><span class="line">	select * from t_dept where did = #&#123;did&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">settings</span>&gt;</span></span><br><span class="line">	<span class="comment">&lt;!--开启延迟加载--&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">setting</span> <span class="attr">name</span>=<span class="string">&quot;lazyLoadingEnabled&quot;</span> <span class="attr">value</span>=<span class="string">&quot;true&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">settings</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>多对一呢？</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">id</span>=<span class="string">&quot;empAndDeptResultMapTwo&quot;</span> <span class="attr">type</span>=<span class="string">&quot;Emp&quot;</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">id</span> <span class="attr">property</span>=<span class="string">&quot;eid&quot;</span> <span class="attr">column</span>=<span class="string">&quot;eid&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;empName&quot;</span> <span class="attr">column</span>=<span class="string">&quot;emp_name&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">result</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;age&quot;</span> <span class="attr">column</span>=<span class="string">&quot;age&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">result</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;sex&quot;</span> <span class="attr">column</span>=<span class="string">&quot;sex&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">result</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;email&quot;</span> <span class="attr">column</span>=<span class="string">&quot;email&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">result</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">association</span> <span class="attr">property</span>=<span class="string">&quot;dept&quot;</span> <span class="attr">javaType</span>=<span class="string">&quot;Dept&quot;</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">id</span> <span class="attr">property</span>=<span class="string">&quot;did&quot;</span> <span class="attr">column</span>=<span class="string">&quot;did&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;deptName&quot;</span> <span class="attr">column</span>=<span class="string">&quot;dept_name&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">result</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">association</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--Emp getEmpAndDept(@Param(&quot;eid&quot;)Integer eid);--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;getEmpAndDept&quot;</span> <span class="attr">resultMap</span>=<span class="string">&quot;empAndDeptResultMapTwo&quot;</span>&gt;</span></span><br><span class="line">	select * from t_emp left join t_dept on t_emp.eid = t_dept.did where t_emp.eid = #&#123;eid&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>分步</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">id</span>=<span class="string">&quot;empAndDeptByStepResultMap&quot;</span> <span class="attr">type</span>=<span class="string">&quot;Emp&quot;</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">id</span> <span class="attr">property</span>=<span class="string">&quot;eid&quot;</span> <span class="attr">column</span>=<span class="string">&quot;eid&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;empName&quot;</span> <span class="attr">column</span>=<span class="string">&quot;emp_name&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">result</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;age&quot;</span> <span class="attr">column</span>=<span class="string">&quot;age&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">result</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;sex&quot;</span> <span class="attr">column</span>=<span class="string">&quot;sex&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">result</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;email&quot;</span> <span class="attr">column</span>=<span class="string">&quot;email&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">result</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">association</span> <span class="attr">property</span>=<span class="string">&quot;dept&quot;</span></span></span><br><span class="line"><span class="tag">				 <span class="attr">select</span>=<span class="string">&quot;com.atguigu.mybatis.mapper.DeptMapper.getEmpAndDeptByStepTwo&quot;</span></span></span><br><span class="line"><span class="tag">				 <span class="attr">column</span>=<span class="string">&quot;did&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">association</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--Emp getEmpAndDeptByStepOne(@Param(&quot;eid&quot;) Integer eid);--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;getEmpAndDeptByStepOne&quot;</span> <span class="attr">resultMap</span>=<span class="string">&quot;empAndDeptByStepResultMap&quot;</span>&gt;</span></span><br><span class="line">	select * from t_emp where eid = #&#123;eid&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>总结，多对一和一对多都是通过级联查询，第一次只查出了某个属性的一部分，必须把手动第二部分的东西封装到属性里</p>
+<p>动态sql标签</p>
+<ul>
+<li>使用if来判断条件是否满足</li>
+<li>使用where来自动生成where，并且自动清除sql前部分的and和or，注意后部分不能去除</li>
+</ul>
+<h2 id="一级缓存"><a href="#一级缓存" class="headerlink" title="一级缓存"></a>一级缓存</h2><ul>
+<li>1，作用范围：<ul>
+<li>一级缓存是SQL session级别的，默认开启，同一个SQL session内相同的sql语句将会使用缓存而不是查询数据库</li>
+</ul>
+</li>
+<li>2,如何开启：<ul>
+<li>自动开启</li>
+</ul>
+</li>
+<li>3，缓存有效使用的条件：<ul>
+<li>同一个SQL session下操作</li>
+<li>一模一样的sql语句</li>
+<li>查询之间没有经历过增删改操作，增删改操作会导致数据库的内容和缓存的内容不一样，mybatis会直接删除缓存</li>
+<li>查询之间没有手动调用清理方Sqlsession.clearCatch()</li>
+</ul>
+</li>
+</ul>
+<h2 id="二级缓存"><a href="#二级缓存" class="headerlink" title="二级缓存"></a>二级缓存</h2><ul>
+<li><p>1，作用范围</p>
+<ul>
+<li>二级缓存是namespace级别的，一般一个mapper接口对应一个mapper文件对应一个namespace</li>
+</ul>
+</li>
+<li><p>2，开启过程</p>
+<ul>
+<li><p>全局设置中&lt;setting name&#x3D;”cacheEnabled” value&#x3D;”true”&#x2F;&gt;,默认就是true，可以不用手动设置该选项</p>
+</li>
+<li><p>在要开启的namespace中使用catche标签配置</p>
+</li>
+<li><pre><code class="xml">&lt;mapper namespace=&quot;com.example.mapper.UserMapper&quot;&gt;
+    &lt;!-- 配置二级缓存 --&gt;
+    &lt;cache 
+        eviction=&quot;LRU&quot; 
+        flushInterval=&quot;60000&quot; 
+        size=&quot;512&quot; 
+        readOnly=&quot;true&quot;/&gt;
+    &lt;!-- SQL语句 --&gt;
+&lt;/mapper&gt;
+</code></pre>
+</li>
+<li><p>表对应的java实例对象要实现序列化接口并设置版本号，因为可能有持久化到磁盘</p>
+</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>计算机</category>
+      </categories>
+      <tags>
+        <tag>ssm</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>MySQL</title>
     <url>/2024/12/09/MySQL/</url>
     <content><![CDATA[<h2 id="行格式"><a href="#行格式" class="headerlink" title="行格式"></a>行格式</h2><h3 id="1，页存在的意义"><a href="#1，页存在的意义" class="headerlink" title="1，页存在的意义"></a>1，页存在的意义</h3><ul>
@@ -243,6 +412,17 @@
       </tags>
   </entry>
   <entry>
+    <title>ps</title>
+    <url>/2024/08/18/ps/</url>
+    <content><![CDATA[<h2 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h2><h3 id="移动和选区"><a href="#移动和选区" class="headerlink" title="移动和选区"></a>移动和选区</h3>]]></content>
+      <categories>
+        <category>图片视频处理</category>
+      </categories>
+      <tags>
+        <tag>ps教程</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hello World</title>
     <url>/2024/08/03/hello-world/</url>
     <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
@@ -263,197 +443,6 @@
 <p>bucketname:zxrpicbed</p>
 <p>地域:oss-cn-guangzhou</p>
 ]]></content>
-  </entry>
-  <entry>
-    <title>mybatis</title>
-    <url>/2024/12/07/mybatis/</url>
-    <content><![CDATA[<p>mybatis配置文件</p>
-<ul>
-<li><p>配置环境，数据源：environments&lt;environment标签</p>
-</li>
-<li><p>配置mapper文件的位置 ：mappers&lt;mapper标签</p>
-<ul>
-<li>按包扫描mapper文件时mappers&lt;package name&#x3D;，xml的名字还起着和mapper接口对应的作用，所以在使用时要注意：<ul>
-<li>1，mapper文件放的层级和mapper接口的层级一样,也就是包一致</li>
-<li>2，mapper文件的名字和接口名一致</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>配置properties文件的位置，引用使用${}：properties标签</p>
-</li>
-<li><p>设置类型别名typeAlias&lt;typeAlia type&#x3D;;alias&#x3D;;可以有效避免由于resultType需要的全限定名过长难写的问题，别名不区分大小写</p>
-<ul>
-<li>除了上面为单个类设置别名的方式，还可以指定某个包所有类以类名为别名，不区分大小写typealais&lt;package name&#x3D;；</li>
-</ul>
-</li>
-</ul>
-<p>mybatis mapper文件和接口的对应</p>
-<ul>
-<li>一张表，对应一个mapper接口，对应一个mapper文件，对应一个实体类</li>
-<li>mapper接口对应mapper文件的命名空间</li>
-<li>mapper接口的方法，对应mapper文件的sql id</li>
-</ul>
-<p>接口中的参数如何传递到sql语句？</p>
-<ul>
-<li>${},#{}</li>
-<li>单个字面量的传递，大括号随便填就可以</li>
-<li>多个字面量，mybatis会存到一个map中，默认的键是arg0，arg1····，或者param0，param1···；值就是参数顺序的参数值<ul>
-<li>获取的时候，直接大括号里写arg0或param0这种就可以获取到值了</li>
-</ul>
-</li>
-<li>多个字面量，为避免使用默认的arg0这种键，可以先在service把参数手动打包成map，再直接传入map类型的参数<ul>
-<li>这样获取的时候，就可以通过大括号中写自己定义的键获取自己定义的值</li>
-</ul>
-</li>
-<li>多个字面量，可以使用@Param注解，给每个参数指定mybatis存储的键<ul>
-<li>大括号里填注解指定的键可以获取值</li>
-</ul>
-</li>
-<li>对象类性，mybatis自动使用属性的名字为键，属性值为值，创建map<ul>
-<li>大括号填属性名即可</li>
-</ul>
-</li>
-</ul>
-<p>结论：参数的获取实际上和接口方法声明的参数名没有关系</p>
-<p>结果集如何指定返回格式？</p>
-<ul>
-<li>单条数据用对象接收，或者用map(接口和resultType都是)，key是属性名，v是值</li>
-<li>多条在接口用List接收，resulttype是list元素类型</li>
-<li>多条也可以用map接收，必须接口@MapKey()指定map的key，每一条记录的json作为v；或者直接使用map列表，返回多个map</li>
-</ul>
-<p>默认使用#{}，什么时候只能用${}？</p>
-<ul>
-<li><p>主要是有没有单引号的关系</p>
-</li>
-<li><p>模糊查询，使用like ‘%${}%’;like “%”#{}”%”;like concat(‘%’,#{},’%’)</p>
-</li>
-<li><p>批量删除使用了in，in ${ids},#{}会为每个id加单引号，执行没结果</p>
-</li>
-<li><p>动态表名使用参数作为表名，表名是不可以有单引号的</p>
-</li>
-</ul>
-<p>如何同时修改有关联的两张表？</p>
-<p>例子：往班级表插入一个班级，分配一些学生(把学生的班级改为插入的班级)</p>
-<p>步骤：</p>
-<ul>
-<li>插入班级</li>
-<li>查询该班级的自增id(插入之前这个值是空，自动生成的)，所以必须查</li>
-<li>根据条件获取一部分学生，更改他们的班级id</li>
-</ul>
-<p>优化：在插入后自动回调将id返回给对象</p>
-<ul>
-<li>设置insert标签参数，useGeneratedKeys&#x3D;”true”,keyProperty&#x3D;”id”(对象的自增主键属性名)</li>
-<li>在执行insert之后，再去看传入的班级对象参数，已经把id属性设置成了插入了的班级的id</li>
-<li>直接用这个id修改学生班级id</li>
-</ul>
-<p>字段名和属性名不同咋办？</p>
-<ul>
-<li>设置underScoreToCamelCase完成下划线和驼峰转换</li>
-<li>在sql语句查询的时候为字段设置别名</li>
-<li>@TableField(“user_name”)注解在实体类属性上，和表字段对应</li>
-<li>使用resultmap</li>
-</ul>
-<p>1对多咋办？</p>
-<p>例子，一个班级对应多个学生，在班级类应当有一个list<student>属性，难以对此属性赋值，因为要通过班级id关联查询</p>
-<ul>
-<li>使用collection标签，记忆：集合属性用collection标签</li>
-</ul>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">id</span>=<span class="string">&quot;classAndStudentResultMap&quot;</span> <span class="attr">type</span>=<span class="string">&quot;Class&quot;</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">id</span> <span class="attr">property</span>=<span class="string">&quot;cid&quot;</span> <span class="attr">column</span>=<span class="string">&quot;cid&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;className&quot;</span> <span class="attr">column</span>=<span class="string">&quot;class_name&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">result</span>&gt;</span></span><br><span class="line">    再封装学生列表，指定list属性名，指定list元素类型</span><br><span class="line">	<span class="tag">&lt;<span class="name">collection</span> <span class="attr">property</span>=<span class="string">&quot;students&quot;</span> <span class="attr">ofType</span>=<span class="string">&quot;student&quot;</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">id</span> <span class="attr">property</span>=<span class="string">&quot;studentId&quot;</span> <span class="attr">column</span>=<span class="string">&quot;student_id&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;age&quot;</span> <span class="attr">column</span>=<span class="string">&quot;age&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">result</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;sex&quot;</span> <span class="attr">column</span>=<span class="string">&quot;sex&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">result</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;email&quot;</span> <span class="attr">column</span>=<span class="string">&quot;email&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">result</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">collection</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>使用分步操作+懒加载</li>
-</ul>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">id</span>=<span class="string">&quot;DeptAndEmpByStepOneResultMap&quot;</span> <span class="attr">type</span>=<span class="string">&quot;Dept&quot;</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">id</span> <span class="attr">property</span>=<span class="string">&quot;did&quot;</span> <span class="attr">column</span>=<span class="string">&quot;did&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;deptName&quot;</span> <span class="attr">column</span>=<span class="string">&quot;dept_name&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">result</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">collection</span> <span class="attr">property</span>=<span class="string">&quot;emps&quot;</span></span></span><br><span class="line"><span class="tag">		</span></span><br><span class="line"><span class="tag">      <span class="attr">指定第二步对应的接口</span>          <span class="attr">select</span>=<span class="string">&quot;com.atguigu.mybatis.mapper.EmpMapper.getDeptAndEmpByStepTwo&quot;</span></span></span><br><span class="line"><span class="tag">                <span class="attr">指定第二步接口需要的参数</span></span></span><br><span class="line"><span class="tag">				<span class="attr">column</span>=<span class="string">&quot;did&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">collection</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--Dept getDeptAndEmpByStepOne(@Param(&quot;did&quot;) Integer did);--&gt;</span></span><br><span class="line">第二步</span><br><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;getDeptAndEmpByStepOne&quot;</span> <span class="attr">resultMap</span>=<span class="string">&quot;DeptAndEmpByStepOneResultMap&quot;</span>&gt;</span></span><br><span class="line">	select * from t_dept where did = #&#123;did&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">settings</span>&gt;</span></span><br><span class="line">	<span class="comment">&lt;!--开启延迟加载--&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">setting</span> <span class="attr">name</span>=<span class="string">&quot;lazyLoadingEnabled&quot;</span> <span class="attr">value</span>=<span class="string">&quot;true&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">settings</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>多对一呢？</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">id</span>=<span class="string">&quot;empAndDeptResultMapTwo&quot;</span> <span class="attr">type</span>=<span class="string">&quot;Emp&quot;</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">id</span> <span class="attr">property</span>=<span class="string">&quot;eid&quot;</span> <span class="attr">column</span>=<span class="string">&quot;eid&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;empName&quot;</span> <span class="attr">column</span>=<span class="string">&quot;emp_name&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">result</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;age&quot;</span> <span class="attr">column</span>=<span class="string">&quot;age&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">result</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;sex&quot;</span> <span class="attr">column</span>=<span class="string">&quot;sex&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">result</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;email&quot;</span> <span class="attr">column</span>=<span class="string">&quot;email&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">result</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">association</span> <span class="attr">property</span>=<span class="string">&quot;dept&quot;</span> <span class="attr">javaType</span>=<span class="string">&quot;Dept&quot;</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">id</span> <span class="attr">property</span>=<span class="string">&quot;did&quot;</span> <span class="attr">column</span>=<span class="string">&quot;did&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;deptName&quot;</span> <span class="attr">column</span>=<span class="string">&quot;dept_name&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">result</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">association</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--Emp getEmpAndDept(@Param(&quot;eid&quot;)Integer eid);--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;getEmpAndDept&quot;</span> <span class="attr">resultMap</span>=<span class="string">&quot;empAndDeptResultMapTwo&quot;</span>&gt;</span></span><br><span class="line">	select * from t_emp left join t_dept on t_emp.eid = t_dept.did where t_emp.eid = #&#123;eid&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>分步</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">id</span>=<span class="string">&quot;empAndDeptByStepResultMap&quot;</span> <span class="attr">type</span>=<span class="string">&quot;Emp&quot;</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">id</span> <span class="attr">property</span>=<span class="string">&quot;eid&quot;</span> <span class="attr">column</span>=<span class="string">&quot;eid&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;empName&quot;</span> <span class="attr">column</span>=<span class="string">&quot;emp_name&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">result</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;age&quot;</span> <span class="attr">column</span>=<span class="string">&quot;age&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">result</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;sex&quot;</span> <span class="attr">column</span>=<span class="string">&quot;sex&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">result</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;email&quot;</span> <span class="attr">column</span>=<span class="string">&quot;email&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">result</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">association</span> <span class="attr">property</span>=<span class="string">&quot;dept&quot;</span></span></span><br><span class="line"><span class="tag">				 <span class="attr">select</span>=<span class="string">&quot;com.atguigu.mybatis.mapper.DeptMapper.getEmpAndDeptByStepTwo&quot;</span></span></span><br><span class="line"><span class="tag">				 <span class="attr">column</span>=<span class="string">&quot;did&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">association</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--Emp getEmpAndDeptByStepOne(@Param(&quot;eid&quot;) Integer eid);--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;getEmpAndDeptByStepOne&quot;</span> <span class="attr">resultMap</span>=<span class="string">&quot;empAndDeptByStepResultMap&quot;</span>&gt;</span></span><br><span class="line">	select * from t_emp where eid = #&#123;eid&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>总结，多对一和一对多都是通过级联查询，第一次只查出了某个属性的一部分，必须把手动第二部分的东西封装到属性里</p>
-<p>动态sql标签</p>
-<ul>
-<li>使用if来判断条件是否满足</li>
-<li>使用where来自动生成where，并且自动清除sql前部分的and和or，注意后部分不能去除</li>
-</ul>
-<h2 id="一级缓存"><a href="#一级缓存" class="headerlink" title="一级缓存"></a>一级缓存</h2><ul>
-<li>1，作用范围：<ul>
-<li>一级缓存是SQL session级别的，默认开启，同一个SQL session内相同的sql语句将会使用缓存而不是查询数据库</li>
-</ul>
-</li>
-<li>2,如何开启：<ul>
-<li>自动开启</li>
-</ul>
-</li>
-<li>3，缓存有效使用的条件：<ul>
-<li>同一个SQL session下操作</li>
-<li>一模一样的sql语句</li>
-<li>查询之间没有经历过增删改操作，增删改操作会导致数据库的内容和缓存的内容不一样，mybatis会直接删除缓存</li>
-<li>查询之间没有手动调用清理方Sqlsession.clearCatch()</li>
-</ul>
-</li>
-</ul>
-<h2 id="二级缓存"><a href="#二级缓存" class="headerlink" title="二级缓存"></a>二级缓存</h2><ul>
-<li><p>1，作用范围</p>
-<ul>
-<li>二级缓存是namespace级别的，一般一个mapper接口对应一个mapper文件对应一个namespace</li>
-</ul>
-</li>
-<li><p>2，开启过程</p>
-<ul>
-<li><p>全局设置中&lt;setting name&#x3D;”cacheEnabled” value&#x3D;”true”&#x2F;&gt;,默认就是true，可以不用手动设置该选项</p>
-</li>
-<li><p>在要开启的namespace中使用catche标签配置</p>
-</li>
-<li><pre><code class="xml">&lt;mapper namespace=&quot;com.example.mapper.UserMapper&quot;&gt;
-    &lt;!-- 配置二级缓存 --&gt;
-    &lt;cache 
-        eviction=&quot;LRU&quot; 
-        flushInterval=&quot;60000&quot; 
-        size=&quot;512&quot; 
-        readOnly=&quot;true&quot;/&gt;
-    &lt;!-- SQL语句 --&gt;
-&lt;/mapper&gt;
-</code></pre>
-</li>
-<li><p>表对应的java实例对象要实现序列化接口并设置版本号，因为可能有持久化到磁盘</p>
-</li>
-</ul>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>计算机</category>
-      </categories>
-      <tags>
-        <tag>ssm</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>ps</title>
-    <url>/2024/08/18/ps/</url>
-    <content><![CDATA[<h2 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h2><h3 id="移动和选区"><a href="#移动和选区" class="headerlink" title="移动和选区"></a>移动和选区</h3>]]></content>
-      <categories>
-        <category>图片视频处理</category>
-      </categories>
-      <tags>
-        <tag>ps教程</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>redis</title>
-    <url>/2024/12/30/redis/</url>
-    <content><![CDATA[]]></content>
-      <categories>
-        <category>计算机</category>
-      </categories>
-      <tags>
-        <tag>redis</tag>
-      </tags>
   </entry>
   <entry>
     <title>rabbitMQ</title>
@@ -719,6 +708,17 @@
       </categories>
       <tags>
         <tag>MQ</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>redis</title>
+    <url>/2024/12/30/redis/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>计算机</category>
+      </categories>
+      <tags>
+        <tag>redis</tag>
       </tags>
   </entry>
   <entry>
@@ -1058,16 +1058,6 @@
       </tags>
   </entry>
   <entry>
-    <title>商城支付</title>
-    <url>/2024/11/12/%E5%95%86%E5%9F%8E%E6%94%AF%E4%BB%98/</url>
-    <content><![CDATA[<h2 id="1，内网穿透-natapp"><a href="#1，内网穿透-natapp" class="headerlink" title="1，内网穿透 natapp"></a>1，内网穿透 natapp</h2><p>1，使用netapp，获取公网ip</p>
-<p><a href="https://natapp.cn/">https://natapp.cn/</a></p>
-<ul>
-<li>购买</li>
-</ul>
-]]></content>
-  </entry>
-  <entry>
     <title>卖家大学</title>
     <url>/2024/08/19/%E5%8D%96%E5%AE%B6%E5%A4%A7%E5%AD%A6/</url>
     <content><![CDATA[<h3 id="listing组成"><a href="#listing组成" class="headerlink" title="listing组成"></a>listing组成</h3><ul>
@@ -1102,52 +1092,6 @@
       </categories>
       <tags>
         <tag>Amazon</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>操作系统</title>
-    <url>/2024/08/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</url>
-    <content><![CDATA[<h4 id="1-给解压好的bochs配置安装文件-make编译，make-install安装"><a href="#1-给解压好的bochs配置安装文件-make编译，make-install安装" class="headerlink" title="1,给解压好的bochs配置安装文件,make编译，make install安装"></a>1,给解压好的bochs配置安装文件,make编译，make install安装</h4><figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="string">./configure</span> <span class="string">\</span> </span><br><span class="line"><span class="string">--prefix=/home/zxr/bochs_install</span> <span class="string">\</span> <span class="comment">#安装路径</span></span><br><span class="line"><span class="string">--enable-debugger</span> <span class="string">\</span> <span class="comment">#启用bochs自带的调试功能</span></span><br><span class="line"><span class="string">--enable-disasm</span> <span class="string">\</span> <span class="comment">#支持反汇编</span></span><br><span class="line"><span class="string">--enable-iodebug</span> <span class="string">\</span> <span class="comment">#开启io调试接口</span></span><br><span class="line"><span class="string">--enable-x86-debugger</span> <span class="string">\</span> <span class="comment">#支持x86调试器</span></span><br><span class="line"><span class="string">--with-x</span> <span class="string">\</span> <span class="comment">#使用xwindows</span></span><br><span class="line"><span class="string">--with-x11</span> <span class="comment">#x11图形用户界面</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>注意安装c和c++编译器，否则会编译失败</li>
-</ul>
-<h4 id="2-配置bochs的启动文件"><a href="#2-配置bochs的启动文件" class="headerlink" title="2,配置bochs的启动文件"></a>2,配置bochs的启动文件</h4><ul>
-<li>启动文件不限定名字和后缀，使用bochsrc.disk放置安装根路径即可(输入的时候方便，只需要输入文件名)，也可以不在根，只不过要输入相对路径</li>
-<li>配置虚拟计算机内存，硬盘启动，BIOS，VGABIOS，日志文件，鼠标，键盘映射，硬盘设置</li>
-</ul>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">megs:</span> <span class="number">32</span> <span class="comment">#内存大小</span></span><br><span class="line"><span class="comment">#BIOS</span></span><br><span class="line"><span class="attr">romimage:</span> <span class="string">file=/home/zxr/bochs_install/bochs/share/bochs/BIOS-bochs-latest</span> </span><br><span class="line"><span class="comment">#VGABIOS</span></span><br><span class="line"><span class="attr">vgaromimage:</span> <span class="string">file=/home/zxr/bochs_install/bochs/share/bochs/VGABIOS-lgpl-latest</span> </span><br><span class="line"><span class="comment">#硬盘启动</span></span><br><span class="line"><span class="attr">boot:</span> <span class="string">disk</span></span><br><span class="line"><span class="comment">#日志输出文件路径，根目录&#x27;/&#x27;省略了</span></span><br><span class="line"><span class="attr">log:</span> <span class="string">bochs.out</span></span><br><span class="line"><span class="comment">#禁用鼠标</span></span><br><span class="line"><span class="attr">mouse:</span> <span class="string">enabled=0</span></span><br><span class="line"><span class="comment">#keyboard_mapping: enabled=1</span></span><br><span class="line"><span class="comment">#键盘映射</span></span><br><span class="line"><span class="string">keyboard:keymap=/home/zxr/bochs_install/bochs/share/bochs/keymaps/x11-pc-us.map</span></span><br><span class="line"><span class="comment">#硬盘设置</span></span><br><span class="line"><span class="attr">ata0:</span> <span class="string">enabled=1,ioaddr1=0x1f0,ioaddr2=0x3f0,irq=14</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>在安装根键入 bin&#x2F;bochs,打开程序</li>
-</ul>
-<p><img src="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20240813235503043.png" alt="image-20240813235503043"></p>
-<ul>
-<li>输入2选择bochs配置文件，输入配置文件路径，读取成功</li>
-</ul>
-<h4 id="创建启动盘"><a href="#创建启动盘" class="headerlink" title="创建启动盘"></a>创建启动盘</h4><ul>
-<li>使用bochs虚拟机自带的bin&#x2F;bximage指令</li>
-</ul>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="string">bin/bximage</span> <span class="string">.</span></span><br><span class="line"><span class="string">-fd创建软盘。</span></span><br><span class="line"><span class="string">-hd</span> <span class="string">创建硬盘。</span></span><br><span class="line"><span class="string">-mode</span> <span class="string">创建硬盘的类型，有flat</span> <span class="string">、sparse</span> <span class="string">、growing</span> <span class="string">三种。</span></span><br><span class="line"><span class="string">-size</span> <span class="string">指创建多大的硬盘，以MB</span> <span class="string">为单位。</span></span><br><span class="line"><span class="string">-q</span> <span class="string">以静默模式创建，创建过程中不会和用户交互。</span></span><br><span class="line"><span class="comment">#bin/bochs -hd -mode=&quot;flat&quot; -size=60 -q hdM60.img</span></span><br><span class="line"><span class="comment">#创建启动硬盘，大小60m，静默创造，名字叫hdM60.img</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>输入指令后，bochs会把需要写进配置文件的内容输出，复制进bochsrc.disk(配置文件)即可</li>
-</ul>
-<p><img src="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20240814235303276.png" alt="image-20240814235303276"></p>
-<ul>
-<li>启动硬盘创建完毕，注意，进入时是调试模式，输入c放行，q退出</li>
-</ul>
-<h3 id="编写mbr"><a href="#编写mbr" class="headerlink" title="编写mbr"></a>编写mbr</h3><p>1，为什么要把操作系统载入内存？</p>
-<ul>
-<li>内存的运行速度快</li>
-<li>操作系统可以存在硬盘，软盘各种媒介，如果不统一放到一个地方，就会有对媒介的适配问题</li>
-</ul>
-]]></content>
-      <categories>
-        <category>计算机</category>
-      </categories>
-      <tags>
-        <tag>自制操作系统</tag>
       </tags>
   </entry>
   <entry>
@@ -1743,6 +1687,62 @@ ScheduledThreadPoolExecutor scheduledThreadPoolExecutor =
       </categories>
       <tags>
         <tag>大汇总</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>商城支付</title>
+    <url>/2024/11/12/%E5%95%86%E5%9F%8E%E6%94%AF%E4%BB%98/</url>
+    <content><![CDATA[<h2 id="1，内网穿透-natapp"><a href="#1，内网穿透-natapp" class="headerlink" title="1，内网穿透 natapp"></a>1，内网穿透 natapp</h2><p>1，使用netapp，获取公网ip</p>
+<p><a href="https://natapp.cn/">https://natapp.cn/</a></p>
+<ul>
+<li>购买</li>
+</ul>
+]]></content>
+  </entry>
+  <entry>
+    <title>操作系统</title>
+    <url>/2024/08/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</url>
+    <content><![CDATA[<h4 id="1-给解压好的bochs配置安装文件-make编译，make-install安装"><a href="#1-给解压好的bochs配置安装文件-make编译，make-install安装" class="headerlink" title="1,给解压好的bochs配置安装文件,make编译，make install安装"></a>1,给解压好的bochs配置安装文件,make编译，make install安装</h4><figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="string">./configure</span> <span class="string">\</span> </span><br><span class="line"><span class="string">--prefix=/home/zxr/bochs_install</span> <span class="string">\</span> <span class="comment">#安装路径</span></span><br><span class="line"><span class="string">--enable-debugger</span> <span class="string">\</span> <span class="comment">#启用bochs自带的调试功能</span></span><br><span class="line"><span class="string">--enable-disasm</span> <span class="string">\</span> <span class="comment">#支持反汇编</span></span><br><span class="line"><span class="string">--enable-iodebug</span> <span class="string">\</span> <span class="comment">#开启io调试接口</span></span><br><span class="line"><span class="string">--enable-x86-debugger</span> <span class="string">\</span> <span class="comment">#支持x86调试器</span></span><br><span class="line"><span class="string">--with-x</span> <span class="string">\</span> <span class="comment">#使用xwindows</span></span><br><span class="line"><span class="string">--with-x11</span> <span class="comment">#x11图形用户界面</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>注意安装c和c++编译器，否则会编译失败</li>
+</ul>
+<h4 id="2-配置bochs的启动文件"><a href="#2-配置bochs的启动文件" class="headerlink" title="2,配置bochs的启动文件"></a>2,配置bochs的启动文件</h4><ul>
+<li>启动文件不限定名字和后缀，使用bochsrc.disk放置安装根路径即可(输入的时候方便，只需要输入文件名)，也可以不在根，只不过要输入相对路径</li>
+<li>配置虚拟计算机内存，硬盘启动，BIOS，VGABIOS，日志文件，鼠标，键盘映射，硬盘设置</li>
+</ul>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">megs:</span> <span class="number">32</span> <span class="comment">#内存大小</span></span><br><span class="line"><span class="comment">#BIOS</span></span><br><span class="line"><span class="attr">romimage:</span> <span class="string">file=/home/zxr/bochs_install/bochs/share/bochs/BIOS-bochs-latest</span> </span><br><span class="line"><span class="comment">#VGABIOS</span></span><br><span class="line"><span class="attr">vgaromimage:</span> <span class="string">file=/home/zxr/bochs_install/bochs/share/bochs/VGABIOS-lgpl-latest</span> </span><br><span class="line"><span class="comment">#硬盘启动</span></span><br><span class="line"><span class="attr">boot:</span> <span class="string">disk</span></span><br><span class="line"><span class="comment">#日志输出文件路径，根目录&#x27;/&#x27;省略了</span></span><br><span class="line"><span class="attr">log:</span> <span class="string">bochs.out</span></span><br><span class="line"><span class="comment">#禁用鼠标</span></span><br><span class="line"><span class="attr">mouse:</span> <span class="string">enabled=0</span></span><br><span class="line"><span class="comment">#keyboard_mapping: enabled=1</span></span><br><span class="line"><span class="comment">#键盘映射</span></span><br><span class="line"><span class="string">keyboard:keymap=/home/zxr/bochs_install/bochs/share/bochs/keymaps/x11-pc-us.map</span></span><br><span class="line"><span class="comment">#硬盘设置</span></span><br><span class="line"><span class="attr">ata0:</span> <span class="string">enabled=1,ioaddr1=0x1f0,ioaddr2=0x3f0,irq=14</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>在安装根键入 bin&#x2F;bochs,打开程序</li>
+</ul>
+<p><img src="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20240813235503043.png" alt="image-20240813235503043"></p>
+<ul>
+<li>输入2选择bochs配置文件，输入配置文件路径，读取成功</li>
+</ul>
+<h4 id="创建启动盘"><a href="#创建启动盘" class="headerlink" title="创建启动盘"></a>创建启动盘</h4><ul>
+<li>使用bochs虚拟机自带的bin&#x2F;bximage指令</li>
+</ul>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="string">bin/bximage</span> <span class="string">.</span></span><br><span class="line"><span class="string">-fd创建软盘。</span></span><br><span class="line"><span class="string">-hd</span> <span class="string">创建硬盘。</span></span><br><span class="line"><span class="string">-mode</span> <span class="string">创建硬盘的类型，有flat</span> <span class="string">、sparse</span> <span class="string">、growing</span> <span class="string">三种。</span></span><br><span class="line"><span class="string">-size</span> <span class="string">指创建多大的硬盘，以MB</span> <span class="string">为单位。</span></span><br><span class="line"><span class="string">-q</span> <span class="string">以静默模式创建，创建过程中不会和用户交互。</span></span><br><span class="line"><span class="comment">#bin/bochs -hd -mode=&quot;flat&quot; -size=60 -q hdM60.img</span></span><br><span class="line"><span class="comment">#创建启动硬盘，大小60m，静默创造，名字叫hdM60.img</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>输入指令后，bochs会把需要写进配置文件的内容输出，复制进bochsrc.disk(配置文件)即可</li>
+</ul>
+<p><img src="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20240814235303276.png" alt="image-20240814235303276"></p>
+<ul>
+<li>启动硬盘创建完毕，注意，进入时是调试模式，输入c放行，q退出</li>
+</ul>
+<h3 id="编写mbr"><a href="#编写mbr" class="headerlink" title="编写mbr"></a>编写mbr</h3><p>1，为什么要把操作系统载入内存？</p>
+<ul>
+<li>内存的运行速度快</li>
+<li>操作系统可以存在硬盘，软盘各种媒介，如果不统一放到一个地方，就会有对媒介的适配问题</li>
+</ul>
+]]></content>
+      <categories>
+        <category>计算机</category>
+      </categories>
+      <tags>
+        <tag>自制操作系统</tag>
       </tags>
   </entry>
   <entry>
