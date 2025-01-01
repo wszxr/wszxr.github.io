@@ -19,13 +19,15 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.21.1","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"always","padding":18,"offset":12},"hljswrap":true,"copycode":{"border_radius":8,"enable":true,"show_result":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta property="og:type" content="article">
+    <meta name="description" content="redis持久化RDB">
+<meta property="og:type" content="article">
 <meta property="og:title" content="redis">
 <meta property="og:url" content="http://example.com/2024/12/30/redis/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="redis持久化RDB">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-12-30T13:45:35.000Z">
-<meta property="article:modified_time" content="2024-12-30T13:52:42.667Z">
+<meta property="article:modified_time" content="2025-01-01T16:08:30.803Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="redis">
 <meta name="twitter:card" content="summary">
@@ -123,7 +125,7 @@
   
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -136,6 +138,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#redis%E6%8C%81%E4%B9%85%E5%8C%96"><span class="nav-number">1.</span> <span class="nav-text">redis持久化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#RDB"><span class="nav-number">1.1.</span> <span class="nav-text">RDB</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AOF"><span class="nav-number">1.2.</span> <span class="nav-text">AOF</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5%E5%8E%9F%E7%90%86"><span class="nav-number">1.3.</span> <span class="nav-text">数据同步原理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%A8%E9%87%8F%E5%90%8C%E6%AD%A5"><span class="nav-number">1.3.1.</span> <span class="nav-text">全量同步</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A2%9E%E9%87%8F%E5%90%8C%E6%AD%A5"><span class="nav-number">1.3.2.</span> <span class="nav-text">增量同步</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%87%8F%E5%B0%91%E5%85%A8%E9%87%8F%E5%90%8C%E6%AD%A5%EF%BC%8C%E5%8A%A0%E5%BF%AB%E5%85%A8%E9%87%8F%E5%90%8C%E6%AD%A5"><span class="nav-number">1.3.3.</span> <span class="nav-text">减少全量同步，加快全量同步</span></a></li></ol></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -219,9 +222,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2024-12-30 21:45:35 / 修改时间：21:52:42" itemprop="dateCreated datePublished" datetime="2024-12-30T21:45:35+08:00">2024-12-30</time>
+      <time title="创建时间：2024-12-30 21:45:35" itemprop="dateCreated datePublished" datetime="2024-12-30T21:45:35+08:00">2024-12-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-01-02 00:08:30" itemprop="dateModified" datetime="2025-01-02T00:08:30+08:00">2025-01-02</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -239,14 +248,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>0</span>
+      <span>2.9k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
+      <span>3 分钟</span>
     </span>
 </div>
 
@@ -256,7 +265,103 @@
     
     
     
-    <div class="post-body" itemprop="articleBody">
+    <div class="post-body" itemprop="articleBody"><h2 id="redis持久化"><a href="#redis持久化" class="headerlink" title="redis持久化"></a>redis持久化</h2><h3 id="RDB"><a href="#RDB" class="headerlink" title="RDB"></a>RDB</h3><span id="more"></span>
+
+<p>1，rdb模式：生成一个内存快照，默认开启</p>
+<p>2，rdb的触发机制</p>
+<ul>
+<li>redis服务正常停止前同步保存</li>
+<li>使用save，bgsave命令的时候保存rdb文件</li>
+<li>启动文件(redis.conf)中配置rdb触发的时机</li>
+</ul>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#在A秒内，有B个key被修改，则执行bgsave</span></span><br><span class="line"><span class="comment">#save “”代表关闭rdb机制</span></span><br><span class="line"><span class="attr">save</span> <span class="string">A B</span></span><br><span class="line"><span class="comment">#rdb相关配置</span></span><br><span class="line"><span class="comment">#文件名称，默认dunmp.rdb</span></span><br><span class="line"><span class="attr">dbfilename</span> <span class="string">XXX</span></span><br><span class="line"><span class="comment">#文件路径，默认./(安装路径)</span></span><br><span class="line"><span class="attr">dir</span> <span class="string">xxx</span></span><br><span class="line"><span class="comment">#是否开启压缩，建议不开启，压缩要耗费cpu资源</span></span><br><span class="line"><span class="attr">rdbcompression</span> <span class="string">yes/no</span></span><br></pre></td></tr></table></figure>
+
+<p>3，异步rdb的原理，使用copyonwrite思想保证对redis数据的遍历复制(bgsave)和修改(主进程修改数据)不会产生线程安全问题</p>
+<ul>
+<li>问题，子进程进行rdb文件保存的途中，如果主进程有修改数据的请求，就产生了变修改，边遍历复制的线程安全问题</li>
+<li>解决，对rdb文件使用copyonwrite操作，修改请求进来，对需要修改的key在的内存页做备份并在备份中修改，不影响原数据，bgsave执行完再同步回去</li>
+<li>优点<ul>
+<li>解决了线程安全问题</li>
+<li>并不是备份全部数据，而是备份要修改的数据，相当于是优化版的COW(copyonwrite)</li>
+</ul>
+</li>
+</ul>
+<p>4，缺点：</p>
+<ul>
+<li>间隔时间长，间隔时间内的数据在意外宕机的时候会丢失</li>
+<li>需要fork子进程，压缩消耗cpu资源，写入磁盘时间长</li>
+</ul>
+<h3 id="AOF"><a href="#AOF" class="headerlink" title="AOF"></a>AOF</h3><p>1，AOF指的是记录每一次对数据进行增删改操作的命令，并在 一定时候给命令文件刷新到磁盘，宕机后直接执行命令文件中的命令即可恢复数据，因为记录的只是没保存的命令，比较小，因此相比rdb可以更高频率的把文件刷新到磁盘，更加安全</p>
+<p>2，AOF开启：在conf文件中，设置</p>
+<ul>
+<li>appendonly  true 时开启,默认关闭</li>
+<li>appendfilename XXX 指定文件名</li>
+</ul>
+<p>3，文件刷新到磁盘的频率控制</p>
+<ul>
+<li>appendfsync always，每次修改key，文件中记录的同时，刷新到磁盘</li>
+<li>appendfsync  everysec，每一秒将文件中的记录刷新到磁盘</li>
+<li>appendfsync  no，不控制，由操作系统自动控制刷新，一般频率比较低</li>
+<li>默认everysec</li>
+</ul>
+<p>4，AOF的文件过大问题</p>
+<ul>
+<li><p>aof相比rdb，除了记录key和value，还记录了指令，因此aof比rdb会大很多</p>
+</li>
+<li><p>执行bgrewriteaof命令，用子进程去重写aof文件，比如set name “name1”,set name “name2”，只需要记录后面的就行了，第一次被覆盖掉了</p>
+</li>
+<li><p>可配置bgrewriteaof命令自动执行的时机，使用默认就好</p>
+</li>
+<li><pre><code class="properties">#aof文件体积超过固定值会执行，默认64
+auto-aof-rewrite-min-size 64mb
+#aof文件相比上一次刷新时增长了多少会执行，默认100%，即这次是上次的两倍大小时执行
+auto-aof-rewrite-percentage 100
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### RDB和AOF的优缺点对比</span><br><span class="line"></span><br><span class="line">1，数据完整性，aof高，因为刷新的频率快</span><br><span class="line"></span><br><span class="line">2，宕机恢复速度，rdb快，因为rdb只需要把数据读取到内存，而aof需要执行所有的命令</span><br><span class="line"></span><br><span class="line">3，文件大小，rdb小，aof除了数据还要存指令</span><br><span class="line"></span><br><span class="line">4，使用场景，对于安全性要求很高，使用aof，不高直接用rdb；可以两个都开启，会优先使用aof的方法恢复，因为aof数据完整，但是rdb文件可以作为一个备份使用，放到其他机器或者什么地方</span><br><span class="line"></span><br><span class="line">## rdis主从</span><br><span class="line"></span><br><span class="line">### 主从建立</span><br><span class="line"></span><br><span class="line">1，配置多个redis节点可以增加redis的吞吐量，请求过来时，分发到不同的节点即可，一般来说，各个从节点负责执行读请求，主节点用于执行写请求，原因是redis的绝大多数请求都是读请求，因此多分一些节点</span><br><span class="line"></span><br><span class="line">2，如何配置主从节点</span><br><span class="line"></span><br><span class="line">+ 在从节点的conf文件中，指定</span><br><span class="line"></span><br><span class="line">+ ~~~properties</span><br><span class="line">   slaveof &lt;主节点ip&gt; &lt;主节点端口&gt;</span><br></pre></td></tr></table></figure>
+</code></pre>
+</li>
+</ul>
+<p>3，在从节点指定了主节点之后，对于主节点的写会同步到从节点上，从节点只负责读，自动实现了读写分离</p>
+<p>4，主从要开启rdb，因为要使用快照给同步给从节点</p>
+<h3 id="数据同步原理"><a href="#数据同步原理" class="headerlink" title="数据同步原理"></a>数据同步原理</h3><h4 id="全量同步"><a href="#全量同步" class="headerlink" title="全量同步"></a>全量同步</h4><p>1，先判断是否是增量同步，如果不是，增量同步拒绝，进行全量同步，主节点把数据全量同步到从节点</p>
+<p>2，问题：</p>
+<ul>
+<li>如何判断是否使用增量同步？<ul>
+<li>每个节点初始都是主节点，只有使用slaveof命令指定之后，才变为从节点，每个节点都有replicationid，从节点的replicationid在同步的时候会修改为主节点的，因此只需要判断replicationid是否和主节点相同就可以了</li>
+</ul>
+</li>
+<li>如何进行同步？<ul>
+<li>判断为全量同步之后，使用bgsave命令，在创建rdb文件开始时，记录主节点repl_backlog的offset，之后把rdb文件和offset值发送给从节点;从节点先清空自己，再加载rdb文件中的内容，同时设置自己的offset和发送过来的offset相等，主节点之后会根据从节点的offset，去repl_backlog中把指令发给从节点执行，以达到动态同步的效果</li>
+</ul>
+</li>
+<li>bgsave期间，增量如何处理？<ul>
+<li>与单纯的持久化不同，持久化中bgsave的文件并不会被用户读取，因此不用担心bgsave期间的增量导致的磁盘文件和redis内存文件不一致问题，但是从节点是专门用来读取，要尽量保证和主节点内容一致</li>
+<li>主节点所有的增删改的指令都会存到repl_backlog里面，根据从节点的offset来持续将log中的命令发给从节点执行</li>
+</ul>
+</li>
+</ul>
+<p>3，repl_backlog：</p>
+<ul>
+<li>主节点维护的一个循环自覆盖数组，主节点的所有增删改指令都会写进repl_backlog里面，维护主节点的offset表示下一条指令插入的位置</li>
+<li>从节点维护了一个offset，表示从节点同步到了repl_backlog中的哪个位置</li>
+<li>主节点的offset和从节点的offset之间，就是从节点还未同步的指令</li>
+</ul>
+<h4 id="增量同步"><a href="#增量同步" class="headerlink" title="增量同步"></a>增量同步</h4><p>1，增量同步发生在从节点重连，短暂失联的重连往往可以使用增量同步，长时间的失联只能用全量同步</p>
+<p>2，在重连时，主节点判断replicationid是一样的，判断为增量同步，根据从节点的offset发送指令即可</p>
+<p>3，如果从节点断连太久，从节点offset就会一直不变，而主节点的offset一直前移，如果他们到同一位置了，说明从节点落后的数据已经沾满了整个循环数组，主节点offset再前移，就会覆盖掉从节点还没有执行的指令，这时候，再重连只能进行全量同步</p>
+<h4 id="减少全量同步，加快全量同步"><a href="#减少全量同步，加快全量同步" class="headerlink" title="减少全量同步，加快全量同步"></a>减少全量同步，加快全量同步</h4><ul>
+<li>加快全量同步<ul>
+<li>全量同步会产生rdb存到磁盘，再由网络发送到从节点，主节点配置repl-diskless-sync yes，可以放弃把rdb存入磁盘，而是直接网络发送给从节点</li>
+<li>减小单节点的内存，可以减少rdb文件的大小，自然就减少了全量更新的时间</li>
+</ul>
+</li>
+<li>减少全量同步<ul>
+<li>选择加大repl_baklog的大小，可以忍受更长时间的断连，减少全量更新次数</li>
+<li>从节点宕机要尽快解决，防止未同步的命令占满repl_baklog</li>
+</ul>
+</li>
+<li>优化：限制主节点的从节点数量，防止同步给主机点带来过大的压力，可以选择链式结构，主节点-&gt;从节点-&gt;从节点，第三层从节点以第二层从节点为主节点</li>
+</ul>
+
     </div>
 
     
@@ -296,7 +401,7 @@
 
   <div class="copyright">
     &copy; 
-    <span itemprop="copyrightYear">2024</span>
+    <span itemprop="copyrightYear">2025</span>
     <span class="with-love">
       <i class="fa fa-heart"></i>
     </span>
@@ -307,13 +412,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">42k</span>
+    <span title="站点总字数">45k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">38 分钟</span>
+    <span title="站点阅读时长">41 分钟</span>
   </span>
 </div>
 
