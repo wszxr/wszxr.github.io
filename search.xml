@@ -30,6 +30,44 @@
       </tags>
   </entry>
   <entry>
+    <title>amazon</title>
+    <url>/2024/08/03/amazon/</url>
+    <content><![CDATA[<h3 id="货物运输状态管理"><a href="#货物运输状态管理" class="headerlink" title="货物运输状态管理"></a>货物运输状态管理</h3><p>在shipment管理里面，用运单号查询运输状态：</p>
+<img src="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20240806154722502.png" alt="image-20240806154722502" style="zoom:50%;" />
+
+<ul>
+<li><p>1，注意选择后台的站点</p>
+</li>
+<li><p>2，点进shipment-&gt;manage Shipments，根据运单号搜要看的运单</p>
+</li>
+<li><p><img src="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20240806155433695.png" alt="image-20240806155433695"></p>
+</li>
+<li><p>运输状态</p>
+<ul>
+<li><p>working是没有确认，点击4，进去填上这个确认号：</p>
+</li>
+<li><p><img src="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20240806155602064.png" alt="image-20240806155602064"></p>
+</li>
+<li><p>shipped是已发货</p>
+</li>
+<li><p>in transit是运输中，可以查询系统的到货时间，提交到表格：</p>
+</li>
+<li><p><img src="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/%E6%97%A0%E6%A0%87%E9%A2%98.png" alt="无标题"></p>
+</li>
+<li><p>设置到货时间为系统预测时间，并且更新时间到企业微信表格，日更···</p>
+</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>DianShang</category>
+      </categories>
+      <tags>
+        <tag>Amazon</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>MySQL</title>
     <url>/2024/12/09/MySQL/</url>
     <content><![CDATA[<h2 id="行格式"><a href="#行格式" class="headerlink" title="行格式"></a>行格式</h2><h3 id="1，页存在的意义"><a href="#1，页存在的意义" class="headerlink" title="1，页存在的意义"></a>1，页存在的意义</h3><ul>
@@ -205,42 +243,26 @@
       </tags>
   </entry>
   <entry>
-    <title>amazon</title>
-    <url>/2024/08/03/amazon/</url>
-    <content><![CDATA[<h3 id="货物运输状态管理"><a href="#货物运输状态管理" class="headerlink" title="货物运输状态管理"></a>货物运输状态管理</h3><p>在shipment管理里面，用运单号查询运输状态：</p>
-<img src="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20240806154722502.png" alt="image-20240806154722502" style="zoom:50%;" />
+    <title>Hello World</title>
+    <url>/2024/08/03/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
 
-<ul>
-<li><p>1，注意选择后台的站点</p>
-</li>
-<li><p>2，点进shipment-&gt;manage Shipments，根据运单号搜要看的运单</p>
-</li>
-<li><p><img src="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20240806155433695.png" alt="image-20240806155433695"></p>
-</li>
-<li><p>运输状态</p>
-<ul>
-<li><p>working是没有确认，点击4，进去填上这个确认号：</p>
-</li>
-<li><p><img src="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20240806155602064.png" alt="image-20240806155602064"></p>
-</li>
-<li><p>shipped是已发货</p>
-</li>
-<li><p>in transit是运输中，可以查询系统的到货时间，提交到表格：</p>
-</li>
-<li><p><img src="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/%E6%97%A0%E6%A0%87%E9%A2%98.png" alt="无标题"></p>
-</li>
-<li><p>设置到货时间为系统预测时间，并且更新时间到企业微信表格，日更···</p>
-</li>
-</ul>
-</li>
-</ul>
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+<p>AccessKey ID：zxrLTAI5tJ2X5xUgPqRDLZNLbfy</p>
+<p>AccessKey Secret: zxrhXjVwZVaKBcswugf9kRJyMfQbzi8wF</p>
+<p>bucketname:zxrpicbed</p>
+<p>地域:oss-cn-guangzhou</p>
 ]]></content>
-      <categories>
-        <category>DianShang</category>
-      </categories>
-      <tags>
-        <tag>Amazon</tag>
-      </tags>
   </entry>
   <entry>
     <title>mybatis</title>
@@ -423,26 +445,144 @@
       </tags>
   </entry>
   <entry>
-    <title>Hello World</title>
-    <url>/2024/08/03/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+    <title>redis</title>
+    <url>/2024/12/30/redis/</url>
+    <content><![CDATA[<h2 id="redis持久化"><a href="#redis持久化" class="headerlink" title="redis持久化"></a>redis持久化</h2><h3 id="RDB"><a href="#RDB" class="headerlink" title="RDB"></a>RDB</h3><span id="more"></span>
 
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>1，rdb模式：生成一个内存快照，默认开启</p>
+<p>2，rdb的触发机制</p>
+<ul>
+<li>redis服务正常停止前同步保存</li>
+<li>使用save，bgsave命令的时候保存rdb文件</li>
+<li>启动文件(redis.conf)中配置rdb触发的时机</li>
+</ul>
+<figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="comment">#在A秒内，有B个key被修改，则执行bgsave</span></span><br><span class="line"><span class="comment">#save “”代表关闭rdb机制</span></span><br><span class="line"><span class="attr">save</span> <span class="string">A B</span></span><br><span class="line"><span class="comment">#rdb相关配置</span></span><br><span class="line"><span class="comment">#文件名称，默认dunmp.rdb</span></span><br><span class="line"><span class="attr">dbfilename</span> <span class="string">XXX</span></span><br><span class="line"><span class="comment">#文件路径，默认./(安装路径)</span></span><br><span class="line"><span class="attr">dir</span> <span class="string">xxx</span></span><br><span class="line"><span class="comment">#是否开启压缩，建议不开启，压缩要耗费cpu资源</span></span><br><span class="line"><span class="attr">rdbcompression</span> <span class="string">yes/no</span></span><br></pre></td></tr></table></figure>
 
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>3，异步rdb的原理，使用copyonwrite思想保证对redis数据的遍历复制(bgsave)和修改(主进程修改数据)不会产生线程安全问题</p>
+<ul>
+<li>问题，子进程进行rdb文件保存的途中，如果主进程有修改数据的请求，就产生了变修改，边遍历复制的线程安全问题</li>
+<li>解决，对rdb文件使用copyonwrite操作，修改请求进来，对需要修改的key在的内存页做备份并在备份中修改，不影响原数据，bgsave执行完再同步回去</li>
+<li>优点<ul>
+<li>解决了线程安全问题</li>
+<li>并不是备份全部数据，而是备份要修改的数据，相当于是优化版的COW(copyonwrite)</li>
+</ul>
+</li>
+</ul>
+<p>4，缺点：</p>
+<ul>
+<li>间隔时间长，间隔时间内的数据在意外宕机的时候会丢失</li>
+<li>需要fork子进程，压缩消耗cpu资源，写入磁盘时间长</li>
+</ul>
+<h3 id="AOF"><a href="#AOF" class="headerlink" title="AOF"></a>AOF</h3><p>1，AOF指的是记录每一次对数据进行增删改操作的命令，并在 一定时候给命令文件刷新到磁盘，宕机后直接执行命令文件中的命令即可恢复数据，因为记录的只是没保存的命令，比较小，因此相比rdb可以更高频率的把文件刷新到磁盘，更加安全</p>
+<p>2，AOF开启：在conf文件中，设置</p>
+<ul>
+<li>appendonly  true 时开启,默认关闭</li>
+<li>appendfilename XXX 指定文件名</li>
+</ul>
+<p>3，文件刷新到磁盘的频率控制</p>
+<ul>
+<li>appendfsync always，每次修改key，文件中记录的同时，刷新到磁盘</li>
+<li>appendfsync  everysec，每一秒将文件中的记录刷新到磁盘</li>
+<li>appendfsync  no，不控制，由操作系统自动控制刷新，一般频率比较低</li>
+<li>默认everysec</li>
+</ul>
+<p>4，AOF的文件过大问题</p>
+<ul>
+<li><p>aof相比rdb，除了记录key和value，还记录了指令，因此aof比rdb会大很多</p>
+</li>
+<li><p>执行bgrewriteaof命令，用子进程去重写aof文件，比如set name “name1”,set name “name2”，只需要记录后面的就行了，第一次被覆盖掉了</p>
+</li>
+<li><p>可配置bgrewriteaof命令自动执行的时机，使用默认就好</p>
+</li>
+<li><pre><code class="properties">#aof文件体积超过固定值会执行，默认64
+auto-aof-rewrite-min-size 64mb
+#aof文件相比上一次刷新时增长了多少会执行，默认100%，即这次是上次的两倍大小时执行
+auto-aof-rewrite-percentage 100
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">### RDB和AOF的优缺点对比</span><br><span class="line"></span><br><span class="line">1，数据完整性，aof高，因为刷新的频率快</span><br><span class="line"></span><br><span class="line">2，宕机恢复速度，rdb快，因为rdb只需要把数据读取到内存，而aof需要执行所有的命令</span><br><span class="line"></span><br><span class="line">3，文件大小，rdb小，aof除了数据还要存指令</span><br><span class="line"></span><br><span class="line">4，使用场景，对于安全性要求很高，使用aof，不高直接用rdb；可以两个都开启，会优先使用aof的方法恢复，因为aof数据完整，但是rdb文件可以作为一个备份使用，放到其他机器或者什么地方</span><br><span class="line"></span><br><span class="line">## rdis主从</span><br><span class="line"></span><br><span class="line">### 主从建立</span><br><span class="line"></span><br><span class="line">1，配置多个redis节点可以增加redis的吞吐量，请求过来时，分发到不同的节点即可，一般来说，各个从节点负责执行读请求，主节点用于执行写请求，原因是redis的绝大多数请求都是读请求，因此多分一些节点</span><br><span class="line"></span><br><span class="line">2，如何配置主从节点</span><br><span class="line"></span><br><span class="line">+ 在从节点的conf文件中，指定</span><br><span class="line"></span><br><span class="line">+ ~~~properties</span><br><span class="line">   slaveof &lt;主节点ip&gt; &lt;主节点端口&gt;</span><br></pre></td></tr></table></figure>
+</code></pre>
+</li>
+</ul>
+<p>3，在从节点指定了主节点之后，对于主节点的写会同步到从节点上，从节点只负责读，自动实现了读写分离</p>
+<p>4，主从要开启rdb，因为要使用快照给同步给从节点</p>
+<h3 id="数据同步原理"><a href="#数据同步原理" class="headerlink" title="数据同步原理"></a>数据同步原理</h3><h4 id="全量同步"><a href="#全量同步" class="headerlink" title="全量同步"></a>全量同步</h4><p>1，先判断是否是增量同步，如果不是，增量同步拒绝，进行全量同步，主节点把数据全量同步到从节点</p>
+<p>2，问题：</p>
+<ul>
+<li>如何判断是否使用增量同步？<ul>
+<li>每个节点初始都是主节点，只有使用slaveof命令指定之后，才变为从节点，每个节点都有replicationid，从节点的replicationid在同步的时候会修改为主节点的，因此只需要判断replicationid是否和主节点相同就可以了</li>
+</ul>
+</li>
+<li>如何进行同步？<ul>
+<li>判断为全量同步之后，使用bgsave命令，在创建rdb文件开始时，记录主节点repl_backlog的offset，之后把rdb文件和offset值发送给从节点;从节点先清空自己，再加载rdb文件中的内容，同时设置自己的offset和发送过来的offset相等，主节点之后会根据从节点的offset，去repl_backlog中把指令发给从节点执行，以达到动态同步的效果</li>
+</ul>
+</li>
+<li>bgsave期间，增量如何处理？<ul>
+<li>与单纯的持久化不同，持久化中bgsave的文件并不会被用户读取，因此不用担心bgsave期间的增量导致的磁盘文件和redis内存文件不一致问题，但是从节点是专门用来读取，要尽量保证和主节点内容一致</li>
+<li>主节点所有的增删改的指令都会存到repl_backlog里面，根据从节点的offset来持续将log中的命令发给从节点执行</li>
+</ul>
+</li>
+</ul>
+<p>3，repl_backlog：</p>
+<ul>
+<li>主节点维护的一个循环自覆盖数组，主节点的所有增删改指令都会写进repl_backlog里面，维护主节点的offset表示下一条指令插入的位置</li>
+<li>从节点维护了一个offset，表示从节点同步到了repl_backlog中的哪个位置</li>
+<li>主节点的offset和从节点的offset之间，就是从节点还未同步的指令</li>
+</ul>
+<h4 id="增量同步"><a href="#增量同步" class="headerlink" title="增量同步"></a>增量同步</h4><p>1，增量同步发生在从节点重连，短暂失联的重连往往可以使用增量同步，长时间的失联只能用全量同步</p>
+<p>2，在重连时，主节点判断replicationid是一样的，判断为增量同步，根据从节点的offset发送指令即可</p>
+<p>3，如果从节点断连太久，从节点offset就会一直不变，而主节点的offset一直前移，如果他们到同一位置了，说明从节点落后的数据已经沾满了整个循环数组，主节点offset再前移，就会覆盖掉从节点还没有执行的指令，这时候，再重连只能进行全量同步</p>
+<h4 id="减少全量同步，加快全量同步"><a href="#减少全量同步，加快全量同步" class="headerlink" title="减少全量同步，加快全量同步"></a>减少全量同步，加快全量同步</h4><ul>
+<li>加快全量同步<ul>
+<li>全量同步会产生rdb存到磁盘，再由网络发送到从节点，主节点配置repl-diskless-sync yes，可以放弃把rdb存入磁盘，而是直接网络发送给从节点</li>
+<li>减小单节点的内存，可以减少rdb文件的大小，自然就减少了全量更新的时间</li>
+</ul>
+</li>
+<li>减少全量同步<ul>
+<li>选择加大repl_baklog的大小，可以忍受更长时间的断连，减少全量更新次数</li>
+<li>从节点宕机要尽快解决，防止未同步的命令占满repl_baklog</li>
+</ul>
+</li>
+<li>优化：限制主节点的从节点数量，防止同步给主机点带来过大的压力，可以选择链式结构，主节点-&gt;从节点-&gt;从节点，第三层从节点以第二层从节点为主节点</li>
+</ul>
+<h3 id="Redis哨兵Sentinal"><a href="#Redis哨兵Sentinal" class="headerlink" title="Redis哨兵Sentinal"></a>Redis哨兵Sentinal</h3><h4 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h4><p>1，作用</p>
+<ul>
+<li>监控主从节点是否宕机</li>
+<li>故障转移，master节点宕机后应当重新选一个master</li>
+<li>通知，旧的slave要绑定在新的master上</li>
+</ul>
+<p>2，如何判断宕机(实例是否健康)</p>
+<ul>
+<li>Sentinal哨兵也是集群，每一秒会给各节点发送ping，如果超过指定quorum的哨兵都没有收到来自某个节点的pong，则认为它已经宕机</li>
+</ul>
+<p>3，故障转移步骤</p>
+<ul>
+<li>挑选一个从节点作为新的主节点，主要依据是offset的大小，offset越大代表数据越完整</li>
+<li>将挑出的从节点执行slaveof no one，取消绑定</li>
+<li>其他的节点执行slaveof，绑定新主节点</li>
+<li>宕机的旧主节点，会被修改配置文件，加上slaveof，因为它宕机了没办法直接执行slaveof命令</li>
+</ul>
+<h4 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h4><p>1，redis-sentinal 配置文件，是redis里面自带的，只需要写配置文件执行指令即可</p>
+<p>2，文件内容</p>
+<figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="comment">#sentinel自身端口</span></span><br><span class="line"><span class="attr">port</span> <span class="string">xxx </span></span><br><span class="line"><span class="comment">#声明sentinel自身的ip地址</span></span><br><span class="line"><span class="attr">sentinael</span> <span class="string">announce-ip xxxx</span></span><br><span class="line"><span class="comment">#声明seantinel监控的redis主从集群,并配置quorum值</span></span><br><span class="line"><span class="attr">sentinel</span> <span class="string">monitor mymaster ip port &lt;2&gt;</span></span><br><span class="line"><span class="comment">#工作目录</span></span><br><span class="line"><span class="attr">dir</span> <span class="string">&quot; &quot;</span></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>3，使用java的redistemplate客户端</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">	<span class="attr">redis:</span> </span><br><span class="line">		<span class="attr">sentinel:</span></span><br><span class="line">		  <span class="attr">master:</span> <span class="string">指定主节点的名称，与redis-sentinel配置文件中指定的master相同</span></span><br><span class="line">		  <span class="attr">nodes:</span> <span class="string">指定sentinel集群信息</span></span><br><span class="line">		  	<span class="string">-ip：port</span></span><br><span class="line">		  	<span class="string">-ip：port</span></span><br><span class="line">		</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-<p>AccessKey ID：zxrLTAI5tJ2X5xUgPqRDLZNLbfy</p>
-<p>AccessKey Secret: zxrhXjVwZVaKBcswugf9kRJyMfQbzi8wF</p>
-<p>bucketname:zxrpicbed</p>
-<p>地域:oss-cn-guangzhou</p>
+<ul>
+<li>配置集群读写操作<ul>
+<li>master:从主节点读</li>
+<li>master_preferred：优先主节点，次选从节点</li>
+<li>replica：从节点读</li>
+<li>replica_prferred:优先从节点，从不可用才去主读</li>
+</ul>
+</li>
+</ul>
 ]]></content>
+      <categories>
+        <category>计算机</category>
+      </categories>
+      <tags>
+        <tag>redis</tag>
+      </tags>
   </entry>
   <entry>
     <title>rabbitMQ</title>
@@ -708,148 +848,6 @@
       </categories>
       <tags>
         <tag>MQ</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>redis</title>
-    <url>/2024/12/30/redis/</url>
-    <content><![CDATA[<h2 id="redis持久化"><a href="#redis持久化" class="headerlink" title="redis持久化"></a>redis持久化</h2><h3 id="RDB"><a href="#RDB" class="headerlink" title="RDB"></a>RDB</h3><span id="more"></span>
-
-<p>1，rdb模式：生成一个内存快照，默认开启</p>
-<p>2，rdb的触发机制</p>
-<ul>
-<li>redis服务正常停止前同步保存</li>
-<li>使用save，bgsave命令的时候保存rdb文件</li>
-<li>启动文件(redis.conf)中配置rdb触发的时机</li>
-</ul>
-<figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="comment">#在A秒内，有B个key被修改，则执行bgsave</span></span><br><span class="line"><span class="comment">#save “”代表关闭rdb机制</span></span><br><span class="line"><span class="attr">save</span> <span class="string">A B</span></span><br><span class="line"><span class="comment">#rdb相关配置</span></span><br><span class="line"><span class="comment">#文件名称，默认dunmp.rdb</span></span><br><span class="line"><span class="attr">dbfilename</span> <span class="string">XXX</span></span><br><span class="line"><span class="comment">#文件路径，默认./(安装路径)</span></span><br><span class="line"><span class="attr">dir</span> <span class="string">xxx</span></span><br><span class="line"><span class="comment">#是否开启压缩，建议不开启，压缩要耗费cpu资源</span></span><br><span class="line"><span class="attr">rdbcompression</span> <span class="string">yes/no</span></span><br></pre></td></tr></table></figure>
-
-<p>3，异步rdb的原理，使用copyonwrite思想保证对redis数据的遍历复制(bgsave)和修改(主进程修改数据)不会产生线程安全问题</p>
-<ul>
-<li>问题，子进程进行rdb文件保存的途中，如果主进程有修改数据的请求，就产生了变修改，边遍历复制的线程安全问题</li>
-<li>解决，对rdb文件使用copyonwrite操作，修改请求进来，对需要修改的key在的内存页做备份并在备份中修改，不影响原数据，bgsave执行完再同步回去</li>
-<li>优点<ul>
-<li>解决了线程安全问题</li>
-<li>并不是备份全部数据，而是备份要修改的数据，相当于是优化版的COW(copyonwrite)</li>
-</ul>
-</li>
-</ul>
-<p>4，缺点：</p>
-<ul>
-<li>间隔时间长，间隔时间内的数据在意外宕机的时候会丢失</li>
-<li>需要fork子进程，压缩消耗cpu资源，写入磁盘时间长</li>
-</ul>
-<h3 id="AOF"><a href="#AOF" class="headerlink" title="AOF"></a>AOF</h3><p>1，AOF指的是记录每一次对数据进行增删改操作的命令，并在 一定时候给命令文件刷新到磁盘，宕机后直接执行命令文件中的命令即可恢复数据，因为记录的只是没保存的命令，比较小，因此相比rdb可以更高频率的把文件刷新到磁盘，更加安全</p>
-<p>2，AOF开启：在conf文件中，设置</p>
-<ul>
-<li>appendonly  true 时开启,默认关闭</li>
-<li>appendfilename XXX 指定文件名</li>
-</ul>
-<p>3，文件刷新到磁盘的频率控制</p>
-<ul>
-<li>appendfsync always，每次修改key，文件中记录的同时，刷新到磁盘</li>
-<li>appendfsync  everysec，每一秒将文件中的记录刷新到磁盘</li>
-<li>appendfsync  no，不控制，由操作系统自动控制刷新，一般频率比较低</li>
-<li>默认everysec</li>
-</ul>
-<p>4，AOF的文件过大问题</p>
-<ul>
-<li><p>aof相比rdb，除了记录key和value，还记录了指令，因此aof比rdb会大很多</p>
-</li>
-<li><p>执行bgrewriteaof命令，用子进程去重写aof文件，比如set name “name1”,set name “name2”，只需要记录后面的就行了，第一次被覆盖掉了</p>
-</li>
-<li><p>可配置bgrewriteaof命令自动执行的时机，使用默认就好</p>
-</li>
-<li><pre><code class="properties">#aof文件体积超过固定值会执行，默认64
-auto-aof-rewrite-min-size 64mb
-#aof文件相比上一次刷新时增长了多少会执行，默认100%，即这次是上次的两倍大小时执行
-auto-aof-rewrite-percentage 100
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">### RDB和AOF的优缺点对比</span><br><span class="line"></span><br><span class="line">1，数据完整性，aof高，因为刷新的频率快</span><br><span class="line"></span><br><span class="line">2，宕机恢复速度，rdb快，因为rdb只需要把数据读取到内存，而aof需要执行所有的命令</span><br><span class="line"></span><br><span class="line">3，文件大小，rdb小，aof除了数据还要存指令</span><br><span class="line"></span><br><span class="line">4，使用场景，对于安全性要求很高，使用aof，不高直接用rdb；可以两个都开启，会优先使用aof的方法恢复，因为aof数据完整，但是rdb文件可以作为一个备份使用，放到其他机器或者什么地方</span><br><span class="line"></span><br><span class="line">## rdis主从</span><br><span class="line"></span><br><span class="line">### 主从建立</span><br><span class="line"></span><br><span class="line">1，配置多个redis节点可以增加redis的吞吐量，请求过来时，分发到不同的节点即可，一般来说，各个从节点负责执行读请求，主节点用于执行写请求，原因是redis的绝大多数请求都是读请求，因此多分一些节点</span><br><span class="line"></span><br><span class="line">2，如何配置主从节点</span><br><span class="line"></span><br><span class="line">+ 在从节点的conf文件中，指定</span><br><span class="line"></span><br><span class="line">+ ~~~properties</span><br><span class="line">   slaveof &lt;主节点ip&gt; &lt;主节点端口&gt;</span><br></pre></td></tr></table></figure>
-</code></pre>
-</li>
-</ul>
-<p>3，在从节点指定了主节点之后，对于主节点的写会同步到从节点上，从节点只负责读，自动实现了读写分离</p>
-<p>4，主从要开启rdb，因为要使用快照给同步给从节点</p>
-<h3 id="数据同步原理"><a href="#数据同步原理" class="headerlink" title="数据同步原理"></a>数据同步原理</h3><h4 id="全量同步"><a href="#全量同步" class="headerlink" title="全量同步"></a>全量同步</h4><p>1，先判断是否是增量同步，如果不是，增量同步拒绝，进行全量同步，主节点把数据全量同步到从节点</p>
-<p>2，问题：</p>
-<ul>
-<li>如何判断是否使用增量同步？<ul>
-<li>每个节点初始都是主节点，只有使用slaveof命令指定之后，才变为从节点，每个节点都有replicationid，从节点的replicationid在同步的时候会修改为主节点的，因此只需要判断replicationid是否和主节点相同就可以了</li>
-</ul>
-</li>
-<li>如何进行同步？<ul>
-<li>判断为全量同步之后，使用bgsave命令，在创建rdb文件开始时，记录主节点repl_backlog的offset，之后把rdb文件和offset值发送给从节点;从节点先清空自己，再加载rdb文件中的内容，同时设置自己的offset和发送过来的offset相等，主节点之后会根据从节点的offset，去repl_backlog中把指令发给从节点执行，以达到动态同步的效果</li>
-</ul>
-</li>
-<li>bgsave期间，增量如何处理？<ul>
-<li>与单纯的持久化不同，持久化中bgsave的文件并不会被用户读取，因此不用担心bgsave期间的增量导致的磁盘文件和redis内存文件不一致问题，但是从节点是专门用来读取，要尽量保证和主节点内容一致</li>
-<li>主节点所有的增删改的指令都会存到repl_backlog里面，根据从节点的offset来持续将log中的命令发给从节点执行</li>
-</ul>
-</li>
-</ul>
-<p>3，repl_backlog：</p>
-<ul>
-<li>主节点维护的一个循环自覆盖数组，主节点的所有增删改指令都会写进repl_backlog里面，维护主节点的offset表示下一条指令插入的位置</li>
-<li>从节点维护了一个offset，表示从节点同步到了repl_backlog中的哪个位置</li>
-<li>主节点的offset和从节点的offset之间，就是从节点还未同步的指令</li>
-</ul>
-<h4 id="增量同步"><a href="#增量同步" class="headerlink" title="增量同步"></a>增量同步</h4><p>1，增量同步发生在从节点重连，短暂失联的重连往往可以使用增量同步，长时间的失联只能用全量同步</p>
-<p>2，在重连时，主节点判断replicationid是一样的，判断为增量同步，根据从节点的offset发送指令即可</p>
-<p>3，如果从节点断连太久，从节点offset就会一直不变，而主节点的offset一直前移，如果他们到同一位置了，说明从节点落后的数据已经沾满了整个循环数组，主节点offset再前移，就会覆盖掉从节点还没有执行的指令，这时候，再重连只能进行全量同步</p>
-<h4 id="减少全量同步，加快全量同步"><a href="#减少全量同步，加快全量同步" class="headerlink" title="减少全量同步，加快全量同步"></a>减少全量同步，加快全量同步</h4><ul>
-<li>加快全量同步<ul>
-<li>全量同步会产生rdb存到磁盘，再由网络发送到从节点，主节点配置repl-diskless-sync yes，可以放弃把rdb存入磁盘，而是直接网络发送给从节点</li>
-<li>减小单节点的内存，可以减少rdb文件的大小，自然就减少了全量更新的时间</li>
-</ul>
-</li>
-<li>减少全量同步<ul>
-<li>选择加大repl_baklog的大小，可以忍受更长时间的断连，减少全量更新次数</li>
-<li>从节点宕机要尽快解决，防止未同步的命令占满repl_baklog</li>
-</ul>
-</li>
-<li>优化：限制主节点的从节点数量，防止同步给主机点带来过大的压力，可以选择链式结构，主节点-&gt;从节点-&gt;从节点，第三层从节点以第二层从节点为主节点</li>
-</ul>
-]]></content>
-      <categories>
-        <category>计算机</category>
-      </categories>
-      <tags>
-        <tag>redis</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>亚马逊自学</title>
-    <url>/2024/09/10/%E4%BA%9A%E9%A9%AC%E9%80%8A%E8%87%AA%E5%AD%A6/</url>
-    <content><![CDATA[<h2 id="关键词库"><a href="#关键词库" class="headerlink" title="关键词库"></a>关键词库</h2><p>1，搜集竞品的asin，在搜索框搜关键词，取头部的竞品asin，10个</p>
-<p>2，使用卖家精灵下载关键词</p>
-<ul>
-<li>关键词反查，单个单个查，多个需要在表里去重</li>
-<li>流量词拓展，多个asin一起查，自动去重</li>
-</ul>
-<p>3，对关键词指标分析，排序，例如月搜索量</p>
-<p>TODO 搞清各个指标对关键词的影响</p>
-<p>4，词频分析，判断频率最高的单个，两个单词组成短语，三个词汇组成短语</p>
-<ul>
-<li>AMZ123词频统计工具：<a href="https://www.amz123.com/tools-wordcounter%E3%80%81">https://www.amz123.com/tools-wordcounter、</a></li>
-<li>单个单词词频卖家精灵自动完成</li>
-</ul>
-<p>5,相关性查询，直接在亚马逊前台搜索看相关性</p>
-<ul>
-<li>强相关会出现在listing和广告</li>
-<li>不相关要否定并且不能出现在listing</li>
-</ul>
-<p>6，细分关键词</p>
-<ul>
-<li>例如：蓝牙无线耳机-&gt;蓝牙，无线，耳机做词根</li>
-</ul>
-<p>7，不同语种，同义词</p>
-<p>8，TODO，用H10进行关键词反查</p>
-]]></content>
-      <categories>
-        <category>DianShang</category>
-      </categories>
-      <tags>
-        <tag>Amazon</tag>
       </tags>
   </entry>
   <entry>
@@ -1154,6 +1152,60 @@ auto-aof-rewrite-percentage 100
       </tags>
   </entry>
   <entry>
+    <title>分布式</title>
+    <url>/2025/01/26/%E5%88%86%E5%B8%83%E5%BC%8F/</url>
+    <content><![CDATA[<h1 id="1，nacos"><a href="#1，nacos" class="headerlink" title="1，nacos"></a>1，nacos</h1><p>1，使用nacos进行服务注册，服务发现，配置管理</p>
+<p>2，下载nacos并启动</p>
+<ul>
+<li>直接在官网下载nacos，解压</li>
+<li>在bin目录cmd执行startup.cmd -m(mode，模式) standalone(单节点)</li>
+<li>在 <a href="http://localhost:8848/nacos/">http://localhost:8848/nacos/</a> 地址，管理nacos，nacos默认端口为8848</li>
+</ul>
+<p><img src="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20250126214515794.png" alt="image-20250126214515794"></p>
+]]></content>
+      <categories>
+        <category>计算机</category>
+      </categories>
+      <tags>
+        <tag>springcloud</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>亚马逊自学</title>
+    <url>/2024/09/10/%E4%BA%9A%E9%A9%AC%E9%80%8A%E8%87%AA%E5%AD%A6/</url>
+    <content><![CDATA[<h2 id="关键词库"><a href="#关键词库" class="headerlink" title="关键词库"></a>关键词库</h2><p>1，搜集竞品的asin，在搜索框搜关键词，取头部的竞品asin，10个</p>
+<p>2，使用卖家精灵下载关键词</p>
+<ul>
+<li>关键词反查，单个单个查，多个需要在表里去重</li>
+<li>流量词拓展，多个asin一起查，自动去重</li>
+</ul>
+<p>3，对关键词指标分析，排序，例如月搜索量</p>
+<p>TODO 搞清各个指标对关键词的影响</p>
+<p>4，词频分析，判断频率最高的单个，两个单词组成短语，三个词汇组成短语</p>
+<ul>
+<li>AMZ123词频统计工具：<a href="https://www.amz123.com/tools-wordcounter%E3%80%81">https://www.amz123.com/tools-wordcounter、</a></li>
+<li>单个单词词频卖家精灵自动完成</li>
+</ul>
+<p>5,相关性查询，直接在亚马逊前台搜索看相关性</p>
+<ul>
+<li>强相关会出现在listing和广告</li>
+<li>不相关要否定并且不能出现在listing</li>
+</ul>
+<p>6，细分关键词</p>
+<ul>
+<li>例如：蓝牙无线耳机-&gt;蓝牙，无线，耳机做词根</li>
+</ul>
+<p>7，不同语种，同义词</p>
+<p>8，TODO，用H10进行关键词反查</p>
+]]></content>
+      <categories>
+        <category>DianShang</category>
+      </categories>
+      <tags>
+        <tag>Amazon</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>卖家大学</title>
     <url>/2024/08/19/%E5%8D%96%E5%AE%B6%E5%A4%A7%E5%AD%A6/</url>
     <content><![CDATA[<h3 id="listing组成"><a href="#listing组成" class="headerlink" title="listing组成"></a>listing组成</h3><ul>
@@ -1201,49 +1253,32 @@ auto-aof-rewrite-percentage 100
 ]]></content>
   </entry>
   <entry>
-    <title>操作系统</title>
-    <url>/2024/08/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</url>
-    <content><![CDATA[<h4 id="1-给解压好的bochs配置安装文件-make编译，make-install安装"><a href="#1-给解压好的bochs配置安装文件-make编译，make-install安装" class="headerlink" title="1,给解压好的bochs配置安装文件,make编译，make install安装"></a>1,给解压好的bochs配置安装文件,make编译，make install安装</h4><figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="string">./configure</span> <span class="string">\</span> </span><br><span class="line"><span class="string">--prefix=/home/zxr/bochs_install</span> <span class="string">\</span> <span class="comment">#安装路径</span></span><br><span class="line"><span class="string">--enable-debugger</span> <span class="string">\</span> <span class="comment">#启用bochs自带的调试功能</span></span><br><span class="line"><span class="string">--enable-disasm</span> <span class="string">\</span> <span class="comment">#支持反汇编</span></span><br><span class="line"><span class="string">--enable-iodebug</span> <span class="string">\</span> <span class="comment">#开启io调试接口</span></span><br><span class="line"><span class="string">--enable-x86-debugger</span> <span class="string">\</span> <span class="comment">#支持x86调试器</span></span><br><span class="line"><span class="string">--with-x</span> <span class="string">\</span> <span class="comment">#使用xwindows</span></span><br><span class="line"><span class="string">--with-x11</span> <span class="comment">#x11图形用户界面</span></span><br></pre></td></tr></table></figure>
-
+    <title>搭建Hexo</title>
+    <url>/2025/01/24/%E6%90%AD%E5%BB%BAHexo/</url>
+    <content><![CDATA[<h1 id="Hexo博客的搭建以及主题选取"><a href="#Hexo博客的搭建以及主题选取" class="headerlink" title="Hexo博客的搭建以及主题选取"></a>Hexo博客的搭建以及主题选取</h1><h2 id="hexo搭建"><a href="#hexo搭建" class="headerlink" title="hexo搭建"></a>hexo搭建</h2><h3 id="1，购买低价vpn翻墙"><a href="#1，购买低价vpn翻墙" class="headerlink" title="1，购买低价vpn翻墙"></a>1，购买低价vpn翻墙</h3><p>1，推荐卷王机场，20元一年，每月提供100g流量</p>
+<p>2，步骤</p>
 <ul>
-<li>注意安装c和c++编译器，否则会编译失败</li>
+<li>地址栏输入卷王机场官网(卷王.xyz),选择国内入口</li>
 </ul>
-<h4 id="2-配置bochs的启动文件"><a href="#2-配置bochs的启动文件" class="headerlink" title="2,配置bochs的启动文件"></a>2,配置bochs的启动文件</h4><ul>
-<li>启动文件不限定名字和后缀，使用bochsrc.disk放置安装根路径即可(输入的时候方便，只需要输入文件名)，也可以不在根，只不过要输入相对路径</li>
-<li>配置虚拟计算机内存，硬盘启动，BIOS，VGABIOS，日志文件，鼠标，键盘映射，硬盘设置</li>
-</ul>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">megs:</span> <span class="number">32</span> <span class="comment">#内存大小</span></span><br><span class="line"><span class="comment">#BIOS</span></span><br><span class="line"><span class="attr">romimage:</span> <span class="string">file=/home/zxr/bochs_install/bochs/share/bochs/BIOS-bochs-latest</span> </span><br><span class="line"><span class="comment">#VGABIOS</span></span><br><span class="line"><span class="attr">vgaromimage:</span> <span class="string">file=/home/zxr/bochs_install/bochs/share/bochs/VGABIOS-lgpl-latest</span> </span><br><span class="line"><span class="comment">#硬盘启动</span></span><br><span class="line"><span class="attr">boot:</span> <span class="string">disk</span></span><br><span class="line"><span class="comment">#日志输出文件路径，根目录&#x27;/&#x27;省略了</span></span><br><span class="line"><span class="attr">log:</span> <span class="string">bochs.out</span></span><br><span class="line"><span class="comment">#禁用鼠标</span></span><br><span class="line"><span class="attr">mouse:</span> <span class="string">enabled=0</span></span><br><span class="line"><span class="comment">#keyboard_mapping: enabled=1</span></span><br><span class="line"><span class="comment">#键盘映射</span></span><br><span class="line"><span class="string">keyboard:keymap=/home/zxr/bochs_install/bochs/share/bochs/keymaps/x11-pc-us.map</span></span><br><span class="line"><span class="comment">#硬盘设置</span></span><br><span class="line"><span class="attr">ata0:</span> <span class="string">enabled=1,ioaddr1=0x1f0,ioaddr2=0x3f0,irq=14</span></span><br></pre></td></tr></table></figure>
-
+<p><img src="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20250124095008769.png" alt="image-20250124095008769"></p>
+<p>3，注册账号</p>
+<p>4，进入主页面，点击左侧使用文档，查看widows使用方式</p>
+<p><img src="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20250124095215919.png" alt="image-20250124095215919"></p>
+<h3 id="2，创建github账号"><a href="#2，创建github账号" class="headerlink" title="2，创建github账号"></a>2，创建github账号</h3><p>1，github是外国网站，需要开启翻墙才可以稳定访问</p>
+<p>2，目的是把本地电脑硬盘上的笔记，放到网络(github仓库)上，经过hexo展示</p>
+<p>3，<a href="https://github.com/">GitHub · Build and ship software on a single, collaborative platform · GitHub</a> –github官网</p>
+<p>4，步骤</p>
 <ul>
-<li>在安装根键入 bin&#x2F;bochs,打开程序</li>
+<li>打开官网，点击sign in，再点击创建新用户</li>
 </ul>
-<p><img src="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20240813235503043.png" alt="image-20240813235503043"></p>
-<ul>
-<li>输入2选择bochs配置文件，输入配置文件路径，读取成功</li>
-</ul>
-<h4 id="创建启动盘"><a href="#创建启动盘" class="headerlink" title="创建启动盘"></a>创建启动盘</h4><ul>
-<li>使用bochs虚拟机自带的bin&#x2F;bximage指令</li>
-</ul>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="string">bin/bximage</span> <span class="string">.</span></span><br><span class="line"><span class="string">-fd创建软盘。</span></span><br><span class="line"><span class="string">-hd</span> <span class="string">创建硬盘。</span></span><br><span class="line"><span class="string">-mode</span> <span class="string">创建硬盘的类型，有flat</span> <span class="string">、sparse</span> <span class="string">、growing</span> <span class="string">三种。</span></span><br><span class="line"><span class="string">-size</span> <span class="string">指创建多大的硬盘，以MB</span> <span class="string">为单位。</span></span><br><span class="line"><span class="string">-q</span> <span class="string">以静默模式创建，创建过程中不会和用户交互。</span></span><br><span class="line"><span class="comment">#bin/bochs -hd -mode=&quot;flat&quot; -size=60 -q hdM60.img</span></span><br><span class="line"><span class="comment">#创建启动硬盘，大小60m，静默创造，名字叫hdM60.img</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>输入指令后，bochs会把需要写进配置文件的内容输出，复制进bochsrc.disk(配置文件)即可</li>
-</ul>
-<p><img src="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20240814235303276.png" alt="image-20240814235303276"></p>
-<ul>
-<li>启动硬盘创建完毕，注意，进入时是调试模式，输入c放行，q退出</li>
-</ul>
-<h3 id="编写mbr"><a href="#编写mbr" class="headerlink" title="编写mbr"></a>编写mbr</h3><p>1，为什么要把操作系统载入内存？</p>
-<ul>
-<li>内存的运行速度快</li>
-<li>操作系统可以存在硬盘，软盘各种媒介，如果不统一放到一个地方，就会有对媒介的适配问题</li>
-</ul>
+<p><img src="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20250124104822511.png" alt="image-20250124104822511"></p>
+<p><img src="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20250124104842827.png" alt="image-20250124104842827"></p>
 ]]></content>
       <categories>
-        <category>计算机</category>
+        <category>搭建hexo</category>
       </categories>
       <tags>
-        <tag>自制操作系统</tag>
+        <tag>博客</tag>
       </tags>
   </entry>
   <entry>
@@ -1839,6 +1874,52 @@ ScheduledThreadPoolExecutor scheduledThreadPoolExecutor =
       </categories>
       <tags>
         <tag>大汇总</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>操作系统</title>
+    <url>/2024/08/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</url>
+    <content><![CDATA[<h4 id="1-给解压好的bochs配置安装文件-make编译，make-install安装"><a href="#1-给解压好的bochs配置安装文件-make编译，make-install安装" class="headerlink" title="1,给解压好的bochs配置安装文件,make编译，make install安装"></a>1,给解压好的bochs配置安装文件,make编译，make install安装</h4><figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="string">./configure</span> <span class="string">\</span> </span><br><span class="line"><span class="string">--prefix=/home/zxr/bochs_install</span> <span class="string">\</span> <span class="comment">#安装路径</span></span><br><span class="line"><span class="string">--enable-debugger</span> <span class="string">\</span> <span class="comment">#启用bochs自带的调试功能</span></span><br><span class="line"><span class="string">--enable-disasm</span> <span class="string">\</span> <span class="comment">#支持反汇编</span></span><br><span class="line"><span class="string">--enable-iodebug</span> <span class="string">\</span> <span class="comment">#开启io调试接口</span></span><br><span class="line"><span class="string">--enable-x86-debugger</span> <span class="string">\</span> <span class="comment">#支持x86调试器</span></span><br><span class="line"><span class="string">--with-x</span> <span class="string">\</span> <span class="comment">#使用xwindows</span></span><br><span class="line"><span class="string">--with-x11</span> <span class="comment">#x11图形用户界面</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>注意安装c和c++编译器，否则会编译失败</li>
+</ul>
+<h4 id="2-配置bochs的启动文件"><a href="#2-配置bochs的启动文件" class="headerlink" title="2,配置bochs的启动文件"></a>2,配置bochs的启动文件</h4><ul>
+<li>启动文件不限定名字和后缀，使用bochsrc.disk放置安装根路径即可(输入的时候方便，只需要输入文件名)，也可以不在根，只不过要输入相对路径</li>
+<li>配置虚拟计算机内存，硬盘启动，BIOS，VGABIOS，日志文件，鼠标，键盘映射，硬盘设置</li>
+</ul>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">megs:</span> <span class="number">32</span> <span class="comment">#内存大小</span></span><br><span class="line"><span class="comment">#BIOS</span></span><br><span class="line"><span class="attr">romimage:</span> <span class="string">file=/home/zxr/bochs_install/bochs/share/bochs/BIOS-bochs-latest</span> </span><br><span class="line"><span class="comment">#VGABIOS</span></span><br><span class="line"><span class="attr">vgaromimage:</span> <span class="string">file=/home/zxr/bochs_install/bochs/share/bochs/VGABIOS-lgpl-latest</span> </span><br><span class="line"><span class="comment">#硬盘启动</span></span><br><span class="line"><span class="attr">boot:</span> <span class="string">disk</span></span><br><span class="line"><span class="comment">#日志输出文件路径，根目录&#x27;/&#x27;省略了</span></span><br><span class="line"><span class="attr">log:</span> <span class="string">bochs.out</span></span><br><span class="line"><span class="comment">#禁用鼠标</span></span><br><span class="line"><span class="attr">mouse:</span> <span class="string">enabled=0</span></span><br><span class="line"><span class="comment">#keyboard_mapping: enabled=1</span></span><br><span class="line"><span class="comment">#键盘映射</span></span><br><span class="line"><span class="string">keyboard:keymap=/home/zxr/bochs_install/bochs/share/bochs/keymaps/x11-pc-us.map</span></span><br><span class="line"><span class="comment">#硬盘设置</span></span><br><span class="line"><span class="attr">ata0:</span> <span class="string">enabled=1,ioaddr1=0x1f0,ioaddr2=0x3f0,irq=14</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>在安装根键入 bin&#x2F;bochs,打开程序</li>
+</ul>
+<p><img src="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20240813235503043.png" alt="image-20240813235503043"></p>
+<ul>
+<li>输入2选择bochs配置文件，输入配置文件路径，读取成功</li>
+</ul>
+<h4 id="创建启动盘"><a href="#创建启动盘" class="headerlink" title="创建启动盘"></a>创建启动盘</h4><ul>
+<li>使用bochs虚拟机自带的bin&#x2F;bximage指令</li>
+</ul>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="string">bin/bximage</span> <span class="string">.</span></span><br><span class="line"><span class="string">-fd创建软盘。</span></span><br><span class="line"><span class="string">-hd</span> <span class="string">创建硬盘。</span></span><br><span class="line"><span class="string">-mode</span> <span class="string">创建硬盘的类型，有flat</span> <span class="string">、sparse</span> <span class="string">、growing</span> <span class="string">三种。</span></span><br><span class="line"><span class="string">-size</span> <span class="string">指创建多大的硬盘，以MB</span> <span class="string">为单位。</span></span><br><span class="line"><span class="string">-q</span> <span class="string">以静默模式创建，创建过程中不会和用户交互。</span></span><br><span class="line"><span class="comment">#bin/bochs -hd -mode=&quot;flat&quot; -size=60 -q hdM60.img</span></span><br><span class="line"><span class="comment">#创建启动硬盘，大小60m，静默创造，名字叫hdM60.img</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>输入指令后，bochs会把需要写进配置文件的内容输出，复制进bochsrc.disk(配置文件)即可</li>
+</ul>
+<p><img src="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20240814235303276.png" alt="image-20240814235303276"></p>
+<ul>
+<li>启动硬盘创建完毕，注意，进入时是调试模式，输入c放行，q退出</li>
+</ul>
+<h3 id="编写mbr"><a href="#编写mbr" class="headerlink" title="编写mbr"></a>编写mbr</h3><p>1，为什么要把操作系统载入内存？</p>
+<ul>
+<li>内存的运行速度快</li>
+<li>操作系统可以存在硬盘，软盘各种媒介，如果不统一放到一个地方，就会有对媒介的适配问题</li>
+</ul>
+]]></content>
+      <categories>
+        <category>计算机</category>
+      </categories>
+      <tags>
+        <tag>自制操作系统</tag>
       </tags>
   </entry>
   <entry>
