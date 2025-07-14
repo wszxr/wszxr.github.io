@@ -156,7 +156,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-count">15</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -173,150 +173,6 @@
     </div>
 
     <div class="main-inner index posts-expand">
-
-    
-
-
-
-<div class="post-block">
-
-
-
-  <div style="padding-left: 8px;">
-    <span class="post-meta-divider" style="padding-right: 8px;">|</span>
-    <i class="fa fa-thumbtack"></i>
-    <font color=black style="font-weight: bold; padding-left: 4px;">置顶</font>
-  </div>
-
-
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/12/18/%E5%A4%A7%E6%B1%87%E6%80%BB/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Hexo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/12/18/%E5%A4%A7%E6%B1%87%E6%80%BB/" class="post-title-link" itemprop="url">大汇总</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-12-18 00:09:36" itemprop="dateCreated datePublished" datetime="2024-12-18T00:09:36+08:00">2024-12-18</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-12-31 00:05:59" itemprop="dateModified" datetime="2024-12-31T00:05:59+08:00">2024-12-31</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/" itemprop="url" rel="index"><span itemprop="name">计算机</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>14k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>13 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <ul>
-<li><h2 id="1，并发编程的优缺点"><a href="#1，并发编程的优缺点" class="headerlink" title="1，并发编程的优缺点"></a>1，并发编程的优缺点</h2><ul>
-<li>优点<ul>
-<li>1，拆分复杂的业务，可以同时操作io和cpu</li>
-<li>2，可以最大程度的利用多核cpu</li>
-</ul>
-</li>
-<li>缺点<ul>
-<li>1，线程从暂停(阻塞，等待)到运行切换需要进行上下文切换，很耗资源</li>
-<li>2，多线程操作可能对临界区带来线程安全问题，比如一致性问题和死锁</li>
-</ul>
-</li>
-</ul>
-<h2 id="2，java中定位死锁"><a href="#2，java中定位死锁" class="headerlink" title="2，java中定位死锁"></a>2，java中定位死锁</h2><ul>
-<li>1，去jdk的bin目录，使用jps指令来获取正在运行的jvm进程id</li>
-<li>2，jstack -l  pid ,就直接可以看到死锁信息</li>
-</ul>
-<h2 id="3，如何创建线程"><a href="#3，如何创建线程" class="headerlink" title="3，如何创建线程"></a>3，如何创建线程</h2><ul>
-<li>1，继承Thread类，调用对象start方法<ul>
-<li>缺点，单继承</li>
-</ul>
-</li>
-<li>2，实现runnable接口，传入Thread构造，调用Thread对象的start<ul>
-<li>缺点，无返回值</li>
-</ul>
-</li>
-<li>3，实现callable接口，交给线程池的submit方法执行，返回一个futrue，调用get方法阻塞获取返回值</li>
-</ul>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2024/12/18/%E5%A4%A7%E6%B1%87%E6%80%BB/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
 
     
 
@@ -359,8 +215,18 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
+      
 
-      <time title="创建时间：2025-07-14 09:14:16" itemprop="dateCreated datePublished" datetime="2025-07-14T09:14:16+08:00">2025-07-14</time>
+      <time title="创建时间：2025-07-14 09:14:16 / 修改时间：20:39:45" itemprop="dateCreated datePublished" datetime="2025-07-14T09:14:16+08:00">2025-07-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/" itemprop="url" rel="index"><span itemprop="name">计算机</span></a>
+        </span>
     </span>
 
   
@@ -369,7 +235,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>0</span>
+      <span>1.4k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -387,7 +253,52 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          
+          <h1 id="1，核心接口"><a href="#1，核心接口" class="headerlink" title="1，核心接口"></a>1，核心接口</h1><p>beanFactory：负责getbean</p>
+<p>applicationcontext：</p>
+<p>1，继承了beanFactory，同时成员变量注入了beanFactory(组合关系)以调用其他beanFactory实现类的方法；</p>
+<p>2，继承了四个功能的抽象类</p>
+<ul>
+<li>国际化：给某个key指定不同国际下对应的词，需要给每个语言写一个文件，把词一一对应，前端传入国家；context.getMassage(xx,xx,contry)</li>
+<li>资源管理：获取文件，context.getResources；通过classpath*:METE-INFO&#x2F;spring.factories可以获取jar包中的配置类文件信息</li>
+<li>配置信息：context.getEnviroment().getProperty(key)可以直接获取环境变量或者是application.yaml中的某个key的信息</li>
+<li>事件驱动：<ul>
+<li>context.publishEvent(new Applicationevent(事件源头)),可以直接发送事件</li>
+<li>给方法加上@EventListiner注解，并在方法参数中指定事件类型，即可监听到事件</li>
+</ul>
+</li>
+</ul>
+<h2 id="bean的生命周期"><a href="#bean的生命周期" class="headerlink" title="bean的生命周期"></a>bean的生命周期</h2><p>1，实例化：实例化前后可以增强</p>
+<p>2，依赖注入：依赖注入时可以增强</p>
+<p>3，初始化：初始化前后可以增强</p>
+<p>4，销毁：销毁之前可以增强</p>
+<ul>
+<li>使用模版方法抽象，可以完成在增强时动态的选择增强的内容</li>
+<li>例如：</li>
+<li>在依赖注入时调用inject()方法增强；<ul>
+<li>1，定义抽象接口，包含inject方法</li>
+<li>2，不同的实现类有不同的inject方法</li>
+<li>3，将需要执行的inject方法的对象放入一个list</li>
+<li>4，依赖注入时，遍历增强接口类型的list，调用每一个元素的inject的方法；也就是执行了所有需要增强的方法</li>
+</ul>
+</li>
+</ul>
+<h1 id="常见的后置bean处理器"><a href="#常见的后置bean处理器" class="headerlink" title="常见的后置bean处理器"></a>常见的后置bean处理器</h1><p>1，autowired-Bean-PostProcessor：负责解析@Autowired注解和@value注解</p>
+<ul>
+<li>1，获取所有加上了@Autowired注解的属性或者方法，封装成metadata，里面含有一个集合存储</li>
+<li>2，元素的reject方法，把自身(成员变量或者方法)封装成一个dependencyDescriptor</li>
+<li>3，通过beanFactory的doresolveDependency方法解析封装好的dd，成员直接拿类型匹配；方法先指定哪一个参数，再根据类型匹配</li>
+<li>4，通过反射赋值</li>
+</ul>
+<p>2，common-Bean-PostProcessor：负责解析@Resource，@PostConstruct(初始化前调用)，@PreDestroy(销毁前)</p>
+<p>3，configuration-PropertiesBinding-postProcessor：在对类使用@ConfigurationProperties时，指定prefix&#x3D;”pre”和文件，即可直接以pre.成员变量为key去文件中匹配值，直接注入</p>
+<h1 id="常见的工厂后处理器"><a href="#常见的工厂后处理器" class="headerlink" title="常见的工厂后处理器"></a>常见的工厂后处理器</h1><p>1，configurationClass-PostProcessor：用于处理@ComponentScan，@Import，@Bean，@ImporResource</p>
+<ul>
+<li>注入流程</li>
+<li>1，获取@ComponentScan(basePackage&#x3D;)的参数,转换成路径</li>
+<li>2，在路径下面获取所有的类，遍历类，通过反射检查类上是否有@Component注解以及衍生注解，有的话创建BeanDefinition</li>
+</ul>
+<p>2，mapperScannerConfigurer：用于处理@MapperScan，需要指定扫描的包</p>
+
       
     </div>
 
@@ -1806,6 +1717,150 @@
 
 
 
+  <div style="padding-left: 8px;">
+    <span class="post-meta-divider" style="padding-right: 8px;">|</span>
+    <i class="fa fa-thumbtack"></i>
+    <font color=black style="font-weight: bold; padding-left: 4px;">置顶</font>
+  </div>
+
+
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/12/18/%E5%A4%A7%E6%B1%87%E6%80%BB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/12/18/%E5%A4%A7%E6%B1%87%E6%80%BB/" class="post-title-link" itemprop="url">大汇总</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-12-18 00:09:36" itemprop="dateCreated datePublished" datetime="2024-12-18T00:09:36+08:00">2024-12-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-12-31 00:05:59" itemprop="dateModified" datetime="2024-12-31T00:05:59+08:00">2024-12-31</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/" itemprop="url" rel="index"><span itemprop="name">计算机</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>14k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>13 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <ul>
+<li><h2 id="1，并发编程的优缺点"><a href="#1，并发编程的优缺点" class="headerlink" title="1，并发编程的优缺点"></a>1，并发编程的优缺点</h2><ul>
+<li>优点<ul>
+<li>1，拆分复杂的业务，可以同时操作io和cpu</li>
+<li>2，可以最大程度的利用多核cpu</li>
+</ul>
+</li>
+<li>缺点<ul>
+<li>1，线程从暂停(阻塞，等待)到运行切换需要进行上下文切换，很耗资源</li>
+<li>2，多线程操作可能对临界区带来线程安全问题，比如一致性问题和死锁</li>
+</ul>
+</li>
+</ul>
+<h2 id="2，java中定位死锁"><a href="#2，java中定位死锁" class="headerlink" title="2，java中定位死锁"></a>2，java中定位死锁</h2><ul>
+<li>1，去jdk的bin目录，使用jps指令来获取正在运行的jvm进程id</li>
+<li>2，jstack -l  pid ,就直接可以看到死锁信息</li>
+</ul>
+<h2 id="3，如何创建线程"><a href="#3，如何创建线程" class="headerlink" title="3，如何创建线程"></a>3，如何创建线程</h2><ul>
+<li>1，继承Thread类，调用对象start方法<ul>
+<li>缺点，单继承</li>
+</ul>
+</li>
+<li>2，实现runnable接口，传入Thread构造，调用Thread对象的start<ul>
+<li>缺点，无返回值</li>
+</ul>
+</li>
+<li>3，实现callable接口，交给线程池的submit方法执行，返回一个futrue，调用get方法阻塞获取返回值</li>
+</ul>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2024/12/18/%E5%A4%A7%E6%B1%87%E6%80%BB/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+
+<div class="post-block">
+
+
+
 
   
   
@@ -2742,13 +2797,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">70k</span>
+    <span title="站点总字数">71k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:03</span>
+    <span title="站点阅读时长">1:05</span>
   </span>
 </div>
 
