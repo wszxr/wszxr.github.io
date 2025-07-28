@@ -145,7 +145,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-count">20</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -156,7 +156,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-count">16</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -173,6 +173,399 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+
+<div class="post-block">
+
+
+
+
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/29/%E4%BC%98%E5%85%88%E5%87%86%E5%A4%87/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/11/29/%E4%BC%98%E5%85%88%E5%87%86%E5%A4%87/" class="post-title-link" itemprop="url">优先准备</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-11-29 10:50:45" itemprop="dateCreated datePublished" datetime="2024-11-29T10:50:45+08:00">2024-11-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-12-04 22:33:12" itemprop="dateModified" datetime="2024-12-04T22:33:12+08:00">2024-12-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/" itemprop="url" rel="index"><span itemprop="name">计算机</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>4.8k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="java基础"><a href="#java基础" class="headerlink" title="java基础"></a>java基础</h2><h3 id="1，get-和-post请求的区别"><a href="#1，get-和-post请求的区别" class="headerlink" title="1，get 和 post请求的区别"></a>1，get 和 post请求的区别</h3><h4 id="延申：弄清楚http种常用不同请求的区别"><a href="#延申：弄清楚http种常用不同请求的区别" class="headerlink" title="延申：弄清楚http种常用不同请求的区别"></a>延申：弄清楚http种常用不同请求的区别</h4><ul>
+<li>get：<ul>
+<li>参数显示在地址栏，不安全，参数有长度限制，常用于获取资源，幂等</li>
+</ul>
+</li>
+<li>post：<ul>
+<li>参数放在请求体，也需要对参数加密，长度无限制，常用于增删改资源，不幂等</li>
+</ul>
+</li>
+<li>put：<ul>
+<li>参数放请求体，用于更新</li>
+</ul>
+</li>
+<li>delete：<ul>
+<li>参数放请求头，用于删除指定位置的资源</li>
+</ul>
+</li>
+<li>head</li>
+</ul>
+<h3 id="2，面向对象三个基本特征"><a href="#2，面向对象三个基本特征" class="headerlink" title="2，面向对象三个基本特征"></a>2，面向对象三个基本特征</h3><ul>
+<li>封装：把类的属性私有，避免外部直接访问，提高程序安全性</li>
+<li>继承：子类可以继承父类的变量和方法，复用代码的手段</li>
+<li>多态：同一操作对于不同的对象有不同的解释，由重载和重写实现<ul>
+<li>重载：同一个类中同名不同参数的方法</li>
+<li>重写：子类重写父类方法提供子类的实现</li>
+</ul>
+</li>
+</ul>
+<h3 id="3，-和equals的区别"><a href="#3，-和equals的区别" class="headerlink" title="3，&#x3D;&#x3D;和equals的区别"></a>3，&#x3D;&#x3D;和equals的区别</h3><ul>
+<li>&#x3D;&#x3D;可以作用与基本数据类型和引用类型<ul>
+<li>基本数据类型，比较的是值是否相等</li>
+<li>引用类型，比较的是对象的地址是否相等，无关对象内的内容</li>
+</ul>
+</li>
+<li>equals只能作用于引用类型<ul>
+<li>在不重写的情况下，方法内使用的是&#x3D;&#x3D;来判断</li>
+</ul>
+</li>
+<li>注意：<ul>
+<li>在使用对象当hashmap的key时：重写equals方法必须要重写hashcode方法，要保证对象相等的时候hashcode必须相同</li>
+<li>原因：在hashmap中先根据hashcode计算桶，再根据equals判断是否是重复的key；假如equals成立(对象相同)，hashcode却不同，则hash冲突不会发生，equals方法不会被触发，造成相同的两个对象会被hash到不同的桶里，不符合hashmap key不重复的设计</li>
+</ul>
+</li>
+</ul>
+<h3 id="4，-和-，-和"><a href="#4，-和-，-和" class="headerlink" title="4，&amp;和&amp;&amp;，|和||"></a>4，&amp;和&amp;&amp;，|和||</h3><ul>
+<li><p>A&amp;B：先判断A，再判断B是否true</p>
+</li>
+<li><p>A&amp;&amp;B：先判断A，如果A为false那么B直接不用判断，结果肯定为false，减少了一次判断</p>
+</li>
+<li><p>II和&amp;&amp;思路一样，短路系列前面能出结果那么后面的就不判断直接获得结果</p>
+</li>
+</ul>
+<h3 id="5-stringbuilder-string-stringbuffer的区别"><a href="#5-stringbuilder-string-stringbuffer的区别" class="headerlink" title="5,stringbuilder,string,stringbuffer的区别"></a>5,stringbuilder,string,stringbuffer的区别</h3><ul>
+<li>string：不可变，每一次操作都返回一个新的对象</li>
+<li>stringbuilder：可变</li>
+<li>stringbuffer：同步的stringbuilder</li>
+</ul>
+<h3 id="6，重载和重写的区别"><a href="#6，重载和重写的区别" class="headerlink" title="6，重载和重写的区别"></a>6，重载和重写的区别</h3><ul>
+<li>重载：同名方法，返回类型不限制，参数不同，可以是数量，类型，顺序不同，访问修饰符大于等于父类</li>
+<li>重写：同名方法，参数相同，返回值不限制，修饰符大于等于父类</li>
+</ul>
+<h3 id="7-用过哪些集合"><a href="#7-用过哪些集合" class="headerlink" title="7,用过哪些集合"></a>7,用过哪些集合</h3><ul>
+<li>arraylist</li>
+<li>hashset</li>
+<li>hashmap</li>
+</ul>
+<h3 id="8，list，set，map的区别"><a href="#8，list，set，map的区别" class="headerlink" title="8，list，set，map的区别"></a>8，list，set，map的区别</h3><ul>
+<li>list和set继承自collection接口，map是另外的接口</li>
+<li>list是有序线性的，set是无序线性的，map是无序kv结构</li>
+</ul>
+<h3 id="9，了解过的线程安全的集合"><a href="#9，了解过的线程安全的集合" class="headerlink" title="9，了解过的线程安全的集合"></a>9，了解过的线程安全的集合</h3><ul>
+<li>hashtable，concurrenthashmap</li>
+<li>copyonwritearraylist</li>
+</ul>
+<h3 id="10-hashmap的put原理？为什么hashmap容量设计成2的n次方"><a href="#10-hashmap的put原理？为什么hashmap容量设计成2的n次方" class="headerlink" title="10.hashmap的put原理？为什么hashmap容量设计成2的n次方"></a>10.hashmap的put原理？为什么hashmap容量设计成2的n次方</h3><ul>
+<li>计算桶：(h^(h&gt;&gt;16))&amp;(table.length-1)</li>
+<li>hash冲突了则去冲突的链表或者红黑树使用equals比较，不重复就插入到链表或者红黑树</li>
+<li>容量设置2的n次方主要用于扩容减少计算量，table的长度*2，只需要判断多出来的那一位高位对应的(h^(h&gt;&gt;16))的值的那一位是1还是0，是1，&amp;后的结果就是1，就需要把桶的结果乘2得到新的桶，是0，&amp;的结果是0，桶的位置不变，；</li>
+</ul>
+<h3 id="11，arraylist和linkedlist的区别"><a href="#11，arraylist和linkedlist的区别" class="headerlink" title="11，arraylist和linkedlist的区别"></a>11，arraylist和linkedlist的区别</h3><ul>
+<li>arraylist底层是数组，适合查询多，增删少的场景，查询可以根据下标</li>
+<li>linkedlist底层使用的是双向链表，适合增删多的场景，查询只能遍历</li>
+</ul>
+<h3 id="12，throw和throws的区别"><a href="#12，throw和throws的区别" class="headerlink" title="12，throw和throws的区别"></a>12，throw和throws的区别</h3><ul>
+<li>throws作用与方法，往外抛出异常</li>
+<li>throw 是抛出异常</li>
+</ul>
+<h3 id="13，接口和抽象类的区别"><a href="#13，接口和抽象类的区别" class="headerlink" title="13，接口和抽象类的区别"></a>13，接口和抽象类的区别</h3><ul>
+<li>一个类可以实现多个接口，但是只能继承一个父类</li>
+<li>接口中只有方法声明，没有具体实现；抽象类可以有抽象方法，也可以有实现的犯法</li>
+</ul>
+<h3 id="14，去阿里巴巴手册看几个代码规范"><a href="#14，去阿里巴巴手册看几个代码规范" class="headerlink" title="14，去阿里巴巴手册看几个代码规范"></a>14，去阿里巴巴手册看几个代码规范</h3><ul>
+<li>类名使用大驼峰命名，方法名和变量统一使用小驼峰</li>
+<li>在关键的类，方法，参数等地方写注释</li>
+<li>在捕获异常的时候，细分异常类型</li>
+<li>创建线程池的时候，不要使用Executors工具类，使用threadpoolexecutor的构造方法</li>
+</ul>
+<h3 id="15，创建对象的三种方式"><a href="#15，创建对象的三种方式" class="headerlink" title="15，创建对象的三种方式"></a>15，创建对象的三种方式</h3><ul>
+<li>new对象</li>
+<li>使用反射创建</li>
+<li>通过反序列化创建</li>
+</ul>
+<h3 id="16，如何通过反射创建对象"><a href="#16，如何通过反射创建对象" class="headerlink" title="16，如何通过反射创建对象"></a>16，如何通过反射创建对象</h3><ul>
+<li>先获取类的入口class类：class.forName(全限定名)</li>
+<li>再获取类的构造方法</li>
+<li>执行构造方法即可</li>
+</ul>
+<h3 id="17，反射的使用场景是什么"><a href="#17，反射的使用场景是什么" class="headerlink" title="17，反射的使用场景是什么"></a>17，反射的使用场景是什么</h3><ul>
+<li>spring中使用</li>
+</ul>
+<h3 id="18，反射的优缺点是什么"><a href="#18，反射的优缺点是什么" class="headerlink" title="18，反射的优缺点是什么"></a>18，反射的优缺点是什么</h3><ul>
+<li>优点：在程序运行的时候可以动态的创建对象</li>
+<li>缺点：性能比较低</li>
+</ul>
+<h3 id="19，掌握几个IO的常用类"><a href="#19，掌握几个IO的常用类" class="headerlink" title="19，掌握几个IO的常用类"></a>19，掌握几个IO的常用类</h3><h2 id="多线程"><a href="#多线程" class="headerlink" title="多线程"></a>多线程</h2><h3 id="1，线程和进程的区别"><a href="#1，线程和进程的区别" class="headerlink" title="1，线程和进程的区别"></a>1，线程和进程的区别</h3><ul>
+<li>进程是计算机进行资源分配的基本单位，线程是计算机调度的基本单位</li>
+<li>进程拥有独立的内存空间，io资源；线程共享同进程的内存空间和io资源</li>
+<li>进程的上下文切换开销大，且进程之间的通信很麻烦；线程的上下文切换开销小，只需要记录寄存器和线程私有的东西，操作数栈，局部变量表</li>
+</ul>
+<h3 id="2，线程有几种创建方式，区别是什么"><a href="#2，线程有几种创建方式，区别是什么" class="headerlink" title="2，线程有几种创建方式，区别是什么"></a>2，线程有几种创建方式，区别是什么</h3><ul>
+<li>3种：<ul>
+<li>继承Thread类，重写run方法，调用对象的start方法即可创建一个线程</li>
+<li>实现runnable接口，重写run方法，把runnable作为Thread类的构造参数,调用对象的start方法即可创建一个线程</li>
+<li>实现callable接口，重写call方法，交给线程池的submit方法执行，返回一个futrue对象，调用futrue.get即可阻塞当前直到获取该callable的返回值</li>
+</ul>
+</li>
+<li>区别：<ul>
+<li>继承thread比较方便，但是java只能单继承，不灵活；run方法不支持返回值</li>
+<li>实现runnable解决了继承不灵活的问题，但是也不支持返回值</li>
+<li>callable配合线程池可以获取返回值，callable是接口也比较灵活</li>
+</ul>
+</li>
+</ul>
+<h3 id="3，线程的几种状态"><a href="#3，线程的几种状态" class="headerlink" title="3，线程的几种状态"></a>3，线程的几种状态</h3><ul>
+<li>ready：还没有调用start方法之前</li>
+<li>runnable：运行</li>
+<li>waiting：等待，object.wait，</li>
+<li>timedwaiting：超时等待</li>
+<li>blocked：阻塞</li>
+<li>terminal：终止</li>
+</ul>
+<h3 id="4，线程池的7大参数"><a href="#4，线程池的7大参数" class="headerlink" title="4，线程池的7大参数"></a>4，线程池的7大参数</h3><ul>
+<li>核心线程数</li>
+<li>最大线程数</li>
+<li>非核心线程过期时间</li>
+<li>时间单位</li>
+<li>阻塞队列</li>
+<li>拒绝策略</li>
+<li>线程工厂</li>
+</ul>
+<h3 id="5，线程池工作原理"><a href="#5，线程池工作原理" class="headerlink" title="5，线程池工作原理"></a>5，线程池工作原理</h3><ul>
+<li>先加入核心线程数</li>
+<li>核心线程不够在看最大线程</li>
+<li>最大线程不够在看阻塞队列够不够</li>
+<li>阻塞队列不够看拒绝策略</li>
+</ul>
+<h3 id="6，阻塞队列有哪些，拒绝策略有哪些"><a href="#6，阻塞队列有哪些，拒绝策略有哪些" class="headerlink" title="6，阻塞队列有哪些，拒绝策略有哪些"></a>6，阻塞队列有哪些，拒绝策略有哪些</h3><ul>
+<li>阻塞队列：</li>
+<li>拒绝策略：<ul>
+<li>丢弃</li>
+<li>报错</li>
+<li>丢弃最老任务</li>
+<li>用户线程执行</li>
+</ul>
+</li>
+</ul>
+<h3 id="7，线程池submit和execute方法的区别"><a href="#7，线程池submit和execute方法的区别" class="headerlink" title="7，线程池submit和execute方法的区别"></a>7，线程池submit和execute方法的区别</h3><ul>
+<li>execute没有返回值，只能接受一个个runnable参数，创建的线程内部出现异常，在线程内处理，不会返回到创建线程的线程</li>
+<li>submit返回一个futrue，可以接受runnable和callable，接收runnable时返回null，线程出现异常会由future.get抛出，放到try catch可以捕获异常</li>
+</ul>
+<h3 id="8，公司使用的线程池，参数怎么设置，设置的依据"><a href="#8，公司使用的线程池，参数怎么设置，设置的依据" class="headerlink" title="8，公司使用的线程池，参数怎么设置，设置的依据"></a>8，公司使用的线程池，参数怎么设置，设置的依据</h3><h3 id="9，为什么不能使用Executors自带的线程池"><a href="#9，为什么不能使用Executors自带的线程池" class="headerlink" title="9，为什么不能使用Executors自带的线程池"></a>9，为什么不能使用Executors自带的线程池</h3><ul>
+<li>参数写死，不能配置</li>
+</ul>
+<h2 id="MySQL"><a href="#MySQL" class="headerlink" title="MySQL"></a>MySQL</h2><h3 id="1，事务的特性"><a href="#1，事务的特性" class="headerlink" title="1，事务的特性"></a>1，事务的特性</h3><ul>
+<li>原子性</li>
+<li>隔离性</li>
+<li>持久性</li>
+<li>一致性</li>
+</ul>
+<h3 id="2，事务的隔离级别，Mysql默认的隔离级别"><a href="#2，事务的隔离级别，Mysql默认的隔离级别" class="headerlink" title="2，事务的隔离级别，Mysql默认的隔离级别"></a>2，事务的隔离级别，Mysql默认的隔离级别</h3><ul>
+<li>隔离级别<ul>
+<li>读未提交</li>
+<li>读已提交</li>
+<li>可重复读</li>
+<li>序列化运行</li>
+</ul>
+</li>
+<li>mysql默认可重复读，通过mvcc实现，极端情况会出现幻影读问题</li>
+</ul>
+<h3 id="3，事务的传播行为"><a href="#3，事务的传播行为" class="headerlink" title="3，事务的传播行为"></a>3，事务的传播行为</h3><ul>
+<li>require new</li>
+<li>require</li>
+</ul>
+<h3 id="4-不同的隔离级别在两个事务中会出现什么问题"><a href="#4-不同的隔离级别在两个事务中会出现什么问题" class="headerlink" title="4,不同的隔离级别在两个事务中会出现什么问题"></a>4,不同的隔离级别在两个事务中会出现什么问题</h3><ul>
+<li>脏读 读未提交，读到还没有提交的事务写入的值</li>
+<li>不可重复读 读已提交，同一个事务中，同一条sql读取出的结果不一样(修改)</li>
+<li>幻影读 同一个事务中，同一个读取范围，读取出的条数不一样，(插入，删除)</li>
+</ul>
+<h3 id="5，sql调优流程举例，explain关键字的使用"><a href="#5，sql调优流程举例，explain关键字的使用" class="headerlink" title="5，sql调优流程举例，explain关键字的使用"></a>5，sql调优流程举例，explain关键字的使用</h3><p>+ </p>
+<h3 id="6，b树和b-树的区别，为什么用b-树而不是b树"><a href="#6，b树和b-树的区别，为什么用b-树而不是b树" class="headerlink" title="6，b树和b+树的区别，为什么用b+树而不是b树"></a>6，b树和b+树的区别，为什么用b+树而不是b树</h3><h3 id="7，索引失效的情况"><a href="#7，索引失效的情况" class="headerlink" title="7，索引失效的情况"></a>7，索引失效的情况</h3><ul>
+<li>使用了聚合函数</li>
+<li>没有按最左的标准查</li>
+</ul>
+<h3 id="8，建立索引的依据"><a href="#8，建立索引的依据" class="headerlink" title="8，建立索引的依据"></a>8，建立索引的依据</h3><ul>
+<li>经常查找的列</li>
+<li>不经常修改的列</li>
+<li>经常用于排序，分组的列</li>
+<li>经常用于连接的列</li>
+</ul>
+<h3 id="9，Mysql最多创建多少个索引"><a href="#9，Mysql最多创建多少个索引" class="headerlink" title="9，Mysql最多创建多少个索引"></a>9，Mysql最多创建多少个索引</h3><h2 id="SSM"><a href="#SSM" class="headerlink" title="SSM"></a>SSM</h2><h3 id="1，什么是aop和ioc"><a href="#1，什么是aop和ioc" class="headerlink" title="1，什么是aop和ioc"></a>1，什么是aop和ioc</h3><h3 id="2，ioc的好处是什么"><a href="#2，ioc的好处是什么" class="headerlink" title="2，ioc的好处是什么"></a>2，ioc的好处是什么</h3><h3 id="3，aop有几种代理方式，有什么区别，默认哪种"><a href="#3，aop有几种代理方式，有什么区别，默认哪种" class="headerlink" title="3，aop有几种代理方式，有什么区别，默认哪种"></a>3，aop有几种代理方式，有什么区别，默认哪种</h3><ul>
+<li>cglib：继承至原始类</li>
+<li>jdk：实现原始类实现的接口，必须要原始类有接口</li>
+<li>默认cglib</li>
+</ul>
+<h4 id="4，用到aop的地方"><a href="#4，用到aop的地方" class="headerlink" title="4，用到aop的地方"></a>4，用到aop的地方</h4><ul>
+<li>日志，事务</li>
+</ul>
+<h3 id="5，-autowired和-resource的区别"><a href="#5，-autowired和-resource的区别" class="headerlink" title="5，@autowired和@resource的区别"></a>5，@autowired和@resource的区别</h3><h3 id="6，bean的作用域"><a href="#6，bean的作用域" class="headerlink" title="6，bean的作用域"></a>6，bean的作用域</h3><ul>
+<li>singleton</li>
+<li>prototype</li>
+<li>request</li>
+<li>session</li>
+</ul>
+<h3 id="7，spring自动装配有哪几种，有什么区别"><a href="#7，spring自动装配有哪几种，有什么区别" class="headerlink" title="7，spring自动装配有哪几种，有什么区别"></a>7，spring自动装配有哪几种，有什么区别</h3><ul>
+<li>@Autowired，按类型装配</li>
+<li>@Resource，先按名字装配，没有再按照类型装配</li>
+</ul>
+<h3 id="8，spring事务注解里面的参数设置，默认的隔离级别"><a href="#8，spring事务注解里面的参数设置，默认的隔离级别" class="headerlink" title="8，spring事务注解里面的参数设置，默认的隔离级别"></a>8，spring事务注解里面的参数设置，默认的隔离级别</h3><h3 id="9，springmvc的请求流程"><a href="#9，springmvc的请求流程" class="headerlink" title="9，springmvc的请求流程"></a>9，springmvc的请求流程</h3><ul>
+<li>dispatchServelet获取请求，进行转发</li>
+<li>转发至handlermapping，根据传入的url寻找匹配的handler，返回执行链给dispatchservelet</li>
+<li>转发给handleradopter，适配可以执行的controller对象，执行handler，返回modeandview，返回给dispatchservelet</li>
+<li>转发给视图解析器解析视图，返回给dispatchservelet</li>
+<li>返回http请求</li>
+</ul>
+<h3 id="10，-和-的区别"><a href="#10，-和-的区别" class="headerlink" title="10，#{}和${}的区别"></a>10，#{}和${}的区别</h3><ul>
+<li>#{}是使用占位符，里面的东西会被视为 一个参数，自动加单引号，可以避免sql注入</li>
+<li>${}是sql拼接，不会加单引号，会被sql注入</li>
+</ul>
+<h3 id="11，mybatis实体类的字段和表字段不一样怎么办"><a href="#11，mybatis实体类的字段和表字段不一样怎么办" class="headerlink" title="11，mybatis实体类的字段和表字段不一样怎么办"></a>11，mybatis实体类的字段和表字段不一样怎么办</h3><ul>
+<li>使用mybatis的resultmap</li>
+<li>在实体类的上面加上小驼峰和下划线转换的注解</li>
+<li>在实体类的字段上利用@Colum注解来对应数据库中的字段名</li>
+</ul>
+<h3 id="12，xml文件id是否能够重复"><a href="#12，xml文件id是否能够重复" class="headerlink" title="12，xml文件id是否能够重复"></a>12，xml文件id是否能够重复</h3><h3 id="13，什么是一级和二级缓存，区别是什么，怎么开启"><a href="#13，什么是一级和二级缓存，区别是什么，怎么开启" class="headerlink" title="13，什么是一级和二级缓存，区别是什么，怎么开启"></a>13，什么是一级和二级缓存，区别是什么，怎么开启</h3><h3 id="14，springboot自动装配的原理"><a href="#14，springboot自动装配的原理" class="headerlink" title="14，springboot自动装配的原理"></a>14，springboot自动装配的原理</h3><h3 id="15，如何解决前端和服务器端跨域问题"><a href="#15，如何解决前端和服务器端跨域问题" class="headerlink" title="15，如何解决前端和服务器端跨域问题"></a>15，如何解决前端和服务器端跨域问题</h3><ul>
+<li>再后端http返回的时候带上允许跨域的源</li>
+</ul>
+<h2 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h2><h3 id="1，单例，工厂，责任链，代理，模板方法模式（理解）"><a href="#1，单例，工厂，责任链，代理，模板方法模式（理解）" class="headerlink" title="1，单例，工厂，责任链，代理，模板方法模式（理解）"></a>1，单例，工厂，责任链，代理，模板方法模式（理解）</h3><h2 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h2><h3 id="1，redis中常用的数据结构和区别"><a href="#1，redis中常用的数据结构和区别" class="headerlink" title="1，redis中常用的数据结构和区别"></a>1，redis中常用的数据结构和区别</h3><h3 id="2，redis数据结构使用场景举例"><a href="#2，redis数据结构使用场景举例" class="headerlink" title="2，redis数据结构使用场景举例"></a>2，redis数据结构使用场景举例</h3><ul>
+<li>string，全局id</li>
+<li>hash，对象</li>
+<li>set，求交集，共同好友</li>
+<li>zset，做排行榜</li>
+<li>list，先进先出，做队列</li>
+</ul>
+<h3 id="3，redis和数据库的数据一致性"><a href="#3，redis和数据库的数据一致性" class="headerlink" title="3，redis和数据库的数据一致性"></a>3，redis和数据库的数据一致性</h3><ul>
+<li>当更新请求打到数据库时，先更新数据库，再删除缓存</li>
+<li>更新数据库的时候，先使用旧的缓存，会带来一段时间的不一致，无伤大雅</li>
+<li>更新数据库和删除缓存应当是原子性的，且只有一个线程能运行，使用同步锁</li>
+</ul>
+<h3 id="4，缓存穿透，击穿，雪崩怎么处理"><a href="#4，缓存穿透，击穿，雪崩怎么处理" class="headerlink" title="4，缓存穿透，击穿，雪崩怎么处理"></a>4，缓存穿透，击穿，雪崩怎么处理</h3><ul>
+<li>穿透：redis没有，MySQL也没有，导致无法建立缓存，攻击全部打数据库<ul>
+<li>解决，redis和mysql都没有的时候，手动在redis创建一个空缓存，设置较短ttl，防止mysql在空缓存存在期间添加了后导致的不一致时间过长</li>
+</ul>
+</li>
+<li>击穿：热点key过期时，大量的请求打到数据库<ul>
+<li>解决，热点key不设置ttl，在java代码中设置逻辑过期时间，当过期后，先返回给旧值，同时创建一个线程去重建缓存</li>
+</ul>
+</li>
+<li>雪崩：大量的key同时过期<ul>
+<li>解决，同一时间上传的key应当设置不同时间的ttl，可以设置基准时间+随机时间</li>
+</ul>
+</li>
+</ul>
+<h3 id="5，redis持久化方式和区别"><a href="#5，redis持久化方式和区别" class="headerlink" title="5，redis持久化方式和区别"></a>5，redis持久化方式和区别</h3><ul>
+<li>rdb快照：内存小，恢复快，间隔内的会丢失<ul>
+<li>设置一段时间内修改多少次触发</li>
+<li>也可以save手动触发，bgsave后台触发</li>
+</ul>
+</li>
+<li>aof：存的是已经执行过的指令，内存大，恢复慢，间隔小，保存到文件，频繁io</li>
+</ul>
+<h3 id="6，redis内存溢出策略"><a href="#6，redis内存溢出策略" class="headerlink" title="6，redis内存溢出策略"></a>6，redis内存溢出策略</h3><ul>
+<li>noeviction 不淘汰，内存满了有添加就报错，查询和删除可以正常使用</li>
+<li>allkeys lru 淘汰最长时间没有访问过的key</li>
+<li>allkeys lfu 淘汰访问频率最低的key</li>
+<li>allkeys random 随机淘汰</li>
+<li>volatile lru 定时key淘汰最长时间没访问的</li>
+<li>volatile lfu 定时key中淘汰访问频率低的</li>
+<li>volatile random 定时key随机淘汰</li>
+<li>默认是noeviction</li>
+</ul>
+<h2 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h2><h3 id="1，linux常见指令，查看进程，内存占用，cpu使用，搜索关键字"><a href="#1，linux常见指令，查看进程，内存占用，cpu使用，搜索关键字" class="headerlink" title="1，linux常见指令，查看进程，内存占用，cpu使用，搜索关键字"></a>1，linux常见指令，查看进程，内存占用，cpu使用，搜索关键字</h3>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1751,13 +2144,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">71k</span>
+    <span title="站点总字数">100k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:05</span>
+    <span title="站点阅读时长">1:31</span>
   </span>
 </div>
 

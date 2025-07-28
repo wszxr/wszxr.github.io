@@ -145,7 +145,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-count">20</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -156,7 +156,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-count">16</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -173,6 +173,1342 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+
+<div class="post-block">
+
+
+
+  <div style="padding-left: 8px;">
+    <span class="post-meta-divider" style="padding-right: 8px;">|</span>
+    <i class="fa fa-thumbtack"></i>
+    <font color=black style="font-weight: bold; padding-left: 4px;">置顶</font>
+  </div>
+
+
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/12/18/%E5%A4%A7%E6%B1%87%E6%80%BB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/12/18/%E5%A4%A7%E6%B1%87%E6%80%BB/" class="post-title-link" itemprop="url">大汇总</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-12-18 00:09:36" itemprop="dateCreated datePublished" datetime="2024-12-18T00:09:36+08:00">2024-12-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-12-31 00:05:59" itemprop="dateModified" datetime="2024-12-31T00:05:59+08:00">2024-12-31</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/" itemprop="url" rel="index"><span itemprop="name">计算机</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>14k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>13 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <ul>
+<li><h2 id="1，并发编程的优缺点"><a href="#1，并发编程的优缺点" class="headerlink" title="1，并发编程的优缺点"></a>1，并发编程的优缺点</h2><ul>
+<li>优点<ul>
+<li>1，拆分复杂的业务，可以同时操作io和cpu</li>
+<li>2，可以最大程度的利用多核cpu</li>
+</ul>
+</li>
+<li>缺点<ul>
+<li>1，线程从暂停(阻塞，等待)到运行切换需要进行上下文切换，很耗资源</li>
+<li>2，多线程操作可能对临界区带来线程安全问题，比如一致性问题和死锁</li>
+</ul>
+</li>
+</ul>
+<h2 id="2，java中定位死锁"><a href="#2，java中定位死锁" class="headerlink" title="2，java中定位死锁"></a>2，java中定位死锁</h2><ul>
+<li>1，去jdk的bin目录，使用jps指令来获取正在运行的jvm进程id</li>
+<li>2，jstack -l  pid ,就直接可以看到死锁信息</li>
+</ul>
+<h2 id="3，如何创建线程"><a href="#3，如何创建线程" class="headerlink" title="3，如何创建线程"></a>3，如何创建线程</h2><ul>
+<li>1，继承Thread类，调用对象start方法<ul>
+<li>缺点，单继承</li>
+</ul>
+</li>
+<li>2，实现runnable接口，传入Thread构造，调用Thread对象的start<ul>
+<li>缺点，无返回值</li>
+</ul>
+</li>
+<li>3，实现callable接口，交给线程池的submit方法执行，返回一个futrue，调用get方法阻塞获取返回值</li>
+</ul>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2024/12/18/%E5%A4%A7%E6%B1%87%E6%80%BB/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+
+<div class="post-block">
+
+
+
+
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/07/28/%E9%9D%A2%E8%AF%95%E5%85%AB%E8%82%A1%E6%96%87%E6%B1%87%E6%80%BB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/07/28/%E9%9D%A2%E8%AF%95%E5%85%AB%E8%82%A1%E6%96%87%E6%B1%87%E6%80%BB/" class="post-title-link" itemprop="url">面试八股文汇总</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2025-07-28 15:20:28 / 修改时间：15:21:20" itemprop="dateCreated datePublished" datetime="2025-07-28T15:20:28+08:00">2025-07-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/" itemprop="url" rel="index"><span itemprop="name">计算机</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>28k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>26 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="Java基础"><a href="#Java基础" class="headerlink" title="Java基础"></a>Java基础</h1><h2 id="语言的三大特性"><a href="#语言的三大特性" class="headerlink" title="语言的三大特性"></a>语言的三大特性</h2><p>1，封装：将属性和方法封装到类中，隐藏实现细节，通过公共接口和外界交互；可以防止外界直接修改敏感数据；安全性高</p>
+<p>2，继承：子类继承父类的属性和方法；实现代码复用</p>
+<p>3，多态：同一个操作作用不同对象，产生不同行为；分为编译时多态(重载)和运行时多态(重写)；提高了拓展度，降低了耦合，提高了灵活性</p>
+<h2 id="重载和重写的区别"><a href="#重载和重写的区别" class="headerlink" title="重载和重写的区别"></a>重载和重写的区别</h2><p>1，重载：只与参数相关，参数数量，返回类型，参数顺序；主要用于同一个类中横向拓展</p>
+<p>2，重写：参数要相同，返回类型只能是被重写的同类或子类，修饰符只能大于等于被重写的；用于父类子类纵向拓展</p>
+<h2 id="包装类型相对基本类型的好处"><a href="#包装类型相对基本类型的好处" class="headerlink" title="包装类型相对基本类型的好处"></a>包装类型相对基本类型的好处</h2><p>1，可以用与数组，集合，泛型</p>
+<p>2，提供了操作数据的一系列方法</p>
+<p>3，有null可以代表是否查到，基本类型只有0无法区分结果和没查到</p>
+<h2 id="static关键字修饰变量，方法"><a href="#static关键字修饰变量，方法" class="headerlink" title="static关键字修饰变量，方法"></a>static关键字修饰变量，方法</h2><p>1，static只能修饰成员变量，不可以修饰局部变量</p>
+<p>2，static方法内在只能用static变量，只能调static方法</p>
+<p>3，普通方法可以调static变量和方法</p>
+<h2 id="抽象类和接口异同"><a href="#抽象类和接口异同" class="headerlink" title="抽象类和接口异同"></a>抽象类和接口异同</h2><p>1，同：</p>
+<ul>
+<li>都不能实例化</li>
+<li>都可以有抽象方法</li>
+</ul>
+<p>2，异：</p>
+<ul>
+<li>抽象类可以有成员变量和常量，接口只能有public的常量</li>
+<li>抽象类可以有完整的非抽象方法，接口1.8后才有default方法</li>
+<li>抽象类只能单继承，接口可以实现多个</li>
+<li>接口强调单个功能实现，抽象类强调类之间所属关系</li>
+</ul>
+<h2 id="如何自定义一个异常"><a href="#如何自定义一个异常" class="headerlink" title="如何自定义一个异常"></a>如何自定义一个异常</h2><p>1，实现Exception或者RuntimeException</p>
+<p>2，创建有参和无参构造</p>
+<p>3，构造中用super调用父类的构造</p>
+<p>4，使用的时候直接throw，利用构造方法创建对象</p>
+<h2 id="深拷贝和浅拷贝的区别"><a href="#深拷贝和浅拷贝的区别" class="headerlink" title="深拷贝和浅拷贝的区别"></a>深拷贝和浅拷贝的区别</h2><p>1，浅拷贝指的是调用Object的clone方法，拷贝时基本类型变量会复制一份，引用类型只会复制引用，前后的对象的变量都存储同一个对象的地址</p>
+<p>2，深拷贝指的在浅拷贝的基础上，手动新建对象赋值或者递归调用浅拷贝方法，来完成引用类型的复制</p>
+<p>3，需要实现cloneable接口才可以使用clone方法，否则会报异常</p>
+<p>4，层级过多可以选择序列化反序列化来深拷贝</p>
+<h2 id="comparator和comparable的区别"><a href="#comparator和comparable的区别" class="headerlink" title="comparator和comparable的区别"></a>comparator和comparable的区别</h2><p>1，类实现comparable接口，可以给当前类制定一个排序规则，写在compare方法里，这个类的对象互相之间被排序时将会使用这个规则</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//students实现的是comparable接口，直接排序即可</span></span><br><span class="line">Collections.sort(students);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Student类</span></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> <span class="type">int</span> <span class="title function_">compareTo</span><span class="params">(Student other)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">this</span>.age - other.age;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>2，comparator接口是规则接口，指定泛型为规则适用的类，每一个comparator接口的实例都是一个排序规则，可以通过多个接口写上同一泛型类，达到给这个类多种可选的规则的目的</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//通过传入多个comparator实例来指定排序规则</span></span><br><span class="line"><span class="comment">//按照姓名排序</span></span><br><span class="line">Collections.sort(students, <span class="keyword">new</span> <span class="title class_">NameComparator</span>());</span><br><span class="line">     </span><br><span class="line"><span class="comment">// 按年龄排序</span></span><br><span class="line">Collections.sort(students, <span class="keyword">new</span> <span class="title class_">AgeComparator</span>());</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//泛型用于指定规则适用的类</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">NameComparator</span> <span class="keyword">implements</span> <span class="title class_">Comparator</span>&lt;Student&gt;&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">compare</span><span class="params">(Student s1, Student s2)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> s1.getName().compareTo(s2.getName());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="序列化和反序列化"><a href="#序列化和反序列化" class="headerlink" title="序列化和反序列化"></a>序列化和反序列化</h2><p>1，序列化指的是从java对象转成字节序列，反序列化相反</p>
+<p>2，通常在网络传输，文件持久化等地方需要序列化成字节序列</p>
+<p>3，使用ObjectInputStream .readObject可以完成反序列化；ObjectOutputStream .writeObject可以完成序列化</p>
+<p>4，序列化需要实现Serializable接口，需要重写版本号用于正确的反序列化；对象中不需要序列化的成员变量可以加上transient关键字</p>
+<h1 id="集合"><a href="#集合" class="headerlink" title="集合"></a>集合</h1><h2 id="ArrayList和Linkedlist的区别"><a href="#ArrayList和Linkedlist的区别" class="headerlink" title="ArrayList和Linkedlist的区别"></a>ArrayList和Linkedlist的区别</h2><p>1，arraylist底层是动态数组，适合随机读取；linkedlist的底层是双链表，适合头尾的增删</p>
+<p>2，linkedlist由于要存储额外的前后指针，所以占用内存较多</p>
+<h2 id="list如何在遍历中删除元素"><a href="#list如何在遍历中删除元素" class="headerlink" title="list如何在遍历中删除元素"></a>list如何在遍历中删除元素</h2><p>1，获取迭代器，遍历的时候调用迭代器的remove</p>
+<p>2，for i遍历的时候，使用后序遍历，删除时不会影响被删除元素之前的部分</p>
+<p>3，不可以使用for i前序遍历，因为删除元素之后，后面元素会补到当前的位置，这个位置已经访问过，补上来的元素就会被略过</p>
+<h2 id="HashMap容量，负载因子，扩容"><a href="#HashMap容量，负载因子，扩容" class="headerlink" title="HashMap容量，负载因子，扩容"></a>HashMap容量，负载因子，扩容</h2><p>1，初始容量16，负载因子0.75；当 元素数量&gt;容量*负载因子 时，触发扩容；扩容倍数为2</p>
+<p>2，hash冲突的链表长度达到8，并且元素总数&gt;64时，触发链表转红黑树，如果没有超过64，只会扩容</p>
+<h2 id="为什么hash容量设计成2的倍数"><a href="#为什么hash容量设计成2的倍数" class="headerlink" title="为什么hash容量设计成2的倍数"></a>为什么hash容量设计成2的倍数</h2><p>1，方便桶的计算：hashmap的桶，是通过调用key的hashcode方法取得32位hashcode，再hashcode与本身高16位进行异或操作，结果再与上容量-1(table长)，结果即为数组下标，用于存放value</p>
+<ul>
+<li>由于数组长度通常不会超过16位，因此高16位hash不起作用；通过高16和低16进行异或操作，发挥作用，增加散列程度</li>
+<li>异或操作相比与和或，结果是1：1，更加均匀</li>
+<li>由于数组长(容量)设计成2的倍数，那么使用&amp;操作即可达到取模的结果，位运算的速度快于取模，提高了效率</li>
+</ul>
+<p>2，方便扩容后的重hash：hashcode()&#x3D;&#x3D;h；r&#x3D;(h^h&gt;&gt;16)&amp;tableLen-1</p>
+<ul>
+<li>扩容时&amp;之前的式子不变，tableLen变成两倍也就是最高位写上1</li>
+<li>只要判断r在新增的tableLen那个最高位上，是1还是0，是1代表结果总体*2，那么桶位置变化到两倍下标；如果是0，那一位&amp;的结果也是0，代表桶的位置不变</li>
+<li>因此，重hash时仅需判断，高一位的r是1还是0即可完成任务，省去了从0开始重hash繁多的步骤，提高的效率</li>
+</ul>
+<h1 id="反射"><a href="#反射" class="headerlink" title="反射"></a>反射</h1><h2 id="创建对象的方式"><a href="#创建对象的方式" class="headerlink" title="创建对象的方式"></a>创建对象的方式</h2><p>1，直接new</p>
+<p>2，反射调用构造函数创建</p>
+<p>3，通过对象拷贝</p>
+<p>4，通过对象序列化和反序列化</p>
+<h2 id="反射定义"><a href="#反射定义" class="headerlink" title="反射定义"></a>反射定义</h2><p>1，在程序运行状态中能动态的获取类信息并调用其方法的功能叫反射</p>
+<h2 id="获取class对象的方式"><a href="#获取class对象的方式" class="headerlink" title="获取class对象的方式"></a>获取class对象的方式</h2><p>1，类.class</p>
+<p>2，Class.forName</p>
+<p>3，对象.getClass</p>
+<h2 id="反射的优点和缺点"><a href="#反射的优点和缺点" class="headerlink" title="反射的优点和缺点"></a>反射的优点和缺点</h2><p>1，优点：</p>
+<ul>
+<li>动态操作，适用于框架</li>
+<li>突破访问限制，可以访问和修改私有成员</li>
+</ul>
+<p>2，缺点：</p>
+<ul>
+<li>效率低，jvm不会对反射代码进行优化</li>
+<li>安全性低，绕过访问控制，破坏封装</li>
+</ul>
+<h2 id="通过反射创建对象，属性赋值，调用方法举例"><a href="#通过反射创建对象，属性赋值，调用方法举例" class="headerlink" title="通过反射创建对象，属性赋值，调用方法举例"></a>通过反射创建对象，属性赋值，调用方法举例</h2><p>1，创建对象，先获取构造方法，之后直接传参调用</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Constructor&lt;?&gt; constructor = clazz.getConstructor(String.class); <span class="comment">// 获取指定构造方法</span></span><br><span class="line"><span class="type">Object</span> <span class="variable">user</span> <span class="operator">=</span> constructor.newInstance(<span class="string">&quot;Alice&quot;</span>); </span><br></pre></td></tr></table></figure>
+
+<p>2，对私有字段赋值时候要开启强制访问，需要指定是哪个对象的变量</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Field</span> <span class="variable">nameField</span> <span class="operator">=</span> clazz.getDeclaredField(<span class="string">&quot;name&quot;</span>); <span class="comment">// 获取私有字段</span></span><br><span class="line">nameField.setAccessible(<span class="literal">true</span>);                   <span class="comment">// 强制访问私有属性</span></span><br><span class="line">nameField.set(user, <span class="string">&quot;Bob&quot;</span>);                      <span class="comment">// 赋值</span></span><br></pre></td></tr></table></figure>
+
+<p>3，调用私有方法必须开启强制访问，需要指定调用的对象</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Method</span> <span class="variable">secretMethod</span> <span class="operator">=</span> clazz.getDeclaredMethod(<span class="string">&quot;secretMethod&quot;</span>);</span><br><span class="line">secretMethod.setAccessible(<span class="literal">true</span>);  <span class="comment">// 强制访问私有方法</span></span><br><span class="line">secretMethod.invoke(user);   </span><br></pre></td></tr></table></figure>
+
+<h1 id="多线程"><a href="#多线程" class="headerlink" title="多线程"></a>多线程</h1><h2 id="Synchronized"><a href="#Synchronized" class="headerlink" title="Synchronized"></a>Synchronized</h2><p>1，使用：</p>
+<ul>
+<li>代码块中，锁指定的对象</li>
+<li>静态方法中，锁类对象</li>
+<li>普通方法中，锁this</li>
+</ul>
+<p>2，分类，原理：</p>
+<ul>
+<li>偏向锁：<ul>
+<li>mark word存线程id，原mark word保存在该线程的栈帧的lock record中</li>
+<li>获取锁只需要判断线程id和mark word中存的id是不是一样就可以</li>
+<li>适合同步块大概率只由一个线程执行的场景</li>
+</ul>
+</li>
+<li>轻量级锁：<ul>
+<li>在栈中创建一片锁空间，markword指向该空间，空间内存markword原始值</li>
+<li>加锁的时候尝试cas把markword指向自己的锁空间，失败会自旋一段时间</li>
+<li>适合同步块执行时间很短的任务，短时间自旋消耗的cpu资源远小于直接阻塞导致的线程上下文切换</li>
+</ul>
+</li>
+<li>重量级锁：<ul>
+<li>加锁时，为对象创建一个monitor，对象头的markword指向monitor，monitor对象中的字段暂存markword原本的值</li>
+<li>monitor中存储获取锁成功的线程，计数器计算重入次数</li>
+<li>monitor拥有一个阻塞队列和一个等待队列，获取锁失败会进入阻塞队列，获取锁成功的线程调用wait会进入等待队列并释放锁；只有当线程被notify唤醒后重新获取时间片wait方法才会结束</li>
+</ul>
+</li>
+</ul>
+<p>3，升级：</p>
+<p>4，性质：</p>
+<ul>
+<li>原子性，Synchronized包裹的代码对于其他线程来说是原子的，同时成功其他线程才可见，出现异常会失败且释放锁</li>
+<li>可见性，Synchronized结束时会强行把代码块的变量刷新到主存，进入Synchronized时会直接去主存重读一个值，刷新进主存保证了对其他线程可见</li>
+<li>有序性，Synchronized会保证同步块内外的指令不会重排序</li>
+</ul>
+<h2 id="创建线程"><a href="#创建线程" class="headerlink" title="创建线程"></a>创建线程</h2><p>1，继承Thread类</p>
+<p>2，实现Runnable接口，作为Thread的构造</p>
+<p>3，实现Callable&lt;&gt;或者Runnable，交由线程池的submit执行，返回futrue，futrue的get可以异步获取结果</p>
+<h2 id="线程状态以及方法"><a href="#线程状态以及方法" class="headerlink" title="线程状态以及方法"></a>线程状态以及方法</h2><p>1，NEW</p>
+<ul>
+<li>start方法调用之前</li>
+</ul>
+<p>2，RUNNABLE</p>
+<ul>
+<li>调用start之后</li>
+<li>由等待转化过来：notify、signal、unpark</li>
+<li>获取到锁由阻塞转化过来</li>
+</ul>
+<p>3，WAITING</p>
+<ul>
+<li>等待通知或中断</li>
+<li>调用Tread.sleep、object.wait、condition.await、Locksuport.park、thread.join、lock.lock获取锁失败后</li>
+</ul>
+<p>4，TIMED_WAITING</p>
+<ul>
+<li>带定时参数的WAITING状态</li>
+</ul>
+<p>5，BLOCKED</p>
+<ul>
+<li>进入synchronized方法，代码块，获取锁失败</li>
+</ul>
+<h2 id="ThreadPoolExecutor"><a href="#ThreadPoolExecutor" class="headerlink" title="ThreadPoolExecutor"></a>ThreadPoolExecutor</h2><p>1，线程池原理：核心线程数-&gt;阻塞队列-&gt;最大线程数-&gt;拒绝策略</p>
+<p>2，作用：可以复用线程资源，管理线程</p>
+<p>3，线程池参数：</p>
+<ul>
+<li>核心线程</li>
+<li>阻塞队列</li>
+<li>最大线程</li>
+<li>拒绝策略:<ul>
+<li>不拒绝，使用用户线程执行</li>
+<li>丢弃</li>
+<li>丢弃并报异常</li>
+<li>丢弃最久没执行的任务</li>
+</ul>
+</li>
+<li>空闲线程存活时间</li>
+<li>时间单位</li>
+<li>线程工厂</li>
+</ul>
+<p>4，线程池关闭</p>
+<ul>
+<li>shutdown：拒绝接收新任务，等待正在执行的和阻塞队列里的执行完</li>
+<li>shutdownnow：拒绝新任务，尝试Interrupt正在执行的，放弃阻塞队列的任务，并返回一个未执行的任务组成的list</li>
+</ul>
+<h2 id="Executors提供的线程池以及它们的问题"><a href="#Executors提供的线程池以及它们的问题" class="headerlink" title="Executors提供的线程池以及它们的问题"></a>Executors提供的线程池以及它们的问题</h2><p>1，FixedThreadPool：核心线程固定，阻塞队列无界，拒绝策略无效；如果生产的速度远快于消费，会沾满内存</p>
+<p>2，SingleThreadExector：核心线程为1的定长线程池</p>
+<p>3，CatchedThreadPool：只有非核心线程的线程池，队列不装东西，最大线程数无限，存活时间60s，拒绝策略无效；如果并发任务过多会创建大量线程，占满cpu</p>
+<p>4，SchedulePoolExecutor：主要分清楚两个方法</p>
+<ul>
+<li>scheduleAtFixedRate：正常情况下按照上个任务开始时间+设定的延迟时间&#x3D;这次开始时间，当时间到了后上一个还没结束，会等结束后执行后一个</li>
+<li>scheduleWithFixedDelay：上次任务结束时间+设定的延迟时间&#x3D;这次开始时间</li>
+</ul>
+<h2 id="同步组件有哪些"><a href="#同步组件有哪些" class="headerlink" title="同步组件有哪些"></a>同步组件有哪些</h2><p>1，ReentrantLock锁：无参为非公平可重入</p>
+<ul>
+<li>可重入：加锁给计数器加一，解锁减一</li>
+<li>公平锁：获取锁失败的线程排队，队头的先获取锁；消耗更多cpu保证只有队头能获取锁；不会出现饥饿问题</li>
+<li>非公平锁：不保证入队顺序，不保证只有队头能获取锁；可能会导致饥饿问题；在入队前可以自旋，可能会减少上下文切换，获取锁之前不需要判断自己是否是队头</li>
+</ul>
+<p>2，Condition：条件等待队列，可以给ReentrantLock设置多个等待队列</p>
+<ul>
+<li>调用lock.newCondition可以创建一个等待队列</li>
+<li>使用condition.await()可以释放锁后进入队列，前提是获取到了锁</li>
+<li>使用condition.signal&#x2F;singnalAll可以唤醒等待队列线程</li>
+<li>被唤醒线程重新获取到锁执行，此时await结束</li>
+<li>对比Synchronized的waitset的好处是可以创建多个，根据不同的条件来等待和唤醒</li>
+</ul>
+<p>3，CountDownLatch：倒计时</p>
+<ul>
+<li>new的时候指定数量new CountDownLatch(5)</li>
+<li>线程A调用countDownLatch.await方法等待</li>
+<li>其他线程调用countDown方法时倒计时-1，减完A线程继续执行</li>
+</ul>
+<p>4，CyclicBarrier：循环屏障</p>
+<ul>
+<li>new的时候指定数量，当指定数量的线程都到达屏障，则会触发RUNNABLE：new CyclicBarrier(6，RUNNABLE)</li>
+<li>6个线程分别调用cyclicBarrier.await()，最快的线程会等待所有线程都调用这个方法后，统一放行</li>
+<li>之所以是循环的，是因为所有线程到达屏障后，屏障被重置，还可以继续调cyclicBarrier.await()，同样使用</li>
+</ul>
+<p>5，Semaphore：信号量，可以理解为一个可以被指定线程数同时获取的锁</p>
+<ul>
+<li>指定通行证的数量，Semaphore semaphore &#x3D; new Semaphore(5);</li>
+<li>获取通行证，5次后阻塞，semaphore.acquire();</li>
+<li>释放通行证，释放后可以被获取，semaphore.release();</li>
+</ul>
+<p>6，Exchanger：两个线程间的数据交换</p>
+<ul>
+<li>new Exchanger<String>()创建Exchanger，指定交换的数据类型</li>
+<li>A先调用exchanger.exchange(a)方法，B后调用exchanger.exchange(b)</li>
+<li>两个方法调用后，方法返回值便是交换后的数据</li>
+</ul>
+<h2 id="并发集合类有哪些"><a href="#并发集合类有哪些" class="headerlink" title="并发集合类有哪些"></a>并发集合类有哪些</h2><p>1，CopyOnWriteArrayList：写时复制一个新数组，在新数组上写，之后把变量指向新数组；读写分离，写不会影响读，但会导致短暂的数据不一致；变量使用volatile修饰保证修改完成之后的可见性</p>
+<p>2，ConcurrentHashMap：</p>
+<ul>
+<li>写写操作，通过cas来保证空桶只会有一个人修改成功，避免覆盖导致某个写操作消失；对于链表和红黑树，会用Synchronized锁住头结点保证同时只会有一个线程写操作</li>
+<li>读写操作(遍历时进行结构性修改)，将节点的v，和next都设置volatile，这样就无需快速失败机制，v保证修改可见，next保证增删可见</li>
+<li>扩容：给就数组分成多个区间，每个区间由一个线程负责迁移进新数组<ul>
+<li>修改sizeCtl为负数标记扩容进行中，防止多次进行扩容操作，sizeCtl必须使用cas操作保证修改操作的原子性</li>
+<li>使用Synchronized锁住头节点，防止迁移中对链表或红黑树进行修改；这时如果读请求，直接读旧数组的数据即可；写请求会被阻塞</li>
+<li>修改完后将旧数组的头节点变为ForwardingNode，扩容后这个节点在新数组的位置；这时读请求到达ForwardingNode会去指向的新数组的指定位置去读新的数据；写请求会先写到新数组，再帮助旧数组扩容</li>
+</ul>
+</li>
+</ul>
+<h2 id="atomic原子操作包"><a href="#atomic原子操作包" class="headerlink" title="atomic原子操作包"></a>atomic原子操作包</h2><p>1，CAS:通过硬件指令直接比较某内存的预期值和现在值，如果相同则更新为新值，过程原子</p>
+<p>2，AtomicInteger：提供了一系列以CAS为原理的方法，getAndIncrement，IncrementAndGet，addAndGet(int i),getAndAdd(int i)</p>
+<p>3，常用类AtomicIong，AtomicIntegerArray()，AtomicReference</p>
+<p>4，AtomicStampedReference：同时检查预期值和当前值是否一样，版本戳是否一样，都一样才会进行更新，可以解决ABA问题</p>
+<h2 id="JMM"><a href="#JMM" class="headerlink" title="JMM"></a>JMM</h2><p>1，定义：JMM是Java规范定义的一套线程间同步和通信的规则，目的是解决多线程下的原子性，可见性，有序性问题</p>
+<p>2，内容：JMM主要包括三方面</p>
+<ul>
+<li>线程通信模型：使用共享内存模型，变量放主内存共享，每个线程有自己单独的工作空间</li>
+<li>内存访问方式：从主内存取副本，然后到工作空间用，之后刷新到主内存</li>
+<li>指令重排序的约束(规则)</li>
+</ul>
+<p>3，对于指令重排的约束(约束)</p>
+<ul>
+<li>as-if-serial：无论怎么重排，单线程的执行结果不能变</li>
+<li>happens-Before：定义了多线程下某些操作必然对后续操作可见<ul>
+<li>volatile写先于volatile读</li>
+<li>解锁先于后续加锁</li>
+<li>线程启动先于线程内操作</li>
+<li>线程内操作先于线程终止</li>
+<li>happens-Before有传导性</li>
+<li>A.join，A的后续所有操作先于调用方</li>
+</ul>
+</li>
+</ul>
+<h2 id="AQS"><a href="#AQS" class="headerlink" title="AQS"></a>AQS</h2><p>1，AQS专门用于构建锁和同步器的框架，封装了改变state的方法，同步队列，排队，等待，唤醒等操作</p>
+<p>2，提供了模版方法</p>
+<ul>
+<li><code>acquire(int arg)</code>：尝试获取独占锁，失败则入队列等待。</li>
+<li><code>release(int arg)</code>：释放独占锁，并唤醒后继线程。</li>
+<li><code>acquireShared(int arg)</code>：尝试获取共享锁，失败则入队列等待。</li>
+<li><code>releaseShared(int arg)</code>：释放共享锁，并唤醒其他线程。</li>
+<li><code>acquireInterruptibly(int arg)</code>：可中断地获取独占锁。</li>
+<li><code>acquireSharedInterruptibly(int arg)</code>：可中断地获取共享锁。</li>
+<li><code>tryAcquireNanos(int arg, long nanosTimeout)</code>：限时尝试获取独占锁。</li>
+<li><code>tryAcquireSharedNanos(int arg, long nanosTimeout)</code>：限时尝试获取共享锁。</li>
+<li><code>isQueued(Thread thread)</code>：是否在排队</li>
+</ul>
+<p>3，模板方法会调用可重写的方法，以下是常用可重写的方法</p>
+<p><code>tryAcquire(int arg)</code>：独占方式尝试获取资源，成功则返回true，失败则返回false。</p>
+<p><code>tryRelease(int arg)</code>：独占方式尝试释放资源，成功则返回true，失败则返回false。</p>
+<p><code>tryAcquireShared(int arg)</code>：共享方式尝试获取资源。负数表示失败；0表示成功，但没有剩余可用资源；正数表示成功，且有剩余资源。</p>
+<p>tryReleaseShared(int arg)：共享方式尝试释放资源，如果释放后允许唤醒后续等待结点返回true，否则返回false。</p>
+<ul>
+<li><code>isHeldExclusively()</code>：该线程是否正在独占资源。只有用到condition才需要去实现它。</li>
+</ul>
+<p>4，使用指南：自定义锁实现lock接口，并创建静态内部类继承自AQS，实现AQS提供的被模版方法调用的几个Protected方法，主要是实现加锁解锁逻辑，如何修改state才算获取了锁，如何算解锁；在lock提供的加锁解锁方法中，调用静态内部类的模版方法即可</p>
+<h2 id="死锁定位"><a href="#死锁定位" class="headerlink" title="死锁定位"></a>死锁定位</h2><p>1，去jdk的bin目录，使用jps指令来获取正在运行的jvm进程id</p>
+<p>2，jstack -l pid ,就直接可以看到死锁信息</p>
+<h1 id="SSM"><a href="#SSM" class="headerlink" title="SSM"></a>SSM</h1><h2 id="spring使用到的设计模式"><a href="#spring使用到的设计模式" class="headerlink" title="spring使用到的设计模式"></a>spring使用到的设计模式</h2><p>1，简单工厂模式</p>
+<p>beanfactory通过传入bean的类型或者名字就可以获取不同的bean</p>
+<p>2，工厂方法模式</p>
+<p>FactoryBean是工厂方法模式的体现，通过实现FactoryBean接口实现不同的工厂，工厂里面写不同类的实现逻辑，好处是新增新的工厂时只需要新增类实现FactoryBean就好，不需要像简单工厂那样调整if-else if逻辑</p>
+<p>3，单例模式</p>
+<p>singleton的bean使用了单例模式</p>
+<p>懒汉式 ，双重检验所，第一次判断可以让有bean之后不用每次都枷锁；volatile修饰禁止指令重排，保证没有被初始化的对象不会被使用</p>
+<p>4，代理模式</p>
+<p>aop使用了动态代理，分为jdk和cglib</p>
+<p>5，模板方法模式</p>
+<p>jdbctemplate，transactiontemplate</p>
+<h2 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h2><h5 id="饿汉式"><a href="#饿汉式" class="headerlink" title="饿汉式"></a>饿汉式</h5><p>1，初始化创建对象放在static final的变量中，类初始化即创建唯一对象</p>
+<ul>
+<li>初始化由jvm控制，线程安全</li>
+<li>每次都提前创建可能会浪费资源</li>
+</ul>
+<p>2，枚举类：需要的对象定义为枚举类的一个变量，枚举类初始化，该变量也完成创建</p>
+<ul>
+<li>jvm保证枚举变量唯一性，初始化时创建，线程安全</li>
+<li>枚举类是构造私有的，且jvm禁止使用反射获取私有构造来创建枚举对象，天然防反射</li>
+</ul>
+<h5 id="懒汉式"><a href="#懒汉式" class="headerlink" title="懒汉式"></a>懒汉式</h5><p>1，双重检查锁</p>
+<ul>
+<li>外层的Synchronized是避免有对象后还要每次都进入同步块</li>
+<li>volatile是为了防止指令重排曝光出还未初始化完成的对象</li>
+<li>线程安全，延迟加载</li>
+</ul>
+<p>3，静态内部类：在静态内部类的static final变量中创建对象，只有当该变量被初次使用时，静态内部类才会初始化</p>
+<ul>
+<li>通过外部类延迟调用静态内部类的变量来实现延迟加载</li>
+<li>通过静态内部类的初始化阶段创建对象来保证线程安全</li>
+<li>线程安全，延迟加载</li>
+</ul>
+<h2 id="ioc和aop"><a href="#ioc和aop" class="headerlink" title="ioc和aop"></a>ioc和aop</h2><p>枚举类和管理对象的权力交给容器，好处是解耦合，增强了可测性</p>
+<p>2，aop指的是切面编程，通过把横切逻辑从业务中分离形成切面；好处是可以在不修改原代码的基础上对方法进行功能增强，降低耦合，复用代码</p>
+<p>3，使用注解实现aop</p>
+<ul>
+<li>@AspectJ标记类为切面</li>
+<li>@pointcut在空方法上指定方法要切的包，类，方法等可以使用方法名复用代码</li>
+<li>@Before @Around @After 在方法上指定方法要在目标的哪个位置切入；注解参数可以是@Pointcut，也可以是方法名</li>
+</ul>
+<p>4，spring默认有接口的情况下优先使用jdk代理，只有在没有接口的情况下才会使用cglib</p>
+<h2 id="Bean的生命周期"><a href="#Bean的生命周期" class="headerlink" title="Bean的生命周期"></a>Bean的生命周期</h2><p>1，实例化</p>
+<p>2，属性注入</p>
+<p>3，aware处理，如果bean实现了接口，spring会调用接口方法，参数包含bean想要的东西，bean可以在接口中把参数赋值给自身的成员变量</p>
+<p>4，beanpostprocessor前</p>
+<p>5，初始化</p>
+<p>6，beanpostprocessor后；进行aop的地点</p>
+<p>7，销毁</p>
+<h2 id="注解-Autowired，-Resource，-Bean，-Component"><a href="#注解-Autowired，-Resource，-Bean，-Component" class="headerlink" title="注解@Autowired，@Resource，@Bean，@Component"></a>注解@Autowired，@Resource，@Bean，@Component</h2><p>1，Autowired默认使用类型注入，存在多个相同类型的bean会报错，配合qualify可以使用名字注入</p>
+<p>2，Resource默认优先使用名字注入，名字不匹配再类型注入</p>
+<p>3，Component用于标记类作为spring组件，对象作为bean</p>
+<p>4，Bean作用于配置类中的方法，将方法的返回值作为bean放到容器中，适用于手动创建复杂对象</p>
+<h2 id="Transactional的参数"><a href="#Transactional的参数" class="headerlink" title="@Transactional的参数"></a>@Transactional的参数</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Transactional(</span></span><br><span class="line"><span class="meta">  propagation = Propagation.REQUIRED,  // 事务传播行为</span></span><br><span class="line"><span class="meta">  isolation = Isolation.DEFAULT,        // 隔离级别</span></span><br><span class="line"><span class="meta">  timeout = 30,                        // 超时时间（秒）</span></span><br><span class="line"><span class="meta">  readOnly = false,                    // 是否只读</span></span><br><span class="line"><span class="meta">  rollbackFor = Exception.class        // 触发回滚的异常类型</span></span><br><span class="line"><span class="meta">)</span></span><br></pre></td></tr></table></figure>
+
+<p>1，隔离级别</p>
+<ul>
+<li>读未提交</li>
+<li>读已提交</li>
+<li>可重复读</li>
+<li>串行</li>
+</ul>
+<p>2，传播行为：事务方法之间调用时事务如何传播</p>
+<ul>
+<li><h3 id="MANDATORY-强制，调用方没有则报异常"><a href="#MANDATORY-强制，调用方没有则报异常" class="headerlink" title="MANDATORY:强制，调用方没有则报异常"></a>MANDATORY:强制，调用方没有则报异常</h3></li>
+<li><h3 id="REQUIRES-NEW：新事务，被调用方总是创建新事务"><a href="#REQUIRES-NEW：新事务，被调用方总是创建新事务" class="headerlink" title="REQUIRES_NEW：新事务，被调用方总是创建新事务"></a>REQUIRES_NEW：新事务，被调用方总是创建新事务</h3></li>
+<li><h3 id="REQUIRED：需要，调用方有，被调用方则使用，无则新建"><a href="#REQUIRED：需要，调用方有，被调用方则使用，无则新建" class="headerlink" title="REQUIRED：需要，调用方有，被调用方则使用，无则新建"></a>REQUIRED：需要，调用方有，被调用方则使用，无则新建</h3></li>
+<li><h3 id="SUPPORTS：支持，调用方有则使用，无则不用"><a href="#SUPPORTS：支持，调用方有则使用，无则不用" class="headerlink" title="SUPPORTS：支持，调用方有则使用，无则不用"></a>SUPPORTS：支持，调用方有则使用，无则不用</h3></li>
+<li><h3 id="NESTED：嵌套"><a href="#NESTED：嵌套" class="headerlink" title="NESTED：嵌套"></a>NESTED：嵌套</h3></li>
+<li><h3 id="NOT-SUPPORTED：不支持，调用方有则挂起"><a href="#NOT-SUPPORTED：不支持，调用方有则挂起" class="headerlink" title="NOT_SUPPORTED：不支持，调用方有则挂起"></a>NOT_SUPPORTED：不支持，调用方有则挂起</h3></li>
+<li><h3 id="NEVER：不支持，调用方有则异常"><a href="#NEVER：不支持，调用方有则异常" class="headerlink" title="NEVER：不支持，调用方有则异常"></a>NEVER：不支持，调用方有则异常</h3></li>
+</ul>
+<p>3，触发回滚的异常类型</p>
+<p>4，是否只读</p>
+<h2 id="spring的单例bean是否会出现线程安全问题"><a href="#spring的单例bean是否会出现线程安全问题" class="headerlink" title="spring的单例bean是否会出现线程安全问题"></a>spring的单例bean是否会出现线程安全问题</h2><p>1，主要是看bean是否有状态，也就是bean的成员变量是否可能被修改，如果可以被修改就会出现线程安全问题</p>
+<p>2，如果有是状态的bean，那么可以使用prototype修饰，或者将用来修改的值不要放在成员变量里，可以放在ThreadLocal中</p>
+<h2 id="三级缓存解决循环依赖"><a href="#三级缓存解决循环依赖" class="headerlink" title="三级缓存解决循环依赖"></a>三级缓存解决循环依赖</h2><p>1，三个缓存：</p>
+<ul>
+<li>一级缓存存在的是初始化完成的对象</li>
+<li>二级缓存存的是早期实例，早期由三级缓存控制有需要时才会暴露</li>
+<li>三级缓存存的ObjectFactory，由bean实例化时放入，控制暴露早期实例，提前进行AOP</li>
+</ul>
+<p>2，bean寻找过程：</p>
+<ul>
+<li>先在一级缓存找</li>
+<li>再在二级缓存找</li>
+<li>三级缓存找，找到则暴露早期实例并存入二级缓存</li>
+<li>三级缓存没有证明还未实例化，先实例化</li>
+</ul>
+<p>3，三级缓存解决循环依赖：</p>
+<ul>
+<li>暴露bean的早期实例给正在初始化的bean，完成初始化</li>
+<li>ObjectFactory动态判断bean是否需要aop，需要的的话先进行aop操作，暴露的就是代理对象的实例的引用</li>
+</ul>
+<p>4，二级缓存的作用：</p>
+<ul>
+<li>存储早期实例，当多个bean初始化都依赖此实例时，能保证获取的是同一个实例的引用，保持单例</li>
+<li>起一个缓存作用，不用每一次依赖都去执行ObjectFactory获取早期实例的方法</li>
+</ul>
+<p>5，注意事项：</p>
+<ul>
+<li>只有单例模式可以解决循环依赖</li>
+<li>互相依赖的bean如果都是构造注入的话，spring没有办法解决；可以是字段注入(Autowired,Resource)或者setter注入</li>
+<li>最好不要写有循环依赖的代码</li>
+</ul>
+<h2 id="springmvc的请求流程"><a href="#springmvc的请求流程" class="headerlink" title="springmvc的请求流程"></a>springmvc的请求流程</h2><p>1，请求进入dispatcherServlet</p>
+<p>2，分发给handlermapping：负责找合适的controller方法</p>
+<p>3，分发给handlerAdopter:</p>
+<ul>
+<li>负责适配不同方式配置的controller，注解，接口等方式</li>
+<li>调用Controller方法</li>
+<li>负责处理返回值，以ModelAndView，String(解析为视图)</li>
+</ul>
+<p>4，handle执行</p>
+<p>5，视图解析器modeView</p>
+<p>6，dispatcherServlet返回给前端</p>
+<h2 id="过滤器拦截器的顺序"><a href="#过滤器拦截器的顺序" class="headerlink" title="过滤器拦截器的顺序"></a>过滤器拦截器的顺序</h2><p>1，大致的顺序：过滤器-&gt;dispatcherservlet-&gt;拦截器</p>
+<p>2，详细的顺序</p>
+<ul>
+<li>过滤器dofilter方法，chain.dofilter()之前的代码</li>
+<li>进入dispatcherServlet</li>
+<li>进入拦截器prehandle方法</li>
+<li>调用controller方法执行</li>
+<li>拦截器posthandle方法，可以修改modeandView</li>
+<li>视图解析器</li>
+<li>拦截器afterhandle方法</li>
+<li>过滤器dofilter方法的chain.dofilter()之后的代码</li>
+</ul>
+<h2 id="和-的区别，-的使用场景"><a href="#和-的区别，-的使用场景" class="headerlink" title="${}和#{}的区别，${}的使用场景"></a>${}和#{}的区别，${}的使用场景</h2><p>1，#{}是预编译占位，会在变量两边自动加上单引号，可以防止sql注入，原理是预编译的会当作一个参数处理而非sql</p>
+<p>2，${}是sql拼接，不会在变量两边加单引号，可能会造成sql注入，比如where name &#x3D;’Tom’ or 1&#x3D;1这个条件永远都是true、</p>
+<p>3，${}的使用场景</p>
+<ul>
+<li>语法上不能加引号的：动态获取表名，列名，排序方式</li>
+<li>在使用的时候保证${}里面的变量都来自于后端，而不是直接把前端url中的变量取出来用，前端的可能会拼接好的语句作为变量；要保证前端用户不可控</li>
+</ul>
+<h2 id="Mybatis的分页原理"><a href="#Mybatis的分页原理" class="headerlink" title="Mybatis的分页原理"></a>Mybatis的分页原理</h2><p>1，可以使用RowBounds进行逻辑分页，逻辑分页是把所有的数据查出来在内存里进行分页</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">RowBounds</span> <span class="variable">rowBounds</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">RowBounds</span>(offset, limit);</span><br><span class="line">List&lt;User&gt; users = userMapper.selectAllUsers(rowBounds);</span><br></pre></td></tr></table></figure>
+
+<p>2，可以使用分页插件进行物理分页，指的是拦截负责sql语句的类，进行sql拼接</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PageHelper.startPage(pageNum, pageSize);</span><br><span class="line">List&lt;User&gt; users = userMapper.getAllUsers();</span><br></pre></td></tr></table></figure>
+
+<p>3，区别及其使用场景</p>
+<ul>
+<li>逻辑分页使用简单，不需要更改sql语句，适合少量数据</li>
+<li>物理分页性能好，不会造成内存溢出，适合大量数据查询</li>
+</ul>
+<h2 id="实体类属性名和表的字段名不一样"><a href="#实体类属性名和表的字段名不一样" class="headerlink" title="实体类属性名和表的字段名不一样"></a>实体类属性名和表的字段名不一样</h2><p>1，配置mapUnderscoreToCamelCase属性会true来开启自动驼峰和下划线转换</p>
+<p>2，在写SQL语句的时候给字段取别名</p>
+<p>3，使用resultmap来手动一一对应</p>
+<h2 id="Mybatis的一级缓存和二级缓存"><a href="#Mybatis的一级缓存和二级缓存" class="headerlink" title="Mybatis的一级缓存和二级缓存"></a>Mybatis的一级缓存和二级缓存</h2><p>1，一级缓存：默认开启，作用域为同一个sqlSession，在进行增删改或者手动执行sqlsession对象的flush方法时会清除一级缓存</p>
+<p>2，二级缓存：</p>
+<ul>
+<li>需要手动开启：配置中设置cacheEnabled为true，在需要开启的mapper文件中写上&lt; &#x2F;catched &gt;</li>
+<li>二级缓存的作用域为namespace，进行增删改操作或者执行sqlsession的clearCache方法时会清除二级缓存</li>
+</ul>
+<h2 id="Mybatis-Mapper-接口支持重载吗？"><a href="#Mybatis-Mapper-接口支持重载吗？" class="headerlink" title="Mybatis Mapper 接口支持重载吗？"></a>Mybatis Mapper 接口支持重载吗？</h2><p>1，不支持重载，包+类(接口)+方法签名共同来确定一条mapper中的sql，重载会出现一个方法有多条sql待选</p>
+<h2 id="springboot自动装配原理"><a href="#springboot自动装配原理" class="headerlink" title="springboot自动装配原理"></a>springboot自动装配原理</h2><p>1，@EnableAutoConfiguration 注解，上使用@Import导入了AutoConfigurationImportSelector类，并且可以使用exclude排除；也可以在@SpringBootApplication上排除</p>
+<p>2，AutoConfigurationImportSelector对象的selectImports方法被执行</p>
+<p>3，springboot启动时，加载META - INF&#x2F;spring.factories文件，文件中写的是配置类的全限定名</p>
+<p>4，配置类上有@Conditional系列注解判断配置类是否生效</p>
+<p>5，生效的配置类在它的方法上加@Bean和@Conditional系列注解来控制需要被spring容器创建的bean</p>
+<h1 id="JVM"><a href="#JVM" class="headerlink" title="JVM"></a>JVM</h1><h2 id="内存模型"><a href="#内存模型" class="headerlink" title="内存模型"></a>内存模型</h2><p>1，程序计数器</p>
+<p>2，虚拟机栈</p>
+<p>3，本地方法栈</p>
+<p>4，堆</p>
+<p>5，方法区</p>
+<h2 id="类加载流程"><a href="#类加载流程" class="headerlink" title="类加载流程"></a>类加载流程</h2><p>1，加载</p>
+<ul>
+<li>通过全限定名获取类的class文件二进制流</li>
+<li>将字节流转化成方法区的运行时数据结构</li>
+<li>堆中生成Class对象作为该类信息的入口</li>
+</ul>
+<p>2，链接</p>
+<ul>
+<li>验证：文件格式，元数据，字节码，符号引用</li>
+<li>准备：赋初值，static final赋完整值</li>
+<li>解析：符号引用转直接引用</li>
+</ul>
+<p>3，初始化</p>
+<ul>
+<li><clinit>方法，执行静态代码块，和成员变量赋值语句</li>
+</ul>
+<h2 id="初始化契机"><a href="#初始化契机" class="headerlink" title="初始化契机"></a>初始化契机</h2><p>1，类被new</p>
+<p>2，子类发生初始化</p>
+<p>3，访问静态方法或者非final的静态变量</p>
+<p>4，class.forName</p>
+<h2 id="双亲委派机制"><a href="#双亲委派机制" class="headerlink" title="双亲委派机制"></a>双亲委派机制</h2><p>1，低层收到加载请求，先委派高层加载器到最高，不在高层扫描范围内则返回给上一层加载</p>
+<p>2，类加载器</p>
+<ul>
+<li>Bootstrap ClassLoader启动类加载器</li>
+<li>Extension Class Loader拓展类加载器</li>
+<li>System ClassLoader启动类加载器，负责classpath</li>
+</ul>
+<p>4，破坏双亲委派场景</p>
+<h2 id="可达性分析"><a href="#可达性分析" class="headerlink" title="可达性分析"></a>可达性分析</h2><p>1，G1和CMS都使用并发的可达性分析算法</p>
+<p>2，并发的可达性分析：</p>
+<ul>
+<li>三色标记：黑色代表分析完毕可达，灰色代表正在分析，白色代表不可达</li>
+</ul>
+<p>3，问题：</p>
+<ul>
+<li>一个白色断开了所有的灰色同时连上了黑色，由于黑色不会再被分析，白色最终还是白色会被误回收</li>
+</ul>
+<p>4，解决：</p>
+<ul>
+<li>增量更新法：黑色新连上一个后，黑色转变为灰色，CMS使用</li>
+<li>原始快照法：使用白色脱离灰色前的快照</li>
+</ul>
+<h2 id="垃圾回收算法"><a href="#垃圾回收算法" class="headerlink" title="垃圾回收算法"></a>垃圾回收算法</h2><p>1，复制算法：多用于新生代，不会产生碎片，但是需要两倍内存</p>
+<p>2，标记清除算法：cms使用，标记内存可以使用，会产生碎片</p>
+<p>3，整理算法：老年代使用，不会产生碎片，但是会改变对象地址，需要stw</p>
+<p>4，分代收集算法：</p>
+<ul>
+<li>将堆分为新生代和老年代，新生代分为Eden：s0：s1 &#x3D; 8:1:1，新生代多使用复制算法，老年代收集器多使用标记整理算法</li>
+<li>新生代复制算法：新对象优先放入Eden，进行minalGC时，将Eden存活的和某s区存活的，一起复制入另一个s区，其他的清除</li>
+</ul>
+<h2 id="垃圾回收器G1-CMS"><a href="#垃圾回收器G1-CMS" class="headerlink" title="垃圾回收器G1,CMS"></a>垃圾回收器G1,CMS</h2><h3 id="G1"><a href="#G1" class="headerlink" title="G1"></a>G1</h3><p>1，流程：</p>
+<ul>
+<li>初始标记，并发标记，最终标记(stw使用原始快照)，筛选回收(选择最有价值的回收)</li>
+</ul>
+<p>2，优点：</p>
+<ul>
+<li>可以自己设置预期的回收时间</li>
+<li>不会产生内存碎片</li>
+</ul>
+<p>3，缺点：</p>
+<ul>
+<li>需要额外的数据结构来管理region</li>
+</ul>
+<h3 id="CMS"><a href="#CMS" class="headerlink" title="CMS"></a>CMS</h3><p>1，流程：</p>
+<ul>
+<li>初始标记，并发标记，重新标记，并发清除</li>
+</ul>
+<p>2，优点：</p>
+<ul>
+<li>响应快速，垃圾回收时间很短</li>
+</ul>
+<p>3，缺点：</p>
+<ul>
+<li>会产生大量的内存碎片</li>
+<li>作为老年代，没有内存可以担保，在并发标记阶段新产生的浮动垃圾可能会沾满空间导致无法继续回收，这次回收可能失败</li>
+</ul>
+<h1 id="TODO堆分析工具"><a href="#TODO堆分析工具" class="headerlink" title="TODO堆分析工具"></a>TODO堆分析工具</h1><h2 id="常用参数"><a href="#常用参数" class="headerlink" title="常用参数"></a>常用参数</h2><p>1，指定堆内存大小 -Xms设置初始大小，-Xmx设置最大大小，-Xmm设置新生代大小，-Xss设置线程栈大小</p>
+<p>2，设置使用G1垃圾回收器-XX:+UseG1GC，-XX:MaxGCPauseMillis可以设置g1垃圾收集最大的停顿时间，-XX:G1HeapRegionSize设置region大小</p>
+<h1 id="MySQL"><a href="#MySQL" class="headerlink" title="MySQL"></a>MySQL</h1><h2 id="char和varchar的区别"><a href="#char和varchar的区别" class="headerlink" title="char和varchar的区别"></a>char和varchar的区别</h2><p>1，char的长度固定，指定0-255个字符</p>
+<p>2，varchar的长度可变，可以指定0-65535个字节，字符数受编码最大长度影响，还受页的大小影响，因为要保证每一页至少要存储两条记录，所以实际不一定能够分到65535个字节</p>
+<p>3，这两个括号里面的数字表示的都是字符数量，varchar只有使用ASCII编码时才有机会在里面填65535</p>
+<h2 id="索引失效的场景"><a href="#索引失效的场景" class="headerlink" title="索引失效的场景"></a>索引失效的场景</h2><p>1，对条件列使用函数或者计算：索引是按照条件列排序的，破坏条件列就无法使用索引</p>
+<p>2，联合索引，排序，分组中，没有使用最左原则</p>
+<p>3，发生了隐式类型转换：如果变量是数字类型，字段是字符串类型，那么mysql要先把字段转成数字才可以和变量比较，等同于对字段使用了函数</p>
+<p>4，like的最左有通配符</p>
+<p>5，非等值的范围查询，后面的列无法使用索引</p>
+<h2 id="索引结构B-树"><a href="#索引结构B-树" class="headerlink" title="索引结构B+树"></a>索引结构B+树</h2><p>1，叶子结点存放所有数据组合成单链表，通过页目录，把记录分组，每组组成一个槽，用二分法来达成快速查找</p>
+<p>2，非叶子结点只存放记录项，每一项对应一页，由指向的页的最小记录的字段值和页号等组成，该页也有页目录，同样可以快速查找</p>
+<p>3，索引必须按索引列排序的</p>
+<h2 id="B树，hash，B-树结构的优劣"><a href="#B树，hash，B-树结构的优劣" class="headerlink" title="B树，hash，B+树结构的优劣"></a>B树，hash，B+树结构的优劣</h2><p>1，B树：</p>
+<ul>
+<li>由于非叶子节点也存数据，导致树高比b+树高，每次查询都需要多io</li>
+<li>范围查询需要跨越层级</li>
+</ul>
+<p>2，Hash表：</p>
+<ul>
+<li>查找迅速，O(1)级别</li>
+<li>但是不能范围查询</li>
+<li>不能排序</li>
+<li>不好删除</li>
+</ul>
+<p>3，B+树：</p>
+<ul>
+<li>树高低</li>
+<li>叶子结点单链表，适合范围查询和全表扫描</li>
+<li>可以排序，可以分组</li>
+</ul>
+<h2 id="索引适用的场景"><a href="#索引适用的场景" class="headerlink" title="索引适用的场景"></a>索引适用的场景</h2><p>1，高频率查询列</p>
+<ul>
+<li>记录数量多</li>
+<li>高基数列，区分度高</li>
+<li>更新不频繁</li>
+<li>非大列</li>
+</ul>
+<p>2，排序列</p>
+<p>3，分组列</p>
+<p>4，被连接表的连接列</p>
+<h2 id="索引相关术语定义"><a href="#索引相关术语定义" class="headerlink" title="索引相关术语定义"></a>索引相关术语定义</h2><p>1，回表：通过二级索引查询时，二级索引没有包含的列需要再去聚簇索引里查</p>
+<p>2，覆盖索引：级联索引已经包括了所有需要的列，这时候不需要回表</p>
+<p>3，索引下推：索引中包含了where的条件字段，会直接在存储引擎级别判断，而不用再次回表去查询条件字段，再进行判断</p>
+<p>4，最左匹配原则：联合索引的使用应该满足从左到右的原则，否则右侧无法使用索引</p>
+<h2 id="事务的四大特性以及实现方式"><a href="#事务的四大特性以及实现方式" class="headerlink" title="事务的四大特性以及实现方式"></a>事务的四大特性以及实现方式</h2><p>1，原子性：undo日志，出错回滚</p>
+<p>2，隔离性：事务之间相互隔离，使用锁和MVCC实现不同的隔离级别</p>
+<p>3，一致性：使用约束，隔离级别等手段保证数据符合预期</p>
+<p>4，持久性：redo日志，宕机重新执行</p>
+<h2 id="事务隔离级别以及会产生的问题以及解决"><a href="#事务隔离级别以及会产生的问题以及解决" class="headerlink" title="事务隔离级别以及会产生的问题以及解决"></a>事务隔离级别以及会产生的问题以及解决</h2><p>1，读未提交：可能脏读</p>
+<ul>
+<li>解决：mvcc,事务内每次查询都生成readview</li>
+</ul>
+<p>2，读已提交：可能不可重复读</p>
+<ul>
+<li>解决：mvcc，每次事务内第一次查询生成readview</li>
+</ul>
+<p>3，可重复读：可能幻影读</p>
+<ul>
+<li>解决：mvcc已经解决了大部分情况下的幻影读，要想全部解决要手动添加互斥锁，select ···· for update</li>
+</ul>
+<p>4，序列化</p>
+<h2 id="MVCC原理"><a href="#MVCC原理" class="headerlink" title="MVCC原理"></a>MVCC原理</h2><p>1，每条记录都有roll_ptr和trx_id两个隐藏列，roll_ptr连接着各个版本，trx_id记录最后修改这条记录的事务id</p>
+<p>2，查询的时候生成read view，包含</p>
+<ul>
+<li>当前事务id</li>
+<li>事务开启时存活的事务ids</li>
+<li>存活的最小事务id</li>
+<li>下一个事务将被分配的id</li>
+</ul>
+<p>3，从每条记录的最新版本开始，沿着版本链判断该版本是否可见</p>
+<ul>
+<li>判断记录trx_id是否是当前事务id，是的话可见</li>
+<li>是否&lt;存活的最小事务id,是的话证明该版本记录的事务已提交，可见</li>
+<li>是否&gt;下一个事务将被分配的id，是的话表示是当前事务后开启的事务，不可见</li>
+<li>事务id在最小-最大之间，判断是否在事务开启时存活的事务ids内，否的话证明当前事务开启前已提交，可见</li>
+</ul>
+<p>4，msyql默认读已提交和可重复读两个隔离级别都是使用MVCC，区别在于</p>
+<ul>
+<li>读已提交时，事务内每次查询都生成readview，因此，事务内别的事务提交的，下次查询就可以读取到</li>
+<li>可重复读时，只在事务第一次查询时生成readview，事务内提交的事务，感知不到</li>
+</ul>
+<h2 id="Innodb的锁"><a href="#Innodb的锁" class="headerlink" title="Innodb的锁"></a>Innodb的锁</h2><p>1，表级锁</p>
+<ul>
+<li>表x，表级别排他所，需要表中任何记录都不存在s或x锁才能加，加上后阻塞表x，s，行x，s</li>
+<li>表s，标记共享锁，表中不能有行x，该锁和行s兼容</li>
+<li>ix锁，对行标记x时，会对表标记意向锁ix，标记表中有记录被加了x锁</li>
+<li>is锁，同ix</li>
+<li>表x锁，对ix，is，x，s全部不兼容</li>
+<li>表s，对is，行s兼容</li>
+<li>注意ix，is事务提交才释放，即使行锁全释放，也会继续存在，这时还是会有阻塞表x的功效</li>
+<li>使用lock tables加表锁会隐式提交当前会话中所有未提交的事务</li>
+</ul>
+<p>2，行级锁</p>
+<ul>
+<li>s，共享锁，和x，s兼容：有s后可以获取x或s</li>
+<li>x，排他锁，不兼容：有x后无法获取x或s：主要的目的就是让读读不阻塞，读写阻塞</li>
+<li>gap间隙锁：阻塞当前记录和前一个空隙，防止插入，幻影读，被阻塞的事务会生成锁对象等待，锁释放时同时获取到可以插入</li>
+<li>next—key临键锁：x锁和gap锁的合体</li>
+<li>隐式锁：在ru(读未提交)级别，其他事务会读到暂未提交的事务，新插入的记录并不会有锁结构(设计，加效率)，这时其他事务因为没有锁结构阻塞，可以直接获取到锁来修改记录导致脏写，使用隐式锁避免</li>
+<li>事务修改前判断插入记录的trx_id，判断是否存活，存活则代表未提交，会帮助生成锁机构并阻塞自己</li>
+<li>对于二级索引，没有trx_id字段，优先判断页上记录的最后修改页的trx_id，如果小于当前id那这个页所有事务都已提交，否则就先去回表然后判断trx_id</li>
+</ul>
+<p>3，rr级别产生幻影的场景：事务中快照读和当前读混用</p>
+<ul>
+<li>在A事务中先用快照读，B此时未提交，读不到</li>
+<li>B提交后，再在A事务快照读，也是读不到的，但是此时使用当前读就可以读到，产生幻影</li>
+</ul>
+<p>4，在RR级别下，进行锁定的非唯一等值查询，唯一索引范围查询时，会给记录加上临界锁next_key，其中就包含了gap锁</p>
+<p>5，语句</p>
+<ul>
+<li>select * from t_xxx lock in share mode；为查询到的记录加行s锁</li>
+<li>select * from t_xxx for update；为查询的记录加行s</li>
+<li>lock tables t_xxx write&#x2F;read；加表s&#x2F;x</li>
+<li>unlock tables；释放所有表锁</li>
+</ul>
+<h2 id="慢SQL优化"><a href="#慢SQL优化" class="headerlink" title="慢SQL优化"></a>慢SQL优化</h2><p>1，开启慢查询日志</p>
+<p>2，使用explain获取执行计划</p>
+<p>3，分析关键字段</p>
+<ul>
+<li>type：单表的访问方法<ul>
+<li>const：唯一索引等值查询</li>
+<li>ref：非唯一索引等值查询</li>
+<li>range：范围查询，&lt;、&gt;、in、 between</li>
+<li>index：索引全扫描，不需要回表的扫描</li>
+<li>all：全表扫描</li>
+</ul>
+</li>
+<li>key：使用的索引</li>
+<li>Rows：扫描的总记录数</li>
+<li>extra：Using temporary（分组未使用索引）, Using filesort(排序未使用索引)</li>
+</ul>
+<p>4，优化sql</p>
+<ul>
+<li><p>优先使用const和ref</p>
+</li>
+<li><p>范围查询or导致的，可以改成union</p>
+</li>
+<li><p>limit(10000,10)改成where xx &gt;10000 limit 10</p>
+</li>
+<li><p>检查隐式类型转换</p>
+</li>
+<li><p>为order by和group by加上联合索引</p>
+</li>
+</ul>
+<h2 id="日志"><a href="#日志" class="headerlink" title="日志"></a>日志</h2><p>1，错误日志,默认开启<br>mysql服务器msqld的启动，运行，停止期间产生的严重错误都会记录在里面<br>文件的位置记录在log_error变量里面，默认的日志名是mysqld.log,</p>
+<p>2，binlog，默认开启<br>二进制日志，记录dml和ddl语句，不包含查询相关的语句，用于主从复制，数据恢复<br>有三种格式，row记录的是每一行的改变，statement记录的是sql语句，mixed混合记录(默认使用statement，特殊时会转row)</p>
+<p>3，查询日志，默认不开启<br>记录所有操作语句， 包括dml，ddl，dql，包含查询,</p>
+<p>4，慢查询日志，默认不开启<br>记录执行时间超过指定时间的sql语句<br>slow_querry_log&#x3D;1参数为1代表开启慢查询<br>long_query_time&#x3D;2，记录执行时间超过两秒的日志，默认10秒</p>
+<h2 id="主从复制"><a href="#主从复制" class="headerlink" title="主从复制"></a>主从复制</h2><p>1，指的是主库把dml，ddl语句复制给从库，主库可以同时给多个从库复制，从库可以作为其他库的主库，形成链状复制<br>2，好处<br>    主库宕机可以快速切换从库使用<br>    实现读写分离，降低主库的压力<br>    可以使用从库备份，防止因为主库备份导致服务无法进行增删改操作<br>3，原理(流程)<br>    主库的dml和ddl语句都会存在binlog中<br>    从库使用iothread线程读取主库的binlog日志至自己的relaylog中<br>    使用sqlthread读取relaylog执行，完成数据同步<br>4，配置<br>    在主库conf文件中，设置server_id服务id，在集群中唯一；设置readonly(0代表读写，1代表只读)<br>    在从库conf文件中，同样设置id和是否只读<br>    在从库中指定主库的ip，端口，用户，密码，binlog位置，binlog文件名字，binlog需要复制的起始位置  change replication source to···<br>    start replica开启同步<br>    show replica status查看主从同步状态：查看io running：yes代表从库从主库binlog复制的线程正常，sql running：yes代表从relay日志中读取并执行的那条线程正常</p>
+<p>5，注意<br>    主从复制是从主从关系开始的时刻开始，对应binlog中的一个position，从库需要主库之前的数据，可以先把主库的数据导出成一个sql文件在从库执行，然后再开始主从复制</p>
+<h2 id="分库分表"><a href="#分库分表" class="headerlink" title="分库分表"></a>分库分表</h2><h3 id="1-好处"><a href="#1-好处" class="headerlink" title="1,好处"></a>1,好处</h3><p>​	将单一服务器的数据分散到多个服务器,防止由于大量请求导致的内存紧张导致的bufferpool不足从而导致每次查询都需要直接从磁盘上读	防止大量请求进行排序分组等耗尽服务器的cpu资源</p>
+<h3 id="2，方式"><a href="#2，方式" class="headerlink" title="2，方式"></a>2，方式</h3><h4 id="垂直分库："><a href="#垂直分库：" class="headerlink" title="垂直分库："></a>垂直分库：</h4><ul>
+<li>将不同的业务的表放到不同的库里</li>
+<li>将数据库以表为依据，通过业务区分，分配给不同的库</li>
+<li>比如用户相关给一个，订单相关给一个，所有库的并集是全量数据，每个库中表结构不一样</li>
+</ul>
+<h4 id="垂直分表："><a href="#垂直分表：" class="headerlink" title="垂直分表："></a>垂直分表：</h4><ul>
+<li>以字段为依据，可以把访问量高的字段放在一张表，访问量低的放在一张，可以显著降低访问量低的字段被查询次数</li>
+<li>将表以字段为依据，拆分为若干表，放在不同的服务器，表之间使用外键或主键来联系。表结构各不相同，并集是全量；库中表结构不一样</li>
+</ul>
+<h4 id="水平分库："><a href="#水平分库：" class="headerlink" title="水平分库："></a>水平分库：</h4><ul>
+<li>将库以字段为依据，复制表结构到其他服务器，数据分开放在各服务器的表中，各服务器的表数据并集就是全量；表结构一样</li>
+</ul>
+<h4 id="水平分表："><a href="#水平分表：" class="headerlink" title="水平分表："></a>水平分表：</h4><ul>
+<li>将表以字段为依据，复制表结构到其他服务器，各表的数据并集是全量；表结构一样</li>
+</ul>
+<h3 id="3，使用mycat进行分库分表"><a href="#3，使用mycat进行分库分表" class="headerlink" title="3，使用mycat进行分库分表"></a>3，使用mycat进行分库分表</h3><p>配置：配置逻辑库，逻辑表，逻辑表要分往的真实数据库，配置真实数据库的数据源<br>server.xml指定用户权限，能够访问的逻辑表，是否只读等</p>
+<h3 id="4分片"><a href="#4分片" class="headerlink" title="4分片"></a>4分片</h3><p>4，分片规则<br>范围，定义0-500w:0,500w-1500w:1，定义指定字段为0-500w的字段存储在节点0中，500w-1500w之间的存在节点1中<br>取模，将指定字段与节点数量进行取模操作，结果为是几就存到几号节点<br>一致性hash，根据指定字段的hash值来分布到库，一致性 代表扩容不会影响已经确定的数据所在的位置<br>枚举分片，定义枚举值对应节点，例如春：0，夏：1 ，代表字段值为春就放入0号节点，需要指定没有落到任何枚举值时需要落在哪个节点<br>应用指定，截取指定字段的子串，作为节点的编号，需要配置截取的起始索引，截取长度，分片数量，子串没有落到节点或不是有效数字时默认落在哪个节点<br>固定hash算法，将指定字段的2进制值，&amp;上1111111111(10位)，其实就是取模；结果存放到节点中，需要配置每个节点的范围例如；2,1–256,512；代表前两个节点每个负责0-256，256-521，第三个节点负责512-1023，因为只有10位1，最大只能指代1024个位置(包含0)<br>字符串hash解析，将字符截取子串进行hash操作，得到的值再进行固定hash算法<br>按天分片：指定开始时间和结束时间，指定某分片的日子数，例如指定，1号到30号，每10天一片，也就是每10天放一个节点；配置的节点数*某片日子数&#x3D;指定的日期差，必须满足，否则报错；时间超过，从0号节点继续插入，10天后继续1号插入，循环<br>自然月分片：配置的月份数(结束月-开始月)必须和配置的节点数一样，否则报错，可以循环使用</p>
+<h2 id="死锁"><a href="#死锁" class="headerlink" title="死锁"></a>死锁</h2><h3 id="1，死锁场景举例"><a href="#1，死锁场景举例" class="headerlink" title="1，死锁场景举例"></a>1，死锁场景举例</h3><ul>
+<li>A事务获取a记录的锁，B事务获取b记录的锁</li>
+<li>同时，A事务还想获取b记录的锁，B也想获取a记录的锁</li>
+<li>AB事务同时卡住无法继续执行</li>
+</ul>
+<h3 id="2，形成死锁的条件"><a href="#2，形成死锁的条件" class="headerlink" title="2，形成死锁的条件"></a>2，形成死锁的条件</h3><ul>
+<li>互斥：锁只能被一个线程占有</li>
+<li>请求和保持：请求资源时保持已有资源</li>
+<li>不可剥夺</li>
+<li>循环等待：形成等待链</li>
+</ul>
+<h3 id="3，mysql死锁的成因"><a href="#3，mysql死锁的成因" class="headerlink" title="3，mysql死锁的成因"></a>3，mysql死锁的成因</h3><ul>
+<li>交叉获取：两个事务获取资源顺序交叉，事务A先获取锁1，再获取锁2,；事务B先获取锁2，再获取锁1，就有可能死锁</li>
+<li>间隙锁：两个事务获取了两个范围的间隙锁，同时想往对方的间隙插入，插入要等待对方间隙锁释放才能成功，对方间隙锁要插入自身间隙才能释放，形成死锁</li>
+</ul>
+<h3 id="3，查看死锁内容"><a href="#3，查看死锁内容" class="headerlink" title="3，查看死锁内容"></a>3，查看死锁内容</h3><ul>
+<li>show engine innodb status 可以直接看到最近的死锁</li>
+<li>设置 innodb_status_output 和 innodb_status_output_locks参数为 ON，在error日志中查deadlock就可以看到</li>
+<li>SELECT * FROM performance_schema.data_locks WHERE lock_status &#x3D; ‘LOCK WAIT’</li>
+</ul>
+<h3 id="4，避免死锁"><a href="#4，避免死锁" class="headerlink" title="4，避免死锁"></a>4，避免死锁</h3><ul>
+<li>服务端指定资源获取顺序</li>
+<li>加索引，不加索引的锁定查询会锁住所有记录</li>
+<li>使用读已提交可以解决间隙锁带来的死锁</li>
+</ul>
+<h3 id="5，解决方法"><a href="#5，解决方法" class="headerlink" title="5，解决方法"></a>5，解决方法</h3><ul>
+<li>出现死锁mysql会自动回滚一个事务并返回1213错误码，在代码中补货SQLException异常后，判断码是否是1213，是的话可以进行适当重试</li>
+</ul>
+<h1 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h1><h2 id="数据结构详解"><a href="#数据结构详解" class="headerlink" title="数据结构详解"></a>数据结构详解</h2><p>1，string，全局id</p>
+<p>2，hash，对象</p>
+<p>3，set，求交集，共同好友</p>
+<p>4，zset，做排行榜</p>
+<p>5，list，先进先出，做队列</p>
+<p>6，位图Bitmaps，签到，统计在线</p>
+<p>7，HyperLogLog：UV统计</p>
+<p>8，GEO：地理位置</p>
+<h2 id="缓存问题"><a href="#缓存问题" class="headerlink" title="缓存问题"></a>缓存问题</h2><p>1，穿透：redis没有，MySQL也没有，导致无法建立缓存，攻击全部打数据库</p>
+<p>解决：</p>
+<ul>
+<li><p>使用布隆过滤器过滤，误判的再设null缓存</p>
+</li>
+<li><p>redis和mysql都没有的时候，手动在redis创建一个空缓存，设置较短ttl，防止mysql在空缓存存在期间添加了后导致的不一致时间过长</p>
+</li>
+</ul>
+<p>2，击穿：热点key过期时，大量的请求打到数据库</p>
+<p>解决：热点key不设置ttl，在java代码中设置逻辑过期时间，当过期后，先返回给旧值，同时创建一个线程去重建缓存</p>
+<p>3，雪崩：大量的key同时过期</p>
+<p>解决：同一时间上传的key应当设置不同时间的ttl，可以设置基准时间+随机时间</p>
+<h2 id="过期策略"><a href="#过期策略" class="headerlink" title="过期策略"></a>过期策略</h2><p>1，惰性删除：过期key被再次访问的时候，检查是否过期，过期则删除</p>
+<p>2，定期删除：在设置了ttl的key中定期挑一批检查是否过期，默认10s一次选20个key</p>
+<p>3，内存淘汰策略</p>
+<ul>
+<li>allkeys-lfu</li>
+<li>allkeys-lru</li>
+<li>allkeys-random</li>
+<li>noevication：默认，拒绝新请求，不删除之前的</li>
+<li>volatile-lfu：频率最低</li>
+<li>volatile-lru：最长时间没访问</li>
+<li>volatile-random：随机</li>
+<li>volatile-ttl：ttl剩余时间最少的</li>
+</ul>
+<p>4，过期策略由这三种机制配合完成</p>
+<h2 id="持久化机制"><a href="#持久化机制" class="headerlink" title="持久化机制"></a>持久化机制</h2><h2 id="Redis为什么快"><a href="#Redis为什么快" class="headerlink" title="Redis为什么快"></a>Redis为什么快</h2><p>1，内存存储</p>
+<p>2，单线程避免了上下文切换的开销</p>
+<p>3，linux下使用epoll IO多路复用</p>
+<p>4，epoll对比select和poll的优势</p>
+<ul>
+<li>使用事件驱动代替轮循，减少了cpu开销</li>
+<li>使用红黑树存放需要监听的md，在内核态持久化存储，避免了频繁的在两态之间拷贝fd列表，新添md是O(logn)</li>
+<li>只有就绪的fd会传到就绪列表返回用户态，因此无需遍历列表找就绪的fd</li>
+<li>总结：作为单线程应用，io多路复用帮助了redis最大程度避免受网络io阻塞的影响</li>
+</ul>
+<h2 id="redis和mysql的缓存一致性"><a href="#redis和mysql的缓存一致性" class="headerlink" title="redis和mysql的缓存一致性"></a>redis和mysql的缓存一致性</h2><p>1，catch-aside+延时双删</p>
+<ul>
+<li>读操作逻辑，先去查缓存，没查到去查mysql并重建缓存</li>
+<li>写操作逻辑，先更新数据库，再删除缓存</li>
+<li>在catch-aside的基础上，延时双删，删除缓存之后隔一段时间(覆盖主从同步时间)再删除缓存</li>
+<li>在主从的情况下，主数据库更新后，缓存删除，从数据库未同步还是旧值，这时读线程读从库重建了缓存，导致缓存和数据库长期的不一致</li>
+<li>需要保证第二次删除缓存一定会执行，可以使用mq异步任务删除</li>
+</ul>
+<p>2，使用canal监听binlog的变动，解析事件，利用消息队列异步发送，redis消费者监听队列</p>
+<ul>
+<li>强一致性，用于秒杀的库存，订单等管理</li>
+<li>无代码侵入，维护复杂</li>
+</ul>
+<h2 id="配置文件的配置项"><a href="#配置文件的配置项" class="headerlink" title="配置文件的配置项"></a>配置文件的配置项</h2><p>1，网络连接相关</p>
+<ul>
+<li>bind ip，指定可以连接的客户端ip</li>
+<li>port 6379，服务器端口</li>
+<li>protected-mode yes，安全模式，开启会禁止无密码的远程访问</li>
+<li>timeout 300(s)，客户端空闲持续时间</li>
+<li>requirepass zxr12345，设置访问密码</li>
+</ul>
+<p>2，内存淘汰</p>
+<ul>
+<li>maxmemory (bytes),最大内存</li>
+<li>maxmemory-policy noeviction，内存淘汰策略</li>
+</ul>
+<p>3，持久化相关</p>
+<ul>
+<li>save a b：a秒内最少b次修改会触发rdb</li>
+<li>appendonly yes：启用 AOF</li>
+<li>appendfilename “appendonly.aof”  ：AOF 文件名</li>
+<li>appendfsync everysec&#x2F;always&#x2F;no ：刷盘策略：每秒&#x2F;每次修改&#x2F;由操作系统决定</li>
+<li>auto-aof-rewrite-percentage 100  ： AOF 文件增长100%触发重写</li>
+<li>auto-aof-rewrite-min-size 64mb ：AOF 文件最小重写大小</li>
+</ul>
+<h2 id="分布式锁"><a href="#分布式锁" class="headerlink" title="分布式锁"></a>分布式锁</h2><p>1，加锁</p>
+<ul>
+<li>使用setnx，无法稳定预判过期时间，过期可能导致锁误删出现线程安全问题，虽然可以通过判断线程id解决误删，但是过期的锁会消失</li>
+<li>redission，锁的结构是hash结构，大key是锁名称，小key是线程id，value是重入次数，通过lua脚本先判断小key是否存在，是否相同，判断能否加锁和可重入，lua脚本保证判断和加锁两步是原子的</li>
+</ul>
+<p>2，解锁</p>
+<ul>
+<li>删除setnx的key可能会误删</li>
+<li>redission使用lua脚本，判断value是否为0，是就删除，不是就减1</li>
+</ul>
+<p>3，可重入性</p>
+<ul>
+<li>setnx无可重入性</li>
+<li>redission使用value来记录可重入次数</li>
+</ul>
+<p>4，看门狗机制</p>
+<ul>
+<li>存储所有加了锁的uuid+线程id</li>
+<li>定时任务每10秒通过这些id去redis查看锁还存不存在(锁是否释放了)</li>
+<li>存在(没释放)就加长时间</li>
+<li>jvm宕机后定时任务结束，因为没有java代码发lua让redis服务器执行了，30s自动过期</li>
+<li>只有没设置ttl的时候才会自动启动看门狗机制，过期时间30s</li>
+</ul>
+<h2 id="主从复制-1"><a href="#主从复制-1" class="headerlink" title="主从复制"></a>主从复制</h2><h1 id="SpringCloud"><a href="#SpringCloud" class="headerlink" title="SpringCloud"></a>SpringCloud</h1><h2 id="1，nacos，注册中心，配置中心"><a href="#1，nacos，注册中心，配置中心" class="headerlink" title="1，nacos，注册中心，配置中心"></a>1，nacos，注册中心，配置中心</h2><h2 id="2，openfeign，远程调用"><a href="#2，openfeign，远程调用" class="headerlink" title="2，openfeign，远程调用"></a>2，openfeign，远程调用</h2><h2 id="3，gateway，网关"><a href="#3，gateway，网关" class="headerlink" title="3，gateway，网关"></a>3，gateway，网关</h2><h2 id="4，Sentinel，流量监控"><a href="#4，Sentinel，流量监控" class="headerlink" title="4，Sentinel，流量监控"></a>4，Sentinel，流量监控</h2><h1 id="RabbitMQ"><a href="#RabbitMQ" class="headerlink" title="RabbitMQ"></a>RabbitMQ</h1><h2 id="多个消费者消费同一个队列时，如何多劳多得？"><a href="#多个消费者消费同一个队列时，如何多劳多得？" class="headerlink" title="多个消费者消费同一个队列时，如何多劳多得？"></a>多个消费者消费同一个队列时，如何多劳多得？</h2><p>1，默认是轮循策略，每个消费者都会分配到相同数量的任务</p>
+<p>2，更改prefetch:1 保证每次执行完只能获取一个，就可以让处理的快的多获取任务</p>
+<h2 id="rabbitMQ的交换机类型？"><a href="#rabbitMQ的交换机类型？" class="headerlink" title="rabbitMQ的交换机类型？"></a>rabbitMQ的交换机类型？</h2><p>1，fanout</p>
+<ul>
+<li>广播，分发给所有绑定改交换机的队列</li>
+<li>队列绑定交换机时使用””为key绑定</li>
+</ul>
+<p>2，direct</p>
+<ul>
+<li>订阅，交换机通过队列绑定的key，消息的key和绑定key相同就分发给该队列</li>
+<li>绑定时需要指定key，生产者发送也要指定key</li>
+</ul>
+<p>3，topic</p>
+<ul>
+<li>通配符订阅，key可以使用通配符判断</li>
+<li>#代表一层或多层，*代表一层；key层级之间使用.分隔：张三.18.男</li>
+</ul>
+<p>4，headers</p>
+<ul>
+<li>通过消息头的信息分发</li>
+</ul>
+<h2 id="怎么修改消息转换器？"><a href="#怎么修改消息转换器？" class="headerlink" title="怎么修改消息转换器？"></a>怎么修改消息转换器？</h2><p>1，默认jdk序列化的坏处：</p>
+<ul>
+<li>只能用于java</li>
+<li>存储额外信息，内存大</li>
+<li>字节流中间状态不可读</li>
+</ul>
+<p>2，使用JSON传输</p>
+<ul>
+<li>配置类中定义MessageConverter 类型的bean，返回值是Jackson2JsonMessageConverter类型，即可覆盖springboot默认的jdk序列化</li>
+<li>可以在生产者序列化给broker(发送消息)时，在消息属性中设置message_id，可以用于幂等性判断：setCreateMessageIds(true)，</li>
+</ul>
+<h2 id="怎么保证消息可靠性？"><a href="#怎么保证消息可靠性？" class="headerlink" title="怎么保证消息可靠性？"></a>怎么保证消息可靠性？</h2><p>1，生产者可靠性</p>
+<p>生产者重试机制：服务端连接失败重试，阻塞式重试，不建议用</p>
+<p>生产者确认机制：</p>
+<ul>
+<li>Publisher Return：交换机无法路由到队列，返回异常信息</li>
+<li>Publisher Confirm：nack需要设置重试，重试失败记录异常<ul>
+<li>进入交换机，无法路由到任意队列，丢弃消息(未开启return时)返回ack</li>
+<li>进入交换机，进入非持久化队列，直接返回ack</li>
+<li>进入交换机，进入持久化队列，持久化成功ack，失败nack</li>
+</ul>
+</li>
+</ul>
+<p>2，消息可靠性</p>
+<ul>
+<li>交换机，消息，队列开启持久化</li>
+<li>开启lazyqueue惰性队列，消息进入队列直接入磁盘，消费时从磁盘取<ul>
+<li>仅仅使用内存，多了的话会统一刷盘，阻塞队列进程</li>
+</ul>
+</li>
+</ul>
+<p>3，消费者可靠性：回执，重试：</p>
+<p>自动+3次重试+重试后重投递</p>
+<ul>
+<li>SpringAMPQ开启自动回执模式<ul>
+<li>none：不处理，消费者一拿到，队列直接删除</li>
+<li>manual：手动，自己调用api，觉定在什么时候返回ack，nack(重投递)，reject(拒绝，不重新投递给队列)</li>
+<li>auto：自动，正常ack，业务异常自动返回nack，消息处理或校验异常自动返回reject</li>
+</ul>
+</li>
+<li>nack的情况下设置重试次数，auto模式生效</li>
+</ul>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">retry:</span></span><br><span class="line">          <span class="attr">enabled:</span> <span class="literal">true</span> <span class="comment"># 开启消费者失败重试</span></span><br><span class="line">          <span class="attr">initial-interval:</span> <span class="string">1000ms</span> <span class="comment"># 初识的失败等待时长为1秒</span></span><br><span class="line">          <span class="attr">multiplier:</span> <span class="number">1</span> <span class="comment"># 失败的等待时长倍数，下次等待时长 = multiplier * last-interval</span></span><br><span class="line">          <span class="attr">max-attempts:</span> <span class="number">3</span> <span class="comment"># 最大重试次数</span></span><br><span class="line">          <span class="attr">stateless:</span> <span class="literal">true</span> <span class="comment"># true无状态；false有状态。如果业务中包含事务，这里改为false</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>重试次数用完，失败处理策略<ul>
+<li>RejectAndDontRequeueRecoverer： 重试耗尽后，直接 reject，丢弃消息。默认就是这种方式。</li>
+<li>ImmediateRequeueMessageRecoverer： 重试耗尽后，返回nack，消息重新入队。</li>
+<li>RepublishMessageRecoverer： 重试耗尽后，将失败消息投递到指定的交换机。</li>
+</ul>
+</li>
+</ul>
+<p>手动编码返回回执+手动编码重试+手动发布到队列&#x2F;进入自定义错误队列人工处理或告警</p>
+<h2 id="怎么保证不重复消费？"><a href="#怎么保证不重复消费？" class="headerlink" title="怎么保证不重复消费？"></a>怎么保证不重复消费？</h2><p>1，生产者发送的时候生成一个唯一id，uuid，雪花，使用JSON消息转换器生成一个id</p>
+<p>2，消息执行之前存redis，使用setnx判断是否已经存储了id，存了代表执行过；也可以使用mysql</p>
+<p>3，使用JSON转换器时由于id存在消息头，要先从消息头取，建议用自己生成的id</p>
+<p>4，存redis成功，消费失败：出异常在catch中删除此消息id对应的key</p>
+<h2 id="怎么保证有序性？"><a href="#怎么保证有序性？" class="headerlink" title="怎么保证有序性？"></a>怎么保证有序性？</h2><p>1，根据业务把任务路由到不同的队列，每个队列只用一个消费者消费，每次只取一个消费</p>
+<h2 id="消息积压怎么办？"><a href="#消息积压怎么办？" class="headerlink" title="消息积压怎么办？"></a>消息积压怎么办？</h2><p>1，扩容</p>
+<ul>
+<li>垂直扩容：增大单个消费者的cpu&#x2F;内存资源加快消费速度</li>
+<li>水平扩容：增加队列的消费者实例个数或消费者多线程消费</li>
+</ul>
+<p>2，批量拉取消息</p>
+<h2 id="怎么发延迟消息？"><a href="#怎么发延迟消息？" class="headerlink" title="怎么发延迟消息？"></a>怎么发延迟消息？</h2><p>1，使用插件</p>
+<ul>
+<li>下载插件rabbitmq-delayed-message-exchange放到插件目录</li>
+<li>创建CustomExchange类的bean，构造函数需要传入”x-delayed-message”字符串指定为延迟交换机，还有参数map等</li>
+<li>新建HashMap作为参数合集，args.put(“x-delayed-type”, “direct”)，指定底层的路由方式</li>
+</ul>
+<p>2，使用死信队列</p>
+<ul>
+<li>给正常消息设置过期时间</li>
+<li>给队列绑定死信交换机</li>
+<li>当正常队列中的消息过期，会发送到死信交换机，使用队列绑定死信交换机即可消费</li>
+</ul>
+<h1 id="Linux指令"><a href="#Linux指令" class="headerlink" title="Linux指令"></a>Linux指令</h1><p>1，ls -l(详情) -h(看得懂的形式文件大小) -a(显示隐藏) |grep hello(筛选hello)</p>
+<p>2，pwd显示路径</p>
+<p>3，ps -ef|grep xxx 查看与xxx相关的进程</p>
+<p>4，vim编辑，set nu：在vim中显示行号</p>
+<p>5，tail -f xxx|gep erro，实时观察xxx文件并过滤erro关键词</p>
+<p>6，lsof -i：8080，查看8080端口占用情况</p>
+<p>7，cat 查看文件，touch 新建文件(vi,vim,echo也可以)，mkdir 新建目录，rmdir 删除空目录，rm -r(递归)-f(强制)删除目录和文件</p>
+<h1 id="git指令"><a href="#git指令" class="headerlink" title="git指令"></a>git指令</h1><p>1，git init，初始化本地仓库</p>
+<p>2，git add，添加文件到暂存区</p>
+<p>3，gitcommit，提交暂存区文件至仓库</p>
+<p>4，gitclone，根据url克隆仓库</p>
+<p>5，git remote add origin(仓库名) 远程仓库url，指定远程仓库</p>
+<p>6，git pull拉取远程仓库的内容并merge到本地仓库</p>
+<p>7，git push，推送到远程仓库</p>
+<p>8，git merge，在主分支内执行，会把各分支的修改合并到主分支</p>
+<h1 id="业务描述"><a href="#业务描述" class="headerlink" title="业务描述"></a>业务描述</h1><h2 id="对接第三方接口的流程"><a href="#对接第三方接口的流程" class="headerlink" title="对接第三方接口的流程"></a>对接第三方接口的流程</h2><h5 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h5><p>1，获取token接口：</p>
+<ul>
+<li>参数为渠道(UC),子渠道(UC中的咨询类型，上文下图，视频，纯文字),秘钥(UC给的)</li>
+<li>返回值为token</li>
+<li>token会过期，定时任务4小时轮循获取新token</li>
+<li>过期时访问拉取咨询接口会504，遇见504主动拉取一次token</li>
+</ul>
+<p>2，拉取咨询接口：</p>
+<ul>
+<li>渠道，子渠道，频道code(体育，娱乐，游戏)，token</li>
+<li>返回值为咨询，带游标标记每个用户的咨询刷新位置，封装成通用模版返回给前端</li>
+</ul>
+<p>3，个性化咨询接口：每八小时拉取给运营，运营手动推送一两条热门咨询给不同的机型，版本</p>
+<p>4，数据回传接口：将用户的曝光，点击行为发送给uc以供个性化推荐</p>
+<p>5，频道校验接口：</p>
+<ul>
+<li>uc的频道有时会下架，我这边没有感知，写了一个5分钟间隔的定时任务轮循频道接口的状态，如果出现错误码就发邮件告警通知运营更换</li>
+<li>请求咨询时如果频道下架，也会发邮件告警</li>
+</ul>
+<h5 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h5><p>1，拉取咨询为什么要分两次请求：减少token被抓取的概率</p>
+<p>2，咨询拉取怎么保证不重复：拉取咨询请求除了咨询还会返回游标，标记每个用户单独的刷新位置，并且返回给客户端，客户端的请求带游标</p>
+<p>3，咨询是否是相同的：</p>
+<ul>
+<li>不是，每个用户有单独的id，对应单独的游标，虽然咨询池使用的是同一个，但是由于刷新频率的不同，游标的位置也不同，所以在同一时刻的用户手机上的咨询是不同的</li>
+<li>每次下发15条咨询</li>
+</ul>
+<p>4，为什么要组装成公用模版：</p>
+<ul>
+<li>不管对接方返回的数据的格式怎么变化，用户那边都是无感知的</li>
+<li>就算用户选择不升级app，保证公用模版不变，那用户就可以正常使用</li>
+</ul>
+<p>5，第三方接口返回的数据：资讯列表，资讯标题，副标题，缩略图，url，作者，发布时间，类型，标签，游标</p>
+<p>6，传给第三方的参数：渠道，子渠道，频道code，token，用户唯一id，游标id，发送时间，手机唯一id，手机机型，机型版本</p>
+<p>7，使用什么方法拉取的，状态码有哪些：</p>
+<ul>
+<li>使用okHttpClient发送http请求拉取</li>
+<li>第三方状态码：200成功，203重定向；400传参错误，401权限不够，404资源不存在；500服务器错误，503token过期</li>
+</ul>
+<p>8，第三方接口超时：5000ms持续时间，手动编码重试3次</p>
+<h2 id="banner展示"><a href="#banner展示" class="headerlink" title="banner展示"></a>banner展示</h2><h5 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h5><p>1，配置固定时间段内展示banner，使用一个list，达到先进后出，每次都去最新放入的那个</p>
+<p>2，一般一段时间内只会有一个banner展示，如果时间有重复，则优先使用新配置的banner</p>
+<p>3，banner接口的执行契机是美篇app的初始化</p>
+<h2 id="引入多线程优化拉取咨询接口"><a href="#引入多线程优化拉取咨询接口" class="headerlink" title="引入多线程优化拉取咨询接口"></a>引入多线程优化拉取咨询接口</h2><p>1，复现</p>
+<ul>
+<li>拉取热点频道的咨询的接口，响应时间为3-4s，使用postman复现</li>
+<li>通过服务治理平台，通过时间，ip，服务名找到postman测试请求，看到了调用链路，拉取广告的时间过长，同步800ms一个，4个3.2秒</li>
+</ul>
+<p>2，解决：</p>
+<ul>
+<li>获取广告的接口使用submit执行，获取future，以广告id为key，futrue为value存入HashMap</li>
+<li>后续需要使用futrue先获取结果，把广告插入咨询列表组装，然后返回</li>
+<li>和产品方面讨论，优先保证响应，广告可以不完全加载；因此选择使用futrue.get(500)，等待500ms，广告没返回就舍弃；如果需要保证广告完整性，可以使用countdownlatch</li>
+<li>由于异步执行，广告正常800ms，组装咨询和资源和广告共花1秒，接口总共正常花1秒，从3.2优化到了1</li>
+</ul>
+<p>3，为什么不能一次拉取多个广告：可能是广告部门方便统计数据</p>
+<p>4，线程池参数设置：和三个参数相关，单秒任务量，任务执行时长，最大响应时间；假如单秒0-200，最高峰为1000，执行时长0.1s，时间单位为秒</p>
+<ul>
+<li>核心数&#x3D;200*0.1&#x3D;20个</li>
+<li>队列长：核心线程1秒执行200个，最大响应为2秒，那么可以再放200个在队列</li>
+<li>最大线程数：最高峰1000个，减去核心和队列的400，剩600任务，单位为秒，应当使用60个线程；因此，最大&#x3D;核心20加非核心60&#x3D;80个</li>
+<li>工厂默认</li>
+<li>拒绝策略：按照重要程度，重要的不拒绝</li>
+<li>线程存活时间：看间隔周期，周期长则存活时间设短，防止一直耗费资源；周期短则时间设长比如5分钟，避免频繁创建线程</li>
+</ul>
+<p>4，公司参数：</p>
+<ul>
+<li>核心10；最大100；队列200；不拒绝使用用户线程执行；过期时间5分钟</li>
+<li>两个线程池，一个用定时任务，一个用于接口</li>
+</ul>
+<p>5，广告有哪些，怎么配置，和资讯冲突咋办</p>
+<ul>
+<li>知盟，阿里妈妈，uc等平台，硬广，api发布(组装成资讯模版)</li>
+<li>运营后台配置，广告位置，广告数量，控制在4个内</li>
+<li>和咨询同一模版，直接让后续咨询和广告后移，通过list的add实现</li>
+</ul>
+<h2 id="引入设计模式优化和第三方对接"><a href="#引入设计模式优化和第三方对接" class="headerlink" title="引入设计模式优化和第三方对接"></a>引入设计模式优化和第三方对接</h2><p>1，之前的接口写死了和百度咨询对接</p>
+<p>2，利用模版方法模式和简单工厂模式改进</p>
+<p>3，定义一个抽象类，定义三个抽象模版方法，检验参数，拉取资讯，组装模版</p>
+<p>4，由于每个平台的参数，拉取方法，拉取结果组装都不一样，所以每个平台都继承这个抽象类，并实现自己的逻辑，实际调用直接用抽象类多态调用就可以</p>
+<p>5，将这些实现类加上@Component作为bean，使用applicationContext.getBeansOfType()可以获取这个抽象类的所有实现bean，返回一个map，K是类名小写，V是bean；这个map可以作为一个简单工厂，使用get(K)可以获取到bean，从而调用实现类的模版方法</p>
+<p>6，由于前端传入的是数字，需要把数字和渠道实际的渠道参数对应，1代表uc，2代表baidu，3代表xinlang，使用枚举类，枚举中定义get方法，通过code可以返回枚举的渠道参数，逻辑中只要写枚举.get(前端参数)即可，前端参数改变，渠道参数改变，对应的简单工厂的参数改变，即可获取想要的实现类；如果要填加不同的渠道，只需要在枚举中定义code和对应的渠道参数，再加上一个抽象类的实现类即可</p>
+<h2 id="优化黑名单匹配方案"><a href="#优化黑名单匹配方案" class="headerlink" title="优化黑名单匹配方案"></a>优化黑名单匹配方案</h2><p>1，背景：</p>
+<ul>
+<li>网信办下发黑名单，资讯url和黑名单一样禁止跳转</li>
+<li>原本黑名单存客户端，用户投诉app内存大</li>
+<li>客户端存储的实时性没法保证，必须重启app黑名单才会刷新</li>
+</ul>
+<p>2，优化：</p>
+<ul>
+<li>存放到客户端，每次跳转时都匹配黑名单，解决了实时性问题</li>
+<li>存放到redis缓存，因为跳转资讯的接口访问量很大，缓存加快查询速度</li>
+</ul>
+<p>3，实现：</p>
+<ul>
+<li>使用set集合存储，可能会造成大key问题，拆分key为10个，利用hashcode对key的数量取模，也会有大key，而且重hash麻烦</li>
+<li>使用布隆过滤，可能会误判非黑名单网址为黑名单<ul>
+<li>在匹配上黑名单后，再去数据库确认(因为只有10w分之1的概率命中，所以不担心数据库压力)</li>
+<li>去数据库确认时，如果数据库也没有，大量伪造请求进入会造成缓存穿透，缓存5分钟空值处理</li>
+<li>黑名单更新时要先删掉缓存的值，然后再插入数据库和缓存</li>
+</ul>
+</li>
+<li>布隆过滤没有办法删除<ul>
+<li>将要删除的url存入redis set，黑名单命中后看是不是已删除</li>
+</ul>
+</li>
+<li>布隆和mysql同步<ul>
+<li>定时任务1小时全量同步</li>
+</ul>
+</li>
+<li>6万黑名 单存入redis大概3M，但是存入布隆过滤器就只有2kb左右。</li>
+</ul>
+<p>4，你们布隆过滤器怎么设置的？</p>
+<ul>
+<li>初始化的时候两个参数分别1000万元素，误判率是千分之1</li>
+</ul>
+<p>5，redis和msyql的一致性怎么保证？</p>
+<ul>
+<li>使用双写，先写数据库，再删缓存，再写缓存</li>
+</ul>
+<p>6，mysql写入成功，redis写入失败怎么办？</p>
+<ul>
+<li>使用全量更新，如果写缓存失败，下次查询到达数据库自动重建缓存</li>
+</ul>
+<p>7，其他的缓存一致性方案？</p>
+<ul>
+<li>缓存延时双删：先删除缓存，再更新数据库，再进行延时删除；如果在更新数据库的途中，有读请求，会拿取旧数据并重建旧缓存，延时双删保证数据库更新完成后，删除旧数据</li>
+<li>可以使用canal伪装成mysql的slave获取binlog日志，监听变动，通过消息队列异步发送给消费者，消费者在解析需要删除缓存的时候进行删除操作；需要控制消息顺序和幂等性处理</li>
+<li>如果面试官还说无法保证，每隔5分钟定时任务进行全量同步</li>
+</ul>
+<h2 id="对拉取咨询接口的缓存击穿问题-热点key过期-进行处理"><a href="#对拉取咨询接口的缓存击穿问题-热点key过期-进行处理" class="headerlink" title="对拉取咨询接口的缓存击穿问题(热点key过期)进行处理"></a>对拉取咨询接口的缓存击穿问题(热点key过期)进行处理</h2><p>1，token过期的时候，大量的请求收到504，如果出现504，加分布式锁，锁住”toke”+旧token</p>
+<p>2，进入锁之后判断自己先从缓存中拿的token和现在缓存中的token是否一样，这是为了查看是否已经有其他线程先进行了token的重新拉取并存放到缓存</p>
+<p>3，如果相等，证明还没有线程拉取新token存储，那么去获取新的token，并休眠一秒，因为token的更新是一个回调接口，休眠保证uc那边已经调用完回调接口，如果不放心，可以用while循环，判断新的token是否已缓存，之后再释放锁，再用新的token查询一次，查询必须在锁外面，防止之前被阻塞的线程每个都获取释放一遍锁</p>
+<p>4，如果不相等，说明已经有其他的线程完成了token更新，那么直接用新token拉取咨询然后返回即可</p>
+<p>5，无需双重检验，因为只有504之后才会进入锁的逻辑，并不是每次请求都会进入504的逻辑</p>
+<h2 id="对慢sql进行调优，参与客户操作记录分库分表"><a href="#对慢sql进行调优，参与客户操作记录分库分表" class="headerlink" title="对慢sql进行调优，参与客户操作记录分库分表"></a>对慢sql进行调优，参与客户操作记录分库分表</h2><p>1，场景：</p>
+<h2 id="灰度发布"><a href="#灰度发布" class="headerlink" title="灰度发布"></a>灰度发布</h2><h3 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h3><ul>
+<li>发布时指定一部分的用户，测试完之后再全量发布</li>
+<li>有些广告，不适配老版本，不能再老版本中展示，有反馈广告位置白屏，对于老机型可以单独配置广告</li>
+</ul>
+<h3 id="方法一：加字段实现"><a href="#方法一：加字段实现" class="headerlink" title="方法一：加字段实现"></a>方法一：加字段实现</h3><h4 id="具体实现："><a href="#具体实现：" class="headerlink" title="具体实现："></a>具体实现：</h4><ul>
+<li>在设置频道的时候指定频道可以展示的机型和版本，配置完后存redis，hash结构，K（机型）V(k版本，v能唯一标识一个频道的类)</li>
+</ul>
+<h4 id="缺点："><a href="#缺点：" class="headerlink" title="缺点："></a>缺点：</h4><ul>
+<li>资源很多，有资源，热词，宫格，导航，快应用等，每一个资源都要指定机型和版本，很麻烦</li>
+<li>修改资源不再展示给某机型和版本，需要遍历该机型版本的所有资源找到，不好管理</li>
+</ul>
+<h3 id="方法二：配置运营组"><a href="#方法二：配置运营组" class="headerlink" title="方法二：配置运营组"></a>方法二：配置运营组</h3><p>设置运营组，每个运营组可以配置若干机型，每个机型可以配置若干版本，每个运营组下有若干资源</p>
+<p>报表<br>不使用java代码,直接用的第三方大数据框架<br>登录大数据平台，写hive sql，通过自己指定的条件来清洗数据，最后为最后的数据生成统计图，指定横坐标和纵坐标就可以看到统计图</p>
+<p>使用中间表可以降低每个sql复杂度</p>
+<p>事件，刷新曝光，点击事件，不喜欢，收藏，点赞</p>
+<p>服务端事件，收藏，不喜欢，点击，曝光，视频观看</p>
+<p>事件上报数据，事件类型，咨询id，标题等；后端组装，发到大数据</p>
+<p>曝光这种数量很多的事件，客户端保存，传给给后端处理上报，5分钟上报一次</p>
+<p>点赞收藏这些，点击即上报即可</p>
+<p>hive sql清洗，执行时间可以配置</p>
+<p>机型A所有的咨询都拉去不到<br>1，使用postman模拟，发现百度渠道被拉黑，原因测试实习生跑monkey测试，没有切测试环境，直接跑了30w次拉取，百度的咨询本身有广告，可能有刷广告访问的嫌疑<br>2，每次拉取咨询时，将结果码，和message拼接上报大数据原始表，写个定时任务，使用大数据的SDK从大数据原始表(events)获取数据，查询事件类型为拉取咨询的，count code为200的数量，拉取成功数量小于95%就发告警</p>
+<p>拉取时使用token进行身份验证，token会不定时过期；<br>流程是，先取出缓存中的token，再拿取到的token去请求uc接口；<br>请求返回504代表token过期，过期重新重新请求一次token后用户直接返回报错，uc收到请求调用我提供的回调接口将token写入到redis，下一次调用即可获取到咨询咨询；<br>并发高的情况下，token过期，拉取token的接口可能会缓存击穿，外层，拉取时返回504进入catch块，catch块中加reddission锁，锁的粒度为业务+当前从redis中查的旧token，块中请求一次token，死循环中，取一次当前redistoken，判断和旧token是否一样，不一样表示更新完成，锁释放，使用当前token查询一次咨询并返回即可，一定要把查询写在锁外面，防止前面被阻塞的线程每一个都要进入同步块</p>
+<p>资源包括，banner，快应用，导航，资源是一张表，通过资源类型区分<br>创建banner资源，包括名称，图片，跳转链接，跳转类型，快应用<br>创建计划，计划中可以下拉框选择资源，用于配置banner的展示时间段</p>
+<p>重大新闻咨询会推送，定时任务每四小时调用uc的个性化推荐接口，插入到数据库，部分插入到es，后台配置推送计划，通过es搜索可以选择咨询，并且选择咨询要推送的手机id，机型，版本，城市，点击确定往表中插入推送计划，推送部分取推送计划表中的计划执行，并非我们咨询部门执行</p>
+<p>个性化推送，创建推送计划无需设置版本机型这些，直接插入个性化推送表，并且每5分钟调大数据平台sdk上报到大数据平台上，大数据根据咨询分类，标题内容等判断具体推送给什么用户；推送完成的计划改成已推送</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1717,150 +3053,6 @@
 
 
 
-  <div style="padding-left: 8px;">
-    <span class="post-meta-divider" style="padding-right: 8px;">|</span>
-    <i class="fa fa-thumbtack"></i>
-    <font color=black style="font-weight: bold; padding-left: 4px;">置顶</font>
-  </div>
-
-
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/12/18/%E5%A4%A7%E6%B1%87%E6%80%BB/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Hexo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/12/18/%E5%A4%A7%E6%B1%87%E6%80%BB/" class="post-title-link" itemprop="url">大汇总</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-12-18 00:09:36" itemprop="dateCreated datePublished" datetime="2024-12-18T00:09:36+08:00">2024-12-18</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-12-31 00:05:59" itemprop="dateModified" datetime="2024-12-31T00:05:59+08:00">2024-12-31</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/" itemprop="url" rel="index"><span itemprop="name">计算机</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>14k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>13 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <ul>
-<li><h2 id="1，并发编程的优缺点"><a href="#1，并发编程的优缺点" class="headerlink" title="1，并发编程的优缺点"></a>1，并发编程的优缺点</h2><ul>
-<li>优点<ul>
-<li>1，拆分复杂的业务，可以同时操作io和cpu</li>
-<li>2，可以最大程度的利用多核cpu</li>
-</ul>
-</li>
-<li>缺点<ul>
-<li>1，线程从暂停(阻塞，等待)到运行切换需要进行上下文切换，很耗资源</li>
-<li>2，多线程操作可能对临界区带来线程安全问题，比如一致性问题和死锁</li>
-</ul>
-</li>
-</ul>
-<h2 id="2，java中定位死锁"><a href="#2，java中定位死锁" class="headerlink" title="2，java中定位死锁"></a>2，java中定位死锁</h2><ul>
-<li>1，去jdk的bin目录，使用jps指令来获取正在运行的jvm进程id</li>
-<li>2，jstack -l  pid ,就直接可以看到死锁信息</li>
-</ul>
-<h2 id="3，如何创建线程"><a href="#3，如何创建线程" class="headerlink" title="3，如何创建线程"></a>3，如何创建线程</h2><ul>
-<li>1，继承Thread类，调用对象start方法<ul>
-<li>缺点，单继承</li>
-</ul>
-</li>
-<li>2，实现runnable接口，传入Thread构造，调用Thread对象的start<ul>
-<li>缺点，无返回值</li>
-</ul>
-</li>
-<li>3，实现callable接口，交给线程池的submit方法执行，返回一个futrue，调用get方法阻塞获取返回值</li>
-</ul>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2024/12/18/%E5%A4%A7%E6%B1%87%E6%80%BB/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-
-<div class="post-block">
-
-
-
 
   
   
@@ -2381,399 +3573,6 @@
 
 
 
-    
-
-
-
-<div class="post-block">
-
-
-
-
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/29/%E4%BC%98%E5%85%88%E5%87%86%E5%A4%87/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Hexo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/11/29/%E4%BC%98%E5%85%88%E5%87%86%E5%A4%87/" class="post-title-link" itemprop="url">优先准备</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-11-29 10:50:45" itemprop="dateCreated datePublished" datetime="2024-11-29T10:50:45+08:00">2024-11-29</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-12-04 22:33:12" itemprop="dateModified" datetime="2024-12-04T22:33:12+08:00">2024-12-04</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/" itemprop="url" rel="index"><span itemprop="name">计算机</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>4.8k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>4 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="java基础"><a href="#java基础" class="headerlink" title="java基础"></a>java基础</h2><h3 id="1，get-和-post请求的区别"><a href="#1，get-和-post请求的区别" class="headerlink" title="1，get 和 post请求的区别"></a>1，get 和 post请求的区别</h3><h4 id="延申：弄清楚http种常用不同请求的区别"><a href="#延申：弄清楚http种常用不同请求的区别" class="headerlink" title="延申：弄清楚http种常用不同请求的区别"></a>延申：弄清楚http种常用不同请求的区别</h4><ul>
-<li>get：<ul>
-<li>参数显示在地址栏，不安全，参数有长度限制，常用于获取资源，幂等</li>
-</ul>
-</li>
-<li>post：<ul>
-<li>参数放在请求体，也需要对参数加密，长度无限制，常用于增删改资源，不幂等</li>
-</ul>
-</li>
-<li>put：<ul>
-<li>参数放请求体，用于更新</li>
-</ul>
-</li>
-<li>delete：<ul>
-<li>参数放请求头，用于删除指定位置的资源</li>
-</ul>
-</li>
-<li>head</li>
-</ul>
-<h3 id="2，面向对象三个基本特征"><a href="#2，面向对象三个基本特征" class="headerlink" title="2，面向对象三个基本特征"></a>2，面向对象三个基本特征</h3><ul>
-<li>封装：把类的属性私有，避免外部直接访问，提高程序安全性</li>
-<li>继承：子类可以继承父类的变量和方法，复用代码的手段</li>
-<li>多态：同一操作对于不同的对象有不同的解释，由重载和重写实现<ul>
-<li>重载：同一个类中同名不同参数的方法</li>
-<li>重写：子类重写父类方法提供子类的实现</li>
-</ul>
-</li>
-</ul>
-<h3 id="3，-和equals的区别"><a href="#3，-和equals的区别" class="headerlink" title="3，&#x3D;&#x3D;和equals的区别"></a>3，&#x3D;&#x3D;和equals的区别</h3><ul>
-<li>&#x3D;&#x3D;可以作用与基本数据类型和引用类型<ul>
-<li>基本数据类型，比较的是值是否相等</li>
-<li>引用类型，比较的是对象的地址是否相等，无关对象内的内容</li>
-</ul>
-</li>
-<li>equals只能作用于引用类型<ul>
-<li>在不重写的情况下，方法内使用的是&#x3D;&#x3D;来判断</li>
-</ul>
-</li>
-<li>注意：<ul>
-<li>在使用对象当hashmap的key时：重写equals方法必须要重写hashcode方法，要保证对象相等的时候hashcode必须相同</li>
-<li>原因：在hashmap中先根据hashcode计算桶，再根据equals判断是否是重复的key；假如equals成立(对象相同)，hashcode却不同，则hash冲突不会发生，equals方法不会被触发，造成相同的两个对象会被hash到不同的桶里，不符合hashmap key不重复的设计</li>
-</ul>
-</li>
-</ul>
-<h3 id="4，-和-，-和"><a href="#4，-和-，-和" class="headerlink" title="4，&amp;和&amp;&amp;，|和||"></a>4，&amp;和&amp;&amp;，|和||</h3><ul>
-<li><p>A&amp;B：先判断A，再判断B是否true</p>
-</li>
-<li><p>A&amp;&amp;B：先判断A，如果A为false那么B直接不用判断，结果肯定为false，减少了一次判断</p>
-</li>
-<li><p>II和&amp;&amp;思路一样，短路系列前面能出结果那么后面的就不判断直接获得结果</p>
-</li>
-</ul>
-<h3 id="5-stringbuilder-string-stringbuffer的区别"><a href="#5-stringbuilder-string-stringbuffer的区别" class="headerlink" title="5,stringbuilder,string,stringbuffer的区别"></a>5,stringbuilder,string,stringbuffer的区别</h3><ul>
-<li>string：不可变，每一次操作都返回一个新的对象</li>
-<li>stringbuilder：可变</li>
-<li>stringbuffer：同步的stringbuilder</li>
-</ul>
-<h3 id="6，重载和重写的区别"><a href="#6，重载和重写的区别" class="headerlink" title="6，重载和重写的区别"></a>6，重载和重写的区别</h3><ul>
-<li>重载：同名方法，返回类型不限制，参数不同，可以是数量，类型，顺序不同，访问修饰符大于等于父类</li>
-<li>重写：同名方法，参数相同，返回值不限制，修饰符大于等于父类</li>
-</ul>
-<h3 id="7-用过哪些集合"><a href="#7-用过哪些集合" class="headerlink" title="7,用过哪些集合"></a>7,用过哪些集合</h3><ul>
-<li>arraylist</li>
-<li>hashset</li>
-<li>hashmap</li>
-</ul>
-<h3 id="8，list，set，map的区别"><a href="#8，list，set，map的区别" class="headerlink" title="8，list，set，map的区别"></a>8，list，set，map的区别</h3><ul>
-<li>list和set继承自collection接口，map是另外的接口</li>
-<li>list是有序线性的，set是无序线性的，map是无序kv结构</li>
-</ul>
-<h3 id="9，了解过的线程安全的集合"><a href="#9，了解过的线程安全的集合" class="headerlink" title="9，了解过的线程安全的集合"></a>9，了解过的线程安全的集合</h3><ul>
-<li>hashtable，concurrenthashmap</li>
-<li>copyonwritearraylist</li>
-</ul>
-<h3 id="10-hashmap的put原理？为什么hashmap容量设计成2的n次方"><a href="#10-hashmap的put原理？为什么hashmap容量设计成2的n次方" class="headerlink" title="10.hashmap的put原理？为什么hashmap容量设计成2的n次方"></a>10.hashmap的put原理？为什么hashmap容量设计成2的n次方</h3><ul>
-<li>计算桶：(h^(h&gt;&gt;16))&amp;(table.length-1)</li>
-<li>hash冲突了则去冲突的链表或者红黑树使用equals比较，不重复就插入到链表或者红黑树</li>
-<li>容量设置2的n次方主要用于扩容减少计算量，table的长度*2，只需要判断多出来的那一位高位对应的(h^(h&gt;&gt;16))的值的那一位是1还是0，是1，&amp;后的结果就是1，就需要把桶的结果乘2得到新的桶，是0，&amp;的结果是0，桶的位置不变，；</li>
-</ul>
-<h3 id="11，arraylist和linkedlist的区别"><a href="#11，arraylist和linkedlist的区别" class="headerlink" title="11，arraylist和linkedlist的区别"></a>11，arraylist和linkedlist的区别</h3><ul>
-<li>arraylist底层是数组，适合查询多，增删少的场景，查询可以根据下标</li>
-<li>linkedlist底层使用的是双向链表，适合增删多的场景，查询只能遍历</li>
-</ul>
-<h3 id="12，throw和throws的区别"><a href="#12，throw和throws的区别" class="headerlink" title="12，throw和throws的区别"></a>12，throw和throws的区别</h3><ul>
-<li>throws作用与方法，往外抛出异常</li>
-<li>throw 是抛出异常</li>
-</ul>
-<h3 id="13，接口和抽象类的区别"><a href="#13，接口和抽象类的区别" class="headerlink" title="13，接口和抽象类的区别"></a>13，接口和抽象类的区别</h3><ul>
-<li>一个类可以实现多个接口，但是只能继承一个父类</li>
-<li>接口中只有方法声明，没有具体实现；抽象类可以有抽象方法，也可以有实现的犯法</li>
-</ul>
-<h3 id="14，去阿里巴巴手册看几个代码规范"><a href="#14，去阿里巴巴手册看几个代码规范" class="headerlink" title="14，去阿里巴巴手册看几个代码规范"></a>14，去阿里巴巴手册看几个代码规范</h3><ul>
-<li>类名使用大驼峰命名，方法名和变量统一使用小驼峰</li>
-<li>在关键的类，方法，参数等地方写注释</li>
-<li>在捕获异常的时候，细分异常类型</li>
-<li>创建线程池的时候，不要使用Executors工具类，使用threadpoolexecutor的构造方法</li>
-</ul>
-<h3 id="15，创建对象的三种方式"><a href="#15，创建对象的三种方式" class="headerlink" title="15，创建对象的三种方式"></a>15，创建对象的三种方式</h3><ul>
-<li>new对象</li>
-<li>使用反射创建</li>
-<li>通过反序列化创建</li>
-</ul>
-<h3 id="16，如何通过反射创建对象"><a href="#16，如何通过反射创建对象" class="headerlink" title="16，如何通过反射创建对象"></a>16，如何通过反射创建对象</h3><ul>
-<li>先获取类的入口class类：class.forName(全限定名)</li>
-<li>再获取类的构造方法</li>
-<li>执行构造方法即可</li>
-</ul>
-<h3 id="17，反射的使用场景是什么"><a href="#17，反射的使用场景是什么" class="headerlink" title="17，反射的使用场景是什么"></a>17，反射的使用场景是什么</h3><ul>
-<li>spring中使用</li>
-</ul>
-<h3 id="18，反射的优缺点是什么"><a href="#18，反射的优缺点是什么" class="headerlink" title="18，反射的优缺点是什么"></a>18，反射的优缺点是什么</h3><ul>
-<li>优点：在程序运行的时候可以动态的创建对象</li>
-<li>缺点：性能比较低</li>
-</ul>
-<h3 id="19，掌握几个IO的常用类"><a href="#19，掌握几个IO的常用类" class="headerlink" title="19，掌握几个IO的常用类"></a>19，掌握几个IO的常用类</h3><h2 id="多线程"><a href="#多线程" class="headerlink" title="多线程"></a>多线程</h2><h3 id="1，线程和进程的区别"><a href="#1，线程和进程的区别" class="headerlink" title="1，线程和进程的区别"></a>1，线程和进程的区别</h3><ul>
-<li>进程是计算机进行资源分配的基本单位，线程是计算机调度的基本单位</li>
-<li>进程拥有独立的内存空间，io资源；线程共享同进程的内存空间和io资源</li>
-<li>进程的上下文切换开销大，且进程之间的通信很麻烦；线程的上下文切换开销小，只需要记录寄存器和线程私有的东西，操作数栈，局部变量表</li>
-</ul>
-<h3 id="2，线程有几种创建方式，区别是什么"><a href="#2，线程有几种创建方式，区别是什么" class="headerlink" title="2，线程有几种创建方式，区别是什么"></a>2，线程有几种创建方式，区别是什么</h3><ul>
-<li>3种：<ul>
-<li>继承Thread类，重写run方法，调用对象的start方法即可创建一个线程</li>
-<li>实现runnable接口，重写run方法，把runnable作为Thread类的构造参数,调用对象的start方法即可创建一个线程</li>
-<li>实现callable接口，重写call方法，交给线程池的submit方法执行，返回一个futrue对象，调用futrue.get即可阻塞当前直到获取该callable的返回值</li>
-</ul>
-</li>
-<li>区别：<ul>
-<li>继承thread比较方便，但是java只能单继承，不灵活；run方法不支持返回值</li>
-<li>实现runnable解决了继承不灵活的问题，但是也不支持返回值</li>
-<li>callable配合线程池可以获取返回值，callable是接口也比较灵活</li>
-</ul>
-</li>
-</ul>
-<h3 id="3，线程的几种状态"><a href="#3，线程的几种状态" class="headerlink" title="3，线程的几种状态"></a>3，线程的几种状态</h3><ul>
-<li>ready：还没有调用start方法之前</li>
-<li>runnable：运行</li>
-<li>waiting：等待，object.wait，</li>
-<li>timedwaiting：超时等待</li>
-<li>blocked：阻塞</li>
-<li>terminal：终止</li>
-</ul>
-<h3 id="4，线程池的7大参数"><a href="#4，线程池的7大参数" class="headerlink" title="4，线程池的7大参数"></a>4，线程池的7大参数</h3><ul>
-<li>核心线程数</li>
-<li>最大线程数</li>
-<li>非核心线程过期时间</li>
-<li>时间单位</li>
-<li>阻塞队列</li>
-<li>拒绝策略</li>
-<li>线程工厂</li>
-</ul>
-<h3 id="5，线程池工作原理"><a href="#5，线程池工作原理" class="headerlink" title="5，线程池工作原理"></a>5，线程池工作原理</h3><ul>
-<li>先加入核心线程数</li>
-<li>核心线程不够在看最大线程</li>
-<li>最大线程不够在看阻塞队列够不够</li>
-<li>阻塞队列不够看拒绝策略</li>
-</ul>
-<h3 id="6，阻塞队列有哪些，拒绝策略有哪些"><a href="#6，阻塞队列有哪些，拒绝策略有哪些" class="headerlink" title="6，阻塞队列有哪些，拒绝策略有哪些"></a>6，阻塞队列有哪些，拒绝策略有哪些</h3><ul>
-<li>阻塞队列：</li>
-<li>拒绝策略：<ul>
-<li>丢弃</li>
-<li>报错</li>
-<li>丢弃最老任务</li>
-<li>用户线程执行</li>
-</ul>
-</li>
-</ul>
-<h3 id="7，线程池submit和execute方法的区别"><a href="#7，线程池submit和execute方法的区别" class="headerlink" title="7，线程池submit和execute方法的区别"></a>7，线程池submit和execute方法的区别</h3><ul>
-<li>execute没有返回值，只能接受一个个runnable参数，创建的线程内部出现异常，在线程内处理，不会返回到创建线程的线程</li>
-<li>submit返回一个futrue，可以接受runnable和callable，接收runnable时返回null，线程出现异常会由future.get抛出，放到try catch可以捕获异常</li>
-</ul>
-<h3 id="8，公司使用的线程池，参数怎么设置，设置的依据"><a href="#8，公司使用的线程池，参数怎么设置，设置的依据" class="headerlink" title="8，公司使用的线程池，参数怎么设置，设置的依据"></a>8，公司使用的线程池，参数怎么设置，设置的依据</h3><h3 id="9，为什么不能使用Executors自带的线程池"><a href="#9，为什么不能使用Executors自带的线程池" class="headerlink" title="9，为什么不能使用Executors自带的线程池"></a>9，为什么不能使用Executors自带的线程池</h3><ul>
-<li>参数写死，不能配置</li>
-</ul>
-<h2 id="MySQL"><a href="#MySQL" class="headerlink" title="MySQL"></a>MySQL</h2><h3 id="1，事务的特性"><a href="#1，事务的特性" class="headerlink" title="1，事务的特性"></a>1，事务的特性</h3><ul>
-<li>原子性</li>
-<li>隔离性</li>
-<li>持久性</li>
-<li>一致性</li>
-</ul>
-<h3 id="2，事务的隔离级别，Mysql默认的隔离级别"><a href="#2，事务的隔离级别，Mysql默认的隔离级别" class="headerlink" title="2，事务的隔离级别，Mysql默认的隔离级别"></a>2，事务的隔离级别，Mysql默认的隔离级别</h3><ul>
-<li>隔离级别<ul>
-<li>读未提交</li>
-<li>读已提交</li>
-<li>可重复读</li>
-<li>序列化运行</li>
-</ul>
-</li>
-<li>mysql默认可重复读，通过mvcc实现，极端情况会出现幻影读问题</li>
-</ul>
-<h3 id="3，事务的传播行为"><a href="#3，事务的传播行为" class="headerlink" title="3，事务的传播行为"></a>3，事务的传播行为</h3><ul>
-<li>require new</li>
-<li>require</li>
-</ul>
-<h3 id="4-不同的隔离级别在两个事务中会出现什么问题"><a href="#4-不同的隔离级别在两个事务中会出现什么问题" class="headerlink" title="4,不同的隔离级别在两个事务中会出现什么问题"></a>4,不同的隔离级别在两个事务中会出现什么问题</h3><ul>
-<li>脏读 读未提交，读到还没有提交的事务写入的值</li>
-<li>不可重复读 读已提交，同一个事务中，同一条sql读取出的结果不一样(修改)</li>
-<li>幻影读 同一个事务中，同一个读取范围，读取出的条数不一样，(插入，删除)</li>
-</ul>
-<h3 id="5，sql调优流程举例，explain关键字的使用"><a href="#5，sql调优流程举例，explain关键字的使用" class="headerlink" title="5，sql调优流程举例，explain关键字的使用"></a>5，sql调优流程举例，explain关键字的使用</h3><p>+ </p>
-<h3 id="6，b树和b-树的区别，为什么用b-树而不是b树"><a href="#6，b树和b-树的区别，为什么用b-树而不是b树" class="headerlink" title="6，b树和b+树的区别，为什么用b+树而不是b树"></a>6，b树和b+树的区别，为什么用b+树而不是b树</h3><h3 id="7，索引失效的情况"><a href="#7，索引失效的情况" class="headerlink" title="7，索引失效的情况"></a>7，索引失效的情况</h3><ul>
-<li>使用了聚合函数</li>
-<li>没有按最左的标准查</li>
-</ul>
-<h3 id="8，建立索引的依据"><a href="#8，建立索引的依据" class="headerlink" title="8，建立索引的依据"></a>8，建立索引的依据</h3><ul>
-<li>经常查找的列</li>
-<li>不经常修改的列</li>
-<li>经常用于排序，分组的列</li>
-<li>经常用于连接的列</li>
-</ul>
-<h3 id="9，Mysql最多创建多少个索引"><a href="#9，Mysql最多创建多少个索引" class="headerlink" title="9，Mysql最多创建多少个索引"></a>9，Mysql最多创建多少个索引</h3><h2 id="SSM"><a href="#SSM" class="headerlink" title="SSM"></a>SSM</h2><h3 id="1，什么是aop和ioc"><a href="#1，什么是aop和ioc" class="headerlink" title="1，什么是aop和ioc"></a>1，什么是aop和ioc</h3><h3 id="2，ioc的好处是什么"><a href="#2，ioc的好处是什么" class="headerlink" title="2，ioc的好处是什么"></a>2，ioc的好处是什么</h3><h3 id="3，aop有几种代理方式，有什么区别，默认哪种"><a href="#3，aop有几种代理方式，有什么区别，默认哪种" class="headerlink" title="3，aop有几种代理方式，有什么区别，默认哪种"></a>3，aop有几种代理方式，有什么区别，默认哪种</h3><ul>
-<li>cglib：继承至原始类</li>
-<li>jdk：实现原始类实现的接口，必须要原始类有接口</li>
-<li>默认cglib</li>
-</ul>
-<h4 id="4，用到aop的地方"><a href="#4，用到aop的地方" class="headerlink" title="4，用到aop的地方"></a>4，用到aop的地方</h4><ul>
-<li>日志，事务</li>
-</ul>
-<h3 id="5，-autowired和-resource的区别"><a href="#5，-autowired和-resource的区别" class="headerlink" title="5，@autowired和@resource的区别"></a>5，@autowired和@resource的区别</h3><h3 id="6，bean的作用域"><a href="#6，bean的作用域" class="headerlink" title="6，bean的作用域"></a>6，bean的作用域</h3><ul>
-<li>singleton</li>
-<li>prototype</li>
-<li>request</li>
-<li>session</li>
-</ul>
-<h3 id="7，spring自动装配有哪几种，有什么区别"><a href="#7，spring自动装配有哪几种，有什么区别" class="headerlink" title="7，spring自动装配有哪几种，有什么区别"></a>7，spring自动装配有哪几种，有什么区别</h3><ul>
-<li>@Autowired，按类型装配</li>
-<li>@Resource，先按名字装配，没有再按照类型装配</li>
-</ul>
-<h3 id="8，spring事务注解里面的参数设置，默认的隔离级别"><a href="#8，spring事务注解里面的参数设置，默认的隔离级别" class="headerlink" title="8，spring事务注解里面的参数设置，默认的隔离级别"></a>8，spring事务注解里面的参数设置，默认的隔离级别</h3><h3 id="9，springmvc的请求流程"><a href="#9，springmvc的请求流程" class="headerlink" title="9，springmvc的请求流程"></a>9，springmvc的请求流程</h3><ul>
-<li>dispatchServelet获取请求，进行转发</li>
-<li>转发至handlermapping，根据传入的url寻找匹配的handler，返回执行链给dispatchservelet</li>
-<li>转发给handleradopter，适配可以执行的controller对象，执行handler，返回modeandview，返回给dispatchservelet</li>
-<li>转发给视图解析器解析视图，返回给dispatchservelet</li>
-<li>返回http请求</li>
-</ul>
-<h3 id="10，-和-的区别"><a href="#10，-和-的区别" class="headerlink" title="10，#{}和${}的区别"></a>10，#{}和${}的区别</h3><ul>
-<li>#{}是使用占位符，里面的东西会被视为 一个参数，自动加单引号，可以避免sql注入</li>
-<li>${}是sql拼接，不会加单引号，会被sql注入</li>
-</ul>
-<h3 id="11，mybatis实体类的字段和表字段不一样怎么办"><a href="#11，mybatis实体类的字段和表字段不一样怎么办" class="headerlink" title="11，mybatis实体类的字段和表字段不一样怎么办"></a>11，mybatis实体类的字段和表字段不一样怎么办</h3><ul>
-<li>使用mybatis的resultmap</li>
-<li>在实体类的上面加上小驼峰和下划线转换的注解</li>
-<li>在实体类的字段上利用@Colum注解来对应数据库中的字段名</li>
-</ul>
-<h3 id="12，xml文件id是否能够重复"><a href="#12，xml文件id是否能够重复" class="headerlink" title="12，xml文件id是否能够重复"></a>12，xml文件id是否能够重复</h3><h3 id="13，什么是一级和二级缓存，区别是什么，怎么开启"><a href="#13，什么是一级和二级缓存，区别是什么，怎么开启" class="headerlink" title="13，什么是一级和二级缓存，区别是什么，怎么开启"></a>13，什么是一级和二级缓存，区别是什么，怎么开启</h3><h3 id="14，springboot自动装配的原理"><a href="#14，springboot自动装配的原理" class="headerlink" title="14，springboot自动装配的原理"></a>14，springboot自动装配的原理</h3><h3 id="15，如何解决前端和服务器端跨域问题"><a href="#15，如何解决前端和服务器端跨域问题" class="headerlink" title="15，如何解决前端和服务器端跨域问题"></a>15，如何解决前端和服务器端跨域问题</h3><ul>
-<li>再后端http返回的时候带上允许跨域的源</li>
-</ul>
-<h2 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h2><h3 id="1，单例，工厂，责任链，代理，模板方法模式（理解）"><a href="#1，单例，工厂，责任链，代理，模板方法模式（理解）" class="headerlink" title="1，单例，工厂，责任链，代理，模板方法模式（理解）"></a>1，单例，工厂，责任链，代理，模板方法模式（理解）</h3><h2 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h2><h3 id="1，redis中常用的数据结构和区别"><a href="#1，redis中常用的数据结构和区别" class="headerlink" title="1，redis中常用的数据结构和区别"></a>1，redis中常用的数据结构和区别</h3><h3 id="2，redis数据结构使用场景举例"><a href="#2，redis数据结构使用场景举例" class="headerlink" title="2，redis数据结构使用场景举例"></a>2，redis数据结构使用场景举例</h3><ul>
-<li>string，全局id</li>
-<li>hash，对象</li>
-<li>set，求交集，共同好友</li>
-<li>zset，做排行榜</li>
-<li>list，先进先出，做队列</li>
-</ul>
-<h3 id="3，redis和数据库的数据一致性"><a href="#3，redis和数据库的数据一致性" class="headerlink" title="3，redis和数据库的数据一致性"></a>3，redis和数据库的数据一致性</h3><ul>
-<li>当更新请求打到数据库时，先更新数据库，再删除缓存</li>
-<li>更新数据库的时候，先使用旧的缓存，会带来一段时间的不一致，无伤大雅</li>
-<li>更新数据库和删除缓存应当是原子性的，且只有一个线程能运行，使用同步锁</li>
-</ul>
-<h3 id="4，缓存穿透，击穿，雪崩怎么处理"><a href="#4，缓存穿透，击穿，雪崩怎么处理" class="headerlink" title="4，缓存穿透，击穿，雪崩怎么处理"></a>4，缓存穿透，击穿，雪崩怎么处理</h3><ul>
-<li>穿透：redis没有，MySQL也没有，导致无法建立缓存，攻击全部打数据库<ul>
-<li>解决，redis和mysql都没有的时候，手动在redis创建一个空缓存，设置较短ttl，防止mysql在空缓存存在期间添加了后导致的不一致时间过长</li>
-</ul>
-</li>
-<li>击穿：热点key过期时，大量的请求打到数据库<ul>
-<li>解决，热点key不设置ttl，在java代码中设置逻辑过期时间，当过期后，先返回给旧值，同时创建一个线程去重建缓存</li>
-</ul>
-</li>
-<li>雪崩：大量的key同时过期<ul>
-<li>解决，同一时间上传的key应当设置不同时间的ttl，可以设置基准时间+随机时间</li>
-</ul>
-</li>
-</ul>
-<h3 id="5，redis持久化方式和区别"><a href="#5，redis持久化方式和区别" class="headerlink" title="5，redis持久化方式和区别"></a>5，redis持久化方式和区别</h3><ul>
-<li>rdb快照：内存小，恢复快，间隔内的会丢失<ul>
-<li>设置一段时间内修改多少次触发</li>
-<li>也可以save手动触发，bgsave后台触发</li>
-</ul>
-</li>
-<li>aof：存的是已经执行过的指令，内存大，恢复慢，间隔小，保存到文件，频繁io</li>
-</ul>
-<h3 id="6，redis内存溢出策略"><a href="#6，redis内存溢出策略" class="headerlink" title="6，redis内存溢出策略"></a>6，redis内存溢出策略</h3><ul>
-<li>noeviction 不淘汰，内存满了有添加就报错，查询和删除可以正常使用</li>
-<li>allkeys lru 淘汰最长时间没有访问过的key</li>
-<li>allkeys lfu 淘汰访问频率最低的key</li>
-<li>allkeys random 随机淘汰</li>
-<li>volatile lru 定时key淘汰最长时间没访问的</li>
-<li>volatile lfu 定时key中淘汰访问频率低的</li>
-<li>volatile random 定时key随机淘汰</li>
-<li>默认是noeviction</li>
-</ul>
-<h2 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h2><h3 id="1，linux常见指令，查看进程，内存占用，cpu使用，搜索关键字"><a href="#1，linux常见指令，查看进程，内存占用，cpu使用，搜索关键字" class="headerlink" title="1，linux常见指令，查看进程，内存占用，cpu使用，搜索关键字"></a>1，linux常见指令，查看进程，内存占用，cpu使用，搜索关键字</h3>
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
@@ -2797,13 +3596,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">71k</span>
+    <span title="站点总字数">100k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:05</span>
+    <span title="站点阅读时长">1:31</span>
   </span>
 </div>
 
