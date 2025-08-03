@@ -145,7 +145,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">20</span>
+          <span class="site-state-item-count">21</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -156,7 +156,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-count">17</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -182,18 +182,12 @@
 
 
 
-  <div style="padding-left: 8px;">
-    <span class="post-meta-divider" style="padding-right: 8px;">|</span>
-    <i class="fa fa-thumbtack"></i>
-    <font color=black style="font-weight: bold; padding-left: 4px;">置顶</font>
-  </div>
-
 
   
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/12/18/%E5%A4%A7%E6%B1%87%E6%80%BB/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/03/%E9%94%99%E9%A2%98/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -211,7 +205,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/12/18/%E5%A4%A7%E6%B1%87%E6%80%BB/" class="post-title-link" itemprop="url">大汇总</a>
+          <a href="/2025/08/03/%E9%94%99%E9%A2%98/" class="post-title-link" itemprop="url">错题</a>
         </h2>
 
         <div class="post-meta-container">
@@ -221,15 +215,9 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
+      
 
-      <time title="创建时间：2024-12-18 00:09:36" itemprop="dateCreated datePublished" datetime="2024-12-18T00:09:36+08:00">2024-12-18</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-12-31 00:05:59" itemprop="dateModified" datetime="2024-12-31T00:05:59+08:00">2024-12-31</time>
+      <time title="创建时间：2025-08-03 19:32:36 / 修改时间：22:28:38" itemprop="dateCreated datePublished" datetime="2025-08-03T19:32:36+08:00">2025-08-03</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -247,14 +235,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>14k</span>
+      <span>1.4k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>13 分钟</span>
+      <span>1 分钟</span>
     </span>
 </div>
 
@@ -265,42 +253,74 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <ul>
-<li><h2 id="1，并发编程的优缺点"><a href="#1，并发编程的优缺点" class="headerlink" title="1，并发编程的优缺点"></a>1，并发编程的优缺点</h2><ul>
-<li>优点<ul>
-<li>1，拆分复杂的业务，可以同时操作io和cpu</li>
-<li>2，可以最大程度的利用多核cpu</li>
+          <h1 id="SQL-MySQL"><a href="#SQL-MySQL" class="headerlink" title="SQL-MySQL"></a>SQL-MySQL</h1><p>1，查找条件为不等于</p>
+<ul>
+<li>!&#x3D;</li>
+<li>&lt;&gt;</li>
+<li>not in()</li>
+</ul>
+<p>2，查找条件为非空</p>
+<ul>
+<li>is not null</li>
+</ul>
+<p>3,order by 默认 asc升序</p>
+<p>4，模糊查询通配符意义，···where name like···</p>
+<ul>
+<li>%：多个任意字符</li>
+<li>_:一个任意字符</li>
+</ul>
+<p>5，正则匹配，··where name regexp··· （内有乾坤，有时间了再详细去看）</p>
+<ul>
+<li>[abc]：abc范围内任意一个字符</li>
+<li>[^abc] : abc范围外的任意一个字符</li>
+</ul>
+<p>6，查找某列最大值</p>
+<ul>
+<li>先order by xx desc降序，再limit 1，取一个<ul>
+<li>limit(a,b)表示跳过a个后取b个</li>
 </ul>
 </li>
-<li>缺点<ul>
-<li>1，线程从暂停(阻塞，等待)到运行切换需要进行上下文切换，很耗资源</li>
-<li>2，多线程操作可能对临界区带来线程安全问题，比如一致性问题和死锁</li>
+<li>直接select max(xx) as xx,给列取一个别名代替max(xx)</li>
+</ul>
+<p>7,avg，count，round，as，group by，order by，的使用</p>
+<p>求每个班，男生和女生分别的，语文和数学平均成绩，人数，结果以班级为首列，性别为第二列，以班级+性别升序排列，成绩保留1位小数</p>
+<ul>
+<li>每个班-&gt;以班级分组；男女-&gt;以性别分组；应当有班级+性别作为分组条件</li>
+<li>平均成绩用avg(成绩列) as xx；某列的平均数并起别名<ul>
+<li>保留小数用round(a,b),给a保留b位小数</li>
 </ul>
 </li>
+<li>计数用count(*),conut(列名)会略过null值</li>
+<li>结果：</li>
 </ul>
-<h2 id="2，java中定位死锁"><a href="#2，java中定位死锁" class="headerlink" title="2，java中定位死锁"></a>2，java中定位死锁</h2><ul>
-<li>1，去jdk的bin目录，使用jps指令来获取正在运行的jvm进程id</li>
-<li>2，jstack -l  pid ,就直接可以看到死锁信息</li>
-</ul>
-<h2 id="3，如何创建线程"><a href="#3，如何创建线程" class="headerlink" title="3，如何创建线程"></a>3，如何创建线程</h2><ul>
-<li>1，继承Thread类，调用对象start方法<ul>
-<li>缺点，单继承</li>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> </span><br><span class="line">#一定记住把分组条件放进结果集，不然结果意义不明，看不懂</span><br><span class="line">class,</span><br><span class="line">gender, </span><br><span class="line">#<span class="keyword">as</span>用来设置别名，也就是结果集最终的列名，<span class="keyword">as</span>写在所有的聚合函数后面，等运行好了再设置别名</span><br><span class="line"><span class="built_in">count</span>(<span class="operator">*</span>) <span class="keyword">as</span> sum_num,</span><br><span class="line">round(<span class="built_in">avg</span>(math),<span class="number">1</span>) <span class="keyword">as</span> avg_math,</span><br><span class="line">round(<span class="built_in">avg</span>(chinese),<span class="number">1</span>)  <span class="keyword">as</span> avg_chinese,</span><br><span class="line"><span class="keyword">from</span> t_score </span><br><span class="line">#永远是先分组，再排序，再limit筛选</span><br><span class="line"><span class="keyword">group</span> <span class="keyword">by</span> class,gender </span><br><span class="line"><span class="keyword">order</span> <span class="keyword">by</span>  class,gender;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>8，sql执行顺序</p>
+<ul>
+<li>通过from或者join确定原始数据来源</li>
+<li>通过where进行过滤</li>
+<li>过滤完通过group by进行分组</li>
+<li>分组后的结果通常包含一对多，检查是否需要对多使用聚合函数，分组后结果集基本形成，对结果集进行聚合函数运算也在这一步，这样下一步having就可以拿到聚合函数结果进行判断了</li>
+<li>having通过聚合函数的结果进行条件判断，比如取分组后，数学平均成绩大于80的组；<ul>
+<li>注意：having子句在select执行之前执行，所以在select关键字后定义的列的别名按理是不可以在having子句中直接引用的</li>
+<li>但是：mysql对此进行了语法糖优化，可以把select中对聚合函数列(只限聚合函数列，普通列不行)的别名直接用于having子句</li>
+<li>然而：不提倡写这种，老老实实写聚合函数表达</li>
 </ul>
 </li>
-<li>2，实现runnable接口，传入Thread构造，调用Thread对象的start<ul>
-<li>缺点，无返回值</li>
+<li>select ，选择需要显示的列</li>
+<li>distinct，对显示的列进行去重</li>
 </ul>
-</li>
-<li>3，实现callable接口，交给线程池的submit方法执行，返回一个futrue，调用get方法阻塞获取返回值</li>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#<span class="keyword">distinct</span>是对结果集的所有行去重，<span class="keyword">distinct</span>后接的是去重依据，这条依据department, employee_name对结果集去重</span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> department, employee_name <span class="keyword">FROM</span> employees;</span><br><span class="line">#下面这个是语法错误，</span><br><span class="line"><span class="keyword">SELECT</span> department, <span class="keyword">DISTINCT</span> employee_name <span class="keyword">FROM</span> employees;</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>order by，对剩余的分组进行排序</li>
+<li>limit ，对结果筛选</li>
 </ul>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2024/12/18/%E5%A4%A7%E6%B1%87%E6%80%BB/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
+
       
     </div>
 
@@ -3053,6 +3073,150 @@
 
 
 
+  <div style="padding-left: 8px;">
+    <span class="post-meta-divider" style="padding-right: 8px;">|</span>
+    <i class="fa fa-thumbtack"></i>
+    <font color=black style="font-weight: bold; padding-left: 4px;">置顶</font>
+  </div>
+
+
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/12/18/%E5%A4%A7%E6%B1%87%E6%80%BB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/12/18/%E5%A4%A7%E6%B1%87%E6%80%BB/" class="post-title-link" itemprop="url">大汇总</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-12-18 00:09:36" itemprop="dateCreated datePublished" datetime="2024-12-18T00:09:36+08:00">2024-12-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-12-31 00:05:59" itemprop="dateModified" datetime="2024-12-31T00:05:59+08:00">2024-12-31</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/" itemprop="url" rel="index"><span itemprop="name">计算机</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>14k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>13 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <ul>
+<li><h2 id="1，并发编程的优缺点"><a href="#1，并发编程的优缺点" class="headerlink" title="1，并发编程的优缺点"></a>1，并发编程的优缺点</h2><ul>
+<li>优点<ul>
+<li>1，拆分复杂的业务，可以同时操作io和cpu</li>
+<li>2，可以最大程度的利用多核cpu</li>
+</ul>
+</li>
+<li>缺点<ul>
+<li>1，线程从暂停(阻塞，等待)到运行切换需要进行上下文切换，很耗资源</li>
+<li>2，多线程操作可能对临界区带来线程安全问题，比如一致性问题和死锁</li>
+</ul>
+</li>
+</ul>
+<h2 id="2，java中定位死锁"><a href="#2，java中定位死锁" class="headerlink" title="2，java中定位死锁"></a>2，java中定位死锁</h2><ul>
+<li>1，去jdk的bin目录，使用jps指令来获取正在运行的jvm进程id</li>
+<li>2，jstack -l  pid ,就直接可以看到死锁信息</li>
+</ul>
+<h2 id="3，如何创建线程"><a href="#3，如何创建线程" class="headerlink" title="3，如何创建线程"></a>3，如何创建线程</h2><ul>
+<li>1，继承Thread类，调用对象start方法<ul>
+<li>缺点，单继承</li>
+</ul>
+</li>
+<li>2，实现runnable接口，传入Thread构造，调用Thread对象的start<ul>
+<li>缺点，无返回值</li>
+</ul>
+</li>
+<li>3，实现callable接口，交给线程池的submit方法执行，返回一个futrue，调用get方法阻塞获取返回值</li>
+</ul>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2024/12/18/%E5%A4%A7%E6%B1%87%E6%80%BB/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+
+<div class="post-block">
+
+
+
 
   
   
@@ -3312,269 +3476,8 @@
 
 
 
-    
-
-
-
-<div class="post-block">
-
-
-
-
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/12/07/mybatis/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Hexo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/12/07/mybatis/" class="post-title-link" itemprop="url">mybatis</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-12-07 00:05:22" itemprop="dateCreated datePublished" datetime="2024-12-07T00:05:22+08:00">2024-12-07</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-12-24 23:56:46" itemprop="dateModified" datetime="2024-12-24T23:56:46+08:00">2024-12-24</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/" itemprop="url" rel="index"><span itemprop="name">计算机</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>5.8k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>5 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>mybatis配置文件</p>
-<ul>
-<li><p>配置环境，数据源：environments&lt;environment标签</p>
-</li>
-<li><p>配置mapper文件的位置 ：mappers&lt;mapper标签</p>
-<ul>
-<li>按包扫描mapper文件时mappers&lt;package name&#x3D;，xml的名字还起着和mapper接口对应的作用，所以在使用时要注意：<ul>
-<li>1，mapper文件放的层级和mapper接口的层级一样,也就是包一致</li>
-<li>2，mapper文件的名字和接口名一致</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>配置properties文件的位置，引用使用${}：properties标签</p>
-</li>
-<li><p>设置类型别名typeAlias&lt;typeAlia type&#x3D;;alias&#x3D;;可以有效避免由于resultType需要的全限定名过长难写的问题，别名不区分大小写</p>
-<ul>
-<li>除了上面为单个类设置别名的方式，还可以指定某个包所有类以类名为别名，不区分大小写typealais&lt;package name&#x3D;；</li>
-</ul>
-</li>
-</ul>
-<p>mybatis mapper文件和接口的对应</p>
-<ul>
-<li>一张表，对应一个mapper接口，对应一个mapper文件，对应一个实体类</li>
-<li>mapper接口对应mapper文件的命名空间</li>
-<li>mapper接口的方法，对应mapper文件的sql id</li>
-</ul>
-<p>接口中的参数如何传递到sql语句？</p>
-<ul>
-<li>${},#{}</li>
-<li>单个字面量的传递，大括号随便填就可以</li>
-<li>多个字面量，mybatis会存到一个map中，默认的键是arg0，arg1····，或者param0，param1···；值就是参数顺序的参数值<ul>
-<li>获取的时候，直接大括号里写arg0或param0这种就可以获取到值了</li>
-</ul>
-</li>
-<li>多个字面量，为避免使用默认的arg0这种键，可以先在service把参数手动打包成map，再直接传入map类型的参数<ul>
-<li>这样获取的时候，就可以通过大括号中写自己定义的键获取自己定义的值</li>
-</ul>
-</li>
-<li>多个字面量，可以使用@Param注解，给每个参数指定mybatis存储的键<ul>
-<li>大括号里填注解指定的键可以获取值</li>
-</ul>
-</li>
-<li>对象类性，mybatis自动使用属性的名字为键，属性值为值，创建map<ul>
-<li>大括号填属性名即可</li>
-</ul>
-</li>
-</ul>
-<p>结论：参数的获取实际上和接口方法声明的参数名没有关系</p>
-<p>结果集如何指定返回格式？</p>
-<ul>
-<li>单条数据用对象接收，或者用map(接口和resultType都是)，key是属性名，v是值</li>
-<li>多条在接口用List接收，resulttype是list元素类型</li>
-<li>多条也可以用map接收，必须接口@MapKey()指定map的key，每一条记录的json作为v；或者直接使用map列表，返回多个map</li>
-</ul>
-<p>默认使用#{}，什么时候只能用${}？</p>
-<ul>
-<li><p>主要是有没有单引号的关系</p>
-</li>
-<li><p>模糊查询，使用like ‘%${}%’;like “%”#{}”%”;like concat(‘%’,#{},’%’)</p>
-</li>
-<li><p>批量删除使用了in，in ${ids},#{}会为每个id加单引号，执行没结果</p>
-</li>
-<li><p>动态表名使用参数作为表名，表名是不可以有单引号的</p>
-</li>
-</ul>
-<p>如何同时修改有关联的两张表？</p>
-<p>例子：往班级表插入一个班级，分配一些学生(把学生的班级改为插入的班级)</p>
-<p>步骤：</p>
-<ul>
-<li>插入班级</li>
-<li>查询该班级的自增id(插入之前这个值是空，自动生成的)，所以必须查</li>
-<li>根据条件获取一部分学生，更改他们的班级id</li>
-</ul>
-<p>优化：在插入后自动回调将id返回给对象</p>
-<ul>
-<li>设置insert标签参数，useGeneratedKeys&#x3D;”true”,keyProperty&#x3D;”id”(对象的自增主键属性名)</li>
-<li>在执行insert之后，再去看传入的班级对象参数，已经把id属性设置成了插入了的班级的id</li>
-<li>直接用这个id修改学生班级id</li>
-</ul>
-<p>字段名和属性名不同咋办？</p>
-<ul>
-<li>设置underScoreToCamelCase完成下划线和驼峰转换</li>
-<li>在sql语句查询的时候为字段设置别名</li>
-<li>@TableField(“user_name”)注解在实体类属性上，和表字段对应</li>
-<li>使用resultmap</li>
-</ul>
-<p>1对多咋办？</p>
-<p>例子，一个班级对应多个学生，在班级类应当有一个list<student>属性，难以对此属性赋值，因为要通过班级id关联查询</p>
-<ul>
-<li>使用collection标签，记忆：集合属性用collection标签</li>
-</ul>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">id</span>=<span class="string">&quot;classAndStudentResultMap&quot;</span> <span class="attr">type</span>=<span class="string">&quot;Class&quot;</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">id</span> <span class="attr">property</span>=<span class="string">&quot;cid&quot;</span> <span class="attr">column</span>=<span class="string">&quot;cid&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;className&quot;</span> <span class="attr">column</span>=<span class="string">&quot;class_name&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">result</span>&gt;</span></span><br><span class="line">    再封装学生列表，指定list属性名，指定list元素类型</span><br><span class="line">	<span class="tag">&lt;<span class="name">collection</span> <span class="attr">property</span>=<span class="string">&quot;students&quot;</span> <span class="attr">ofType</span>=<span class="string">&quot;student&quot;</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">id</span> <span class="attr">property</span>=<span class="string">&quot;studentId&quot;</span> <span class="attr">column</span>=<span class="string">&quot;student_id&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;age&quot;</span> <span class="attr">column</span>=<span class="string">&quot;age&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">result</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;sex&quot;</span> <span class="attr">column</span>=<span class="string">&quot;sex&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">result</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;email&quot;</span> <span class="attr">column</span>=<span class="string">&quot;email&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">result</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">collection</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>使用分步操作+懒加载</li>
-</ul>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">id</span>=<span class="string">&quot;DeptAndEmpByStepOneResultMap&quot;</span> <span class="attr">type</span>=<span class="string">&quot;Dept&quot;</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">id</span> <span class="attr">property</span>=<span class="string">&quot;did&quot;</span> <span class="attr">column</span>=<span class="string">&quot;did&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;deptName&quot;</span> <span class="attr">column</span>=<span class="string">&quot;dept_name&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">result</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">collection</span> <span class="attr">property</span>=<span class="string">&quot;emps&quot;</span></span></span><br><span class="line"><span class="tag">		</span></span><br><span class="line"><span class="tag">      <span class="attr">指定第二步对应的接口</span>          <span class="attr">select</span>=<span class="string">&quot;com.atguigu.mybatis.mapper.EmpMapper.getDeptAndEmpByStepTwo&quot;</span></span></span><br><span class="line"><span class="tag">                <span class="attr">指定第二步接口需要的参数</span></span></span><br><span class="line"><span class="tag">				<span class="attr">column</span>=<span class="string">&quot;did&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">collection</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--Dept getDeptAndEmpByStepOne(@Param(&quot;did&quot;) Integer did);--&gt;</span></span><br><span class="line">第二步</span><br><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;getDeptAndEmpByStepOne&quot;</span> <span class="attr">resultMap</span>=<span class="string">&quot;DeptAndEmpByStepOneResultMap&quot;</span>&gt;</span></span><br><span class="line">	select * from t_dept where did = #&#123;did&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">settings</span>&gt;</span></span><br><span class="line">	<span class="comment">&lt;!--开启延迟加载--&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">setting</span> <span class="attr">name</span>=<span class="string">&quot;lazyLoadingEnabled&quot;</span> <span class="attr">value</span>=<span class="string">&quot;true&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">settings</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>多对一呢？</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">id</span>=<span class="string">&quot;empAndDeptResultMapTwo&quot;</span> <span class="attr">type</span>=<span class="string">&quot;Emp&quot;</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">id</span> <span class="attr">property</span>=<span class="string">&quot;eid&quot;</span> <span class="attr">column</span>=<span class="string">&quot;eid&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;empName&quot;</span> <span class="attr">column</span>=<span class="string">&quot;emp_name&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">result</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;age&quot;</span> <span class="attr">column</span>=<span class="string">&quot;age&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">result</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;sex&quot;</span> <span class="attr">column</span>=<span class="string">&quot;sex&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">result</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;email&quot;</span> <span class="attr">column</span>=<span class="string">&quot;email&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">result</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">association</span> <span class="attr">property</span>=<span class="string">&quot;dept&quot;</span> <span class="attr">javaType</span>=<span class="string">&quot;Dept&quot;</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">id</span> <span class="attr">property</span>=<span class="string">&quot;did&quot;</span> <span class="attr">column</span>=<span class="string">&quot;did&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;deptName&quot;</span> <span class="attr">column</span>=<span class="string">&quot;dept_name&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">result</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">association</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--Emp getEmpAndDept(@Param(&quot;eid&quot;)Integer eid);--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;getEmpAndDept&quot;</span> <span class="attr">resultMap</span>=<span class="string">&quot;empAndDeptResultMapTwo&quot;</span>&gt;</span></span><br><span class="line">	select * from t_emp left join t_dept on t_emp.eid = t_dept.did where t_emp.eid = #&#123;eid&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>分步</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">id</span>=<span class="string">&quot;empAndDeptByStepResultMap&quot;</span> <span class="attr">type</span>=<span class="string">&quot;Emp&quot;</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">id</span> <span class="attr">property</span>=<span class="string">&quot;eid&quot;</span> <span class="attr">column</span>=<span class="string">&quot;eid&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;empName&quot;</span> <span class="attr">column</span>=<span class="string">&quot;emp_name&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">result</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;age&quot;</span> <span class="attr">column</span>=<span class="string">&quot;age&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">result</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;sex&quot;</span> <span class="attr">column</span>=<span class="string">&quot;sex&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">result</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;email&quot;</span> <span class="attr">column</span>=<span class="string">&quot;email&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">result</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">association</span> <span class="attr">property</span>=<span class="string">&quot;dept&quot;</span></span></span><br><span class="line"><span class="tag">				 <span class="attr">select</span>=<span class="string">&quot;com.atguigu.mybatis.mapper.DeptMapper.getEmpAndDeptByStepTwo&quot;</span></span></span><br><span class="line"><span class="tag">				 <span class="attr">column</span>=<span class="string">&quot;did&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">association</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--Emp getEmpAndDeptByStepOne(@Param(&quot;eid&quot;) Integer eid);--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;getEmpAndDeptByStepOne&quot;</span> <span class="attr">resultMap</span>=<span class="string">&quot;empAndDeptByStepResultMap&quot;</span>&gt;</span></span><br><span class="line">	select * from t_emp where eid = #&#123;eid&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>总结，多对一和一对多都是通过级联查询，第一次只查出了某个属性的一部分，必须把手动第二部分的东西封装到属性里</p>
-<p>动态sql标签</p>
-<ul>
-<li>使用if来判断条件是否满足</li>
-<li>使用where来自动生成where，并且自动清除sql前部分的and和or，注意后部分不能去除</li>
-</ul>
-<h2 id="一级缓存"><a href="#一级缓存" class="headerlink" title="一级缓存"></a>一级缓存</h2><ul>
-<li>1，作用范围：<ul>
-<li>一级缓存是SQL session级别的，默认开启，同一个SQL session内相同的sql语句将会使用缓存而不是查询数据库</li>
-</ul>
-</li>
-<li>2,如何开启：<ul>
-<li>自动开启</li>
-</ul>
-</li>
-<li>3，缓存有效使用的条件：<ul>
-<li>同一个SQL session下操作</li>
-<li>一模一样的sql语句</li>
-<li>查询之间没有经历过增删改操作，增删改操作会导致数据库的内容和缓存的内容不一样，mybatis会直接删除缓存</li>
-<li>查询之间没有手动调用清理方Sqlsession.clearCatch()</li>
-</ul>
-</li>
-</ul>
-<h2 id="二级缓存"><a href="#二级缓存" class="headerlink" title="二级缓存"></a>二级缓存</h2><ul>
-<li><p>1，作用范围</p>
-<ul>
-<li>二级缓存是namespace级别的，一般一个mapper接口对应一个mapper文件对应一个namespace</li>
-</ul>
-</li>
-<li><p>2，开启过程</p>
-<ul>
-<li><p>全局设置中&lt;setting name&#x3D;”cacheEnabled” value&#x3D;”true”&#x2F;&gt;,默认就是true，可以不用手动设置该选项</p>
-</li>
-<li><p>在要开启的namespace中使用catche标签配置</p>
-</li>
-<li><pre><code class="xml">&lt;mapper namespace=&quot;com.example.mapper.UserMapper&quot;&gt;
-    &lt;!-- 配置二级缓存 --&gt;
-    &lt;cache 
-        eviction=&quot;LRU&quot; 
-        flushInterval=&quot;60000&quot; 
-        size=&quot;512&quot; 
-        readOnly=&quot;true&quot;/&gt;
-    &lt;!-- SQL语句 --&gt;
-&lt;/mapper&gt;
-</code></pre>
-</li>
-<li><p>表对应的java实例对象要实现序列化接口并设置版本号，因为可能有持久化到磁盘</p>
-</li>
-</ul>
-</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>
@@ -3596,13 +3499,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">100k</span>
+    <span title="站点总字数">101k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:31</span>
+    <span title="站点阅读时长">1:32</span>
   </span>
 </div>
 
