@@ -430,9 +430,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2025-07-28 15:20:28 / 修改时间：15:21:20" itemprop="dateCreated datePublished" datetime="2025-07-28T15:20:28+08:00">2025-07-28</time>
+      <time title="创建时间：2025-07-28 15:20:28" itemprop="dateCreated datePublished" datetime="2025-07-28T15:20:28+08:00">2025-07-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-08-17 21:56:52" itemprop="dateModified" datetime="2025-08-17T21:56:52+08:00">2025-08-17</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -450,14 +456,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>28k</span>
+      <span>31k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>26 分钟</span>
+      <span>28 分钟</span>
     </span>
 </div>
 
@@ -1563,6 +1569,77 @@
 <p>资源包括，banner，快应用，导航，资源是一张表，通过资源类型区分<br>创建banner资源，包括名称，图片，跳转链接，跳转类型，快应用<br>创建计划，计划中可以下拉框选择资源，用于配置banner的展示时间段</p>
 <p>重大新闻咨询会推送，定时任务每四小时调用uc的个性化推荐接口，插入到数据库，部分插入到es，后台配置推送计划，通过es搜索可以选择咨询，并且选择咨询要推送的手机id，机型，版本，城市，点击确定往表中插入推送计划，推送部分取推送计划表中的计划执行，并非我们咨询部门执行</p>
 <p>个性化推送，创建推送计划无需设置版本机型这些，直接插入个性化推送表，并且每5分钟调大数据平台sdk上报到大数据平台上，大数据根据咨询分类，标题内容等判断具体推送给什么用户；推送完成的计划改成已推送</p>
+<h1 id="Git的使用"><a href="#Git的使用" class="headerlink" title="Git的使用"></a>Git的使用</h1><p>1，使用git add .可以所有本地文件提交到本地暂存区</p>
+<p>2，git commit -am””可以提交到本地仓库并注释</p>
+<p>3，git push可以提交到远程仓库</p>
+<p>4，git pull可以从远程仓库拉取</p>
+<p>5，git checkout -b zxr 可以创建并切换到zxr分支</p>
+<p>6，git checkout master可以直接切换到master分支</p>
+<ul>
+<li>写代码之前，先创建自己的分支</li>
+<li>完成后提交，测试后没问题才会merge合并到master分支</li>
+<li>自己分支功能开发完，并且已经合并到master后，可以考虑从master新建一个分支开发或者是把新的master的内容merge到自己的分支上，都可以获取到最新的master的所有内容</li>
+</ul>
+<p>7，git merge zxr 把zxr分支代码合并到当前分支</p>
+<p>8，每次提交都会生成一个版本，如果已经提交的功能有问题，要回到某个版本：</p>
+<ul>
+<li>git log命令，显示版本号，修改人，修改时间，提交时的注释</li>
+<li>通过查看自己提交的注释找到要回到的版本，拿到版本号</li>
+<li>通过git reset –hard 版本号前几位，就可以回到某个版本继续开发</li>
+</ul>
+<p>9，和github等仓库进行远程连接的方式有两种，主要的目的就是要验证身份，让git可以访问到指定账户</p>
+<ul>
+<li>直接使用github账户的用户名密码，能证明github账户是自己的，可以被访问</li>
+<li>在本地上生成公钥和私钥，把公钥配置到自己的github账户中，git访问时服务端下发随机字符串，客户端用私钥加签，上传，服务端用公钥解签，解完后字符串正确代表git可以访问这个github账户，需要把远程连接方式改成ssh而非密码pat</li>
+</ul>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh<span class="literal">-keygen</span> <span class="literal">-t</span> ed25519 <span class="literal">-C</span> <span class="string">&quot;your_email@example.com&quot;</span>  <span class="comment"># 更安全的Ed25519算法</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="SpringcloudAlibaba的使用"><a href="#SpringcloudAlibaba的使用" class="headerlink" title="SpringcloudAlibaba的使用"></a>SpringcloudAlibaba的使用</h1><p>1，nacos，服务注册，配置管理</p>
+<ul>
+<li>在需要注册成服务的模块的yaml问价中指定nacos的服务器ip和进程端口号</li>
+<li>在需要注册的模块的启动类上加@EnableDiscoveryClient注解</li>
+<li>服务注册到nacos上，名字和yaml文件中配置的服务名相同，注意名字不要包含下划线，需要分级可以用减号(横杠)</li>
+</ul>
+<p>2，openFeign，远程调用</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//创建一个接口，指定要调用的方法所属的服务，服务名和yaml中服务名相同</span></span><br><span class="line"> <span class="meta">@FeignClient(&quot;service-vod&quot;)</span></span><br><span class="line"> <span class="meta">@Component</span></span><br><span class="line"> <span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">VodClient</span> &#123;</span><br><span class="line"><span class="comment">//直接使用springmvc的注解即可，注意路径完整性，除了方法上的@Deletemapping参数，路径还要包含类上的@Requestmapping里的路径</span></span><br><span class="line"> <span class="meta">@DeleteMapping(value = &quot;/eduvod/vod/video/&#123;videoId&#125;&quot;)</span></span><br><span class="line"><span class="comment">// 直接复制目标服务中的方法的签名即可</span></span><br><span class="line"> <span class="keyword">public</span> R <span class="title function_">removeVideo</span><span class="params">(<span class="meta">@PathVariable(&quot;videoId&quot;)</span> String videoId)</span>;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>注意在远程调用时，@PathVariable的参数不可以省略，需要和路径大括号里的一样</li>
+<li>一般可以把所有的远程调用接口集中到一个interface模块中，这个模块里面的接口代码都可以复用</li>
+<li>基本就是通过接口中配置的服务名和方法路径，去目标服务找到实际的接口然后调用</li>
+</ul>
+<p>3，histrix，熔断器，判断远程调用请求是否需要熔断，否放行给ribbon，是报异常或者返回熔断结果</p>
+<ul>
+<li>在feign接口所在的yaml中设置feign.histix.enable&#x3D;true开启熔断，默认是false</li>
+<li>在feign接口所在的yaml中设置默认的熔断时间，超过此时间没响应的请求会触发熔断<ul>
+<li>是否是feign接口模块还是调用方加存疑？？？</li>
+</ul>
+</li>
+<li>调用流程：在被调用方宕机或者调用时间超时会执行熔断方法<ul>
+<li>写一个实现类实现feign接口，重写方法，这个方法在远程调用失败时会触发，一般方法内手动响应错误类型回去即可；</li>
+<li>在feign接口上的@feignClient注解上，除了指定远程调用服务名(name参数)，还需要知道熔断器的类型(自己创建的实现类的类型，注解参数名为fallback)</li>
+</ul>
+</li>
+</ul>
+<p>4，ribbon负载均衡，在没有触发熔断时，根据服务名和负载均衡策略指定集群中的某个机器</p>
+<p>5，使用httpclent进行实际的http调用</p>
+<p>6，顺序，写feign接口-调用feign接口-是否熔断-负载均衡-http请求</p>
+<p>7，gateway网关，作用，请求转发，权限管理，跨域配置;请求直接访问网关的ip和端口，由网关转发给服务</p>
+<ul>
+<li><p>使用：新建单独模块作为nacos的服务，导入依赖，在yaml中配置网关的规则</p>
+<ul>
+<li>路由：可以配置若干路由规则，每个规则有自己的id，规则指定客户端发来的请求路径(通配符匹配) 应该 路由转发到哪个服务名，在服务名之前加上lb:&#x2F;&#x2F;可以进行该服务集群的负载均衡</li>
+</ul>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring.cloud.gateway.routes[0].id</span></span><br><span class="line"><span class="attr">spring.cloud.gateway.routes[0].uri</span></span><br><span class="line"><span class="attr">spring.cloud.gateway.routes[0].predicates</span></span><br><span class="line"><span class="comment">#[0]代表第一个路由规则，想加规则可以用后面的数字</span></span><br><span class="line"><span class="comment">#id是规则名，随意取</span></span><br><span class="line"><span class="comment">#uri可以指定被拦截路径要转发向哪个服务，lb://server1，转发给server1并对server1的集群做负载均衡</span></span><br><span class="line"><span class="comment">#predicates是断言，是前端的请求路径，Path=...,可以使用通配符匹配若干路径</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>断言</li>
+<li>过滤器</li>
+</ul>
+</li>
+<li><p>网关的转发依赖nacos的服务注册，注册了才能发现服务才能做负载均衡和转发</p>
+</li>
+</ul>
 
       
     </div>
@@ -3552,13 +3629,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">103k</span>
+    <span title="站点总字数">105k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:33</span>
+    <span title="站点阅读时长">1:35</span>
   </span>
 </div>
 
