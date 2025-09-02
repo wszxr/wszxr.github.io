@@ -182,150 +182,6 @@
 
 
 
-  <div style="padding-left: 8px;">
-    <span class="post-meta-divider" style="padding-right: 8px;">|</span>
-    <i class="fa fa-thumbtack"></i>
-    <font color=black style="font-weight: bold; padding-left: 4px;">置顶</font>
-  </div>
-
-
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/12/18/%E5%A4%A7%E6%B1%87%E6%80%BB/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Hexo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/12/18/%E5%A4%A7%E6%B1%87%E6%80%BB/" class="post-title-link" itemprop="url">大汇总</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-12-18 00:09:36" itemprop="dateCreated datePublished" datetime="2024-12-18T00:09:36+08:00">2024-12-18</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-12-31 00:05:59" itemprop="dateModified" datetime="2024-12-31T00:05:59+08:00">2024-12-31</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/" itemprop="url" rel="index"><span itemprop="name">计算机</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>14k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>13 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <ul>
-<li><h2 id="1，并发编程的优缺点"><a href="#1，并发编程的优缺点" class="headerlink" title="1，并发编程的优缺点"></a>1，并发编程的优缺点</h2><ul>
-<li>优点<ul>
-<li>1，拆分复杂的业务，可以同时操作io和cpu</li>
-<li>2，可以最大程度的利用多核cpu</li>
-</ul>
-</li>
-<li>缺点<ul>
-<li>1，线程从暂停(阻塞，等待)到运行切换需要进行上下文切换，很耗资源</li>
-<li>2，多线程操作可能对临界区带来线程安全问题，比如一致性问题和死锁</li>
-</ul>
-</li>
-</ul>
-<h2 id="2，java中定位死锁"><a href="#2，java中定位死锁" class="headerlink" title="2，java中定位死锁"></a>2，java中定位死锁</h2><ul>
-<li>1，去jdk的bin目录，使用jps指令来获取正在运行的jvm进程id</li>
-<li>2，jstack -l  pid ,就直接可以看到死锁信息</li>
-</ul>
-<h2 id="3，如何创建线程"><a href="#3，如何创建线程" class="headerlink" title="3，如何创建线程"></a>3，如何创建线程</h2><ul>
-<li>1，继承Thread类，调用对象start方法<ul>
-<li>缺点，单继承</li>
-</ul>
-</li>
-<li>2，实现runnable接口，传入Thread构造，调用Thread对象的start<ul>
-<li>缺点，无返回值</li>
-</ul>
-</li>
-<li>3，实现callable接口，交给线程池的submit方法执行，返回一个futrue，调用get方法阻塞获取返回值</li>
-</ul>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2024/12/18/%E5%A4%A7%E6%B1%87%E6%80%BB/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-
-<div class="post-block">
-
-
-
 
   
   
@@ -367,7 +223,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-09-01 23:55:48" itemprop="dateModified" datetime="2025-09-01T23:55:48+08:00">2025-09-01</time>
+      <time title="修改时间：2025-09-02 23:53:56" itemprop="dateModified" datetime="2025-09-02T23:53:56+08:00">2025-09-02</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -385,14 +241,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>1.7k</span>
+      <span>8.4k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>2 分钟</span>
+      <span>8 分钟</span>
     </span>
 </div>
 
@@ -456,7 +312,164 @@
 <li>digestutils是基于springframework的，用于加密的工具类</li>
 <li>md5digestashex会生成一个32位的字符串作为结果，相比于md5digest的128位二进制字节数组更加易于人类查看</li>
 </ul>
+<h3 id="9，后端生成接口文档，接口测试，knife4j"><a href="#9，后端生成接口文档，接口测试，knife4j" class="headerlink" title="9，后端生成接口文档，接口测试，knife4j"></a>9，后端生成接口文档，接口测试，knife4j</h3><p>1，knife4j是一个框架，集成了swagger，简化了swagger的操作</p>
+<p>2，在springboot中使用knife4j</p>
+<ul>
+<li>导入依赖</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.github.xiaoymin<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>knife4j-spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
+<ul>
+<li>配置类中创建需要的bean</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="keyword">public</span> Docket <span class="title function_">docket</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="comment">//设置主页信息</span></span><br><span class="line">    <span class="type">ApiInfo</span> <span class="variable">apiInfo</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ApiInfoBuilder</span>()</span><br><span class="line">        .title(<span class="string">&quot;苍穹外卖项目接口文档&quot;</span>)</span><br><span class="line">        .version(<span class="string">&quot;2.0&quot;</span>)</span><br><span class="line">        .description(<span class="string">&quot;苍穹外卖项目接口文档&quot;</span>)</span><br><span class="line">        .build();</span><br><span class="line">    <span class="comment">//指定swagger版本为swagger2</span></span><br><span class="line">    <span class="type">Docket</span> <span class="variable">docket</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Docket</span>(DocumentationType.SWAGGER_2)</span><br><span class="line">        .apiInfo(apiInfo)</span><br><span class="line">        .select()</span><br><span class="line">        <span class="comment">//指定需要扫描的包</span></span><br><span class="line">        .apis(RequestHandlerSelectors.basePackage(<span class="string">&quot;com.sky.controller&quot;</span>))</span><br><span class="line">        .paths(PathSelectors.any())</span><br><span class="line">        .build();</span><br><span class="line">    <span class="keyword">return</span> docket;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>设置静态资源映射，把访问地址映射到静态资源上；如果没有设置映射，springmvc会把这个路径当做一个controller的路径，就找不到会404</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">addResourceHandlers</span><span class="params">(ResourceHandlerRegistry registry)</span> &#123;</span><br><span class="line">    <span class="comment">//knife4j会吧生成的静态资源都放到classpath下的路径中，在浏览器访问/doc.html的时候，要映射才能访问到classpath下的真正的静态资源</span></span><br><span class="line">    registry</span><br><span class="line">        .addResourceHandler(<span class="string">&quot;/doc.html&quot;</span>)</span><br><span class="line">        .addResourceLocations(<span class="string">&quot;classpath:/META-INF/resources/&quot;</span>);</span><br><span class="line">    registry</span><br><span class="line">        .addResourceHandler(<span class="string">&quot;/webjars/**&quot;</span>)</span><br><span class="line">        .addResourceLocations(<span class="string">&quot;classpath:/META-INF/resources/webjars/&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>通过服务的ip+端口+&#x2F;doc.html可以直接访问主页</li>
+</ul>
+<img src="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20250902115930274.png" alt="image-20250902115930274" style="zoom: 50%;" />
+
+<p>3，knife4j常用注解</p>
+<ul>
+<li>@Api：用在类上，比如controller类，描述类的作用、<ul>
+<li>tags参数写描述信息</li>
+</ul>
+</li>
+<li>@ApiModel：用在实体类上，比如dto，vo，entity，描述作用<ul>
+<li>description参数写描述信息</li>
+</ul>
+</li>
+<li>@ApiModelProperties：用在实体类的属性上<ul>
+<li>value参数写描述信息</li>
+</ul>
+</li>
+<li>@ApiOperation：用在方法上，描述方法的信息，作用，参数，返回值等<ul>
+<li>value参数写描述信息</li>
+</ul>
+</li>
+<li>@ApiImplicitParams：用于描述参数信息，可以包含一个参数列表</li>
+<li>@ApiImplicitParam：描述参数列表中的每一个参数<ul>
+<li>name：必填，和方法签名中的参数名必须一致</li>
+<li>value：非必填，对参数的描述</li>
+<li>required：非必填，描述参数是否可以不传</li>
+<li>paramType：必填，指定参数所在的位置<ul>
+<li>query：代表在路径中通过？拼接的参数</li>
+<li>path：代表路径中使用{}restfull风格的参数</li>
+<li>header：请求头中的参数</li>
+<li>cookie：cookie中的参数</li>
+<li>body：请求体中的参数</li>
+<li>cookie和header都可以通过httprequest对象获取</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="10，接口设计，apifox"><a href="#10，接口设计，apifox" class="headerlink" title="10，接口设计，apifox"></a>10，接口设计，apifox</h3><p>1，接口设计是在写代码之前开会讨论需要什么接口，形成一个文档，同时管理和维护；后面按照文档开发即可，可以使用apifox或yapi等</p>
+<p>2，swagger是后端进行开发的时候，用于自测接口功能的，和设计文档不是一个作用</p>
+<h3 id="11，接口开发流程"><a href="#11，接口开发流程" class="headerlink" title="11，接口开发流程"></a>11，接口开发流程</h3><p>1，通过需求看参数</p>
+<ul>
+<li>是否必须</li>
+<li>参数类型</li>
+<li>请求头中参数传递方式，是否是JSON</li>
+<li>参数校验：号码11位，身份证号18位，用户名和手机号唯一，参数是否必须</li>
+<li>返回类型，是否要封装成Result对象，一般包含<ul>
+<li>code：请求结果码</li>
+<li>data：如果有，代表实际返回的值</li>
+<li>message：如果有，代表后端传来的错误信息，一般用于展示给用户</li>
+</ul>
+</li>
+</ul>
+<p>2，看数据库</p>
+<ul>
+<li>是否需要唯一</li>
+<li>是否需要主键</li>
+<li>是否需要默认值</li>
+</ul>
+<h3 id="12，数据接收，传递，入库"><a href="#12，数据接收，传递，入库" class="headerlink" title="12，数据接收，传递，入库"></a>12，数据接收，传递，入库</h3><p>1，前端数据直接使用dto接收</p>
+<p>2，传输使用dto，入库需要把dto转成entity，因为dto的属性不完全</p>
+<p>3，可以使用：</p>
+<ul>
+<li>BeanUtils.copypropertise转化，并且手动赋值其他没有的属性</li>
+<li>使用lombok的builder，Entity.Builder().build()能链式的赋值，注意返回的是新对象，需要接收，不保留之前对象属性的值，所以两种方法不要混用</li>
+</ul>
+<h3 id="13，前端传入JSON对象"><a href="#13，前端传入JSON对象" class="headerlink" title="13，前端传入JSON对象"></a>13，前端传入JSON对象</h3><p>1，需要用@RequestBody接收，不然收不到</p>
+<h3 id="14，全局异常处理"><a href="#14，全局异常处理" class="headerlink" title="14，全局异常处理"></a>14，全局异常处理</h3><p>1，设定一个自定义异常，通常继承运行时异常类，或者继承自自定义异常基类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">CustomException</span> <span class="keyword">extends</span> <span class="title class_">BaseException</span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> code;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">CustomException</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">CustomException</span><span class="params">(String message)</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>(message);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">CustomException</span><span class="params">(String message, <span class="type">int</span> code)</span>&#123;</span><br><span class="line">        <span class="built_in">super</span>(message);</span><br><span class="line">        <span class="built_in">this</span>.code = code;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>设置了三个构造器，在手动throw的时候可以选择参数</li>
+</ul>
+<p>2，通过方法增强，捕获异常</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RestControllerAdvice</span></span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">GlobalExceptionHandler</span> &#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 捕获全局自定义异常</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> ex 异常</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 异常信息以及状态码</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@ExceptionHandler()</span></span><br><span class="line">    <span class="keyword">public</span> Result <span class="title function_">exceptionHandler</span><span class="params">(CustomException ex)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> Result.error(ex.getMessage(),ex.getCode());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>@RestControllerAdvice是切面，切点是所有的controller方法，rest表示方法return的结果以JSON形式返回，而不是作为路径跳转</li>
+<li>@ExceptionHandler()是专门在切面中进行异常捕获功能增强的注解，在注解的Value参数中写需要捕获的异常类型，没写的话会根据方法参数类型推出来</li>
+<li>原理就是，对所有controller方法都做了增强，也就是代理，代理原理就是在controller方法外加上try-catch代码，catch的类型就是指定的类型</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> 代理方法(原始方法)&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">try</span>&#123;</span><br><span class="line">        原始方法.invoke();</span><br><span class="line">    &#125;<span class="keyword">catch</span>(CustomException e)&#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="15，获取用户上下文信息"><a href="#15，获取用户上下文信息" class="headerlink" title="15，获取用户上下文信息"></a>15，获取用户上下文信息</h3><p>1，在进行增删改操作时，要获取用户信息并存入记录中，以记录是谁进行的修改</p>
+<p>2，方案一：在拦截器中，通过token反推出存入token的信息，再去库里查询完整的信息，存入threadlocal</p>
+<ul>
+<li>创建threadLocal实例，一般都会对threadlocal进行包装，提供静态的存取删方法</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 员工上下文，用于传递当前请求的员工信息</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">EmployeeContext</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> ThreadLocal&lt;Employee&gt; employeeHolder = <span class="keyword">new</span> <span class="title class_">ThreadLocal</span>&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Employee <span class="title function_">getEmployee</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> employeeHolder.get();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">setEmployee</span><span class="params">(Employee employee)</span> &#123;</span><br><span class="line">        employeeHolder.set(employee);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">removeEmployee</span><span class="params">()</span> &#123;</span><br><span class="line">        employeeHolder.remove();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>通过请求头中的token，获取信息，再去库查询完整信息，再存入ThreadLocal</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">preHandle</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler)</span>&#123;</span><br><span class="line">    <span class="comment">//1、从请求头中获取令牌</span></span><br><span class="line"><span class="type">String</span> <span class="variable">token</span> <span class="operator">=</span> request.getHeader(jwtProperties.getAdminTokenName());</span><br><span class="line"></span><br><span class="line"><span class="comment">//2、校验令牌,令牌生成时是利用id，所以可以通过令牌反推出id</span></span><br><span class="line"><span class="type">Claims</span> <span class="variable">claims</span> <span class="operator">=</span> JwtUtil.parseJWT(jwtProperties.getAdminSecretKey(), token);</span><br><span class="line"><span class="type">Long</span> <span class="variable">empId</span> <span class="operator">=</span> Long.valueOf(claims.get(JwtClaimsConstant.EMP_ID).toString());</span><br><span class="line"></span><br><span class="line"><span class="comment">//将员工信息放入threadLocal</span></span><br><span class="line">Employee employee;</span><br><span class="line">employee = employeeMapper.getById(empId);</span><br><span class="line">EmployeeContext.setEmployee(employee);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//别忘了在请求结束后移除ThreadLocal中的内容</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">afterCompletion</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">    <span class="comment">//请求完成时删除清空threadLocal</span></span><br><span class="line">    EmployeeContext.removeEmployee();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>注意请求结束后清空内容</li>
+<li>由于一个请求在controller，service，mapper直至返回都是同一个线程，所以这种方式在3层都可以获取</li>
+</ul>
+<p>3，方案二：自定义一个注解，例如@Login，注解类型为修饰参数，例如User user</p>
+<ul>
+<li>在参数解析器中，取到有@Login修饰且参数类型是User的参数</li>
+<li>通过token和库查到用户信息</li>
+<li>将用户信息通过反射插入该参数</li>
+<li>这时参数就有用户信息，在每一层方法都带上此参数，就能获取到用户信息</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">LoginUserResolver</span> <span class="keyword">implements</span> <span class="title class_">HandlerMethodArgumentResolver</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>参数解析器和拦截器都是在controller之前执行，但是分工不一样，应正确使用</li>
+<li>这种方法只能给controller的参数赋值，如果其他层想用，那么将此参数作为参数传递下去即可</li>
+</ul>
+<h3 id="16，mybatis中带条件的分页查询"><a href="#16，mybatis中带条件的分页查询" class="headerlink" title="16，mybatis中带条件的分页查询"></a>16，mybatis中带条件的分页查询</h3><p>1，传入的数据为，需要展示的页码，每一页的数量，查询条件；前端的数据应当专门建一个pageXXXDTO来接收</p>
+<ul>
+<li>注意前端的的参数是quey类型(路径中拼接)，后端使用对象可以直接接收；如果前端传入的是JSON，那么后端要加@RequestBody</li>
+</ul>
+<p>2，分页的结果应当封装到一个pageResult类里，类的属性根据前端需要的属性来定，正常需要的是总条数，和当前展示页的数据列表</p>
+<p>3，一般返回前端的都是Result统一结果，一般包含响应信息，响应码，data数据；这个data一般用T泛型表示或者是Object，所以返回的时候返回Result&lt;pageResult&gt; 就指明了data类型是pageResult，然后pageResult又包含总条数和数据列表</p>
+<p>4，手动方案进行分页</p>
+<ul>
+<li>手动先根据条件筛选，然后计算需要页码的开始和结束条目，使用limit截取返回即可</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;queryEmployeePage&quot;</span> <span class="attr">resultType</span>=<span class="string">&quot;employee&quot;</span>&gt;</span></span><br><span class="line">    select * from employee</span><br><span class="line">    <span class="comment">&lt;!--需要动态判断条件存在不存在，使用动态标签--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">where</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;name!=null and name!=&#x27;&#x27; &quot;</span>&gt;</span></span><br><span class="line">            <span class="comment">&lt;!-- 模糊查询使用concat拼接比较好--&gt;</span></span><br><span class="line">            and name like concat(&#x27;%&#x27;,#&#123;name&#125;,&#x27;%&#x27;)</span><br><span class="line">        <span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">where</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--谨记limit不需要打括号，limit的含义是跳过start条数据，取pageSize条数据--&gt;</span></span><br><span class="line">    limit #&#123;start&#125;,#&#123;pageSize&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>start计算的时候，page一定要减一，比如需要第一页的，那就从0*pageSize&#x3D;0开始；第二页就是从1*pageSize&#x3D;pageSize开始</li>
+</ul>
+<p>5,使用插件进行分页，原理就是，把pageNum，pageSize保存到threadLocal中，在sql执行之前，拦截执行sql的方法，判断threadLocal是否有分页信息，有的话就进行拼接limit然后执行</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//指定分页的页码，每一页的条数</span></span><br><span class="line">PageHelper.startPage(pageNum,pageSize);</span><br><span class="line"><span class="comment">//直接使用条件查询，插件会自动拦截下一条sql，把计算好的limit的值拼接到sql后面，这里返回的一定是Page对象 </span></span><br><span class="line">Page&lt;Employee&gt; page = employeeMapper.queryEmployeePageList(name);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//page对象中包含了结果和总数，直接用就行</span></span><br><span class="line">pageResult.setRecords(page.getResult());</span><br><span class="line">pageResult.setTotal(page.getTotal());</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--注意分页的返回值是Page&lt;Employee&gt;中的泛型类型，而不是Page类型--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;queryEmployeePageList&quot;</span> <span class="attr">resultType</span>=<span class="string">&quot;com.sky.entity.Employee&quot;</span>&gt;</span></span><br><span class="line">    select * from employee</span><br><span class="line">    <span class="tag">&lt;<span class="name">where</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--习惯写上and，where标签会自动去除不需要的and和or，但是多条件不写and就会出错--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;name!=null and name!=&#x27;&#x27; &quot;</span>&gt;</span></span><br><span class="line">            and name like concat(&#x27;%&#x27;,#&#123;name&#125;,&#x27;%&#x27;)</span><br><span class="line">        <span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">where</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>在mapper接口中，如果安装了mybatisx插件，mapper接口没有对应sql会爆红，alt+enter可以自动创建sql，自动填写id和返回值</li>
+<li>必须导入pagehelper依赖才可以使用</li>
+</ul>
+<h3 id="17，后端返回给前端日期类型的格式化"><a href="#17，后端返回给前端日期类型的格式化" class="headerlink" title="17，后端返回给前端日期类型的格式化"></a>17，后端返回给前端日期类型的格式化</h3>
       
     </div>
 
@@ -3249,6 +3262,364 @@
 
 
 
+    
+
+
+
+<div class="post-block">
+
+
+
+
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/12/25/rabbitMQ/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/12/25/rabbitMQ/" class="post-title-link" itemprop="url">rabbitMQ</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-12-25 22:25:55" itemprop="dateCreated datePublished" datetime="2024-12-25T22:25:55+08:00">2024-12-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-12-29 22:53:58" itemprop="dateModified" datetime="2024-12-29T22:53:58+08:00">2024-12-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/" itemprop="url" rel="index"><span itemprop="name">计算机</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>7k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>6 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="1，RabbitMQ架构"><a href="#1，RabbitMQ架构" class="headerlink" title="1，RabbitMQ架构"></a>1，RabbitMQ架构</h2><p><img src="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20241225222848029.png" alt="image-20241225222848029"></p>
+<ul>
+<li>1，整体架构：<ul>
+<li>发布者-&gt;交换机-&gt;消息队列-&gt;消费者</li>
+<li>可以用virtualHost隔离，每一个由若干交换机和消息队列组成</li>
+</ul>
+</li>
+<li>2，组件功能<ul>
+<li>交换机：负责路由和转发消息</li>
+<li>消息队列：负责存储消息</li>
+</ul>
+</li>
+<li>3，数据隔离<ul>
+<li>每个项目可以创建多个用户，有不同的权限，每个用户可以有多个virtualHost</li>
+</ul>
+</li>
+</ul>
+<h2 id="2，使用Java代码"><a href="#2，使用Java代码" class="headerlink" title="2，使用Java代码"></a>2，使用Java代码</h2><ul>
+<li>1，引入依赖starter，在yaml文件配置<ul>
+<li>host：rabbitMQ运行的主机地址</li>
+<li>port：rabbitMQ端口号</li>
+<li>username：用户名</li>
+<li>password：密码</li>
+<li>virtualHost：数据隔离空间</li>
+</ul>
+</li>
+</ul>
+<h2 id="3，rabbitMQ的组成"><a href="#3，rabbitMQ的组成" class="headerlink" title="3，rabbitMQ的组成"></a>3，rabbitMQ的组成</h2><ul>
+<li>1，生产者</li>
+<li>2，交换机</li>
+<li>3，消息队列</li>
+<li>4，消费者</li>
+<li>5，数据隔离virtualhost，每个virtualhost可以有若干交换机和队列组成，virtualhost之间互相隔离</li>
+<li>6，用户管理，每个用户可以有多个virtualhost</li>
+</ul>
+<h2 id="4，rabbitMQ原理"><a href="#4，rabbitMQ原理" class="headerlink" title="4，rabbitMQ原理"></a>4，rabbitMQ原理</h2><ul>
+<li>1，生产者发消息给交换机</li>
+<li>2，交换机把消息转发给队列，不负责存储</li>
+<li>3，队列存储和管理消息，队列绑定交换机</li>
+<li>4，消费者绑定队列消费</li>
+</ul>
+<h2 id="5，work-queues模型"><a href="#5，work-queues模型" class="headerlink" title="5，work queues模型"></a>5，work queues模型</h2><ul>
+<li><p>1，定义</p>
+<ul>
+<li>当生产者信息多时可以使用多个消费者，绑定同一个队列，一起消费同一个队列</li>
+</ul>
+</li>
+<li><p>2，问题</p>
+<ul>
+<li>消费者的能力不同，但是队列消息是平均分配给消费者的，导致能力强的消费者没有任务可执行</li>
+</ul>
+</li>
+<li><p>3，解决</p>
+<ul>
+<li>配置每次只取一条消息，只有处理完了之后再去取</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span> </span><br><span class="line">    <span class="attr">rabbitmq:</span> </span><br><span class="line">        <span class="attr">listener:</span> </span><br><span class="line">            <span class="attr">simple:</span> </span><br><span class="line">                <span class="attr">prefetch:</span> <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="6，rabbitMQ交换机类型"><a href="#6，rabbitMQ交换机类型" class="headerlink" title="6，rabbitMQ交换机类型"></a>6，rabbitMQ交换机类型</h2><ul>
+<li>1，fanout：广播交换机，队列绑定交换机只需要提供空key(“”)即可，每次对交换机发消息都会广播到所有绑定了交换机的队列</li>
+<li>2，direct：订阅交换机，队列绑定交换机的时候要提供一个key，只有交换机会根据消息中的key来路由到不同的队列</li>
+<li>3，topic：通配符订阅交换机，队列绑定的时候可以用通配符，消息中的key如果满足通配符，就会路由到该队列里面<ul>
+<li>key一般使用word1.word2.word3····的形式</li>
+<li>#代表0或任意多层单词，*代表任意一层单词</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">张三.18.男</span><br><span class="line">可以使用：</span><br><span class="line">张三.#</span><br><span class="line">张三.*.*</span><br><span class="line">张三.18.*</span><br><span class="line">#(全部key都接收到队列)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>4，headers：基于mq的消息头匹配(少用)</li>
+</ul>
+<h2 id="7，springAMPQ分别使用java配置类和注解来配置"><a href="#7，springAMPQ分别使用java配置类和注解来配置" class="headerlink" title="7，springAMPQ分别使用java配置类和注解来配置"></a>7，springAMPQ分别使用java配置类和注解来配置</h2><ul>
+<li>1，原理：springAMPQ为创建交换机，创建队列，交换机和队列的绑定都定义了专门的类以供使用</li>
+<li>2，具体类：<ul>
+<li>交换机：<ul>
+<li>FanoutExchange </li>
+<li>directExchange</li>
+<li>topicExchange</li>
+</ul>
+</li>
+<li>队列：<ul>
+<li>Queue</li>
+</ul>
+</li>
+<li>绑定：<ul>
+<li>Binding</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<ul>
+<li>3，使用spring配置类示例：<ul>
+<li>在配置类中创建三个对象，生产者发消息指定交换机和key，消费者绑定队列即可：</li>
+</ul>
+</li>
+</ul>
+<p><em><strong>对象创建以及绑定key</strong></em></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//注意，对象名是方法名，指定的参数是交换机名</span></span><br><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="keyword">public</span> DirectExchange <span class="title function_">directExchange</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">DirectExchange</span>(<span class="string">&quot;directExchange&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Direct队列，注意，对象名是方法名，指定的参数是队列名</span></span><br><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="keyword">public</span> Queue <span class="title function_">directQueue</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Queue</span>(<span class="string">&quot;directQueue&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Direct绑定</span></span><br><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="keyword">public</span> Binding <span class="title function_">directBinding</span><span class="params">(Queue directQueue, DirectExchange directExchange)</span> &#123;</span><br><span class="line">    <span class="comment">//将队列绑定在交换机上，并且指定绑定的key</span></span><br><span class="line">    <span class="keyword">return</span> BindingBuilder</span><br><span class="line">        .bind(directQueue)</span><br><span class="line">        .to(directExchange)</span><br><span class="line">        .with(<span class="string">&quot;directRoutingKey&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p><em><strong>生产者发送消息</strong></em>:需要注入RabbitTemplate</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> RabbitTemplate rabbitTemplate;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 发送Direct消息,需要交换器名，队列绑的key，消息内容</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">sendDirectMessage</span><span class="params">(String message)</span> &#123;</span><br><span class="line">    rabbitTemplate.convertAndSend(<span class="string">&quot;directExchangeName&quot;</span>, <span class="string">&quot;user.name&quot;</span>, message);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 发送Fanout消息，key用空字符串表示</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">sendFanoutMessage</span><span class="params">(String message)</span> &#123;</span><br><span class="line">    rabbitTemplate.convertAndSend(<span class="string">&quot;fanoutExchangename&quot;</span>, <span class="string">&quot;&quot;</span>, message);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><em><strong>消费者</strong></em></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 接收Direct消息，自动接收，消息由spring放在参数中，需要指定消费的队列</span></span><br><span class="line"><span class="meta">@RabbitListener(queues = &quot;directQueueName&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">receiveDirectMessage</span><span class="params">(String message)</span> &#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;Received Direct Message: &quot;</span> + message);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<ul>
+<li>4，使用注解配置队列和绑定</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">可以在配置类使用注解创建三个对象</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="meta">@Exchange(name = &quot;directExchange&quot;, type = ExchangeTypes.DIRECT)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">declareDirectExchange</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="comment">// 注解会自动声明交换机，这里不需要实现具体的方法体</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 声明一个队列</span></span><br><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="meta">@Queue(name = &quot;myQueue&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">declareQueue</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="comment">// 注解会自动声明队列</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用@QueueBinding注解来声明队列和绑定</span></span><br><span class="line"><span class="meta">@QueueBinding(</span></span><br><span class="line"><span class="meta">    value = @Queue(name = &quot;myQueue&quot;),</span></span><br><span class="line"><span class="meta">    exchange = @Exchange(name = &quot;directExchange&quot;, type = &quot;direct&quot;),</span></span><br><span class="line"><span class="meta">    key = &quot;myRoutingKey&quot;</span></span><br><span class="line"><span class="meta">)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">declareBinding</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="comment">// 注解会自动声明绑定</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">也可以在消费者直接声明交换机，队列，绑定</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="meta">@RabbitListener(bindings = @QueueBinding(</span></span><br><span class="line"><span class="meta">    value = @Queue(name = &quot;myQueue&quot;, durable = &quot;true&quot;),</span></span><br><span class="line"><span class="meta">    exchange = @Exchange(name = &quot;auto.exch&quot;, ignoreDeclarationExceptions = &quot;true&quot;),</span></span><br><span class="line"><span class="meta">    key = &quot;orderRoutingKey&quot;)</span></span><br><span class="line"><span class="meta">)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">processOrder</span><span class="params">(Order order)</span> &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="8，消息转换器"><a href="#8，消息转换器" class="headerlink" title="8，消息转换器"></a>8，消息转换器</h2><ul>
+<li>1，springAMQP默认使用的是jdk序列化<ul>
+<li>对象序列化成立字节流，中途不可读</li>
+<li>只能在java程序之间传输，依赖readObject和writeObject方法</li>
+<li>jdk对象序列化会记录一些类的信息，导致传输的文件比原始的要大</li>
+<li>字节流传输有安全风险，是可变的，变化之后无法进行反序列化</li>
+</ul>
+</li>
+<li>2，配置json消息转换器，得益于springboot自动装配，只需要配置Jackson的bean就可以覆盖原来的转换器、</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="keyword">public</span> MessageConverter <span class="title function_">messageConverter</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="comment">// 1.定义消息转换器</span></span><br><span class="line">    <span class="type">Jackson2JsonMessageConverter</span> <span class="variable">jackson2JsonMessageConverter</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Jackson2JsonMessageConverter</span>();</span><br><span class="line">    <span class="comment">// 2.配置自动创建消息id，用于识别不同消息，也可以在业务中基于ID判断是否是重复消息</span></span><br><span class="line">    jackson2JsonMessageConverter.setCreateMessageIds(<span class="literal">true</span>);</span><br><span class="line">    <span class="keyword">return</span> jackson2JsonMessageConverter;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>注意需要同时在生产者和消费者模块都引入Jackson，生产者用于序列化，消费者用于反序列化</li>
+<li>setCreateMessageIds可以在序列化的时候为消息加上一个id，用于幂等性判断</li>
+</ul>
+<h2 id="9，生产者可靠性"><a href="#9，生产者可靠性" class="headerlink" title="9，生产者可靠性"></a>9，生产者可靠性</h2><ul>
+<li><p>1，mq的客户端连接不上mq：失败重试机制</p>
+<ul>
+<li>spring.rabbitmq.connection-time: 1s，指定了一秒没连上服务器为超时</li>
+<li>spring.rabbitmq.template.retry<ul>
+<li>.enable&#x3D;true，开启重试</li>
+<li>.initial-interval: 1000ms,每次重试的初始等待时间</li>
+<li>multiplier&#x3D;1，下次重试的等待时间是这次的多少倍，下次时间&#x3D;初始时间+上次时间*倍数</li>
+<li>max-attempts，最大重试次数</li>
+</ul>
+</li>
+<li>注意：这个重试是阻塞式，会阻塞线程，要么禁用要么短一点，200ms左右</li>
+</ul>
+</li>
+<li><p>2，生产者确认机制</p>
+<ul>
+<li><p>publisher return：消息进入交换机，但是没有正确路由到队列，会返回异常信息</p>
+</li>
+<li><p>publisher confirm：</p>
+<ul>
+<li>消息进入交换机，进入非持久化队列，直接返回ack</li>
+<li>进入交换机，进入持久化队列，持久化完成后返回ack</li>
+<li>进入交换机，路由失败(无法路由到任何队列)，返回ack</li>
+<li>进入持久化队列，未成功持久化，返回nack</li>
+<li>未能进入任何交换机，返回nack</li>
+</ul>
+</li>
+<li><p>注意：</p>
+<ul>
+<li>只有nack的情况，需要设置重发代码，路由失败一般都是代码问题</li>
+<li>由于路由失败是代码问题，因此不要开启publisher return，无法靠这个解决代码逻辑问题</li>
+<li>对于nack的处理，做有限次的重试，重试失败记录异常信息即可</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="10，消息的可靠性"><a href="#10，消息的可靠性" class="headerlink" title="10，消息的可靠性"></a>10，消息的可靠性</h2><ul>
+<li>1，为了防止rabbitmq宕机导致的数据丢失，要对交换机，队列，队列中的消息都做持久化，设置他们的durable属性为true即可</li>
+<li>2，队列中的消息，之前是全部存到内存中<ul>
+<li>问题：<ul>
+<li>宕机或者重启，全部消息都会消失</li>
+<li>消息占满内存只能往磁盘写，会阻塞生产者线程直到所有持久化完毕</li>
+</ul>
+</li>
+<li>解决：3.6.0开始默认使用lazyQueue<ul>
+<li>队列接收到消息直接存在磁盘中</li>
+<li>消费者需要消费时再去取<ul>
+<li>好处是可存储的消息数量增加，不会长时间阻塞生产者线程</li>
+<li>得益于io优化，实际上这种方案比内存操作然后阻塞刷新到磁盘会快得多</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="11，消费者的可靠性"><a href="#11，消费者的可靠性" class="headerlink" title="11，消费者的可靠性"></a>11，消费者的可靠性</h2><ul>
+<li>1，消费者确认机制，在消费者方法执行后，要给消息队列返回一个结果，展示是否消费成功以及后续操作<ul>
+<li>ack：消费成功，rabbitmq应该将此消息直接从队列删除</li>
+<li>nack：消费处理失败，应当重发</li>
+<li>reject：处理失败且拒绝，但是从队列中删除，不再重发</li>
+</ul>
+</li>
+<li>2，使用springamqp的消费者确认机制</li>
+</ul>
+<p>配置</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">rabbitmq:</span></span><br><span class="line">    <span class="attr">listener:</span></span><br><span class="line">      <span class="attr">simple:</span></span><br><span class="line">        <span class="attr">acknowledge-mode:</span> <span class="string">none</span> <span class="comment"># 不做处理</span></span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>none：失败了不做处理，不返回，会直接从队列中删除消息</li>
+<li>manual：手动处理，自己在逻辑中调用api决定什么时候返回ack和nack</li>
+<li>auto(推荐):自动模式，使用了aop环绕，在代理对象调用消费方法时出现运行时异常会返回nack，出现比如消息转化异常等消息处理和校验异常，会返回reject</li>
+<li>3，失败重试机制：消费者返回nack时，会重新给消费者，再次调用消费者方法，一直不成功就会一直往复，可以配置重试机制，防止无限制重新入队</li>
+</ul>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">rabbitmq:</span></span><br><span class="line">    <span class="attr">listener:</span></span><br><span class="line">      <span class="attr">simple:</span></span><br><span class="line">        <span class="attr">retry:</span></span><br><span class="line">          <span class="attr">enabled:</span> <span class="literal">true</span> <span class="comment"># 开启消费者失败重试</span></span><br><span class="line">          <span class="attr">initial-interval:</span> <span class="string">1000ms</span> <span class="comment"># 初识的失败等待时长为1秒</span></span><br><span class="line">          <span class="attr">multiplier:</span> <span class="number">1</span> <span class="comment"># 失败的等待时长倍数，下次等待时长 = multiplier * last-interval</span></span><br><span class="line">          <span class="attr">max-attempts:</span> <span class="number">3</span> <span class="comment"># 最大重试次数</span></span><br><span class="line">          <span class="attr">stateless:</span> <span class="literal">true</span> <span class="comment"># true无状态；false有状态。如果业务中包含事务，这里改为false</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>配置重试次数，重试时间</li>
+<li>4，失败处理策略：当重试次数用完后重试还是失败，会调用失败处理策略<ul>
+<li>RejectAndDontRequeueRecoverer：springamqp默认机制，重试后还是失败会直接拒绝，返回reject</li>
+<li>ImmediateRequeueMessageRecoverer：本地重试失败后返回reject，重新入队列</li>
+<li>RepublishMessageRecoverer：设置一个专门的交换机，配置一个队列，消费者监听队列消息，有消息可以发送邮件，人工来处理</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.itheima.consumer.config;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="comment">//只有开启了消费者重试机制，才需要对重试后还是失败的消息进行处理</span></span><br><span class="line"><span class="meta">@ConditionalOnProperty(name = &quot;spring.rabbitmq.listener.simple.retry.enabled&quot;, havingValue = &quot;true&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ErrorMessageConfig</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//创建交换机</span></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="keyword">public</span> DirectExchange <span class="title function_">errorMessageExchange</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">DirectExchange</span>(<span class="string">&quot;error.direct&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//创建队列</span></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="keyword">public</span> Queue <span class="title function_">errorQueue</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Queue</span>(<span class="string">&quot;error.queue&quot;</span>, <span class="literal">true</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//绑定交换机和队列</span></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="keyword">public</span> Binding <span class="title function_">errorBinding</span><span class="params">(Queue errorQueue, DirectExchange errorMessageExchange)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> BindingBuilder.bind(errorQueue).to(errorMessageExchange).with(<span class="string">&quot;error&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//创建一个MessageRecoverer对象，实现类为RepublishMessageRecoverer，也就是重试次数用完后，发送到指定交换机，需要指定客户端，交换机，以及发送消息时的key</span></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="keyword">public</span> MessageRecoverer <span class="title function_">republishMessageRecoverer</span><span class="params">(RabbitTemplate rabbitTemplate)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">RepublishMessageRecoverer</span>(rabbitTemplate, <span class="string">&quot;error.direct&quot;</span>, <span class="string">&quot;error&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="12-幂等性保证"><a href="#12-幂等性保证" class="headerlink" title="12,幂等性保证"></a>12,幂等性保证</h2><ul>
+<li>1，在消息放一个id，可以使用JacksonMessageConvertor生成，也可以使用自己生成的id在发送的时候带上<ul>
+<li>当消费者拿到消息，判断redis或者mysql里面是不是有这个id，有的话代表执行过，没有的话这次才能执行</li>
+</ul>
+</li>
+</ul>
+<h2 id="13-延迟消息的实现"><a href="#13-延迟消息的实现" class="headerlink" title="13,延迟消息的实现"></a>13,延迟消息的实现</h2><ul>
+<li>1，使用插件，下载插件放在rabbitmq的插件目录，在创建交换机的时候设置delay属性为true，发送的时候使用setdelay方法设置时间(ms)，就会自动在交换机里等时间到了才会放到队列</li>
+<li>2，使用死信队列，可以为一个队列设置死信交换机<ul>
+<li>死信：<ul>
+<li>队列中过期的消息</li>
+<li>队列超过设置的最大值，待得最久的消息</li>
+<li>rejecte或者nack的，并且设置不能重入队的消息</li>
+</ul>
+</li>
+<li>某个队列的死信消息会直接发往死信交换机，只需要设置一个死信交换机，给它榜一个队列就可以操作死信</li>
+</ul>
+</li>
+<li>3，利用两个交换机和两个队列<ul>
+<li>第一组交换机和队列，队列不设置消费者，给消息设置定时时间，让它在队列里过期成为死信</li>
+<li>第二组设置为死信交换机，以及用队列绑定该交换机，在设置的时间过了之后消息会被送到死信交换机，达到延迟消息的效果</li>
+</ul>
+</li>
+</ul>
+<h2 id="12-消息丢失"><a href="#12-消息丢失" class="headerlink" title="12,消息丢失"></a>12,消息丢失</h2><ul>
+<li>1，三个可靠性</li>
+</ul>
+<h2 id="13，重复消费幂等性"><a href="#13，重复消费幂等性" class="headerlink" title="13，重复消费幂等性"></a>13，重复消费幂等性</h2><ul>
+<li>1，使用uuid或者Jackson转换器生成id，利用redis或mysql暂存，执行前判断，已经有id存进去了表示执行过了</li>
+</ul>
+<h2 id="14，顺序发送"><a href="#14，顺序发送" class="headerlink" title="14，顺序发送"></a>14，顺序发送</h2><ul>
+<li>1，把需要按顺序的放在一个额外的队列里面</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
   <nav class="pagination">
     <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
@@ -3272,13 +3643,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">107k</span>
+    <span title="站点总字数">114k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:37</span>
+    <span title="站点阅读时长">1:44</span>
   </span>
 </div>
 
