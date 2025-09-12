@@ -847,6 +847,17 @@ ScheduledThreadPoolExecutor scheduledThreadPoolExecutor =
 </ul>
 </li>
 </ul>
+<h3 id="21-lombok的使用"><a href="#21-lombok的使用" class="headerlink" title="21,lombok的使用"></a>21,lombok的使用</h3><p>1，@Accessors(chain &#x3D; true)，表示使用链式调用复制，比如User user &#x3D; new User().setName(张三).setAge(18);</p>
+<p>2，@Builder()，让类可以使用builder构建一个对象,返回一个user对象，没有被赋值的会赋值成初值</p>
+<ul>
+<li>一般用于从0开始构建对象</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">User.Builder()</span><br><span class="line">    .name(<span class="string">&quot;张三&quot;</span>)</span><br><span class="line">    .age(<span class="number">18</span>)</span><br></pre></td></tr></table></figure>
+
+<p>3，@Builder(toBuilder &#x3D; true)，如果要在原有的对象上builder，保留原对象之前赋的值，可以使用对象.toBuilder()方法再给其他的属性赋值</p>
+<ul>
+<li>一般用于修改对象少量字段</li>
+</ul>
 ]]></content>
       <categories>
         <category>计算机</category>
