@@ -19,12 +19,12 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.21.1","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"always","padding":18,"offset":12},"hljswrap":true,"copycode":{"border_radius":8,"enable":true,"show_result":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="1，项目中各种java类的作用entity，与数据库表一一对应的实体 dto，数据传输对象，前端的数据使用dto接，后端返回也应该是dto vo，视图对象，待了解 pojo，代表普通java对象，对象内只有属性和getter，setter；包括了entity，vo和dto 2，配置git提交时的排除文件 .gitignore文件中配置不需要交给git管理的文件目录  3，写代码前初始化本地仓库 点">
+    <meta name="description" content="[TOC] 1，项目中各种java类的作用entity，与数据库表一一对应的实体 dto，数据传输对象，前端的数据使用dto接，后端返回也应该是dto vo，视图对象，待了解 pojo，代表普通java对象，对象内只有属性和getter，setter；包括了entity，vo和dto 2，配置git提交时的排除文件 .gitignore文件中配置不需要交给git管理的文件目录  3，写代码前初始化">
 <meta property="og:type" content="article">
-<meta property="og:title" content="苍穹外卖">
-<meta property="og:url" content="http://example.com/2025/08/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96/index.html">
+<meta property="og:title" content="项目经验">
+<meta property="og:url" content="http://example.com/2025/08/27/%E9%A1%B9%E7%9B%AE%E7%BB%8F%E9%AA%8C/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="1，项目中各种java类的作用entity，与数据库表一一对应的实体 dto，数据传输对象，前端的数据使用dto接，后端返回也应该是dto vo，视图对象，待了解 pojo，代表普通java对象，对象内只有属性和getter，setter；包括了entity，vo和dto 2，配置git提交时的排除文件 .gitignore文件中配置不需要交给git管理的文件目录  3，写代码前初始化本地仓库 点">
+<meta property="og:description" content="[TOC] 1，项目中各种java类的作用entity，与数据库表一一对应的实体 dto，数据传输对象，前端的数据使用dto接，后端返回也应该是dto vo，视图对象，待了解 pojo，代表普通java对象，对象内只有属性和getter，setter；包括了entity，vo和dto 2，配置git提交时的排除文件 .gitignore文件中配置不需要交给git管理的文件目录  3，写代码前初始化">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20250901184649941.png">
 <meta property="og:image" content="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20250901184831795.png">
@@ -32,20 +32,20 @@
 <meta property="og:image" content="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20250901235001914.png">
 <meta property="og:image" content="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20250902115930274.png">
 <meta property="article:published_time" content="2025-08-27T06:01:15.000Z">
-<meta property="article:modified_time" content="2025-09-15T10:08:09.565Z">
+<meta property="article:modified_time" content="2025-10-22T10:04:44.485Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="java项目-苍穹外卖">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20250901184649941.png">
 
 
-<link rel="canonical" href="http://example.com/2025/08/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96/">
+<link rel="canonical" href="http://example.com/2025/08/27/%E9%A1%B9%E7%9B%AE%E7%BB%8F%E9%AA%8C/">
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2025/08/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96/","path":"2025/08/27/苍穹外卖/","title":"苍穹外卖"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2025/08/27/%E9%A1%B9%E7%9B%AE%E7%BB%8F%E9%AA%8C/","path":"2025/08/27/项目经验/","title":"项目经验"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>苍穹外卖 | Hexo</title>
+<title>项目经验 | Hexo</title>
   
 
 
@@ -144,7 +144,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%EF%BC%8C%E9%A1%B9%E7%9B%AE%E4%B8%AD%E5%90%84%E7%A7%8Djava%E7%B1%BB%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-number">1.</span> <span class="nav-text">1，项目中各种java类的作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%EF%BC%8C%E9%85%8D%E7%BD%AEgit%E6%8F%90%E4%BA%A4%E6%97%B6%E7%9A%84%E6%8E%92%E9%99%A4%E6%96%87%E4%BB%B6"><span class="nav-number">2.</span> <span class="nav-text">2，配置git提交时的排除文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%EF%BC%8C%E5%86%99%E4%BB%A3%E7%A0%81%E5%89%8D%E5%88%9D%E5%A7%8B%E5%8C%96%E6%9C%AC%E5%9C%B0%E4%BB%93%E5%BA%93"><span class="nav-number">3.</span> <span class="nav-text">3，写代码前初始化本地仓库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4%EF%BC%8C%E8%BF%9E%E6%8E%A5%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93"><span class="nav-number">4.</span> <span class="nav-text">4，连接远程仓库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5%EF%BC%8C%E6%97%A7%E7%9A%84mysql%E5%AD%98%E5%9C%A8%EF%BC%8C%E9%9C%80%E8%A6%81%E9%87%8D%E7%BD%AE%E5%AF%86%E7%A0%81"><span class="nav-number">5.</span> <span class="nav-text">5，旧的mysql存在，需要重置密码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6%EF%BC%8C%E5%AF%BC%E5%85%A5sql%E6%89%A7%E8%A1%8C%E6%96%87%E4%BB%B6%E6%88%96%E8%80%85navicate%E5%A4%87%E4%BB%BD%E6%96%87%E4%BB%B6"><span class="nav-number">6.</span> <span class="nav-text">6，导入sql执行文件或者navicate备份文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7%EF%BC%8C%E6%9B%B4%E6%94%B9%E9%A1%B9%E7%9B%AEjdk%E7%89%88%E6%9C%AC"><span class="nav-number">7.</span> <span class="nav-text">7，更改项目jdk版本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8%EF%BC%8C%E5%AF%B9%E5%AF%86%E7%A0%81%E8%BF%9B%E8%A1%8Cmd5%E5%8A%A0%E5%AF%86%E5%A4%84%E7%90%86"><span class="nav-number">8.</span> <span class="nav-text">8，对密码进行md5加密处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9%EF%BC%8C%E5%90%8E%E7%AB%AF%E7%94%9F%E6%88%90%E6%8E%A5%E5%8F%A3%E6%96%87%E6%A1%A3%EF%BC%8C%E6%8E%A5%E5%8F%A3%E6%B5%8B%E8%AF%95%EF%BC%8Cknife4j"><span class="nav-number">9.</span> <span class="nav-text">9，后端生成接口文档，接口测试，knife4j</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10%EF%BC%8C%E6%8E%A5%E5%8F%A3%E8%AE%BE%E8%AE%A1%EF%BC%8Capifox"><span class="nav-number">10.</span> <span class="nav-text">10，接口设计，apifox</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#11%EF%BC%8C%E6%8E%A5%E5%8F%A3%E5%BC%80%E5%8F%91%E6%B5%81%E7%A8%8B"><span class="nav-number">11.</span> <span class="nav-text">11，接口开发流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#12%EF%BC%8C%E6%95%B0%E6%8D%AE%E6%8E%A5%E6%94%B6%EF%BC%8C%E4%BC%A0%E9%80%92%EF%BC%8C%E5%85%A5%E5%BA%93"><span class="nav-number">12.</span> <span class="nav-text">12，数据接收，传递，入库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#13%EF%BC%8C%E5%89%8D%E7%AB%AF%E4%BC%A0%E5%85%A5JSON%E5%AF%B9%E8%B1%A1"><span class="nav-number">13.</span> <span class="nav-text">13，前端传入JSON对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#14%EF%BC%8C%E5%85%A8%E5%B1%80%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86"><span class="nav-number">14.</span> <span class="nav-text">14，全局异常处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#15%EF%BC%8C%E8%8E%B7%E5%8F%96%E7%94%A8%E6%88%B7%E4%B8%8A%E4%B8%8B%E6%96%87%E4%BF%A1%E6%81%AF"><span class="nav-number">15.</span> <span class="nav-text">15，获取用户上下文信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#16%EF%BC%8Cmybatis%E4%B8%AD%E5%B8%A6%E6%9D%A1%E4%BB%B6%E7%9A%84%E5%88%86%E9%A1%B5%E6%9F%A5%E8%AF%A2"><span class="nav-number">16.</span> <span class="nav-text">16，mybatis中带条件的分页查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#17%EF%BC%8C%E5%90%8E%E7%AB%AF%E8%BF%94%E5%9B%9E%E7%BB%99%E5%89%8D%E7%AB%AF%E6%97%A5%E6%9C%9F%E7%B1%BB%E5%9E%8B%E7%9A%84%E6%A0%BC%E5%BC%8F%E5%8C%96"><span class="nav-number">17.</span> <span class="nav-text">17，后端返回给前端日期类型的格式化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#18-%E5%9C%A8%E4%B9%8C%E7%8F%AD%E5%9B%BE%E4%B8%AD%E4%B8%8B%E8%BD%BD%E5%B9%B6%E5%AE%89%E8%A3%85redis"><span class="nav-number">18.</span> <span class="nav-text">18.在乌班图中下载并安装redis</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#19%EF%BC%8Credis%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="nav-number">19.</span> <span class="nav-text">19，redis的配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#20%EF%BC%8Cvim%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">20.</span> <span class="nav-text">20，vim的使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#21-lombok%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">21.</span> <span class="nav-text">21,lombok的使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#22%EF%BC%8C%E6%95%B0%E6%8D%AE%E5%BA%93%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C"><span class="nav-number">22.</span> <span class="nav-text">22，数据库基本操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#23%EF%BC%8Cgit%E7%9B%B8%E5%85%B3%E6%93%8D%E4%BD%9C"><span class="nav-number">23.</span> <span class="nav-text">23，git相关操作</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%EF%BC%8C%E9%A1%B9%E7%9B%AE%E4%B8%AD%E5%90%84%E7%A7%8Djava%E7%B1%BB%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-number">1.</span> <span class="nav-text">1，项目中各种java类的作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%EF%BC%8C%E9%85%8D%E7%BD%AEgit%E6%8F%90%E4%BA%A4%E6%97%B6%E7%9A%84%E6%8E%92%E9%99%A4%E6%96%87%E4%BB%B6"><span class="nav-number">2.</span> <span class="nav-text">2，配置git提交时的排除文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%EF%BC%8C%E5%86%99%E4%BB%A3%E7%A0%81%E5%89%8D%E5%88%9D%E5%A7%8B%E5%8C%96%E6%9C%AC%E5%9C%B0%E4%BB%93%E5%BA%93"><span class="nav-number">3.</span> <span class="nav-text">3，写代码前初始化本地仓库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4%EF%BC%8Cgit%E8%BF%9E%E6%8E%A5%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93"><span class="nav-number">4.</span> <span class="nav-text">4，git连接远程仓库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5%EF%BC%8Cmysql%E9%87%8D%E7%BD%AE%E5%AF%86%E7%A0%81%EF%BC%8C%E5%BC%BA%E5%88%B6%E4%BF%AE%E6%94%B9"><span class="nav-number">5.</span> <span class="nav-text">5，mysql重置密码，强制修改</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6%EF%BC%8C%E5%AF%BC%E5%85%A5sql%E6%89%A7%E8%A1%8C%E6%96%87%E4%BB%B6%EF%BC%8Cnavicate%E5%A4%87%E4%BB%BD%E6%96%87%E4%BB%B6"><span class="nav-number">6.</span> <span class="nav-text">6，导入sql执行文件，navicate备份文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7%EF%BC%8C%E6%9B%B4%E6%94%B9%E9%A1%B9%E7%9B%AEjdk%E7%89%88%E6%9C%AC"><span class="nav-number">7.</span> <span class="nav-text">7，更改项目jdk版本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8%EF%BC%8C%E5%AF%B9%E5%AF%86%E7%A0%81%E8%BF%9B%E8%A1%8Cmd5%E5%8A%A0%E5%AF%86%E5%A4%84%E7%90%86"><span class="nav-number">8.</span> <span class="nav-text">8，对密码进行md5加密处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9%EF%BC%8C%E5%90%8E%E7%AB%AF%E7%94%9F%E6%88%90%E6%8E%A5%E5%8F%A3%E6%96%87%E6%A1%A3%EF%BC%8C%E6%8E%A5%E5%8F%A3%E6%B5%8B%E8%AF%95%EF%BC%8Cknife4j"><span class="nav-number">9.</span> <span class="nav-text">9，后端生成接口文档，接口测试，knife4j</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10%EF%BC%8C%E6%8E%A5%E5%8F%A3%E8%AE%BE%E8%AE%A1%EF%BC%8Capifox"><span class="nav-number">10.</span> <span class="nav-text">10，接口设计，apifox</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#11%EF%BC%8C%E6%8E%A5%E5%8F%A3%E5%BC%80%E5%8F%91%E6%B5%81%E7%A8%8B"><span class="nav-number">11.</span> <span class="nav-text">11，接口开发流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#12%EF%BC%8C%E6%95%B0%E6%8D%AE%E6%8E%A5%E6%94%B6%EF%BC%8C%E4%BC%A0%E9%80%92%EF%BC%8C%E5%85%A5%E5%BA%93"><span class="nav-number">12.</span> <span class="nav-text">12，数据接收，传递，入库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#13%EF%BC%8C%E5%89%8D%E7%AB%AF%E4%BC%A0%E5%85%A5JSON%E5%AF%B9%E8%B1%A1"><span class="nav-number">13.</span> <span class="nav-text">13，前端传入JSON对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#14%EF%BC%8C%E5%85%A8%E5%B1%80%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86"><span class="nav-number">14.</span> <span class="nav-text">14，全局异常处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#15%EF%BC%8C%E8%8E%B7%E5%8F%96%E7%94%A8%E6%88%B7%E4%B8%8A%E4%B8%8B%E6%96%87%E4%BF%A1%E6%81%AF"><span class="nav-number">15.</span> <span class="nav-text">15，获取用户上下文信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#16%EF%BC%8Cmybatis%E4%B8%AD%E5%B8%A6%E6%9D%A1%E4%BB%B6%E7%9A%84%E5%88%86%E9%A1%B5%E6%9F%A5%E8%AF%A2"><span class="nav-number">16.</span> <span class="nav-text">16，mybatis中带条件的分页查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#17%EF%BC%8C%E5%90%8E%E7%AB%AF%E8%BF%94%E5%9B%9E%E7%BB%99%E5%89%8D%E7%AB%AF%E6%97%A5%E6%9C%9F%E7%B1%BB%E5%9E%8B%E7%9A%84%E6%A0%BC%E5%BC%8F%E5%8C%96"><span class="nav-number">17.</span> <span class="nav-text">17，后端返回给前端日期类型的格式化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#18-%E5%9C%A8%E4%B9%8C%E7%8F%AD%E5%9B%BE%E4%B8%AD%E4%B8%8B%E8%BD%BD%E5%B9%B6%E5%AE%89%E8%A3%85redis"><span class="nav-number">18.</span> <span class="nav-text">18.在乌班图中下载并安装redis</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#19%EF%BC%8Credis%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="nav-number">19.</span> <span class="nav-text">19，redis的配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#20%EF%BC%8Cvim%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">20.</span> <span class="nav-text">20，vim的使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#21%EF%BC%8Clombok%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">21.</span> <span class="nav-text">21，lombok的使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#22%EF%BC%8C%E6%95%B0%E6%8D%AE%E5%BA%93%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C"><span class="nav-number">22.</span> <span class="nav-text">22，数据库基本操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#23%EF%BC%8Cgit%E7%9B%B8%E5%85%B3%E6%93%8D%E4%BD%9C"><span class="nav-number">23.</span> <span class="nav-text">23，git相关操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#24%EF%BC%8CBigDecimal%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">24.</span> <span class="nav-text">24，BigDecimal的使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#25%EF%BC%8C%E5%AF%B9%E8%B1%A1%E7%B1%BB%E5%9E%8B%E5%88%A4%E7%A9%BA"><span class="nav-number">25.</span> <span class="nav-text">25，对象类型判空</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#26%EF%BC%8Chttp%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="nav-number">26.</span> <span class="nav-text">26，http客户端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#27%EF%BC%8C%E5%BA%8F%E5%88%97%E5%8C%96%E4%BB%A5%E5%8F%8A%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96"><span class="nav-number">27.</span> <span class="nav-text">27，序列化以及反序列化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#28%EF%BC%8C%E6%8F%90%E4%BE%9B%E6%8E%A5%E5%8F%A3%E7%BB%99%E7%AC%AC%E4%B8%89%E6%96%B9%E8%B0%83%E7%94%A8"><span class="nav-number">28.</span> <span class="nav-text">28，提供接口给第三方调用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#29%EF%BC%8Cshiro"><span class="nav-number">29.</span> <span class="nav-text">29，shiro</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#30%EF%BC%8CJava%E6%97%B6%E9%97%B4%E6%97%A5%E6%9C%9F"><span class="nav-number">30.</span> <span class="nav-text">30，Java时间日期</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -157,18 +157,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-count">25</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-count">21</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -200,7 +200,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/27/%E9%A1%B9%E7%9B%AE%E7%BB%8F%E9%AA%8C/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -213,12 +213,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="苍穹外卖 | Hexo">
+      <meta itemprop="name" content="项目经验 | Hexo">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          苍穹外卖
+          项目经验
         </h1>
 
         <div class="post-meta-container">
@@ -236,7 +236,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-09-15 18:08:09" itemprop="dateModified" datetime="2025-09-15T18:08:09+08:00">2025-09-15</time>
+      <time title="修改时间：2025-10-22 18:04:44" itemprop="dateModified" datetime="2025-10-22T18:04:44+08:00">2025-10-22</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -254,14 +254,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>10k</span>
+      <span>13k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>9 分钟</span>
+      <span>12 分钟</span>
     </span>
 </div>
 
@@ -271,7 +271,8 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h3 id="1，项目中各种java类的作用"><a href="#1，项目中各种java类的作用" class="headerlink" title="1，项目中各种java类的作用"></a>1，项目中各种java类的作用</h3><p>entity，与数据库表一一对应的实体</p>
+    <div class="post-body" itemprop="articleBody"><p>[TOC]</p>
+<h3 id="1，项目中各种java类的作用"><a href="#1，项目中各种java类的作用" class="headerlink" title="1，项目中各种java类的作用"></a>1，项目中各种java类的作用</h3><p>entity，与数据库表一一对应的实体</p>
 <p>dto，数据传输对象，前端的数据使用dto接，后端返回也应该是dto</p>
 <p>vo，视图对象，待了解</p>
 <p>pojo，代表普通java对象，对象内只有属性和getter，setter；包括了entity，vo和dto</p>
@@ -281,12 +282,12 @@
 <h3 id="3，写代码前初始化本地仓库"><a href="#3，写代码前初始化本地仓库" class="headerlink" title="3，写代码前初始化本地仓库"></a>3，写代码前初始化本地仓库</h3><ul>
 <li>点击vcs，创建本地仓库，使用项目最大目录最为本地仓库就可以了，再本地中添加，提交后，才能推到远程仓库</li>
 </ul>
-<h3 id="4，连接远程仓库"><a href="#4，连接远程仓库" class="headerlink" title="4，连接远程仓库"></a>4，连接远程仓库</h3><ul>
+<h3 id="4，git连接远程仓库"><a href="#4，git连接远程仓库" class="headerlink" title="4，git连接远程仓库"></a>4，git连接远程仓库</h3><ul>
 <li>点击推送，会需要输入仓库url，输入完后，还需要输入账号密码，然后才可以推送</li>
 </ul>
-<h3 id="5，旧的mysql存在，需要重置密码"><a href="#5，旧的mysql存在，需要重置密码" class="headerlink" title="5，旧的mysql存在，需要重置密码"></a>5，旧的mysql存在，需要重置密码</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">忘记密码</span><br><span class="line">在忘记密码的情况下如何强制修改密码，我在此提供一种办法。</span><br><span class="line"></span><br><span class="line">1. 以超级管理员打开cmd，关闭mysql服务</span><br><span class="line">net stop mysql</span><br><span class="line"></span><br><span class="line">2. 跳过权限验证登录mysql</span><br><span class="line">mysqld --shared-memory --skip-grant-tables</span><br><span class="line"></span><br><span class="line">3. 在新的窗口中登录mysql</span><br><span class="line">mysql -u root -p</span><br><span class="line">无需输入密码，直接回车即可。</span><br><span class="line"></span><br><span class="line">4. 切换到mysql，将密码置空。</span><br><span class="line">use mysql;</span><br><span class="line">update user set authentication_string=&#x27;&#x27; where user=&#x27;root&#x27;;</span><br><span class="line">5.然后刷新权限:</span><br><span class="line">flush privileges;</span><br><span class="line"></span><br><span class="line">6. 设置加密规则并更新新密码，授权(直接复制这些SQL语句你的密码会更新为123456)</span><br><span class="line">ALTER USER &#x27;root&#x27;@&#x27;localhost&#x27; IDENTIFIED BY &#x27;123456&#x27; PASSWORD EXPIRE NEVER; </span><br><span class="line">alter user &#x27;root&#x27;@&#x27;localhost&#x27; identified by &#x27;123456&#x27;;</span><br><span class="line">grant all privileges  on *.*  to &quot;root&quot;@&#x27;localhost&#x27;;</span><br><span class="line">flush privileges;</span><br><span class="line"></span><br><span class="line">6. 设置成功后，重启mysql服务，使用新密码登录</span><br><span class="line">net start mysql</span><br></pre></td></tr></table></figure>
+<h3 id="5，mysql重置密码，强制修改"><a href="#5，mysql重置密码，强制修改" class="headerlink" title="5，mysql重置密码，强制修改"></a>5，mysql重置密码，强制修改</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">忘记密码</span><br><span class="line">在忘记密码的情况下如何强制修改密码，我在此提供一种办法。</span><br><span class="line"></span><br><span class="line">1. 以超级管理员打开cmd，关闭mysql服务</span><br><span class="line">net stop mysql</span><br><span class="line"></span><br><span class="line">2. 跳过权限验证登录mysql</span><br><span class="line">mysqld --shared-memory --skip-grant-tables</span><br><span class="line"></span><br><span class="line">3. 在新的窗口中登录mysql</span><br><span class="line">mysql -u root -p</span><br><span class="line">无需输入密码，直接回车即可。</span><br><span class="line"></span><br><span class="line">4. 切换到mysql，将密码置空。</span><br><span class="line">use mysql;</span><br><span class="line">update user set authentication_string=&#x27;&#x27; where user=&#x27;root&#x27;;</span><br><span class="line">5.然后刷新权限:</span><br><span class="line">flush privileges;</span><br><span class="line"></span><br><span class="line">6. 设置加密规则并更新新密码，授权(直接复制这些SQL语句你的密码会更新为123456)</span><br><span class="line">ALTER USER &#x27;root&#x27;@&#x27;localhost&#x27; IDENTIFIED BY &#x27;123456&#x27; PASSWORD EXPIRE NEVER; </span><br><span class="line">alter user &#x27;root&#x27;@&#x27;localhost&#x27; identified by &#x27;123456&#x27;;</span><br><span class="line">grant all privileges  on *.*  to &quot;root&quot;@&#x27;localhost&#x27;;</span><br><span class="line">flush privileges;</span><br><span class="line"></span><br><span class="line">6. 设置成功后，重启mysql服务，使用新密码登录</span><br><span class="line">net start mysql</span><br></pre></td></tr></table></figure>
 
-<h3 id="6，导入sql执行文件或者navicate备份文件"><a href="#6，导入sql执行文件或者navicate备份文件" class="headerlink" title="6，导入sql执行文件或者navicate备份文件"></a>6，导入sql执行文件或者navicate备份文件</h3><ul>
+<h3 id="6，导入sql执行文件，navicate备份文件"><a href="#6，导入sql执行文件，navicate备份文件" class="headerlink" title="6，导入sql执行文件，navicate备份文件"></a>6，导入sql执行文件，navicate备份文件</h3><ul>
 <li>如果是sql执行文件，可以navicate右击库然后执行</li>
 </ul>
 <img src="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20250901184649941.png" alt="image-20250901184649941" style="zoom: 33%;" />
@@ -520,7 +521,7 @@
 </ul>
 </li>
 </ul>
-<h3 id="21-lombok的使用"><a href="#21-lombok的使用" class="headerlink" title="21,lombok的使用"></a>21,lombok的使用</h3><p>1，@Accessors(chain &#x3D; true)，表示使用链式调用复制，比如User user &#x3D; new User().setName(张三).setAge(18);</p>
+<h3 id="21，lombok的使用"><a href="#21，lombok的使用" class="headerlink" title="21，lombok的使用"></a>21，lombok的使用</h3><p>1，@Accessors(chain &#x3D; true)，表示使用链式调用复制，比如User user &#x3D; new User().setName(张三).setAge(18);</p>
 <p>2，@Builder()，让类可以使用builder构建一个对象,返回一个user对象，没有被赋值的会赋值成初值</p>
 <ul>
 <li>一般用于从0开始构建对象</li>
@@ -539,7 +540,65 @@
 <ul>
 <li>alter table table_name drop colum colum_name;注意删除的时候不要写字段类型</li>
 </ul>
-<h3 id="23，git相关操作"><a href="#23，git相关操作" class="headerlink" title="23，git相关操作"></a>23，git相关操作</h3>
+<h3 id="23，git相关操作"><a href="#23，git相关操作" class="headerlink" title="23，git相关操作"></a>23，git相关操作</h3><h3 id="24，BigDecimal的使用"><a href="#24，BigDecimal的使用" class="headerlink" title="24，BigDecimal的使用"></a>24，BigDecimal的使用</h3><p>1，创建对象，建议使用BigDecimal自带的常量</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">BigDecimal.ZERO.setScale(<span class="number">2</span>, RoundingMode.FLOOR)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>BigDecimal.ZERO：获取一个值为0的对象，BigDecimal是不可变的，每次修改都返回新的对象，所以这个常量被共用是安全的，建议每次都使用这种方式而不是new；常见除了ZERO还有ONE，TEN等</li>
+<li>使用setScale方法设置小数位数以及舍入模式；setScale(2, RoundingMode.FLOOR)代表两位小数，使用floor模式(向下取整1.5-&gt;1;-1.5-&gt;-2);HALF_UP(四舍五入)是最常用的模式</li>
+<li>对非零的BigDecimal对象setScale时，必须设置舍入模式，否则会ArithmeticException: Rounding necessary</li>
+</ul>
+<h3 id="25，对象类型判空"><a href="#25，对象类型判空" class="headerlink" title="25，对象类型判空"></a>25，对象类型判空</h3><ul>
+<li><p>Boolean Objects.nonNull(T obj)</p>
+</li>
+<li><p>Boolean Objects.isNull(T obj)</p>
+</li>
+<li><p>T Objects.requireNonNull(T obj，String message)：obj不为空返回obj对象，为空固定抛出NullPointerException</p>
+</li>
+</ul>
+<h3 id="26，http客户端"><a href="#26，http客户端" class="headerlink" title="26，http客户端"></a>26，http客户端</h3><p>1，使用hutool工具包的HttpRequest类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">String</span> <span class="variable">result</span> <span class="operator">=</span> HttpRequest.post(<span class="string">&quot;https://api.example.com/data&quot;</span>)</span><br><span class="line">    .header(<span class="string">&quot;Authorization&quot;</span>, <span class="string">&quot;Bearer token123&quot;</span>)</span><br><span class="line">    .body(<span class="string">&quot;&#123;\&quot;name\&quot;:\&quot;value\&quot;&#125;&quot;</span>, <span class="string">&quot;application/json&quot;</span>)</span><br><span class="line">    .timeout(<span class="number">5000</span>)</span><br><span class="line">    .execute()</span><br><span class="line">    .body();</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>链式调用，post是方法类型可以是.get,.delete.put等；body是请求体；timeout是请求超时时间.execute是执行，返回的是HttpResponse对象</li>
+<li>.body()是获取HttpResponse的请求体</li>
+</ul>
+<h3 id="27，序列化以及反序列化"><a href="#27，序列化以及反序列化" class="headerlink" title="27，序列化以及反序列化"></a>27，序列化以及反序列化</h3><p>1，使用Jackson</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> ObjectMapper JSON_MAPPER;</span><br><span class="line"><span class="comment">//创建一个ObjectMapper</span></span><br><span class="line">JSON_MAPPER = <span class="keyword">new</span> <span class="title class_">ObjectMapper</span>();</span><br><span class="line"></span><br><span class="line"><span class="comment">//设置是否转换空，是否转换类没有的字段，是否转换没有getter，setter的四有字段，是否转换私有构造</span></span><br><span class="line">JSON_MAPPER.setSerializationInclusion(Include.NON_NULL);</span><br><span class="line">JSON_MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, <span class="literal">false</span>);</span><br><span class="line">JSON_MAPPER.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, <span class="literal">true</span>);</span><br><span class="line">JSON_MAPPER.setVisibility(FIELD,JsonAutoDetect.Visibility.ANY);</span><br><span class="line">JSON_MAPPER.setVisibility(CREATOR,JsonAutoDetect.Visibility.ANY);</span><br></pre></td></tr></table></figure>
+
+<p>2，Jackson出异常后在catch块中用hutool兜底</p>
+<h3 id="28，提供接口给第三方调用"><a href="#28，提供接口给第三方调用" class="headerlink" title="28，提供接口给第三方调用"></a>28，提供接口给第三方调用</h3><p>1，设置shiro权限，”路径”，”anon”；允许匿名访问</p>
+<p>2，验证身份，使用jwt，或者在后端验证ip是否正确</p>
+<h3 id="29，shiro"><a href="#29，shiro" class="headerlink" title="29，shiro"></a>29，shiro</h3><p>1，shiro的用户信息只能从controller层获取</p>
+<h3 id="30，Java时间日期"><a href="#30，Java时间日期" class="headerlink" title="30，Java时间日期"></a>30，Java时间日期</h3><p>1，获取当前日期的指定格式</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//使用老方案</span></span><br><span class="line"><span class="comment">// 定义格式</span></span><br><span class="line"><span class="type">SimpleDateFormat</span> <span class="variable">sdf</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SimpleDateFormat</span>(<span class="string">&quot;yyyy-MM-dd HH:mm:ss&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取当前时间并格式化</span></span><br><span class="line"><span class="type">String</span> <span class="variable">formattedDateTime</span> <span class="operator">=</span> sdf.format(<span class="keyword">new</span> <span class="title class_">Date</span>());</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//java8以后推荐的新方案</span></span><br><span class="line"><span class="comment">// 定义格式</span></span><br><span class="line"><span class="type">DateTimeFormatter</span> <span class="variable">formatter</span> <span class="operator">=</span> DateTimeFormatter.ofPattern(<span class="string">&quot;yyyy-MM-dd HH:mm:ss&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取当前时间并格式化</span></span><br><span class="line"><span class="type">String</span> <span class="variable">formattedDateTime</span> <span class="operator">=</span> LocalDateTime.now().format(formatter);</span><br></pre></td></tr></table></figure>
+
+
+
+<p>2，两种日期api的区别，新api的好处，什么情况用新的什么情况用旧的，除安全性外，效率是否有区别</p>
+<ul>
+<li>新api主要解决了simpledateformat的线程安全问题，simpledateformat无论是parse还是format方法，都会先使用calendar对象存中间状态，多个线程同时调用一个simpledateformat的方法时，会导致calendar对象出现线程安全问题，导致转换后的内容和原本预期的内容不一致；效率也是新api更好</li>
+</ul>
+<p>3，前后端日期类型的参数传递</p>
+<ul>
+<li>前端传入指定的字符串格式 “2025:05:20”</li>
+<li>后端直接使用date接收会报错，格式转换错误<ul>
+<li>可以在接收的属性上加spring的注解，@DateTimeFormat(pattern &#x3D; “yyyy-MM-dd”) private Date createDate;</li>
+<li>可以对date类型做全局配置，spring.mvc.format.date&#x3D;yyyy-MM-dd；spring.jackson.date-format&#x3D;yyyy-MM-dd；spring.jackson.time-zone&#x3D;GMT+8；参数传递需要指定springmvc的转换器，json传递需要指定Jackson的转换器</li>
+<li>也可以接收字符串，然后手动转成date类型</li>
+</ul>
+</li>
+<li>服务器的时间保存到数据库<ul>
+<li>数据库保存日期时间用datetime，保存时间用time；需要自动时区转换用timestamp</li>
+<li>java的date和localdatetime可以同时对应datetime和time，instant和timestamp可以对应timestamp</li>
+<li>数据库datetime类型存什么就取什么，不管时区的事；timestamp会把时间转换成utc时区存入，所以存之前要指定时区，取的时候也要指定时区，否则可能导致时间错误</li>
+<li>timestamp取的时候会自动以服务器时区为时区转换时间，因此在国际业务中非常好用，不用每次都手动根据当前时区转换，但是timestamp是从1970-2038，存历史事件等的日期存不进去</li>
+</ul>
+</li>
+</ul>
+
     </div>
 
     
@@ -560,6 +619,9 @@
                 </a>
             </div>
             <div class="post-nav-item">
+                <a href="/2025/09/27/springmvc/" rel="next" title="springmvc">
+                  springmvc <i class="fa fa-angle-right"></i>
+                </a>
             </div>
           </div>
     </footer>
@@ -590,13 +652,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">116k</span>
+    <span title="站点总字数">119k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:45</span>
+    <span title="站点阅读时长">1:48</span>
   </span>
 </div>
 
