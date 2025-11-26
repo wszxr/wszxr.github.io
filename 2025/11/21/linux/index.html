@@ -26,11 +26,19 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="linux内核1，硬件操作 2，系统调用，把对硬件的操作封装成一个个系统调用，相当于函数 3，终端命令，用来触发系统调用，相当于程序 Linux目录1，&#x2F;表示根目录，Linux只有一个盘  bin：存放可执行文件 etc：存放配置文件 home：每个用户的家文件夹  2，操作应该在home的用户文件夹里 Linux命令1，放大终端   ctr+shift+&#x3D;：shif+&amp;#x3">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20251125105249408.png">
+<meta property="og:image" content="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20251126111331784.png">
+<meta property="og:image" content="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20251126112452344.png">
+<meta property="og:image" content="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20251126115110245.png">
+<meta property="og:image" content="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20251126115248930.png">
+<meta property="og:image" content="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20251126160045140.png">
+<meta property="og:image" content="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20251126160628501.png">
 <meta property="article:published_time" content="2025-11-21T02:26:15.000Z">
-<meta property="article:modified_time" content="2025-11-24T12:22:05.485Z">
+<meta property="article:modified_time" content="2025-11-26T10:17:59.125Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="乌班图">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20251125105249408.png">
 
 
 <link rel="canonical" href="http://example.com/2025/11/21/linux/">
@@ -138,7 +146,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#linux%E5%86%85%E6%A0%B8"><span class="nav-number">1.</span> <span class="nav-text">linux内核</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux%E7%9B%AE%E5%BD%95"><span class="nav-number">2.</span> <span class="nav-text">Linux目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux%E5%91%BD%E4%BB%A4"><span class="nav-number">3.</span> <span class="nav-text">Linux命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E7%9B%B8%E5%85%B3%E5%91%BD%E4%BB%A4"><span class="nav-number">3.1.</span> <span class="nav-text">文件相关命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ls"><span class="nav-number">3.1.1.</span> <span class="nav-text">ls</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cd-change-direction"><span class="nav-number">3.1.2.</span> <span class="nav-text">cd change direction</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E5%92%8C%E5%88%A0%E9%99%A4"><span class="nav-number">3.1.3.</span> <span class="nav-text">创建和删除</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E6%8B%B7%E8%B4%9D%E5%92%8C%E7%A7%BB%E5%8A%A8"><span class="nav-number">3.1.4.</span> <span class="nav-text">文件拷贝和移动</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E6%9F%A5%E7%9C%8B"><span class="nav-number">3.1.5.</span> <span class="nav-text">文件查看</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#echo%E5%92%8C%E9%87%8D%E5%AE%9A%E5%90%91"><span class="nav-number">3.1.6.</span> <span class="nav-text">echo和重定向</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AE%A1%E9%81%93"><span class="nav-number">3.1.7.</span> <span class="nav-text">管道</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9C%E7%A8%8B%E7%AE%A1%E7%90%86%E7%9B%B8%E5%85%B3%E5%91%BD%E4%BB%A4"><span class="nav-number">3.2.</span> <span class="nav-text">远程管理相关命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B3%E6%9C%BA%E9%87%8D%E5%90%AF"><span class="nav-number">3.2.1.</span> <span class="nav-text">关机重启</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8Bip%E5%92%8Cping%E5%91%BD%E4%BB%A4"><span class="nav-number">3.2.2.</span> <span class="nav-text">查看ip和ping命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ssh%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5"><span class="nav-number">3.2.3.</span> <span class="nav-text">ssh远程连接</span></a></li></ol></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#linux%E5%86%85%E6%A0%B8"><span class="nav-number">1.</span> <span class="nav-text">linux内核</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux%E7%9B%AE%E5%BD%95"><span class="nav-number">2.</span> <span class="nav-text">Linux目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux%E5%91%BD%E4%BB%A4"><span class="nav-number">3.</span> <span class="nav-text">Linux命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E7%9B%B8%E5%85%B3%E5%91%BD%E4%BB%A4"><span class="nav-number">3.1.</span> <span class="nav-text">文件相关命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ls"><span class="nav-number">3.1.1.</span> <span class="nav-text">ls</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cd-change-direction"><span class="nav-number">3.1.2.</span> <span class="nav-text">cd change direction</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E5%92%8C%E5%88%A0%E9%99%A4"><span class="nav-number">3.1.3.</span> <span class="nav-text">创建和删除</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E6%8B%B7%E8%B4%9D%E5%92%8C%E7%A7%BB%E5%8A%A8"><span class="nav-number">3.1.4.</span> <span class="nav-text">文件拷贝和移动</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E6%9F%A5%E7%9C%8B"><span class="nav-number">3.1.5.</span> <span class="nav-text">文件查看</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#echo%E5%92%8C%E9%87%8D%E5%AE%9A%E5%90%91"><span class="nav-number">3.1.6.</span> <span class="nav-text">echo和重定向</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AE%A1%E9%81%93"><span class="nav-number">3.1.7.</span> <span class="nav-text">管道</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9C%E7%A8%8B%E7%AE%A1%E7%90%86%E7%9B%B8%E5%85%B3%E5%91%BD%E4%BB%A4"><span class="nav-number">3.2.</span> <span class="nav-text">远程管理相关命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B3%E6%9C%BA%E9%87%8D%E5%90%AF"><span class="nav-number">3.2.1.</span> <span class="nav-text">关机重启</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8Bip%E5%92%8Cping%E5%91%BD%E4%BB%A4"><span class="nav-number">3.2.2.</span> <span class="nav-text">查看ip和ping命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ssh%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5"><span class="nav-number">3.2.3.</span> <span class="nav-text">ssh远程连接</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%EF%BC%8C%E6%9D%83%E9%99%90%EF%BC%8C%E7%BB%84"><span class="nav-number">3.3.</span> <span class="nav-text">用户，权限，组</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9D%83%E9%99%90"><span class="nav-number">3.3.1.</span> <span class="nav-text">权限</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BB%84"><span class="nav-number">3.3.2.</span> <span class="nav-text">组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%94%A8%E6%88%B7"><span class="nav-number">3.3.3.</span> <span class="nav-text">用户</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E4%BF%A1%E6%81%AF%E7%9B%B8%E5%85%B3%E5%91%BD%E4%BB%A4"><span class="nav-number">3.4.</span> <span class="nav-text">系统信息相关命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E5%91%BD%E4%BB%A4"><span class="nav-number">3.5.</span> <span class="nav-text">其他命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9F%A5%E6%89%BE%E6%96%87%E4%BB%B6"><span class="nav-number">3.5.1.</span> <span class="nav-text">查找文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BD%AF%E9%93%BE%E6%8E%A5%EF%BC%8C%E7%A1%AC%E8%BF%9E%E6%8E%A5"><span class="nav-number">3.5.2.</span> <span class="nav-text">软链接，硬连接</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%89%93%E5%8C%85%E8%A7%A3%E5%8E%8B"><span class="nav-number">3.5.3.</span> <span class="nav-text">打包解压</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85"><span class="nav-number">3.5.4.</span> <span class="nav-text">软件安装</span></a></li></ol></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -230,7 +238,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-11-24 20:22:05" itemprop="dateModified" datetime="2025-11-24T20:22:05+08:00">2025-11-24</time>
+      <time title="修改时间：2025-11-26 18:17:59" itemprop="dateModified" datetime="2025-11-26T18:17:59+08:00">2025-11-26</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -248,14 +256,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>2k</span>
+      <span>5k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>2 分钟</span>
+      <span>5 分钟</span>
     </span>
 </div>
 
@@ -395,7 +403,202 @@
 <ul>
 <li>端口默认是22，取决于服务器安装的sshserver的进程端口</li>
 </ul>
+<h3 id="用户，权限，组"><a href="#用户，权限，组" class="headerlink" title="用户，权限，组"></a>用户，权限，组</h3><h4 id="权限"><a href="#权限" class="headerlink" title="权限"></a>权限</h4><p>1，linux可以有多个用户，每个用户在home目录都有一个文件夹</p>
+<p>2，对于每个文件或目录，都可以对不同的用户设置不同的权限</p>
+<p>3，组代表一组用户，每个文件或目录都可以给一组用户设置不同的权限，用于简化权限管理</p>
+<p>4，ls -l的解析</p>
+<p><img src="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20251125105249408.png" alt="image-20251125105249408"></p>
+<ul>
+<li>1，d代表目录，-代表文件</li>
+<li>2，代表文件拥有者的权限，r是读，w是写，x是执行权限；第一个文件拥有者是zxr，第二个是root</li>
+<li>3，代表组的权限，默认组名和用户名一样，zxr组对该文件的权限是r-x，可读可执行</li>
+<li>4，代表非拥有者和指定组对该文件的权限</li>
+<li>5，硬链接，到达此文件或目录的路径数<ul>
+<li>文件一般都是1，代表用绝对路径访问</li>
+<li>目录默认有绝对路径，和在目录中用.访问两种；还可以在下一级用..访问，跨级目录不算因为不存在直接跳2或3级等的指令，因此目录的硬链接数&#x3D;2+子目录的数量</li>
+</ul>
+</li>
+<li>6，文件拥有者</li>
+<li>7，文件所属用户组，一个文件只能属于一个用户组，但是可以属于多个用户</li>
+<li>8，文件大小</li>
+<li>9，文件最大修改时间</li>
+</ul>
+<p>5，设置文件的权限</p>
+<ul>
+<li>chmod  u&#x2F;g&#x2F;o&#x2F;a  +&#x2F;-  rwx:<ul>
+<li>chmod代表changemode指令</li>
+<li>u&#x2F;g&#x2F;o&#x2F;a分别代表给拥有者，拥有组，其他用户，所有用户</li>
+<li>+&#x2F;-代表增加，减少权限</li>
+<li>+r代表增加读权限，+w代表增加写权限，x代表执行权限，可以+wrx等等</li>
+</ul>
+</li>
+<li>可以用数字表示<ul>
+<li><code>rwx</code>&#x3D; 4+2+1 &#x3D; 7</li>
+<li><code>rw-</code>&#x3D; 4+2 &#x3D; 6</li>
+<li><code>r-x</code>&#x3D; 4+1 &#x3D; 5</li>
+<li><code>r--</code>&#x3D; 4</li>
+<li><code>---</code>&#x3D; 0</li>
+</ul>
+</li>
+<li>chmod 765 表示u 为7(rwx),g为6(rw-),0为5(r-x)</li>
+</ul>
+<p>6，修改目录权限的方法是一样的，不过注意</p>
+<ul>
+<li>要cd进目录需要目录的执行权限x</li>
+<li>进入目录后要ls显示内容需要目录的刻度权限r</li>
+</ul>
+<h4 id="组"><a href="#组" class="headerlink" title="组"></a>组</h4><p>1，添加组 sudo groupadd dev，sudo表示用管理员的身份执行</p>
+<p>2，删除组 sudo groupdel dev</p>
+<p>3，查看组 cat&#x2F;less  &#x2F;etc&#x2F;group ，保存的组都会存到etc文件中</p>
+<h4 id="用户"><a href="#用户" class="headerlink" title="用户"></a>用户</h4><p>1，创建用户，sudo useradd -m -g dev 张三</p>
+<ul>
+<li>创建一个名字叫张三的用户，需要root权限</li>
+<li>-m代表自动创建家目录，且配置家目录的权限</li>
+<li>-g 指定用户所属的组，如果不指定默认创建一个和用户名一样的组</li>
+</ul>
+<p>2，设置密码，sudo passwd  张三 zxr6666</p>
+<ul>
+<li>给制定用户设置密码可以使用sudo</li>
+<li>修改自己的密码直接passwd就行了</li>
+</ul>
+<p>3，删除密码 userdel -r username</p>
+<ul>
+<li>-r代表同时删除用户家目录</li>
+</ul>
+<p>4，查看用户信息 cat &#x2F;etc&#x2F;passwd | grep zhangsan</p>
+<ul>
+<li>存在root的&#x2F;ect&#x2F;passwd文件下</li>
+</ul>
+<p><img src="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20251126111331784.png" alt="image-20251126111331784"></p>
+<ul>
+<li>用户信息用：分隔，分别是<ul>
+<li>用户名：是否有密码(x代表有，默认存在&#x2F;etc&#x2F;shadow文件中，加密保存)：用户id：主要组id：用户全名：用户家目录：命令行解释器，负责接收命令并解析执行</li>
+</ul>
+</li>
+</ul>
+<p>5，使用id指令查看用户信息 id zxr</p>
+<p><img src="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20251126112452344.png" alt="image-20251126112452344"></p>
+<ul>
+<li>uid是用户ID，zxr是用户名</li>
+<li>gid是主要组的id，指的是useradd -g指定的组，用户创建的新文件都默认属于这个组</li>
+<li>groups表示用户所属的组集合，用户可以属于多个组，同时拥有多个组的权限</li>
+</ul>
+<p>6，使用who和who am i查看用户信息</p>
+<p><img src="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20251126115110245.png" alt="image-20251126115110245"></p>
+<ul>
+<li>who可以显示当前机器上登录的所有用户</li>
+<li>pts&#x2F;0代表远程ssh登录，后面是登录时间和远程的ip地址</li>
+<li>tty2代表本地登录，直接在机器上登录的</li>
+</ul>
+<p><img src="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20251126115248930.png" alt="image-20251126115248930"></p>
+<ul>
+<li>who am i 可以返回当前用户信息</li>
+</ul>
+<p>7，usermod切换用户的主要组，附加组，使用的shell；需要root权限，改完需要重新连接</p>
+<ul>
+<li><p>usermod -g dev zhangsan，把张三的主要组设置成dev</p>
+</li>
+<li><p>usermod -aG sudo，www-data zhangsan，把张三添加进sudo，www-data附加组</p>
+<ul>
+<li>-G 代表增加附加组</li>
+<li>-a 代表追加，不写就是覆盖</li>
+</ul>
+</li>
+<li><p>usermod -s &#x2F;bin&#x2F;bash  zhangsan，把zhangsan登录是用的shell程序切换为bash</p>
+<ul>
+<li>推荐使用bash，有文件和目录的颜色区分</li>
+</ul>
+</li>
+</ul>
+<p>8，which用于查看指令程序的存放位置</p>
+<p>9，su zxr，用于切换用户</p>
+<ul>
+<li>su -zxr，切换后到达用户的家目录</li>
+<li>exit，退出当前用户，如果在root 执行su zxr，再exit会返回到root，都是递归的</li>
+<li>su 不指定用户和su root 的功能一样，都是切换到root用户</li>
+</ul>
+<p>10，修改文件拥有者，文件所属组，文件权限</p>
+<ul>
+<li>chown zhangsan  user.txt，修改文件拥有者为zhangsan</li>
+<li>chgrp dev user.txt，修改文件组为dev</li>
+<li>chmod 用来修改权限</li>
+<li>以上都可以用于目录或者文件，如果要更改目录里面包含的所有子目录和文件，加上-R参数</li>
+</ul>
+<h3 id="系统信息相关命令"><a href="#系统信息相关命令" class="headerlink" title="系统信息相关命令"></a>系统信息相关命令</h3><p>1，查看系统时间，date</p>
+<p>2，查看系统日历，需要安装ncal软件</p>
+<ul>
+<li>cal显示一个月的日历</li>
+<li>cal -y显示一年的日历</li>
+</ul>
+<p>3，查看磁盘使用情况 df -h (disk free)</p>
+<p><img src="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20251126160045140.png" alt="image-20251126160045140"></p>
+<ul>
+<li>-h 用于以能看懂的方式显示字节数</li>
+<li>主要关注挂载点的&#x2F;目录，能直观显示磁盘的使用情况</li>
+</ul>
+<p>4，查看目录下文件总大小 du(disk usage) -h</p>
+<img src="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20251126160628501.png" alt="image-20251126160628501" style="zoom:50%;" />
 
+<ul>
+<li>这里有三个目录(.&#x2F;，test，inq)，du -h显示了每个目录下的文件的大小总和</li>
+</ul>
+<p>5，查看进程 ps，默认显示当前用户的用终端命令执行的进程</p>
+<ul>
+<li>ps -a，显示所有用户的进程</li>
+<li>ps -u，显示进程的详细状态</li>
+<li>ps -x，显示所有进程，包括非终端执行的</li>
+<li>ps -aux可以显示所有用户的所有进程</li>
+</ul>
+<p>6，动态查看进程top，可以快速筛选出占资源的进程</p>
+<ul>
+<li><p>top -o 字段，指定排序字段</p>
+</li>
+<li><p>会默认按照cpu使用率降序，动态监控进程</p>
+</li>
+<li><p>按P用cup排序，按M切换内存排序，按T切换时间排序</p>
+</li>
+<li><p>按q退出top，按R切换为降序</p>
+</li>
+</ul>
+<p>7，杀死进程 kill</p>
+<ul>
+<li>kill pid，杀死进程，进程会执行完关闭所需要的保存日志等工作</li>
+<li>kill -9 pid，强制杀死进程，用于进程无响应，不能正常关闭</li>
+</ul>
+<h3 id="其他命令"><a href="#其他命令" class="headerlink" title="其他命令"></a>其他命令</h3><h4 id="查找文件"><a href="#查找文件" class="headerlink" title="查找文件"></a>查找文件</h4><p>1，find path -name “*.txt” ，在path下查找文件名为 <em>.txt的文件，</em> *代表匹配多个字符</p>
+<ul>
+<li>path不指定默认当前路径</li>
+<li>默认递归查找，子目录中有也会被查找到</li>
+</ul>
+<h4 id="软链接，硬连接"><a href="#软链接，硬连接" class="headerlink" title="软链接，硬连接"></a>软链接，硬连接</h4><p>1，ln -s 源文件 目标文件，可以建立软链接，目标文件相当于一个源文件的快捷方式</p>
+<ul>
+<li><p>软链接的文件相当于一个路径，指向文件名</p>
+</li>
+<li><p>源文件最好使用绝对路径，不然目标文件变动后，找不到源文件</p>
+</li>
+<li><p>修改目标文件的内容会同步到源文件</p>
+</li>
+<li><p>源文件移动后，软链接会断开</p>
+</li>
+</ul>
+<p>2，linux文件系统，文件名和数据完全分开</p>
+<ul>
+<li>路径层，通过路径解析可以找到目录层的指定目录</li>
+<li>目录层，目录层存放文件名和iNode的映射</li>
+<li>inode层，通过iNode中的元数据找到真实数据存的地方</li>
+<li>软链接相当于一个路径，指向一个目录，当目录中文件名变了，软链接就断了</li>
+<li>删除原文件也只是删除了源文件的目录层，iNode和数据都还在，所以对硬链接没影响，由于没有目录，路径就解析不到目录，所以软链接就断开</li>
+</ul>
+<p>2，ln 源文件 目标文件，建立硬连接</p>
+<ul>
+<li><p>源文件移动或者</p>
+</li>
+<li><p>硬连接相当于在目录新增一个文件名，和原来的文件名映射同一个iNode，就算原来的文件名删除，文件数据也依旧可以通过这个文件名访问</p>
+</li>
+<li><p>当没有文件名映射到这个iNode的时候，iNode元数据指向的真实数据也会被删除</p>
+</li>
+</ul>
+<h4 id="打包解压"><a href="#打包解压" class="headerlink" title="打包解压"></a>打包解压</h4><h4 id="软件安装"><a href="#软件安装" class="headerlink" title="软件安装"></a>软件安装</h4>
     </div>
 
     
@@ -446,13 +649,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">121k</span>
+    <span title="站点总字数">124k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:50</span>
+    <span title="站点阅读时长">1:53</span>
   </span>
 </div>
 
