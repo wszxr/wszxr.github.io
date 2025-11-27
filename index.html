@@ -367,7 +367,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-11-26 18:17:59" itemprop="dateModified" datetime="2025-11-26T18:17:59+08:00">2025-11-26</time>
+      <time title="修改时间：2025-11-27 10:30:52" itemprop="dateModified" datetime="2025-11-27T10:30:52+08:00">2025-11-27</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -385,7 +385,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>5k</span>
+      <span>5.9k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -728,7 +728,62 @@
 <li><p>当没有文件名映射到这个iNode的时候，iNode元数据指向的真实数据也会被删除</p>
 </li>
 </ul>
-<h4 id="打包解压"><a href="#打包解压" class="headerlink" title="打包解压"></a>打包解压</h4><h4 id="软件安装"><a href="#软件安装" class="headerlink" title="软件安装"></a>软件安装</h4>
+<h4 id="打包解包"><a href="#打包解包" class="headerlink" title="打包解包"></a>打包解包</h4><p>1，tar -cvf  目标文件 源文件1 源文件2 ····</p>
+<ul>
+<li><p>把源文件1，源文件2打包为目标文件</p>
+</li>
+<li><p>c代表打包</p>
+</li>
+<li><p>v代表显示详细处理过程</p>
+</li>
+<li><p>f指定目标文件，f后必须跟目标文件</p>
+</li>
+<li><p>2</p>
+</li>
+</ul>
+<p>2，tar -xvf 源文件 -C 目标文件夹</p>
+<ul>
+<li>x代表解包</li>
+</ul>
+<h4 id="压缩解压"><a href="#压缩解压" class="headerlink" title="压缩解压"></a>压缩解压</h4><p>1，gzip -k 01.py ，压缩01.py文件，只能压缩文件，不能压缩目录</p>
+<ul>
+<li>-k表示保留源文件</li>
+<li>不能指定压缩后文件的名字，默认文件名加.gz</li>
+<li>不能指定压缩到哪个目录</li>
+</ul>
+<p>2，gunzip 01.py.gz</p>
+<ul>
+<li>不能指定名字和解压后的路径</li>
+</ul>
+<p>3，配合打包解包使用</p>
+<ul>
+<li>tar -zcvf会调用gzip，先打包，后压缩打包后的文件</li>
+<li>tar -zxvf也一样</li>
+</ul>
+<p>4，bzip2，调用tar -jcvf可以调用bzip2压缩解压程序而不是gzip</p>
+<h4 id="软件安装"><a href="#软件安装" class="headerlink" title="软件安装"></a>软件安装</h4><p>1，安装，sudo apt install 软件名</p>
+<p>2，删除，sudo apt remove 软件名</p>
+<p>3，设置源，源就是保存了apt所有安装包的仓库</p>
+<ul>
+<li>设置为阿里云镜像 sudo sed -i ‘s&#x2F;archive.ubuntu.com&#x2F;mirrors.aliyun.com&#x2F;g’ &#x2F;etc&#x2F;apt&#x2F;sources.list<ul>
+<li>sed表示直接对文件做流式操作 s代表替换，把文件中archive.ubuntu.com替换为mirrors.aliyun.com，g代表全局</li>
+</ul>
+</li>
+<li>设置 安全镜像阿里云 sudo sed -i ‘s&#x2F;security.ubuntu.com&#x2F;mirrors.aliyun.com&#x2F;g’ &#x2F;etc&#x2F;apt&#x2F;sources.list<ul>
+<li>安全镜像负责安装后软件的安全和漏洞更新</li>
+</ul>
+</li>
+<li>重新设置apt源的索引 sudo apt update，更新apt索引中软件的信息<ul>
+<li><code>sed</code>：文本编辑工具</li>
+<li><code>-i</code>：直接修改原文件</li>
+<li><code>&#39;s/archive.ubuntu.com/mirrors.aliyun.com/g&#39;</code>：替换规则</li>
+<li><code>/etc/apt/sources.list</code>：要修改的文件</li>
+</ul>
+</li>
+<li>软件是用户共用的，需要root权限才能操作</li>
+</ul>
+<p>4，更新软件 sudo apt upgrade，真正更新软件版本</p>
+
       
     </div>
 
@@ -3279,13 +3334,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">124k</span>
+    <span title="站点总字数">125k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:53</span>
+    <span title="站点阅读时长">1:54</span>
   </span>
 </div>
 
