@@ -596,6 +596,69 @@ ScheduledThreadPoolExecutor scheduledThreadPoolExecutor =
       </tags>
   </entry>
   <entry>
+    <title>数据结构</title>
+    <url>/2025/12/02/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</url>
+    <content><![CDATA[<p>2025-12-17</p>
+<h1 id="二分查找"><a href="#二分查找" class="headerlink" title="二分查找"></a>二分查找</h1><div class="tabs" id="first-unique-name"><ul class="nav-tabs"><li class="tab active"><a href="#first-unique-name-1">basicBinarySearch</a></li><li class="tab"><a href="#first-unique-name-2">getFirstOrLastIndexBinarySearch</a></li></ul><div class="tab-content"><div class="tab-pane active" id="first-unique-name-1"><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> array 原始升序数组</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> key   需要查找的元素</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> 索引的位置，元素不在数组中返回-1</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="type">int</span> <span class="title function_">basicBinarySearch</span><span class="params">(<span class="type">int</span>[] array, <span class="type">int</span> key)</span> &#123;</span><br><span class="line">    <span class="comment">//1,定义前后指针，指向的是索引</span></span><br><span class="line">    <span class="type">int</span> <span class="variable">low</span> <span class="operator">=</span> <span class="number">0</span>, high = array.length - <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//2,当i&lt;j时，判断目标元素和中间元素的大小；目标元素小说明可能在数组的左半边，大则说明可能在数组的右半边</span></span><br><span class="line">    <span class="keyword">while</span> (low &lt;= high) &#123;   <span class="comment">//===&gt;易错点一：low &lt;= high，两个指针相同时，也要判断是不是和查找的元素相等，如果没有等号，则会漏过这一个元素</span></span><br><span class="line">        <span class="comment">//获取中间元素</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">midIndex</span> <span class="operator">=</span> (high + low) / <span class="number">2</span>;</span><br><span class="line">        <span class="type">int</span> <span class="variable">midVal</span> <span class="operator">=</span> array[midIndex];</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (key &lt; midVal) &#123;</span><br><span class="line">            high = midIndex - <span class="number">1</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (key &gt; midVal) &#123;</span><br><span class="line">            low = midIndex + <span class="number">1</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> midIndex;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//当查找不到时，最后的low就是查找的值在原数组应该插入的位置，</span></span><br><span class="line">    <span class="comment">//按理说返回-low，用负号标记没找到，用low代表位置即可，</span></span><br><span class="line">    <span class="comment">//但是考虑到-0和0在java没差，无法判断是查找到了还是没有查找到，所以给原本的-low 加上了一个-1</span></span><br><span class="line">    <span class="comment">//只需要给返回值+1，再取绝对值，就可以获取到插入位置</span></span><br><span class="line">    <span class="keyword">return</span> -(low + <span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div><div class="tab-pane" id="first-unique-name-2"><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> array   原始升序数组</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> key     元素值</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> isFirst 是否要最左元素，否的话就是最右元素</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> 元素的索引，或者元素应该插入的索引index： -(index+1)</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="type">int</span> <span class="title function_">getFirstOrLastIndexBinarySearch</span><span class="params">(<span class="type">int</span>[] array, <span class="type">int</span> key, <span class="type">boolean</span> isFirst)</span> &#123;</span><br><span class="line">    <span class="comment">//1,照常找元素，找到后先记录下索引，下次找到的时候，比较索引大小即可</span></span><br><span class="line">    <span class="type">int</span> <span class="variable">low</span> <span class="operator">=</span> <span class="number">0</span>, high = array.length - <span class="number">1</span>;</span><br><span class="line">    <span class="type">int</span> <span class="variable">resultIndex</span> <span class="operator">=</span> -<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span> (low &lt;= high) &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">midIndex</span> <span class="operator">=</span> (high + low) / <span class="number">2</span>;</span><br><span class="line">        <span class="type">int</span> <span class="variable">midVal</span> <span class="operator">=</span> array[midIndex];</span><br><span class="line">        <span class="keyword">if</span> (key &lt; midVal) &#123;</span><br><span class="line">            high = midIndex - <span class="number">1</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (key &gt; midVal) &#123;</span><br><span class="line">            low = midIndex + <span class="number">1</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            resultIndex = midIndex;</span><br><span class="line">            <span class="comment">//2,找到之后，要把这个midIndex排除到下一次查找的范围，如果是向左查找，就把high指针-1排除当前的mid，是向右则low+1</span></span><br><span class="line">            <span class="keyword">if</span> (isFirst) &#123;</span><br><span class="line">                high = midIndex - <span class="number">1</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                low = midIndex + <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> resultIndex == -<span class="number">1</span> ? -(low + <span class="number">1</span>) : resultIndex;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div></div></div>
+
+<div class="tabs" id="first-unique-1"><ul class="nav-tabs"></ul><div class="tab-content"></div></div>]]></content>
+      <categories>
+        <category>计算机</category>
+      </categories>
+      <tags>
+        <tag>数据结构基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>shiro</title>
+    <url>/2025/12/01/shiro/</url>
+    <content><![CDATA[<p>1，username</p>
+<div class="tabs" id="first-unique-name"><ul class="nav-tabs"><li class="tab active"><a href="#first-unique-name-1">启动类</a></li><li class="tab"><a href="#first-unique-name-2">basicBinarySearch</a></li><li class="tab"><a href="#first-unique-name-3">insertElementInArray</a></li></ul><div class="tab-content"><div class="tab-pane active" id="first-unique-name-1"></div><div class="tab-pane" id="first-unique-name-2"></div><div class="tab-pane" id="first-unique-name-3"></div></div></div>
+
+]]></content>
+      <categories>
+        <category>计算机</category>
+      </categories>
+      <tags>
+        <tag>登录，权限</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>docker</title>
+    <url>/2025/11/27/docker/</url>
+    <content><![CDATA[<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="在linux安装docker"><a href="#在linux安装docker" class="headerlink" title="在linux安装docker"></a>在linux安装docker</h3><h4 id="1，bash安装"><a href="#1，bash安装" class="headerlink" title="1，bash安装"></a>1，bash安装</h4><p>1，curl -fsSL get.docker.com -o get-docker.sh</p>
+<ul>
+<li>在docker.com拉取get-docker.sh脚本，是docker官方提供的，适用所有的发行版linux</li>
+</ul>
+<p>2，sudo sh get-docker.sh –mirror Aliyun</p>
+<ul>
+<li>在阿里云镜像执行脚本，自动安装</li>
+</ul>
+<p>3，启动docker服务</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#设置docker服务开机自启动</span></span><br><span class="line"><span class="built_in">sudo</span> systemctl <span class="built_in">enable</span> docker</span><br><span class="line"><span class="comment">#启动docker服务</span></span><br><span class="line"><span class="built_in">sudo</span> systemctl start docker</span><br></pre></td></tr></table></figure>
+
+<p>4，sudo groupadd docker</p>
+<ul>
+<li>创建docker组，一般脚本会自动创建</li>
+<li>&#x2F;etc&#x2F;groups 文件内保存了组信息，可以查看有没有叫docker的组</li>
+</ul>
+<p>5，usermod -aG docker zxr</p>
+<ul>
+<li>将docker组作为zxr用户追加的附加组，服务端需要docker组的权限才可以访问</li>
+</ul>
+<p>6，docker version</p>
+<ul>
+<li>查看客户端和服务端信息</li>
+</ul>
+]]></content>
+      <categories>
+        <category>计算机</category>
+      </categories>
+      <tags>
+        <tag>docker</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>linux</title>
     <url>/2025/11/21/linux/</url>
     <content><![CDATA[<h2 id="linux内核"><a href="#linux内核" class="headerlink" title="linux内核"></a>linux内核</h2><p>1，硬件操作</p>
@@ -5138,7 +5201,7 @@ auto-aof-rewrite-percentage 100
   <entry>
     <title>操作系统</title>
     <url>/2024/08/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</url>
-    <content><![CDATA[<h4 id="1-给解压好的bochs配置安装文件-make编译，make-install安装"><a href="#1-给解压好的bochs配置安装文件-make编译，make-install安装" class="headerlink" title="1,给解压好的bochs配置安装文件,make编译，make install安装"></a>1,给解压好的bochs配置安装文件,make编译，make install安装</h4><figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="string">./configure</span> <span class="string">\</span> </span><br><span class="line"><span class="string">--prefix=/home/zxr/bochs_install</span> <span class="string">\</span> <span class="comment">#安装路径</span></span><br><span class="line"><span class="string">--enable-debugger</span> <span class="string">\</span> <span class="comment">#启用bochs自带的调试功能</span></span><br><span class="line"><span class="string">--enable-disasm</span> <span class="string">\</span> <span class="comment">#支持反汇编</span></span><br><span class="line"><span class="string">--enable-iodebug</span> <span class="string">\</span> <span class="comment">#开启io调试接口</span></span><br><span class="line"><span class="string">--enable-x86-debugger</span> <span class="string">\</span> <span class="comment">#支持x86调试器</span></span><br><span class="line"><span class="string">--with-x</span> <span class="string">\</span> <span class="comment">#使用xwindows</span></span><br><span class="line"><span class="string">--with-x11</span> <span class="comment">#x11图形用户界面</span></span><br></pre></td></tr></table></figure>
+    <content><![CDATA[<h1 id="1，安装bochs硬件模拟程序"><a href="#1，安装bochs硬件模拟程序" class="headerlink" title="1，安装bochs硬件模拟程序"></a>1，安装bochs硬件模拟程序</h1><h4 id="1-给解压好的bochs配置安装文件-make编译，make-install安装"><a href="#1-给解压好的bochs配置安装文件-make编译，make-install安装" class="headerlink" title="1,给解压好的bochs配置安装文件,make编译，make install安装"></a>1,给解压好的bochs配置安装文件,make编译，make install安装</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">./configure \ </span><br><span class="line">--prefix=/home/zxr/bochs_install \ <span class="comment">#安装路径</span></span><br><span class="line">--enable-debugger \ <span class="comment">#启用bochs自带的调试功能</span></span><br><span class="line">--enable-disasm \ <span class="comment">#支持反汇编</span></span><br><span class="line">--enable-iodebug \ <span class="comment">#开启io调试接口</span></span><br><span class="line">--enable-x86-debugger \ <span class="comment">#支持x86调试器</span></span><br><span class="line">--with-x \ <span class="comment">#使用xwindows</span></span><br><span class="line">--with-x11 <span class="comment">#x11图形用户界面</span></span><br></pre></td></tr></table></figure>
 
 <ul>
 <li>注意安装c和c++编译器，否则会编译失败</li>
@@ -5159,7 +5222,7 @@ auto-aof-rewrite-percentage 100
 <h4 id="创建启动盘"><a href="#创建启动盘" class="headerlink" title="创建启动盘"></a>创建启动盘</h4><ul>
 <li>使用bochs虚拟机自带的bin&#x2F;bximage指令</li>
 </ul>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="string">bin/bximage</span> <span class="string">.</span></span><br><span class="line"><span class="string">-fd创建软盘。</span></span><br><span class="line"><span class="string">-hd</span> <span class="string">创建硬盘。</span></span><br><span class="line"><span class="string">-mode</span> <span class="string">创建硬盘的类型，有flat</span> <span class="string">、sparse</span> <span class="string">、growing</span> <span class="string">三种。</span></span><br><span class="line"><span class="string">-size</span> <span class="string">指创建多大的硬盘，以MB</span> <span class="string">为单位。</span></span><br><span class="line"><span class="string">-q</span> <span class="string">以静默模式创建，创建过程中不会和用户交互。</span></span><br><span class="line"><span class="comment">#bin/bochs -hd -mode=&quot;flat&quot; -size=60 -q hdM60.img</span></span><br><span class="line"><span class="comment">#创建启动硬盘，大小60m，静默创造，名字叫hdM60.img</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">bin/bximage .</span><br><span class="line">-fd创建软盘。</span><br><span class="line">-hd 创建硬盘。</span><br><span class="line">-mode 创建硬盘的类型，有flat 、sparse 、growing 三种。</span><br><span class="line">-size 指创建多大的硬盘，以MB 为单位。</span><br><span class="line">-q 以静默模式创建，创建过程中不会和用户交互。</span><br><span class="line"><span class="comment">#bin/bochs -hd -mode=&quot;flat&quot; -size=60 -q hdM60.img</span></span><br><span class="line"><span class="comment">#创建启动硬盘，大小60m，静默创造，名字叫hdM60.img</span></span><br></pre></td></tr></table></figure>
 
 <ul>
 <li>输入指令后，bochs会把需要写进配置文件的内容输出，复制进bochsrc.disk(配置文件)即可</li>
@@ -5168,12 +5231,29 @@ auto-aof-rewrite-percentage 100
 <ul>
 <li>启动硬盘创建完毕，注意，进入时是调试模式，输入c放行，q退出</li>
 </ul>
-<h3 id="编写mbr"><a href="#编写mbr" class="headerlink" title="编写mbr"></a>编写mbr</h3><p>1，为什么要把操作系统载入内存？</p>
+<h1 id="2，编写mbr"><a href="#2，编写mbr" class="headerlink" title="2，编写mbr"></a>2，编写mbr</h1><h2 id="1，bios"><a href="#1，bios" class="headerlink" title="1，bios"></a>1，bios</h2><h3 id="1-1，概念："><a href="#1-1，概念：" class="headerlink" title="1.1，概念："></a>1.1，概念：</h3><p>1，bios指的是basic input output system，基本输入输出系统，是计算机运行的第一个程序</p>
+<h3 id="2-1，问题"><a href="#2-1，问题" class="headerlink" title="2.1，问题"></a>2.1，问题</h3><p>1，程序需要加载进内存才能被运行？</p>
 <ul>
-<li>内存的运行速度快</li>
-<li>操作系统可以存在硬盘，软盘各种媒介，如果不统一放到一个地方，就会有对媒介的适配问题</li>
+<li>程序并不是要被加载进内存才能运行，只要地址线能够映射到这里的地址，就能访问到，如果是可执行程序，就能执行，因为x86实模式给了64k的大小专门映射到一块内存，直接把bios写这里就可以了</li>
 </ul>
-]]></content>
+<p>2，bios程序怎么开始运行的</p>
+<ul>
+<li>cs：ip两个寄存器指向的指令就是下一条要别运行的指令，开机的时候会强制指向cs f0000,ip 0ffff，合起来就是ffff0的位置，这个位置就是下表最上面的16kb内存，内容是一个跳转指令，跳转到真正的bios存放的地址</li>
+</ul>
+<p><img src="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20251129151426980.png" alt="image-20251129151426980"></p>
+<p>3，bios程序做了些什么</p>
+<ul>
+<li>初始化硬件，建立中断向量表</li>
+<li>加载mbr程序，通过mbr加载更多的东西，规定mbr的大小为512字节，存放在0磁盘0磁道1扇区的位置，也就是硬盘的第一个扇区</li>
+</ul>
+<h2 id="2，编写基础的mbr程序"><a href="#2，编写基础的mbr程序" class="headerlink" title="2，编写基础的mbr程序"></a>2，编写基础的mbr程序</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">######编写基础版主引导程序 mbr</span><br><span class="line">;指定程序加载进内存时，从0x7c00开始</span><br><span class="line">section mbr vstart=0x7c00</span><br><span class="line">	;利用ax作为中转，把cs的值存入ds，es等</span><br><span class="line">	mov ax,cs</span><br><span class="line">	mov ds,ax</span><br><span class="line">	mov es,ax</span><br><span class="line">	mov ss,ax</span><br><span class="line">	mov fs,ax</span><br><span class="line">	mov sp,0x7c00</span><br><span class="line">	;调用0x10中断的0x06号子功能清屏(上卷窗口)</span><br><span class="line">	mov ax,0x600</span><br><span class="line">	mov bx,0x700</span><br><span class="line">	mov cx,0</span><br><span class="line">	mov dx,0x10</span><br><span class="line">    int 0x10</span><br><span class="line">	;使用0x10中断的3号子功能获取光标位置</span><br><span class="line">	mov ah, 3</span><br><span class="line">	mov bh, 0</span><br><span class="line">	int 0x10</span><br><span class="line">	;用0x10中断打印字符串</span><br><span class="line">	mov ax, message</span><br><span class="line">	mov bp, ax</span><br><span class="line">	</span><br><span class="line">	mov cx, 5</span><br><span class="line">	mov ax, 0x1301</span><br><span class="line">	mov bx, 0x2</span><br><span class="line">	</span><br><span class="line">	int 0x10</span><br><span class="line">	;;;; 死循环</span><br><span class="line">	jmp $</span><br><span class="line">	</span><br><span class="line">	;message是标签，nasm提供的，通过这个标签可以访问到这个字符串</span><br><span class="line">	;db也是是伪指令，代表在这里分配一个或多个字节的内存空间，并初始化后面的数据</span><br><span class="line">	;这里的1 MBR在ascii编码中是5个字节</span><br><span class="line">	message db &quot;1 MBR&quot;</span><br><span class="line">	;用0填充中间的字节</span><br><span class="line">	times 510-($-$$) db 0</span><br><span class="line">	;设置aa，55为512的最后两个字节，bios读到这个才会认为是mbr程序，反着放是因为用的小端序列，也就是高位的写后面</span><br><span class="line">	;又因为一个16进制数字最高是16，只有2的4次方，4位，所以两个16进制数字才是一个字节，字节是最小单位</span><br><span class="line">	;因此，0x1234按小端就是 0x34 0x12</span><br><span class="line">	db 0x55,0xaa</span><br><span class="line">	</span><br></pre></td></tr></table></figure>
+
+<h2 id="3，编译MBR，放进第一扇区"><a href="#3，编译MBR，放进第一扇区" class="headerlink" title="3，编译MBR，放进第一扇区"></a>3，编译MBR，放进第一扇区</h2><h3 id="3-1，编译MBR"><a href="#3-1，编译MBR" class="headerlink" title="3.1，编译MBR"></a>3.1，编译MBR</h3><p>1，使用nasm编译器编译mbr文件</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -o 输出文件 输入文件 -f 文件格式，默认bin格式，可以直接被计算机执行</span></span><br><span class="line">nasm -o mbr.bin mbr.S </span><br></pre></td></tr></table></figure>
+
+<h3 id="3-2，用dd指令覆盖硬盘的第一扇区"><a href="#3-2，用dd指令覆盖硬盘的第一扇区" class="headerlink" title="3.2，用dd指令覆盖硬盘的第一扇区"></a>3.2，用dd指令覆盖硬盘的第一扇区</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># if 源文件 of 目标文件 bs块大小，以块作为单位的 count块的数量 seek跳过指定块数 </span></span><br><span class="line"><span class="comment"># conv=notrunc代表覆盖块的时候，不改变其他块的内容</span></span><br><span class="line"><span class="built_in">dd</span> <span class="keyword">if</span>=mbr.bin of=../hd60M.img bs=512 count=1 conv=notrunc</span><br></pre></td></tr></table></figure>
+
+<h1 id="3-完善mbr"><a href="#3-完善mbr" class="headerlink" title="3,完善mbr"></a>3,完善mbr</h1>]]></content>
       <categories>
         <category>计算机</category>
       </categories>

@@ -19,17 +19,18 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.21.1","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"always","padding":18,"offset":12},"hljswrap":true,"copycode":{"border_radius":8,"enable":true,"show_result":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="1,给解压好的bochs配置安装文件,make编译，make install安装12345678.&#x2F;configure \ --prefix&#x3D;&#x2F;home&#x2F;zxr&#x2F;bochs_install \ #安装路径--enable-debugger \ #启用bochs自带的调试功能--enable-disasm \ #支持反汇编--enable-iodebug \ #开启io调试接口--enable-x8">
+    <meta name="description" content="1，安装bochs硬件模拟程序1,给解压好的bochs配置安装文件,make编译，make install安装12345678.&#x2F;configure \ --prefix&#x3D;&#x2F;home&#x2F;zxr&#x2F;bochs_install \ #安装路径--enable-debugger \ #启用bochs自带的调试功能--enable-disasm \ #支持反汇编--enable-iodebug \ #开启io">
 <meta property="og:type" content="article">
 <meta property="og:title" content="操作系统">
 <meta property="og:url" content="http://example.com/2024/08/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="1,给解压好的bochs配置安装文件,make编译，make install安装12345678.&#x2F;configure \ --prefix&#x3D;&#x2F;home&#x2F;zxr&#x2F;bochs_install \ #安装路径--enable-debugger \ #启用bochs自带的调试功能--enable-disasm \ #支持反汇编--enable-iodebug \ #开启io调试接口--enable-x8">
+<meta property="og:description" content="1，安装bochs硬件模拟程序1,给解压好的bochs配置安装文件,make编译，make install安装12345678.&#x2F;configure \ --prefix&#x3D;&#x2F;home&#x2F;zxr&#x2F;bochs_install \ #安装路径--enable-debugger \ #启用bochs自带的调试功能--enable-disasm \ #支持反汇编--enable-iodebug \ #开启io">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20240813235503043.png">
 <meta property="og:image" content="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20240814235303276.png">
+<meta property="og:image" content="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20251129151426980.png">
 <meta property="article:published_time" content="2024-08-13T14:55:25.000Z">
-<meta property="article:modified_time" content="2024-09-17T14:50:41.965Z">
+<meta property="article:modified_time" content="2025-11-29T15:10:34.410Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="自制操作系统">
 <meta name="twitter:card" content="summary">
@@ -141,7 +142,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E7%BB%99%E8%A7%A3%E5%8E%8B%E5%A5%BD%E7%9A%84bochs%E9%85%8D%E7%BD%AE%E5%AE%89%E8%A3%85%E6%96%87%E4%BB%B6-make%E7%BC%96%E8%AF%91%EF%BC%8Cmake-install%E5%AE%89%E8%A3%85"><span class="nav-number">1.</span> <span class="nav-text">1,给解压好的bochs配置安装文件,make编译，make install安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E9%85%8D%E7%BD%AEbochs%E7%9A%84%E5%90%AF%E5%8A%A8%E6%96%87%E4%BB%B6"><span class="nav-number">2.</span> <span class="nav-text">2,配置bochs的启动文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E5%90%AF%E5%8A%A8%E7%9B%98"><span class="nav-number">3.</span> <span class="nav-text">创建启动盘</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E5%86%99mbr"><span class="nav-number"></span> <span class="nav-text">编写mbr</span></a></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1%EF%BC%8C%E5%AE%89%E8%A3%85bochs%E7%A1%AC%E4%BB%B6%E6%A8%A1%E6%8B%9F%E7%A8%8B%E5%BA%8F"><span class="nav-number">1.</span> <span class="nav-text">1，安装bochs硬件模拟程序</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E7%BB%99%E8%A7%A3%E5%8E%8B%E5%A5%BD%E7%9A%84bochs%E9%85%8D%E7%BD%AE%E5%AE%89%E8%A3%85%E6%96%87%E4%BB%B6-make%E7%BC%96%E8%AF%91%EF%BC%8Cmake-install%E5%AE%89%E8%A3%85"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">1,给解压好的bochs配置安装文件,make编译，make install安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E9%85%8D%E7%BD%AEbochs%E7%9A%84%E5%90%AF%E5%8A%A8%E6%96%87%E4%BB%B6"><span class="nav-number">1.0.0.2.</span> <span class="nav-text">2,配置bochs的启动文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E5%90%AF%E5%8A%A8%E7%9B%98"><span class="nav-number">1.0.0.3.</span> <span class="nav-text">创建启动盘</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2%EF%BC%8C%E7%BC%96%E5%86%99mbr"><span class="nav-number">2.</span> <span class="nav-text">2，编写mbr</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1%EF%BC%8Cbios"><span class="nav-number">2.1.</span> <span class="nav-text">1，bios</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1%EF%BC%8C%E6%A6%82%E5%BF%B5%EF%BC%9A"><span class="nav-number">2.1.1.</span> <span class="nav-text">1.1，概念：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1%EF%BC%8C%E9%97%AE%E9%A2%98"><span class="nav-number">2.1.2.</span> <span class="nav-text">2.1，问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%EF%BC%8C%E7%BC%96%E5%86%99%E5%9F%BA%E7%A1%80%E7%9A%84mbr%E7%A8%8B%E5%BA%8F"><span class="nav-number">2.2.</span> <span class="nav-text">2，编写基础的mbr程序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3%EF%BC%8C%E7%BC%96%E8%AF%91MBR%EF%BC%8C%E6%94%BE%E8%BF%9B%E7%AC%AC%E4%B8%80%E6%89%87%E5%8C%BA"><span class="nav-number">2.3.</span> <span class="nav-text">3，编译MBR，放进第一扇区</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1%EF%BC%8C%E7%BC%96%E8%AF%91MBR"><span class="nav-number">2.3.1.</span> <span class="nav-text">3.1，编译MBR</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2%EF%BC%8C%E7%94%A8dd%E6%8C%87%E4%BB%A4%E8%A6%86%E7%9B%96%E7%A1%AC%E7%9B%98%E7%9A%84%E7%AC%AC%E4%B8%80%E6%89%87%E5%8C%BA"><span class="nav-number">2.3.2.</span> <span class="nav-text">3.2，用dd指令覆盖硬盘的第一扇区</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E5%AE%8C%E5%96%84mbr"><span class="nav-number">3.</span> <span class="nav-text">3,完善mbr</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -154,7 +155,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">27</span>
+          <span class="site-state-item-count">30</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -165,7 +166,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-count">26</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -233,7 +234,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-09-17 22:50:41" itemprop="dateModified" datetime="2024-09-17T22:50:41+08:00">2024-09-17</time>
+      <time title="修改时间：2025-11-29 23:10:34" itemprop="dateModified" datetime="2025-11-29T23:10:34+08:00">2025-11-29</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -251,14 +252,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>1.3k</span>
+      <span>2.6k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
+      <span>2 分钟</span>
     </span>
 </div>
 
@@ -268,7 +269,7 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h4 id="1-给解压好的bochs配置安装文件-make编译，make-install安装"><a href="#1-给解压好的bochs配置安装文件-make编译，make-install安装" class="headerlink" title="1,给解压好的bochs配置安装文件,make编译，make install安装"></a>1,给解压好的bochs配置安装文件,make编译，make install安装</h4><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">./configure</span> <span class="string">\</span> </span><br><span class="line"><span class="string">--prefix=/home/zxr/bochs_install</span> <span class="string">\</span> <span class="comment">#安装路径</span></span><br><span class="line"><span class="string">--enable-debugger</span> <span class="string">\</span> <span class="comment">#启用bochs自带的调试功能</span></span><br><span class="line"><span class="string">--enable-disasm</span> <span class="string">\</span> <span class="comment">#支持反汇编</span></span><br><span class="line"><span class="string">--enable-iodebug</span> <span class="string">\</span> <span class="comment">#开启io调试接口</span></span><br><span class="line"><span class="string">--enable-x86-debugger</span> <span class="string">\</span> <span class="comment">#支持x86调试器</span></span><br><span class="line"><span class="string">--with-x</span> <span class="string">\</span> <span class="comment">#使用xwindows</span></span><br><span class="line"><span class="string">--with-x11</span> <span class="comment">#x11图形用户界面</span></span><br></pre></td></tr></table></figure>
+    <div class="post-body" itemprop="articleBody"><h1 id="1，安装bochs硬件模拟程序"><a href="#1，安装bochs硬件模拟程序" class="headerlink" title="1，安装bochs硬件模拟程序"></a>1，安装bochs硬件模拟程序</h1><h4 id="1-给解压好的bochs配置安装文件-make编译，make-install安装"><a href="#1-给解压好的bochs配置安装文件-make编译，make-install安装" class="headerlink" title="1,给解压好的bochs配置安装文件,make编译，make install安装"></a>1,给解压好的bochs配置安装文件,make编译，make install安装</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">./configure \ </span><br><span class="line">--prefix=/home/zxr/bochs_install \ <span class="comment">#安装路径</span></span><br><span class="line">--enable-debugger \ <span class="comment">#启用bochs自带的调试功能</span></span><br><span class="line">--enable-disasm \ <span class="comment">#支持反汇编</span></span><br><span class="line">--enable-iodebug \ <span class="comment">#开启io调试接口</span></span><br><span class="line">--enable-x86-debugger \ <span class="comment">#支持x86调试器</span></span><br><span class="line">--with-x \ <span class="comment">#使用xwindows</span></span><br><span class="line">--with-x11 <span class="comment">#x11图形用户界面</span></span><br></pre></td></tr></table></figure>
 
 <ul>
 <li>注意安装c和c++编译器，否则会编译失败</li>
@@ -289,7 +290,7 @@
 <h4 id="创建启动盘"><a href="#创建启动盘" class="headerlink" title="创建启动盘"></a>创建启动盘</h4><ul>
 <li>使用bochs虚拟机自带的bin&#x2F;bximage指令</li>
 </ul>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">bin/bximage</span> <span class="string">.</span></span><br><span class="line"><span class="string">-fd创建软盘。</span></span><br><span class="line"><span class="string">-hd</span> <span class="string">创建硬盘。</span></span><br><span class="line"><span class="string">-mode</span> <span class="string">创建硬盘的类型，有flat</span> <span class="string">、sparse</span> <span class="string">、growing</span> <span class="string">三种。</span></span><br><span class="line"><span class="string">-size</span> <span class="string">指创建多大的硬盘，以MB</span> <span class="string">为单位。</span></span><br><span class="line"><span class="string">-q</span> <span class="string">以静默模式创建，创建过程中不会和用户交互。</span></span><br><span class="line"><span class="comment">#bin/bochs -hd -mode=&quot;flat&quot; -size=60 -q hdM60.img</span></span><br><span class="line"><span class="comment">#创建启动硬盘，大小60m，静默创造，名字叫hdM60.img</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">bin/bximage .</span><br><span class="line">-fd创建软盘。</span><br><span class="line">-hd 创建硬盘。</span><br><span class="line">-mode 创建硬盘的类型，有flat 、sparse 、growing 三种。</span><br><span class="line">-size 指创建多大的硬盘，以MB 为单位。</span><br><span class="line">-q 以静默模式创建，创建过程中不会和用户交互。</span><br><span class="line"><span class="comment">#bin/bochs -hd -mode=&quot;flat&quot; -size=60 -q hdM60.img</span></span><br><span class="line"><span class="comment">#创建启动硬盘，大小60m，静默创造，名字叫hdM60.img</span></span><br></pre></td></tr></table></figure>
 
 <ul>
 <li>输入指令后，bochs会把需要写进配置文件的内容输出，复制进bochsrc.disk(配置文件)即可</li>
@@ -298,12 +299,29 @@
 <ul>
 <li>启动硬盘创建完毕，注意，进入时是调试模式，输入c放行，q退出</li>
 </ul>
-<h3 id="编写mbr"><a href="#编写mbr" class="headerlink" title="编写mbr"></a>编写mbr</h3><p>1，为什么要把操作系统载入内存？</p>
+<h1 id="2，编写mbr"><a href="#2，编写mbr" class="headerlink" title="2，编写mbr"></a>2，编写mbr</h1><h2 id="1，bios"><a href="#1，bios" class="headerlink" title="1，bios"></a>1，bios</h2><h3 id="1-1，概念："><a href="#1-1，概念：" class="headerlink" title="1.1，概念："></a>1.1，概念：</h3><p>1，bios指的是basic input output system，基本输入输出系统，是计算机运行的第一个程序</p>
+<h3 id="2-1，问题"><a href="#2-1，问题" class="headerlink" title="2.1，问题"></a>2.1，问题</h3><p>1，程序需要加载进内存才能被运行？</p>
 <ul>
-<li>内存的运行速度快</li>
-<li>操作系统可以存在硬盘，软盘各种媒介，如果不统一放到一个地方，就会有对媒介的适配问题</li>
+<li>程序并不是要被加载进内存才能运行，只要地址线能够映射到这里的地址，就能访问到，如果是可执行程序，就能执行，因为x86实模式给了64k的大小专门映射到一块内存，直接把bios写这里就可以了</li>
 </ul>
+<p>2，bios程序怎么开始运行的</p>
+<ul>
+<li>cs：ip两个寄存器指向的指令就是下一条要别运行的指令，开机的时候会强制指向cs f0000,ip 0ffff，合起来就是ffff0的位置，这个位置就是下表最上面的16kb内存，内容是一个跳转指令，跳转到真正的bios存放的地址</li>
+</ul>
+<p><img src="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20251129151426980.png" alt="image-20251129151426980"></p>
+<p>3，bios程序做了些什么</p>
+<ul>
+<li>初始化硬件，建立中断向量表</li>
+<li>加载mbr程序，通过mbr加载更多的东西，规定mbr的大小为512字节，存放在0磁盘0磁道1扇区的位置，也就是硬盘的第一个扇区</li>
+</ul>
+<h2 id="2，编写基础的mbr程序"><a href="#2，编写基础的mbr程序" class="headerlink" title="2，编写基础的mbr程序"></a>2，编写基础的mbr程序</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">######编写基础版主引导程序 mbr</span><br><span class="line">;指定程序加载进内存时，从0x7c00开始</span><br><span class="line">section mbr vstart=0x7c00</span><br><span class="line">	;利用ax作为中转，把cs的值存入ds，es等</span><br><span class="line">	mov ax,cs</span><br><span class="line">	mov ds,ax</span><br><span class="line">	mov es,ax</span><br><span class="line">	mov ss,ax</span><br><span class="line">	mov fs,ax</span><br><span class="line">	mov sp,0x7c00</span><br><span class="line">	;调用0x10中断的0x06号子功能清屏(上卷窗口)</span><br><span class="line">	mov ax,0x600</span><br><span class="line">	mov bx,0x700</span><br><span class="line">	mov cx,0</span><br><span class="line">	mov dx,0x10</span><br><span class="line">    int 0x10</span><br><span class="line">	;使用0x10中断的3号子功能获取光标位置</span><br><span class="line">	mov ah, 3</span><br><span class="line">	mov bh, 0</span><br><span class="line">	int 0x10</span><br><span class="line">	;用0x10中断打印字符串</span><br><span class="line">	mov ax, message</span><br><span class="line">	mov bp, ax</span><br><span class="line">	</span><br><span class="line">	mov cx, 5</span><br><span class="line">	mov ax, 0x1301</span><br><span class="line">	mov bx, 0x2</span><br><span class="line">	</span><br><span class="line">	int 0x10</span><br><span class="line">	;;;; 死循环</span><br><span class="line">	jmp $</span><br><span class="line">	</span><br><span class="line">	;message是标签，nasm提供的，通过这个标签可以访问到这个字符串</span><br><span class="line">	;db也是是伪指令，代表在这里分配一个或多个字节的内存空间，并初始化后面的数据</span><br><span class="line">	;这里的1 MBR在ascii编码中是5个字节</span><br><span class="line">	message db &quot;1 MBR&quot;</span><br><span class="line">	;用0填充中间的字节</span><br><span class="line">	times 510-($-$$) db 0</span><br><span class="line">	;设置aa，55为512的最后两个字节，bios读到这个才会认为是mbr程序，反着放是因为用的小端序列，也就是高位的写后面</span><br><span class="line">	;又因为一个16进制数字最高是16，只有2的4次方，4位，所以两个16进制数字才是一个字节，字节是最小单位</span><br><span class="line">	;因此，0x1234按小端就是 0x34 0x12</span><br><span class="line">	db 0x55,0xaa</span><br><span class="line">	</span><br></pre></td></tr></table></figure>
 
+<h2 id="3，编译MBR，放进第一扇区"><a href="#3，编译MBR，放进第一扇区" class="headerlink" title="3，编译MBR，放进第一扇区"></a>3，编译MBR，放进第一扇区</h2><h3 id="3-1，编译MBR"><a href="#3-1，编译MBR" class="headerlink" title="3.1，编译MBR"></a>3.1，编译MBR</h3><p>1，使用nasm编译器编译mbr文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -o 输出文件 输入文件 -f 文件格式，默认bin格式，可以直接被计算机执行</span></span><br><span class="line">nasm -o mbr.bin mbr.S </span><br></pre></td></tr></table></figure>
+
+<h3 id="3-2，用dd指令覆盖硬盘的第一扇区"><a href="#3-2，用dd指令覆盖硬盘的第一扇区" class="headerlink" title="3.2，用dd指令覆盖硬盘的第一扇区"></a>3.2，用dd指令覆盖硬盘的第一扇区</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># if 源文件 of 目标文件 bs块大小，以块作为单位的 count块的数量 seek跳过指定块数 </span></span><br><span class="line"><span class="comment"># conv=notrunc代表覆盖块的时候，不改变其他块的内容</span></span><br><span class="line"><span class="built_in">dd</span> <span class="keyword">if</span>=mbr.bin of=../hd60M.img bs=512 count=1 conv=notrunc</span><br></pre></td></tr></table></figure>
+
+<h1 id="3-完善mbr"><a href="#3-完善mbr" class="headerlink" title="3,完善mbr"></a>3,完善mbr</h1>
     </div>
 
     
@@ -357,13 +375,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">125k</span>
+    <span title="站点总字数">128k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:54</span>
+    <span title="站点阅读时长">1:57</span>
   </span>
 </div>
 

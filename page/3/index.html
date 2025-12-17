@@ -145,7 +145,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">27</span>
+          <span class="site-state-item-count">30</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -156,7 +156,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-count">26</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -173,6 +173,751 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+
+<div class="post-block">
+
+
+
+
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/29/%E4%BC%98%E5%85%88%E5%87%86%E5%A4%87/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/11/29/%E4%BC%98%E5%85%88%E5%87%86%E5%A4%87/" class="post-title-link" itemprop="url">优先准备</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-11-29 10:50:45" itemprop="dateCreated datePublished" datetime="2024-11-29T10:50:45+08:00">2024-11-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-12-04 22:33:12" itemprop="dateModified" datetime="2024-12-04T22:33:12+08:00">2024-12-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/" itemprop="url" rel="index"><span itemprop="name">计算机</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>4.8k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="java基础"><a href="#java基础" class="headerlink" title="java基础"></a>java基础</h2><h3 id="1，get-和-post请求的区别"><a href="#1，get-和-post请求的区别" class="headerlink" title="1，get 和 post请求的区别"></a>1，get 和 post请求的区别</h3><h4 id="延申：弄清楚http种常用不同请求的区别"><a href="#延申：弄清楚http种常用不同请求的区别" class="headerlink" title="延申：弄清楚http种常用不同请求的区别"></a>延申：弄清楚http种常用不同请求的区别</h4><ul>
+<li>get：<ul>
+<li>参数显示在地址栏，不安全，参数有长度限制，常用于获取资源，幂等</li>
+</ul>
+</li>
+<li>post：<ul>
+<li>参数放在请求体，也需要对参数加密，长度无限制，常用于增删改资源，不幂等</li>
+</ul>
+</li>
+<li>put：<ul>
+<li>参数放请求体，用于更新</li>
+</ul>
+</li>
+<li>delete：<ul>
+<li>参数放请求头，用于删除指定位置的资源</li>
+</ul>
+</li>
+<li>head</li>
+</ul>
+<h3 id="2，面向对象三个基本特征"><a href="#2，面向对象三个基本特征" class="headerlink" title="2，面向对象三个基本特征"></a>2，面向对象三个基本特征</h3><ul>
+<li>封装：把类的属性私有，避免外部直接访问，提高程序安全性</li>
+<li>继承：子类可以继承父类的变量和方法，复用代码的手段</li>
+<li>多态：同一操作对于不同的对象有不同的解释，由重载和重写实现<ul>
+<li>重载：同一个类中同名不同参数的方法</li>
+<li>重写：子类重写父类方法提供子类的实现</li>
+</ul>
+</li>
+</ul>
+<h3 id="3，-和equals的区别"><a href="#3，-和equals的区别" class="headerlink" title="3，&#x3D;&#x3D;和equals的区别"></a>3，&#x3D;&#x3D;和equals的区别</h3><ul>
+<li>&#x3D;&#x3D;可以作用与基本数据类型和引用类型<ul>
+<li>基本数据类型，比较的是值是否相等</li>
+<li>引用类型，比较的是对象的地址是否相等，无关对象内的内容</li>
+</ul>
+</li>
+<li>equals只能作用于引用类型<ul>
+<li>在不重写的情况下，方法内使用的是&#x3D;&#x3D;来判断</li>
+</ul>
+</li>
+<li>注意：<ul>
+<li>在使用对象当hashmap的key时：重写equals方法必须要重写hashcode方法，要保证对象相等的时候hashcode必须相同</li>
+<li>原因：在hashmap中先根据hashcode计算桶，再根据equals判断是否是重复的key；假如equals成立(对象相同)，hashcode却不同，则hash冲突不会发生，equals方法不会被触发，造成相同的两个对象会被hash到不同的桶里，不符合hashmap key不重复的设计</li>
+</ul>
+</li>
+</ul>
+<h3 id="4，-和-，-和"><a href="#4，-和-，-和" class="headerlink" title="4，&amp;和&amp;&amp;，|和||"></a>4，&amp;和&amp;&amp;，|和||</h3><ul>
+<li><p>A&amp;B：先判断A，再判断B是否true</p>
+</li>
+<li><p>A&amp;&amp;B：先判断A，如果A为false那么B直接不用判断，结果肯定为false，减少了一次判断</p>
+</li>
+<li><p>II和&amp;&amp;思路一样，短路系列前面能出结果那么后面的就不判断直接获得结果</p>
+</li>
+</ul>
+<h3 id="5-stringbuilder-string-stringbuffer的区别"><a href="#5-stringbuilder-string-stringbuffer的区别" class="headerlink" title="5,stringbuilder,string,stringbuffer的区别"></a>5,stringbuilder,string,stringbuffer的区别</h3><ul>
+<li>string：不可变，每一次操作都返回一个新的对象</li>
+<li>stringbuilder：可变</li>
+<li>stringbuffer：同步的stringbuilder</li>
+</ul>
+<h3 id="6，重载和重写的区别"><a href="#6，重载和重写的区别" class="headerlink" title="6，重载和重写的区别"></a>6，重载和重写的区别</h3><ul>
+<li>重载：同名方法，返回类型不限制，参数不同，可以是数量，类型，顺序不同，访问修饰符大于等于父类</li>
+<li>重写：同名方法，参数相同，返回值不限制，修饰符大于等于父类</li>
+</ul>
+<h3 id="7-用过哪些集合"><a href="#7-用过哪些集合" class="headerlink" title="7,用过哪些集合"></a>7,用过哪些集合</h3><ul>
+<li>arraylist</li>
+<li>hashset</li>
+<li>hashmap</li>
+</ul>
+<h3 id="8，list，set，map的区别"><a href="#8，list，set，map的区别" class="headerlink" title="8，list，set，map的区别"></a>8，list，set，map的区别</h3><ul>
+<li>list和set继承自collection接口，map是另外的接口</li>
+<li>list是有序线性的，set是无序线性的，map是无序kv结构</li>
+</ul>
+<h3 id="9，了解过的线程安全的集合"><a href="#9，了解过的线程安全的集合" class="headerlink" title="9，了解过的线程安全的集合"></a>9，了解过的线程安全的集合</h3><ul>
+<li>hashtable，concurrenthashmap</li>
+<li>copyonwritearraylist</li>
+</ul>
+<h3 id="10-hashmap的put原理？为什么hashmap容量设计成2的n次方"><a href="#10-hashmap的put原理？为什么hashmap容量设计成2的n次方" class="headerlink" title="10.hashmap的put原理？为什么hashmap容量设计成2的n次方"></a>10.hashmap的put原理？为什么hashmap容量设计成2的n次方</h3><ul>
+<li>计算桶：(h^(h&gt;&gt;16))&amp;(table.length-1)</li>
+<li>hash冲突了则去冲突的链表或者红黑树使用equals比较，不重复就插入到链表或者红黑树</li>
+<li>容量设置2的n次方主要用于扩容减少计算量，table的长度*2，只需要判断多出来的那一位高位对应的(h^(h&gt;&gt;16))的值的那一位是1还是0，是1，&amp;后的结果就是1，就需要把桶的结果乘2得到新的桶，是0，&amp;的结果是0，桶的位置不变，；</li>
+</ul>
+<h3 id="11，arraylist和linkedlist的区别"><a href="#11，arraylist和linkedlist的区别" class="headerlink" title="11，arraylist和linkedlist的区别"></a>11，arraylist和linkedlist的区别</h3><ul>
+<li>arraylist底层是数组，适合查询多，增删少的场景，查询可以根据下标</li>
+<li>linkedlist底层使用的是双向链表，适合增删多的场景，查询只能遍历</li>
+</ul>
+<h3 id="12，throw和throws的区别"><a href="#12，throw和throws的区别" class="headerlink" title="12，throw和throws的区别"></a>12，throw和throws的区别</h3><ul>
+<li>throws作用与方法，往外抛出异常</li>
+<li>throw 是抛出异常</li>
+</ul>
+<h3 id="13，接口和抽象类的区别"><a href="#13，接口和抽象类的区别" class="headerlink" title="13，接口和抽象类的区别"></a>13，接口和抽象类的区别</h3><ul>
+<li>一个类可以实现多个接口，但是只能继承一个父类</li>
+<li>接口中只有方法声明，没有具体实现；抽象类可以有抽象方法，也可以有实现的犯法</li>
+</ul>
+<h3 id="14，去阿里巴巴手册看几个代码规范"><a href="#14，去阿里巴巴手册看几个代码规范" class="headerlink" title="14，去阿里巴巴手册看几个代码规范"></a>14，去阿里巴巴手册看几个代码规范</h3><ul>
+<li>类名使用大驼峰命名，方法名和变量统一使用小驼峰</li>
+<li>在关键的类，方法，参数等地方写注释</li>
+<li>在捕获异常的时候，细分异常类型</li>
+<li>创建线程池的时候，不要使用Executors工具类，使用threadpoolexecutor的构造方法</li>
+</ul>
+<h3 id="15，创建对象的三种方式"><a href="#15，创建对象的三种方式" class="headerlink" title="15，创建对象的三种方式"></a>15，创建对象的三种方式</h3><ul>
+<li>new对象</li>
+<li>使用反射创建</li>
+<li>通过反序列化创建</li>
+</ul>
+<h3 id="16，如何通过反射创建对象"><a href="#16，如何通过反射创建对象" class="headerlink" title="16，如何通过反射创建对象"></a>16，如何通过反射创建对象</h3><ul>
+<li>先获取类的入口class类：class.forName(全限定名)</li>
+<li>再获取类的构造方法</li>
+<li>执行构造方法即可</li>
+</ul>
+<h3 id="17，反射的使用场景是什么"><a href="#17，反射的使用场景是什么" class="headerlink" title="17，反射的使用场景是什么"></a>17，反射的使用场景是什么</h3><ul>
+<li>spring中使用</li>
+</ul>
+<h3 id="18，反射的优缺点是什么"><a href="#18，反射的优缺点是什么" class="headerlink" title="18，反射的优缺点是什么"></a>18，反射的优缺点是什么</h3><ul>
+<li>优点：在程序运行的时候可以动态的创建对象</li>
+<li>缺点：性能比较低</li>
+</ul>
+<h3 id="19，掌握几个IO的常用类"><a href="#19，掌握几个IO的常用类" class="headerlink" title="19，掌握几个IO的常用类"></a>19，掌握几个IO的常用类</h3><h2 id="多线程"><a href="#多线程" class="headerlink" title="多线程"></a>多线程</h2><h3 id="1，线程和进程的区别"><a href="#1，线程和进程的区别" class="headerlink" title="1，线程和进程的区别"></a>1，线程和进程的区别</h3><ul>
+<li>进程是计算机进行资源分配的基本单位，线程是计算机调度的基本单位</li>
+<li>进程拥有独立的内存空间，io资源；线程共享同进程的内存空间和io资源</li>
+<li>进程的上下文切换开销大，且进程之间的通信很麻烦；线程的上下文切换开销小，只需要记录寄存器和线程私有的东西，操作数栈，局部变量表</li>
+</ul>
+<h3 id="2，线程有几种创建方式，区别是什么"><a href="#2，线程有几种创建方式，区别是什么" class="headerlink" title="2，线程有几种创建方式，区别是什么"></a>2，线程有几种创建方式，区别是什么</h3><ul>
+<li>3种：<ul>
+<li>继承Thread类，重写run方法，调用对象的start方法即可创建一个线程</li>
+<li>实现runnable接口，重写run方法，把runnable作为Thread类的构造参数,调用对象的start方法即可创建一个线程</li>
+<li>实现callable接口，重写call方法，交给线程池的submit方法执行，返回一个futrue对象，调用futrue.get即可阻塞当前直到获取该callable的返回值</li>
+</ul>
+</li>
+<li>区别：<ul>
+<li>继承thread比较方便，但是java只能单继承，不灵活；run方法不支持返回值</li>
+<li>实现runnable解决了继承不灵活的问题，但是也不支持返回值</li>
+<li>callable配合线程池可以获取返回值，callable是接口也比较灵活</li>
+</ul>
+</li>
+</ul>
+<h3 id="3，线程的几种状态"><a href="#3，线程的几种状态" class="headerlink" title="3，线程的几种状态"></a>3，线程的几种状态</h3><ul>
+<li>ready：还没有调用start方法之前</li>
+<li>runnable：运行</li>
+<li>waiting：等待，object.wait，</li>
+<li>timedwaiting：超时等待</li>
+<li>blocked：阻塞</li>
+<li>terminal：终止</li>
+</ul>
+<h3 id="4，线程池的7大参数"><a href="#4，线程池的7大参数" class="headerlink" title="4，线程池的7大参数"></a>4，线程池的7大参数</h3><ul>
+<li>核心线程数</li>
+<li>最大线程数</li>
+<li>非核心线程过期时间</li>
+<li>时间单位</li>
+<li>阻塞队列</li>
+<li>拒绝策略</li>
+<li>线程工厂</li>
+</ul>
+<h3 id="5，线程池工作原理"><a href="#5，线程池工作原理" class="headerlink" title="5，线程池工作原理"></a>5，线程池工作原理</h3><ul>
+<li>先加入核心线程数</li>
+<li>核心线程不够在看最大线程</li>
+<li>最大线程不够在看阻塞队列够不够</li>
+<li>阻塞队列不够看拒绝策略</li>
+</ul>
+<h3 id="6，阻塞队列有哪些，拒绝策略有哪些"><a href="#6，阻塞队列有哪些，拒绝策略有哪些" class="headerlink" title="6，阻塞队列有哪些，拒绝策略有哪些"></a>6，阻塞队列有哪些，拒绝策略有哪些</h3><ul>
+<li>阻塞队列：</li>
+<li>拒绝策略：<ul>
+<li>丢弃</li>
+<li>报错</li>
+<li>丢弃最老任务</li>
+<li>用户线程执行</li>
+</ul>
+</li>
+</ul>
+<h3 id="7，线程池submit和execute方法的区别"><a href="#7，线程池submit和execute方法的区别" class="headerlink" title="7，线程池submit和execute方法的区别"></a>7，线程池submit和execute方法的区别</h3><ul>
+<li>execute没有返回值，只能接受一个个runnable参数，创建的线程内部出现异常，在线程内处理，不会返回到创建线程的线程</li>
+<li>submit返回一个futrue，可以接受runnable和callable，接收runnable时返回null，线程出现异常会由future.get抛出，放到try catch可以捕获异常</li>
+</ul>
+<h3 id="8，公司使用的线程池，参数怎么设置，设置的依据"><a href="#8，公司使用的线程池，参数怎么设置，设置的依据" class="headerlink" title="8，公司使用的线程池，参数怎么设置，设置的依据"></a>8，公司使用的线程池，参数怎么设置，设置的依据</h3><h3 id="9，为什么不能使用Executors自带的线程池"><a href="#9，为什么不能使用Executors自带的线程池" class="headerlink" title="9，为什么不能使用Executors自带的线程池"></a>9，为什么不能使用Executors自带的线程池</h3><ul>
+<li>参数写死，不能配置</li>
+</ul>
+<h2 id="MySQL"><a href="#MySQL" class="headerlink" title="MySQL"></a>MySQL</h2><h3 id="1，事务的特性"><a href="#1，事务的特性" class="headerlink" title="1，事务的特性"></a>1，事务的特性</h3><ul>
+<li>原子性</li>
+<li>隔离性</li>
+<li>持久性</li>
+<li>一致性</li>
+</ul>
+<h3 id="2，事务的隔离级别，Mysql默认的隔离级别"><a href="#2，事务的隔离级别，Mysql默认的隔离级别" class="headerlink" title="2，事务的隔离级别，Mysql默认的隔离级别"></a>2，事务的隔离级别，Mysql默认的隔离级别</h3><ul>
+<li>隔离级别<ul>
+<li>读未提交</li>
+<li>读已提交</li>
+<li>可重复读</li>
+<li>序列化运行</li>
+</ul>
+</li>
+<li>mysql默认可重复读，通过mvcc实现，极端情况会出现幻影读问题</li>
+</ul>
+<h3 id="3，事务的传播行为"><a href="#3，事务的传播行为" class="headerlink" title="3，事务的传播行为"></a>3，事务的传播行为</h3><ul>
+<li>require new</li>
+<li>require</li>
+</ul>
+<h3 id="4-不同的隔离级别在两个事务中会出现什么问题"><a href="#4-不同的隔离级别在两个事务中会出现什么问题" class="headerlink" title="4,不同的隔离级别在两个事务中会出现什么问题"></a>4,不同的隔离级别在两个事务中会出现什么问题</h3><ul>
+<li>脏读 读未提交，读到还没有提交的事务写入的值</li>
+<li>不可重复读 读已提交，同一个事务中，同一条sql读取出的结果不一样(修改)</li>
+<li>幻影读 同一个事务中，同一个读取范围，读取出的条数不一样，(插入，删除)</li>
+</ul>
+<h3 id="5，sql调优流程举例，explain关键字的使用"><a href="#5，sql调优流程举例，explain关键字的使用" class="headerlink" title="5，sql调优流程举例，explain关键字的使用"></a>5，sql调优流程举例，explain关键字的使用</h3><p>+ </p>
+<h3 id="6，b树和b-树的区别，为什么用b-树而不是b树"><a href="#6，b树和b-树的区别，为什么用b-树而不是b树" class="headerlink" title="6，b树和b+树的区别，为什么用b+树而不是b树"></a>6，b树和b+树的区别，为什么用b+树而不是b树</h3><h3 id="7，索引失效的情况"><a href="#7，索引失效的情况" class="headerlink" title="7，索引失效的情况"></a>7，索引失效的情况</h3><ul>
+<li>使用了聚合函数</li>
+<li>没有按最左的标准查</li>
+</ul>
+<h3 id="8，建立索引的依据"><a href="#8，建立索引的依据" class="headerlink" title="8，建立索引的依据"></a>8，建立索引的依据</h3><ul>
+<li>经常查找的列</li>
+<li>不经常修改的列</li>
+<li>经常用于排序，分组的列</li>
+<li>经常用于连接的列</li>
+</ul>
+<h3 id="9，Mysql最多创建多少个索引"><a href="#9，Mysql最多创建多少个索引" class="headerlink" title="9，Mysql最多创建多少个索引"></a>9，Mysql最多创建多少个索引</h3><h2 id="SSM"><a href="#SSM" class="headerlink" title="SSM"></a>SSM</h2><h3 id="1，什么是aop和ioc"><a href="#1，什么是aop和ioc" class="headerlink" title="1，什么是aop和ioc"></a>1，什么是aop和ioc</h3><h3 id="2，ioc的好处是什么"><a href="#2，ioc的好处是什么" class="headerlink" title="2，ioc的好处是什么"></a>2，ioc的好处是什么</h3><h3 id="3，aop有几种代理方式，有什么区别，默认哪种"><a href="#3，aop有几种代理方式，有什么区别，默认哪种" class="headerlink" title="3，aop有几种代理方式，有什么区别，默认哪种"></a>3，aop有几种代理方式，有什么区别，默认哪种</h3><ul>
+<li>cglib：继承至原始类</li>
+<li>jdk：实现原始类实现的接口，必须要原始类有接口</li>
+<li>默认cglib</li>
+</ul>
+<h4 id="4，用到aop的地方"><a href="#4，用到aop的地方" class="headerlink" title="4，用到aop的地方"></a>4，用到aop的地方</h4><ul>
+<li>日志，事务</li>
+</ul>
+<h3 id="5，-autowired和-resource的区别"><a href="#5，-autowired和-resource的区别" class="headerlink" title="5，@autowired和@resource的区别"></a>5，@autowired和@resource的区别</h3><h3 id="6，bean的作用域"><a href="#6，bean的作用域" class="headerlink" title="6，bean的作用域"></a>6，bean的作用域</h3><ul>
+<li>singleton</li>
+<li>prototype</li>
+<li>request</li>
+<li>session</li>
+</ul>
+<h3 id="7，spring自动装配有哪几种，有什么区别"><a href="#7，spring自动装配有哪几种，有什么区别" class="headerlink" title="7，spring自动装配有哪几种，有什么区别"></a>7，spring自动装配有哪几种，有什么区别</h3><ul>
+<li>@Autowired，按类型装配</li>
+<li>@Resource，先按名字装配，没有再按照类型装配</li>
+</ul>
+<h3 id="8，spring事务注解里面的参数设置，默认的隔离级别"><a href="#8，spring事务注解里面的参数设置，默认的隔离级别" class="headerlink" title="8，spring事务注解里面的参数设置，默认的隔离级别"></a>8，spring事务注解里面的参数设置，默认的隔离级别</h3><h3 id="9，springmvc的请求流程"><a href="#9，springmvc的请求流程" class="headerlink" title="9，springmvc的请求流程"></a>9，springmvc的请求流程</h3><ul>
+<li>dispatchServelet获取请求，进行转发</li>
+<li>转发至handlermapping，根据传入的url寻找匹配的handler，返回执行链给dispatchservelet</li>
+<li>转发给handleradopter，适配可以执行的controller对象，执行handler，返回modeandview，返回给dispatchservelet</li>
+<li>转发给视图解析器解析视图，返回给dispatchservelet</li>
+<li>返回http请求</li>
+</ul>
+<h3 id="10，-和-的区别"><a href="#10，-和-的区别" class="headerlink" title="10，#{}和${}的区别"></a>10，#{}和${}的区别</h3><ul>
+<li>#{}是使用占位符，里面的东西会被视为 一个参数，自动加单引号，可以避免sql注入</li>
+<li>${}是sql拼接，不会加单引号，会被sql注入</li>
+</ul>
+<h3 id="11，mybatis实体类的字段和表字段不一样怎么办"><a href="#11，mybatis实体类的字段和表字段不一样怎么办" class="headerlink" title="11，mybatis实体类的字段和表字段不一样怎么办"></a>11，mybatis实体类的字段和表字段不一样怎么办</h3><ul>
+<li>使用mybatis的resultmap</li>
+<li>在实体类的上面加上小驼峰和下划线转换的注解</li>
+<li>在实体类的字段上利用@Colum注解来对应数据库中的字段名</li>
+</ul>
+<h3 id="12，xml文件id是否能够重复"><a href="#12，xml文件id是否能够重复" class="headerlink" title="12，xml文件id是否能够重复"></a>12，xml文件id是否能够重复</h3><h3 id="13，什么是一级和二级缓存，区别是什么，怎么开启"><a href="#13，什么是一级和二级缓存，区别是什么，怎么开启" class="headerlink" title="13，什么是一级和二级缓存，区别是什么，怎么开启"></a>13，什么是一级和二级缓存，区别是什么，怎么开启</h3><h3 id="14，springboot自动装配的原理"><a href="#14，springboot自动装配的原理" class="headerlink" title="14，springboot自动装配的原理"></a>14，springboot自动装配的原理</h3><h3 id="15，如何解决前端和服务器端跨域问题"><a href="#15，如何解决前端和服务器端跨域问题" class="headerlink" title="15，如何解决前端和服务器端跨域问题"></a>15，如何解决前端和服务器端跨域问题</h3><ul>
+<li>再后端http返回的时候带上允许跨域的源</li>
+</ul>
+<h2 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h2><h3 id="1，单例，工厂，责任链，代理，模板方法模式（理解）"><a href="#1，单例，工厂，责任链，代理，模板方法模式（理解）" class="headerlink" title="1，单例，工厂，责任链，代理，模板方法模式（理解）"></a>1，单例，工厂，责任链，代理，模板方法模式（理解）</h3><h2 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h2><h3 id="1，redis中常用的数据结构和区别"><a href="#1，redis中常用的数据结构和区别" class="headerlink" title="1，redis中常用的数据结构和区别"></a>1，redis中常用的数据结构和区别</h3><h3 id="2，redis数据结构使用场景举例"><a href="#2，redis数据结构使用场景举例" class="headerlink" title="2，redis数据结构使用场景举例"></a>2，redis数据结构使用场景举例</h3><ul>
+<li>string，全局id</li>
+<li>hash，对象</li>
+<li>set，求交集，共同好友</li>
+<li>zset，做排行榜</li>
+<li>list，先进先出，做队列</li>
+</ul>
+<h3 id="3，redis和数据库的数据一致性"><a href="#3，redis和数据库的数据一致性" class="headerlink" title="3，redis和数据库的数据一致性"></a>3，redis和数据库的数据一致性</h3><ul>
+<li>当更新请求打到数据库时，先更新数据库，再删除缓存</li>
+<li>更新数据库的时候，先使用旧的缓存，会带来一段时间的不一致，无伤大雅</li>
+<li>更新数据库和删除缓存应当是原子性的，且只有一个线程能运行，使用同步锁</li>
+</ul>
+<h3 id="4，缓存穿透，击穿，雪崩怎么处理"><a href="#4，缓存穿透，击穿，雪崩怎么处理" class="headerlink" title="4，缓存穿透，击穿，雪崩怎么处理"></a>4，缓存穿透，击穿，雪崩怎么处理</h3><ul>
+<li>穿透：redis没有，MySQL也没有，导致无法建立缓存，攻击全部打数据库<ul>
+<li>解决，redis和mysql都没有的时候，手动在redis创建一个空缓存，设置较短ttl，防止mysql在空缓存存在期间添加了后导致的不一致时间过长</li>
+</ul>
+</li>
+<li>击穿：热点key过期时，大量的请求打到数据库<ul>
+<li>解决，热点key不设置ttl，在java代码中设置逻辑过期时间，当过期后，先返回给旧值，同时创建一个线程去重建缓存</li>
+</ul>
+</li>
+<li>雪崩：大量的key同时过期<ul>
+<li>解决，同一时间上传的key应当设置不同时间的ttl，可以设置基准时间+随机时间</li>
+</ul>
+</li>
+</ul>
+<h3 id="5，redis持久化方式和区别"><a href="#5，redis持久化方式和区别" class="headerlink" title="5，redis持久化方式和区别"></a>5，redis持久化方式和区别</h3><ul>
+<li>rdb快照：内存小，恢复快，间隔内的会丢失<ul>
+<li>设置一段时间内修改多少次触发</li>
+<li>也可以save手动触发，bgsave后台触发</li>
+</ul>
+</li>
+<li>aof：存的是已经执行过的指令，内存大，恢复慢，间隔小，保存到文件，频繁io</li>
+</ul>
+<h3 id="6，redis内存溢出策略"><a href="#6，redis内存溢出策略" class="headerlink" title="6，redis内存溢出策略"></a>6，redis内存溢出策略</h3><ul>
+<li>noeviction 不淘汰，内存满了有添加就报错，查询和删除可以正常使用</li>
+<li>allkeys lru 淘汰最长时间没有访问过的key</li>
+<li>allkeys lfu 淘汰访问频率最低的key</li>
+<li>allkeys random 随机淘汰</li>
+<li>volatile lru 定时key淘汰最长时间没访问的</li>
+<li>volatile lfu 定时key中淘汰访问频率低的</li>
+<li>volatile random 定时key随机淘汰</li>
+<li>默认是noeviction</li>
+</ul>
+<h2 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h2><h3 id="1，linux常见指令，查看进程，内存占用，cpu使用，搜索关键字"><a href="#1，linux常见指令，查看进程，内存占用，cpu使用，搜索关键字" class="headerlink" title="1，linux常见指令，查看进程，内存占用，cpu使用，搜索关键字"></a>1，linux常见指令，查看进程，内存占用，cpu使用，搜索关键字</h3>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+
+<div class="post-block">
+
+
+
+
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/17/%E9%87%8D%E8%A6%81/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/11/17/%E9%87%8D%E8%A6%81/" class="post-title-link" itemprop="url">重要</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-11-17 13:56:13" itemprop="dateCreated datePublished" datetime="2024-11-17T13:56:13+08:00">2024-11-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-11-24 15:03:49" itemprop="dateModified" datetime="2024-11-24T15:03:49+08:00">2024-11-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/" itemprop="url" rel="index"><span itemprop="name">计算机</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>3.7k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>1，通过合作第三方获取资讯</p>
+<p>新浪，百度，UC等</p>
+<p>2，通过广告微服务，远程rpc获取要插入资讯的广告</p>
+<ul>
+<li>广告表：广告id，广告位置，广告名称，广告类型，广告状态</li>
+<li>类型<ul>
+<li>sdk广告：由客户端直接请求</li>
+<li>api广告：由后端请求</li>
+</ul>
+</li>
+</ul>
+<p>3，获取第三方广告需要的时间长，可以和获取资讯两个任务并发执行，利用future，并把结果存到一个map里</p>
+<p>4，插入自己公司想插入的信息流，一般增删改查</p>
+<p>5，在最后需要广告的时候，可以使用future.get等待500ms，之后把map的广告插进信息流，不管map里是否有四个</p>
+<p>6，话术：</p>
+<ul>
+<li>用户反馈切换页面时相应时间长</li>
+<li>组长分配需求</li>
+<li>公司的运维开发的链路追踪工具，可以一层一层看出接口的耗时</li>
+<li>同步请求uc资讯和4个广告，耗时3秒左右</li>
+<li>引入多线程，异步并行获取广告，放进map里</li>
+<li>最后需要广告时判断map是否有，没有的话使用futrue的get方法多等待500ms，还是没有直接放弃广告</li>
+<li>优化后结果，获取资讯0.6秒，广告并发0.5秒，总共1秒左右</li>
+</ul>
+<p>7，项目书写</p>
+<ul>
+<li>负责日常需求的开发和迭代(新的第三方资讯引入，banner菜单开发，快应用菜单开发)<ul>
+<li>就是写banner表单&#x2F;快应用表单，提交后载入到管理系统</li>
+<li>快应用就是点击直达的应用推荐</li>
+<li>第三方返回的资讯字段：标题，副标题，资讯url，资讯分类，作者，图片，图片类型，创建时间</li>
+<li>使用工厂和模板方法，优化第三方资讯拉取的方法<ul>
+<li>之前是写死uc的资讯</li>
+<li>改为工厂模式通过渠道(入参)获取不同实例，不同实例实现统一接口也就是模板方法模式</li>
+<li>模板方法用于封装资讯，因为不同渠道讯息关键字不同，要统一封装一层返回给前端<ul>
+<li>注意要把工厂的实例注入到spring，之后在工厂里直接get，否则会导致aop失效</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>和uc对接：<ul>
+<li>带着密钥和频道id访问uc的验证接口，获取到token（为什么要给一个方法给他们调用才能获取token，那边直接http返回不行吗），存到redis，token和此频道id一一对应</li>
+<li>访问时从redis根据频道id取token，然后拿着频道id和token访问uc接口拿资讯</li>
+<li>设置定时任务10分钟访问一次验证接口获取token(?，必要性？直接token过期后再请求不好吗)，当访问资讯接口显示token过期时，手动调用验证接口获取token，并刷新redis的频道id+token</li>
+</ul>
+</li>
+<li>导入黑名单，从在用户手机上匹配，到在redis中匹配，减少了用户的内存压力(?资讯app中的黑名单作用是什么，是否是浏览器话术遗留)</li>
+</ul>
+<h3 id="问点解析"><a href="#问点解析" class="headerlink" title="问点解析"></a>问点解析</h3><h4 id="咨询获取"><a href="#咨询获取" class="headerlink" title="咨询获取"></a>咨询获取</h4><p>1，参数为渠道（区分），子渠道，密钥 请求uc的token；提供接口供uc调用，接口内容为把渠道，子渠道，子渠道对应的token，作为hash结构保存到redis；再通过渠道，子渠道，+token的方式去获取uc的资讯；</p>
+<p>2，问题</p>
+<ul>
+<li>为什么要分两步？<ul>
+<li>使用token对比直接使用密钥，提高了安全性</li>
+</ul>
+</li>
+<li>token会变，变了怎么办<ul>
+<li>token变了之后，用户访问时拉取资讯会504，当出现504时，重新访问请求token接口</li>
+</ul>
+</li>
+<li>返回的参数？<ul>
+<li>资讯标题，副标题，分类，标题，作者名称，发版时间，缩略图，图片类型，修改时间</li>
+</ul>
+</li>
+<li>接口安全性保证<ul>
+<li>约定算法，根据客户端的参数计算出一个sign值，前端带入参数+sign值；后端拿到参数计算sign值，一样就好</li>
+<li>请求时间不超过5分钟</li>
+<li>对参数进行数据加密，使用非堆成加密，客户端使用公钥对参数加密，服务端使用私钥对参数进行解密</li>
+<li>使用https协议，了解https为什么安全</li>
+<li>把大数据曝光前50的快应用，以及通过省份和分类区分前50的快应用，今年和去年减少量，这个月和上个月减少量；写进xml文件，打压缩包ftp发送到目录<ul>
+<li>快应用是展示事件，展示给用户后存快应用包名，通过count能排序出前50</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>资讯拉取引入了什么设计模式？<ul>
+<li>工厂模式+模板方法模式</li>
+<li>之前同事对接时，写死了uc，现在改用模板方法模式，写一个抽象类，提供验证和获取资讯两个模板抽象方法</li>
+<li>每个资讯方写一个类继承抽象类，实现方法，使用applicationcontext.getBeanOfType(抽象类.class);可以把抽象类的实现类全部按照类名驼峰加载到spring里面，还会返回一个map，k是名字，v是载入的bean，这样就形成一个工厂，传入参数这个map就可以根据k找到不同的实现类；</li>
+<li>了解三个工厂的知识，还知道哪些设计模式？</li>
+</ul>
+</li>
+</ul>
+<h4 id="后台反馈内容显示刷新资讯耗时过长"><a href="#后台反馈内容显示刷新资讯耗时过长" class="headerlink" title="后台反馈内容显示刷新资讯耗时过长"></a>后台反馈内容显示刷新资讯耗时过长</h4><p>1，问题</p>
+<ul>
+<li>在哪里反馈？<ul>
+<li>应用反馈，直接存到数据库，运营在后台可以看到</li>
+</ul>
+</li>
+<li>拿到优化需求后，怎么定位问题？<ul>
+<li>链路追踪工具：利用postman模拟刷新资讯的请求，通过公司的链路追踪工具可以看到具体接口的耗时，发现在资讯里面插入广告时耗时严重，rpc请求每一个广告的时间在0.8秒左右，请求15条资讯的接口只要0.6s</li>
+</ul>
+</li>
+<li>怎么保证拉取的资讯不重复？<ul>
+<li>uc在返回资讯的时候，资讯列表里加一个游标(可能是字符串)，后端收到后连带游标发给前端，前端再次发请求时也带上这个游标，作用是UC标记资讯返回到哪个位置，防止返回重复的资讯</li>
+</ul>
+</li>
+<li>如何优化时间过长问题？<ul>
+<li>背景：运营可能会配置0-4个广告不等，广告模块提供的接口是请求单个广告，当运营配置插入4条广告时，会请求0.8*4&#x3D;3.2秒左右，他和拉取资讯串行，0.6+3.2&#x3D;3.8秒</li>
+<li>优化：利用多线程<ul>
+<li>将拉取资讯和拉取广告并发执行，最多耗时3.2秒广告时间，拉取资讯在这3.2s已经完成</li>
+<li>将每次请求广告接口并发执行，拉取广告最多仅耗时0.8s，总耗时也就0.8s</li>
+<li>在资讯和广告组装时，也就是接口快结束时，利用future.get()获取广告结果，如果广告执行过长，get()只等400ms，超过了没有get到就丢弃广告</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>优化广告代码逻辑</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//并行获取广告</span></span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span><span class="number">0</span>;i&lt;<span class="number">4</span>;i++)&#123;</span><br><span class="line">    Futrue&lt;String&gt; f = Executors.newfixedThreadPool(<span class="number">10</span>).submit((广告id)-&gt;&#123;</span><br><span class="line">        <span class="comment">//获取广告</span></span><br><span class="line">        <span class="comment">//返回广告，json格式</span></span><br><span class="line">        <span class="keyword">return</span> ···;</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="comment">//将广告id对应的future加入map，future里面有执行结果</span></span><br><span class="line">    map.put(广告id,f)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//获取资讯</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//资讯中插入自营内容，banner，卡片等</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//获取广告</span></span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span><span class="number">0</span>,i&lt;<span class="number">4</span>;i++)&#123;</span><br><span class="line">    <span class="comment">//遍历map，map.get(广告id).get(400ms)</span></span><br><span class="line">    <span class="comment">//将广告插入资讯</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//优化完成，时间=0.6s获取资讯，每个广告最多等待400ms，加起来最多2.2s</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="负责bi报表的制作"><a href="#负责bi报表的制作" class="headerlink" title="负责bi报表的制作"></a>负责bi报表的制作</h4><p>事件：点击，曝光，不喜欢，阅读时长，视频播放时长</p>
+<h4 id="配置黑名单"><a href="#配置黑名单" class="headerlink" title="配置黑名单"></a>配置黑名单</h4><ul>
+<li><p>把运营给的黑名单网站存到redis里面，key会过大，拆封key，通过计算计算每个网站的hashcode，取模key的数量，计算出黑名单网站应该对应的key，会出现分布不均匀的问题，暂未找到更优解决；十万网址拆10个key，20w网址拆20个key;在点击资讯时，计算出hashcode取模拆分的key的个数，可以知道存在了那个key里面，之后在拿那个key对应的网址set进行ismembers操作。</p>
+<ul>
+<li>问题：扩容的时候重计算吗，不重计算出现扩容前后算法不一致问题，之前的数据无法读取到？</li>
+</ul>
+</li>
+<li><p>使用的redis数据结构</p>
+<p>string存储hash，渠道，子渠道，token</p>
+<p>set 存黑名单网站，ismembers可以方便的查出是否在黑名单</p>
+<p>zset 给广告点击量排名，在黄金时间7-9点放排名高的广告</p>
+<ul>
+<li>学习string，hash，zset的底层数据结构</li>
+</ul>
+</li>
+<li><p>使用redis存储替代客户端存储的好处</p>
+<ul>
+<li>减少手机客户端大小</li>
+<li>请求时在redis里面判断速度快</li>
+<li>实时性问题，黑名单更新后需要重进客户端；使用redis则不需要用户重启软件</li>
+</ul>
+</li>
+<li><p>逻辑升级：</p>
+<ul>
+<li>使用手机物理内存作黑名单时，在应用启动的时候去拉取黑名单保存在手机，等点击资讯时直接在手机内存中判断是否在黑名单网址集合中</li>
+<li>使用redis作黑名单时：把黑名单存到redis的set集合，每一次点击资讯都判断资讯网址是否是在这个黑名单set里，是的话进行拦截</li>
+</ul>
+</li>
+</ul>
+<h4 id="定位redisoom问题"><a href="#定位redisoom问题" class="headerlink" title="定位redisoom问题"></a>定位redisoom问题</h4><p>问题：定位比较难的线上问题</p>
+<h4 id="服务告警，防止异常无感知"><a href="#服务告警，防止异常无感知" class="headerlink" title="服务告警，防止异常无感知"></a>服务告警，防止异常无感知</h4><ul>
+<li>公司的平台只能监控用户调用服务端的接口，服务端请求uc的接口没办法监控；</li>
+<li>uc拉黑了公司的子渠道；导致线上资讯不展示</li>
+<li>可以把每次服务端请求uc资讯的结果状态码通过大数据api存储到大数据平台（数据量过大不宜使用本地数据库），之后写一个定时任务，几分钟去计算下异常状态码的比率，大于5%的时候就发警告，通过短信，邮件，和电话</li>
+</ul>
+<h4 id="分布式锁的使用"><a href="#分布式锁的使用" class="headerlink" title="分布式锁的使用"></a>分布式锁的使用</h4><ul>
+<li><p>浏览器模块和控制中台模块的同步问题</p>
+</li>
+<li><p>对某个用户推送资讯的时候，需要先去写申请，去审批中台审批，当审批提交时，中台正在处理，这时浏览器方面决定放弃推送，同时点击撤销，此时中台还在审批，过一会后审批成功；出现了浏览器端不推送，审批中台推送，的不一致的情况</p>
+</li>
+<li><p>解决，按照请求审批编号加分布式锁，保证撤销审批操作和中台审批操作串行执行；也就是撤销中途阻塞中台审批；中台审批的时候阻塞撤销操作</p>
+</li>
+</ul>
+<h3 id="项目答疑"><a href="#项目答疑" class="headerlink" title="项目答疑"></a>项目答疑</h3>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+
+<div class="post-block">
+
+
+
+
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/12/%E5%95%86%E5%9F%8E%E6%94%AF%E4%BB%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/11/12/%E5%95%86%E5%9F%8E%E6%94%AF%E4%BB%98/" class="post-title-link" itemprop="url">商城支付</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2024-11-12 22:56:04 / 修改时间：23:47:21" itemprop="dateCreated datePublished" datetime="2024-11-12T22:56:04+08:00">2024-11-12</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>49</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="1，内网穿透-natapp"><a href="#1，内网穿透-natapp" class="headerlink" title="1，内网穿透 natapp"></a>1，内网穿透 natapp</h2><p>1，使用netapp，获取公网ip</p>
+<p><a target="_blank" rel="noopener" href="https://natapp.cn/">https://natapp.cn/</a></p>
+<ul>
+<li>购买</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1046,7 +1791,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-09-17 22:50:41" itemprop="dateModified" datetime="2024-09-17T22:50:41+08:00">2024-09-17</time>
+      <time title="修改时间：2025-11-29 23:10:34" itemprop="dateModified" datetime="2025-11-29T23:10:34+08:00">2025-11-29</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1064,14 +1809,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>1.3k</span>
+      <span>2.6k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
+      <span>2 分钟</span>
     </span>
 </div>
 
@@ -1082,7 +1827,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h4 id="1-给解压好的bochs配置安装文件-make编译，make-install安装"><a href="#1-给解压好的bochs配置安装文件-make编译，make-install安装" class="headerlink" title="1,给解压好的bochs配置安装文件,make编译，make install安装"></a>1,给解压好的bochs配置安装文件,make编译，make install安装</h4><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">./configure</span> <span class="string">\</span> </span><br><span class="line"><span class="string">--prefix=/home/zxr/bochs_install</span> <span class="string">\</span> <span class="comment">#安装路径</span></span><br><span class="line"><span class="string">--enable-debugger</span> <span class="string">\</span> <span class="comment">#启用bochs自带的调试功能</span></span><br><span class="line"><span class="string">--enable-disasm</span> <span class="string">\</span> <span class="comment">#支持反汇编</span></span><br><span class="line"><span class="string">--enable-iodebug</span> <span class="string">\</span> <span class="comment">#开启io调试接口</span></span><br><span class="line"><span class="string">--enable-x86-debugger</span> <span class="string">\</span> <span class="comment">#支持x86调试器</span></span><br><span class="line"><span class="string">--with-x</span> <span class="string">\</span> <span class="comment">#使用xwindows</span></span><br><span class="line"><span class="string">--with-x11</span> <span class="comment">#x11图形用户界面</span></span><br></pre></td></tr></table></figure>
+          <h1 id="1，安装bochs硬件模拟程序"><a href="#1，安装bochs硬件模拟程序" class="headerlink" title="1，安装bochs硬件模拟程序"></a>1，安装bochs硬件模拟程序</h1><h4 id="1-给解压好的bochs配置安装文件-make编译，make-install安装"><a href="#1-给解压好的bochs配置安装文件-make编译，make-install安装" class="headerlink" title="1,给解压好的bochs配置安装文件,make编译，make install安装"></a>1,给解压好的bochs配置安装文件,make编译，make install安装</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">./configure \ </span><br><span class="line">--prefix=/home/zxr/bochs_install \ <span class="comment">#安装路径</span></span><br><span class="line">--enable-debugger \ <span class="comment">#启用bochs自带的调试功能</span></span><br><span class="line">--enable-disasm \ <span class="comment">#支持反汇编</span></span><br><span class="line">--enable-iodebug \ <span class="comment">#开启io调试接口</span></span><br><span class="line">--enable-x86-debugger \ <span class="comment">#支持x86调试器</span></span><br><span class="line">--with-x \ <span class="comment">#使用xwindows</span></span><br><span class="line">--with-x11 <span class="comment">#x11图形用户界面</span></span><br></pre></td></tr></table></figure>
 
 <ul>
 <li>注意安装c和c++编译器，否则会编译失败</li>
@@ -1103,7 +1848,7 @@
 <h4 id="创建启动盘"><a href="#创建启动盘" class="headerlink" title="创建启动盘"></a>创建启动盘</h4><ul>
 <li>使用bochs虚拟机自带的bin&#x2F;bximage指令</li>
 </ul>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">bin/bximage</span> <span class="string">.</span></span><br><span class="line"><span class="string">-fd创建软盘。</span></span><br><span class="line"><span class="string">-hd</span> <span class="string">创建硬盘。</span></span><br><span class="line"><span class="string">-mode</span> <span class="string">创建硬盘的类型，有flat</span> <span class="string">、sparse</span> <span class="string">、growing</span> <span class="string">三种。</span></span><br><span class="line"><span class="string">-size</span> <span class="string">指创建多大的硬盘，以MB</span> <span class="string">为单位。</span></span><br><span class="line"><span class="string">-q</span> <span class="string">以静默模式创建，创建过程中不会和用户交互。</span></span><br><span class="line"><span class="comment">#bin/bochs -hd -mode=&quot;flat&quot; -size=60 -q hdM60.img</span></span><br><span class="line"><span class="comment">#创建启动硬盘，大小60m，静默创造，名字叫hdM60.img</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">bin/bximage .</span><br><span class="line">-fd创建软盘。</span><br><span class="line">-hd 创建硬盘。</span><br><span class="line">-mode 创建硬盘的类型，有flat 、sparse 、growing 三种。</span><br><span class="line">-size 指创建多大的硬盘，以MB 为单位。</span><br><span class="line">-q 以静默模式创建，创建过程中不会和用户交互。</span><br><span class="line"><span class="comment">#bin/bochs -hd -mode=&quot;flat&quot; -size=60 -q hdM60.img</span></span><br><span class="line"><span class="comment">#创建启动硬盘，大小60m，静默创造，名字叫hdM60.img</span></span><br></pre></td></tr></table></figure>
 
 <ul>
 <li>输入指令后，bochs会把需要写进配置文件的内容输出，复制进bochsrc.disk(配置文件)即可</li>
@@ -1112,12 +1857,29 @@
 <ul>
 <li>启动硬盘创建完毕，注意，进入时是调试模式，输入c放行，q退出</li>
 </ul>
-<h3 id="编写mbr"><a href="#编写mbr" class="headerlink" title="编写mbr"></a>编写mbr</h3><p>1，为什么要把操作系统载入内存？</p>
+<h1 id="2，编写mbr"><a href="#2，编写mbr" class="headerlink" title="2，编写mbr"></a>2，编写mbr</h1><h2 id="1，bios"><a href="#1，bios" class="headerlink" title="1，bios"></a>1，bios</h2><h3 id="1-1，概念："><a href="#1-1，概念：" class="headerlink" title="1.1，概念："></a>1.1，概念：</h3><p>1，bios指的是basic input output system，基本输入输出系统，是计算机运行的第一个程序</p>
+<h3 id="2-1，问题"><a href="#2-1，问题" class="headerlink" title="2.1，问题"></a>2.1，问题</h3><p>1，程序需要加载进内存才能被运行？</p>
 <ul>
-<li>内存的运行速度快</li>
-<li>操作系统可以存在硬盘，软盘各种媒介，如果不统一放到一个地方，就会有对媒介的适配问题</li>
+<li>程序并不是要被加载进内存才能运行，只要地址线能够映射到这里的地址，就能访问到，如果是可执行程序，就能执行，因为x86实模式给了64k的大小专门映射到一块内存，直接把bios写这里就可以了</li>
 </ul>
+<p>2，bios程序怎么开始运行的</p>
+<ul>
+<li>cs：ip两个寄存器指向的指令就是下一条要别运行的指令，开机的时候会强制指向cs f0000,ip 0ffff，合起来就是ffff0的位置，这个位置就是下表最上面的16kb内存，内容是一个跳转指令，跳转到真正的bios存放的地址</li>
+</ul>
+<p><img src="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20251129151426980.png" alt="image-20251129151426980"></p>
+<p>3，bios程序做了些什么</p>
+<ul>
+<li>初始化硬件，建立中断向量表</li>
+<li>加载mbr程序，通过mbr加载更多的东西，规定mbr的大小为512字节，存放在0磁盘0磁道1扇区的位置，也就是硬盘的第一个扇区</li>
+</ul>
+<h2 id="2，编写基础的mbr程序"><a href="#2，编写基础的mbr程序" class="headerlink" title="2，编写基础的mbr程序"></a>2，编写基础的mbr程序</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">######编写基础版主引导程序 mbr</span><br><span class="line">;指定程序加载进内存时，从0x7c00开始</span><br><span class="line">section mbr vstart=0x7c00</span><br><span class="line">	;利用ax作为中转，把cs的值存入ds，es等</span><br><span class="line">	mov ax,cs</span><br><span class="line">	mov ds,ax</span><br><span class="line">	mov es,ax</span><br><span class="line">	mov ss,ax</span><br><span class="line">	mov fs,ax</span><br><span class="line">	mov sp,0x7c00</span><br><span class="line">	;调用0x10中断的0x06号子功能清屏(上卷窗口)</span><br><span class="line">	mov ax,0x600</span><br><span class="line">	mov bx,0x700</span><br><span class="line">	mov cx,0</span><br><span class="line">	mov dx,0x10</span><br><span class="line">    int 0x10</span><br><span class="line">	;使用0x10中断的3号子功能获取光标位置</span><br><span class="line">	mov ah, 3</span><br><span class="line">	mov bh, 0</span><br><span class="line">	int 0x10</span><br><span class="line">	;用0x10中断打印字符串</span><br><span class="line">	mov ax, message</span><br><span class="line">	mov bp, ax</span><br><span class="line">	</span><br><span class="line">	mov cx, 5</span><br><span class="line">	mov ax, 0x1301</span><br><span class="line">	mov bx, 0x2</span><br><span class="line">	</span><br><span class="line">	int 0x10</span><br><span class="line">	;;;; 死循环</span><br><span class="line">	jmp $</span><br><span class="line">	</span><br><span class="line">	;message是标签，nasm提供的，通过这个标签可以访问到这个字符串</span><br><span class="line">	;db也是是伪指令，代表在这里分配一个或多个字节的内存空间，并初始化后面的数据</span><br><span class="line">	;这里的1 MBR在ascii编码中是5个字节</span><br><span class="line">	message db &quot;1 MBR&quot;</span><br><span class="line">	;用0填充中间的字节</span><br><span class="line">	times 510-($-$$) db 0</span><br><span class="line">	;设置aa，55为512的最后两个字节，bios读到这个才会认为是mbr程序，反着放是因为用的小端序列，也就是高位的写后面</span><br><span class="line">	;又因为一个16进制数字最高是16，只有2的4次方，4位，所以两个16进制数字才是一个字节，字节是最小单位</span><br><span class="line">	;因此，0x1234按小端就是 0x34 0x12</span><br><span class="line">	db 0x55,0xaa</span><br><span class="line">	</span><br></pre></td></tr></table></figure>
 
+<h2 id="3，编译MBR，放进第一扇区"><a href="#3，编译MBR，放进第一扇区" class="headerlink" title="3，编译MBR，放进第一扇区"></a>3，编译MBR，放进第一扇区</h2><h3 id="3-1，编译MBR"><a href="#3-1，编译MBR" class="headerlink" title="3.1，编译MBR"></a>3.1，编译MBR</h3><p>1，使用nasm编译器编译mbr文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -o 输出文件 输入文件 -f 文件格式，默认bin格式，可以直接被计算机执行</span></span><br><span class="line">nasm -o mbr.bin mbr.S </span><br></pre></td></tr></table></figure>
+
+<h3 id="3-2，用dd指令覆盖硬盘的第一扇区"><a href="#3-2，用dd指令覆盖硬盘的第一扇区" class="headerlink" title="3.2，用dd指令覆盖硬盘的第一扇区"></a>3.2，用dd指令覆盖硬盘的第一扇区</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># if 源文件 of 目标文件 bs块大小，以块作为单位的 count块的数量 seek跳过指定块数 </span></span><br><span class="line"><span class="comment"># conv=notrunc代表覆盖块的时候，不改变其他块的内容</span></span><br><span class="line"><span class="built_in">dd</span> <span class="keyword">if</span>=mbr.bin of=../hd60M.img bs=512 count=1 conv=notrunc</span><br></pre></td></tr></table></figure>
+
+<h1 id="3-完善mbr"><a href="#3-完善mbr" class="headerlink" title="3,完善mbr"></a>3,完善mbr</h1>
       
     </div>
 
@@ -1399,13 +2161,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">125k</span>
+    <span title="站点总字数">128k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:54</span>
+    <span title="站点阅读时长">1:57</span>
   </span>
 </div>
 
