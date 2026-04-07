@@ -596,6 +596,88 @@ ScheduledThreadPoolExecutor scheduledThreadPoolExecutor =
       </tags>
   </entry>
   <entry>
+    <title>注解和aop</title>
+    <url>/2026/04/07/%E6%B3%A8%E8%A7%A3%E5%92%8Caop/</url>
+    <content><![CDATA[<h1 id="通过反射获取注解中的信息"><a href="#通过反射获取注解中的信息" class="headerlink" title="通过反射获取注解中的信息"></a>通过反射获取注解中的信息</h1><h2 id="需求分析"><a href="#需求分析" class="headerlink" title="需求分析"></a>需求分析</h2><p>1，创建一个注解：</p>
+<ul>
+<li>只能用在方法上</li>
+<li>运行时可用</li>
+<li>带两个属性：<ul>
+<li>module：模块名：例如用户管理</li>
+<li>action：操作名：例如新增用户</li>
+</ul>
+</li>
+</ul>
+<p>2，测试代码-读取注解属性：</p>
+<ul>
+<li>创建一个UserService类，创建一个新增用户的方法</li>
+<li>用自定义注解标识这个方法</li>
+<li>使用反射获取注解中的属性值并打印</li>
+</ul>
+<h2 id="创建注解"><a href="#创建注解" class="headerlink" title="创建注解"></a>创建注解</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Target(ElementType.METHOD)</span></span><br><span class="line"><span class="comment">//忘记了元数据的名字</span></span><br><span class="line"><span class="meta">@Retention(RetentionPolicy.RUNTIME)</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> OperationLog &#123;</span><br><span class="line">    <span class="comment">//注解的数据为什么不能用private,为什么用方法的形式</span></span><br><span class="line">    String <span class="title function_">module</span><span class="params">()</span>;</span><br><span class="line">    String <span class="title function_">action</span><span class="params">()</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h3><p>1，如何指定为运行时？为什么要指定为运行时？指定其他的有什么作用？</p>
+<ul>
+<li>@Retention(RetentionPolicy.RUNTIME)可以指定为运行时。</li>
+<li>总共有三种环境：SOURCE（源码环境）、CLASS（字节码环境）、Runtime（运行时环境），暂时可以粗略理解成，反射是在运行时环境拿注解，必须保证运行时注解还存在。</li>
+<li>@Retention决定注解能活到哪个阶段；指定为其他环境的作用待深入理解，涉及字节码工具和编译器。</li>
+</ul>
+<p>2，注解的属性为什么是方法的形式？为什么不能写成private的方法？</p>
+<ul>
+<li>注解的本质是一个接口，写一个注解相当于写了一个接口继承了java.lang.annotation.Annotation接口，因此：<ul>
+<li>接口的方法都是默认public Abstract的，所以不能用private修饰</li>
+</ul>
+</li>
+</ul>
+<h2 id="测试代码-读取注解属性"><a href="#测试代码-读取注解属性" class="headerlink" title="测试代码-读取注解属性"></a>测试代码-读取注解属性</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserService</span> &#123;</span><br><span class="line">    <span class="meta">@OperationLog(module = &quot;用户管理&quot;, action = &quot;添加用户&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">addUser</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;添加用户&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">test</span>&#123;</span><br><span class="line">     <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">         Class&lt;UserService&gt; userServiceClass = UserService.class;</span><br><span class="line">         <span class="type">Method</span> <span class="variable">addUser</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">         <span class="keyword">try</span> &#123;</span><br><span class="line">             addUser = userServiceClass.getDeclaredMethod(<span class="string">&quot;addUser&quot;</span>);</span><br><span class="line">         &#125; <span class="keyword">catch</span> (NoSuchMethodException e) &#123;</span><br><span class="line">             <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(e);</span><br><span class="line">         &#125;</span><br><span class="line">         <span class="comment">//这句话的用法</span></span><br><span class="line">         addUser.setAccessible(<span class="literal">true</span>);</span><br><span class="line">         <span class="keyword">if</span> (addUser.isAnnotationPresent(OperationLog.class)) &#123;</span><br><span class="line">             <span class="type">OperationLog</span> <span class="variable">operationLog</span> <span class="operator">=</span> addUser.getAnnotation(OperationLog.class);</span><br><span class="line">             System.out.println(<span class="string">&quot;模块：&quot;</span> + operationLog.<span class="keyword">module</span>() + <span class="string">&quot;, 操作：&quot;</span> + operationLog.action());</span><br><span class="line">         &#125;</span><br><span class="line">     &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="遇到的问题-1"><a href="#遇到的问题-1" class="headerlink" title="遇到的问题"></a>遇到的问题</h3><p>1， @OperationLog(module &#x3D; “用户管理”, action &#x3D; “添加用户”)是怎么把值赋值给注解的？</p>
+<ul>
+<li>使用代理类的方式，见代码：</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">final</span> <span class="keyword">class</span> <span class="title class_">$ProxyAnnotation</span> <span class="keyword">implements</span> <span class="title class_">OperationLog</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Map&lt;String, Object&gt; values;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> $ProxyAnnotation(Map&lt;String, Object&gt; values) &#123;</span><br><span class="line">        <span class="built_in">this</span>.values = values;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">module</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> (String) values.get(<span class="string">&quot;module&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">action</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> (String) values.get(<span class="string">&quot;action&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Class&lt;? <span class="keyword">extends</span> <span class="title class_">Annotation</span>&gt; annotationType() &#123;</span><br><span class="line">        <span class="keyword">return</span> OperationLog.class;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>当调用addUser.getAnnotation(OperationLog.class)时，需要获取一个代理对象回去：<ul>
+<li>代理对象会把注解属性名和方法上标记的值存进map，</li>
+<li>调用代理对象的方法，就会在map里取然后返回，</li>
+<li>每次调这个方法都会返回一个代理对象，也就是每个方法都单独对应一个代理对象，不会混乱。</li>
+</ul>
+</li>
+</ul>
+<p>2，operationLog.module()，既然OperationLog是接口，那怎么能用接口直接调用方法？</p>
+<ul>
+<li>同上，实际调用的是代理对象的方法。</li>
+</ul>
+<p>3，addUser.setAccessible(true)的作用？什么时候要setAccessible(true)？</p>
+<ul>
+<li>setAccessible(true)是跳过访问控制检查：<ul>
+<li>private属性要set()和get()时需要，</li>
+<li>private方法要invoke()时需要，</li>
+<li>通过属性和方法获取注解或者判断注解之类的，不需要，因为不管属性和方法原内容的事(待以后深入)。</li>
+</ul>
+</li>
+</ul>
+<h1 id="使用aop-注解"><a href="#使用aop-注解" class="headerlink" title="使用aop + 注解"></a>使用aop + 注解</h1><h2 id="需求分析-1"><a href="#需求分析-1" class="headerlink" title="需求分析"></a>需求分析</h2><p>1，使用aop打印出方法的执行时间</p>
+<p>2，使用aop防止方法短时间内重复提交</p>
+<h2 id="使用aop打印出方法的执行时间"><a href="#使用aop打印出方法的执行时间" class="headerlink" title="使用aop打印出方法的执行时间"></a>使用aop打印出方法的执行时间</h2><h3 id="创建自定义注解"><a href="#创建自定义注解" class="headerlink" title="创建自定义注解"></a>创建自定义注解</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Target(ElementType.METHOD)</span></span><br><span class="line"><span class="meta">@Retention(RetentionPolicy.RUNTIME)</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> TimeLog &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用注解标记方法"><a href="#使用注解标记方法" class="headerlink" title="使用注解标记方法"></a>使用注解标记方法</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@TimeLog</span></span><br><span class="line"><span class="keyword">public</span> String <span class="title function_">addUser</span><span class="params">()</span>  &#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;添加用户&quot;</span>);</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        Thread.sleep(<span class="number">3000</span>);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(e);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;success&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="创建切面"><a href="#创建切面" class="headerlink" title="创建切面"></a>创建切面</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="meta">@Aspect</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TimeLogAspect</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Around(&quot;@annotation(test.anotation.TimeLog)&quot;)</span></span><br><span class="line">    <span class="comment">//问题：@Around参数怎么写</span></span><br><span class="line">    <span class="keyword">public</span> Object <span class="title function_">logTime</span><span class="params">(ProceedingJoinPoint joinPoint)</span> &#123;</span><br><span class="line">        <span class="type">LocalDateTime</span> <span class="variable">start</span> <span class="operator">=</span> LocalDateTime.now();</span><br><span class="line">        <span class="comment">//问题：参数是哪个类型？是不是joinPoint</span></span><br><span class="line">        Object bean;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            bean = joinPoint.proceed();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Throwable e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(e);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="type">LocalDateTime</span> <span class="variable">end</span> <span class="operator">=</span> LocalDateTime.now();</span><br><span class="line">        <span class="comment">//问题：如何相减后获取毫秒数，转化为分钟</span></span><br><span class="line">        <span class="type">Duration</span> <span class="variable">duration</span> <span class="operator">=</span> Duration.between(start, end);</span><br><span class="line">        <span class="type">long</span> <span class="variable">seconds</span> <span class="operator">=</span> duration.toSeconds();</span><br><span class="line">        System.out.println(<span class="string">&quot;耗时：&quot;</span> + seconds + <span class="string">&quot;秒&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> bean;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="遇到的问题-2"><a href="#遇到的问题-2" class="headerlink" title="遇到的问题"></a>遇到的问题</h3><p>1，@Around的参数是什么？除了Around还有其他的吗，这几个区别是什么？</p>
+<p>2，joinPoint具体是哪个类型？</p>
+<p>3，localDatetime如何计算出时间间隔，并转成想要的单位？</p>
+]]></content>
+      <categories>
+        <category>认真版</category>
+      </categories>
+      <tags>
+        <tag>认真版</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>链表</title>
     <url>/2025/12/19/%E9%93%BE%E8%A1%A8/</url>
     <content><![CDATA[]]></content>
