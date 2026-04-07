@@ -145,7 +145,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-count">32</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -301,6 +301,93 @@
             </div>
           <!--/noindex-->
         
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+
+<div class="post-block">
+
+
+
+
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/12/19/%E9%93%BE%E8%A1%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/12/19/%E9%93%BE%E8%A1%A8/" class="post-title-link" itemprop="url">链表</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-12-19 09:49:32" itemprop="dateCreated datePublished" datetime="2025-12-19T09:49:32+08:00">2025-12-19</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>0</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          
       
     </div>
 
@@ -596,7 +683,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-12-17 16:44:32" itemprop="dateModified" datetime="2025-12-17T16:44:32+08:00">2025-12-17</time>
+      <time title="修改时间：2026-01-13 18:27:22" itemprop="dateModified" datetime="2026-01-13T18:27:22+08:00">2026-01-13</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -614,7 +701,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>50</span>
+      <span>609</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -632,9 +719,20 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>1，username</p>
-<div class="tabs" id="first-unique-name"><ul class="nav-tabs"><li class="tab active"><a href="#first-unique-name-1">启动类</a></li><li class="tab"><a href="#first-unique-name-2">basicBinarySearch</a></li><li class="tab"><a href="#first-unique-name-3">insertElementInArray</a></li></ul><div class="tab-content"><div class="tab-pane active" id="first-unique-name-1"></div><div class="tab-pane" id="first-unique-name-2"></div><div class="tab-pane" id="first-unique-name-3"></div></div></div>
-
+          <h2 id="Security-Manager"><a href="#Security-Manager" class="headerlink" title="Security Manager"></a>Security Manager</h2><p>Authenticator</p>
+<p>Authorizer</p>
+<p>sessionmanager</p>
+<p>sessiondao</p>
+<p>cachemanager</p>
+<p>realms</p>
+<p>密码生成器</p>
+<h2 id="身份认证"><a href="#身份认证" class="headerlink" title="身份认证"></a>身份认证</h2><p>1，subject ：主体，可以是用户，可以是一个程序，请求shiro认证的主体</p>
+<p>2，principal： 身份信息，用户名，邮箱，手机号等，需要一个主身份</p>
+<p>3，credential：凭证，可以是密码，证书等</p>
+<h2 id="密码存库MD5-salt"><a href="#密码存库MD5-salt" class="headerlink" title="密码存库MD5+salt"></a>密码存库MD5+salt</h2><p>1，注册时把密码通过md5存到数据库，为了防止用户密码过于简单，md5被穷举出来，给每个用户随机一个salt，密码 + salt 后再通过md5加密存进数据库，同时salt也要存进数据库；salt可以用uuid随机一个</p>
+<p>2，登录时，通过用户名查到密码，通过前端的密码+数据库的salt 进行md5后和数据库的密码比较，相同则登录认证成功</p>
+<p>3，给密码加盐可以调用shiro的MD5hash工具，new Md5Hash(authenticationToken.getCredentials(),”salt”,1024);salt是盐，1024是hash次数</p>
+<p>4，doGetAuthenticationInfo返回SimpleAuthenticationInfo后，携带了密码，由CredentialsMatcher解析，默认用SimpleCredentialsMatcher解析密码，使用equals判断密码是否相等；由于现在要把数据库</p>
 
       
     </div>
@@ -823,7 +921,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-11-27 10:30:52" itemprop="dateModified" datetime="2025-11-27T10:30:52+08:00">2025-11-27</time>
+      <time title="修改时间：2026-01-14 18:36:11" itemprop="dateModified" datetime="2026-01-14T18:36:11+08:00">2026-01-14</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -841,14 +939,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>5.9k</span>
+      <span>6.2k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>5 分钟</span>
+      <span>6 分钟</span>
     </span>
 </div>
 
@@ -960,6 +1058,95 @@
 <li>&#x2F;zxr搜索zxr字符并高亮</li>
 <li>esc + U，取消高亮</li>
 </ul>
+<p>less指令</p>
+<h1 id="less-命令速查手册"><a href="#less-命令速查手册" class="headerlink" title="less 命令速查手册"></a>less 命令速查手册</h1><h2 id="基础用法"><a href="#基础用法" class="headerlink" title="基础用法"></a>基础用法</h2><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>less filename.log</code></td>
+<td>查看文件内容</td>
+</tr>
+<tr>
+<td><code>less +F filename.log</code></td>
+<td>实时监控日志（类似 tail -f）</td>
+</tr>
+<tr>
+<td><code>less +G filename.log</code></td>
+<td>从文件末尾开始查看</td>
+</tr>
+<tr>
+<td><code>less +100 filename.log</code></td>
+<td>跳转到第100行</td>
+</tr>
+</tbody></table>
+<h2 id="核心导航操作"><a href="#核心导航操作" class="headerlink" title="核心导航操作"></a>核心导航操作</h2><table>
+<thead>
+<tr>
+<th>按键</th>
+<th>功能</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>空格键</strong></td>
+<td>向下翻页</td>
+<td>Page Down</td>
+</tr>
+<tr>
+<td><strong>b</strong></td>
+<td>向上翻页</td>
+<td>Page Up</td>
+</tr>
+<tr>
+<td><strong>回车键</strong></td>
+<td>向下一行</td>
+<td>Line Down</td>
+</tr>
+<tr>
+<td><strong>k</strong></td>
+<td>向上一行</td>
+<td>Line Up</td>
+</tr>
+<tr>
+<td><strong>g</strong></td>
+<td>跳到文件开头</td>
+<td>Go to top</td>
+</tr>
+<tr>
+<td><strong>G</strong></td>
+<td>跳到文件末尾</td>
+<td>Go to bottom</td>
+</tr>
+<tr>
+<td><strong>50g</strong></td>
+<td>跳到第50行</td>
+<td>跳转到指定行</td>
+</tr>
+<tr>
+<td><strong>&#x2F;keyword</strong></td>
+<td>向下搜索</td>
+<td>如 <code>/ERROR</code></td>
+</tr>
+<tr>
+<td><strong>?keyword</strong></td>
+<td>向上搜索</td>
+<td>如 <code>?NullPointerException</code></td>
+</tr>
+<tr>
+<td><strong>n</strong></td>
+<td>下一个匹配项</td>
+<td>Next match</td>
+</tr>
+<tr>
+<td><strong>N</strong></td>
+<td>上一个匹配项</td>
+<td>Previous match</td>
+</tr>
+</tbody></table>
 <p>4，grep zxr zxr.txt表示在zxr.txt搜索zxr，显示包含zxr的行</p>
 <ul>
 <li>grep -n zxr zxr.txt显示包含行号</li>
@@ -1599,436 +1786,6 @@
 
 
 
-    
-
-
-
-<div class="post-block">
-
-
-
-
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/27/%E9%A1%B9%E7%9B%AE%E7%BB%8F%E9%AA%8C/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Hexo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/08/27/%E9%A1%B9%E7%9B%AE%E7%BB%8F%E9%AA%8C/" class="post-title-link" itemprop="url">项目经验</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2025-08-27 14:01:15" itemprop="dateCreated datePublished" datetime="2025-08-27T14:01:15+08:00">2025-08-27</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-10-22 18:04:44" itemprop="dateModified" datetime="2025-10-22T18:04:44+08:00">2025-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/" itemprop="url" rel="index"><span itemprop="name">计算机</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>13k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>12 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>[TOC]</p>
-<h3 id="1，项目中各种java类的作用"><a href="#1，项目中各种java类的作用" class="headerlink" title="1，项目中各种java类的作用"></a>1，项目中各种java类的作用</h3><p>entity，与数据库表一一对应的实体</p>
-<p>dto，数据传输对象，前端的数据使用dto接，后端返回也应该是dto</p>
-<p>vo，视图对象，待了解</p>
-<p>pojo，代表普通java对象，对象内只有属性和getter，setter；包括了entity，vo和dto</p>
-<h3 id="2，配置git提交时的排除文件"><a href="#2，配置git提交时的排除文件" class="headerlink" title="2，配置git提交时的排除文件"></a>2，配置git提交时的排除文件</h3><ul>
-<li>.gitignore文件中配置不需要交给git管理的文件目录</li>
-</ul>
-<h3 id="3，写代码前初始化本地仓库"><a href="#3，写代码前初始化本地仓库" class="headerlink" title="3，写代码前初始化本地仓库"></a>3，写代码前初始化本地仓库</h3><ul>
-<li>点击vcs，创建本地仓库，使用项目最大目录最为本地仓库就可以了，再本地中添加，提交后，才能推到远程仓库</li>
-</ul>
-<h3 id="4，git连接远程仓库"><a href="#4，git连接远程仓库" class="headerlink" title="4，git连接远程仓库"></a>4，git连接远程仓库</h3><ul>
-<li>点击推送，会需要输入仓库url，输入完后，还需要输入账号密码，然后才可以推送</li>
-</ul>
-<h3 id="5，mysql重置密码，强制修改"><a href="#5，mysql重置密码，强制修改" class="headerlink" title="5，mysql重置密码，强制修改"></a>5，mysql重置密码，强制修改</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">忘记密码</span><br><span class="line">在忘记密码的情况下如何强制修改密码，我在此提供一种办法。</span><br><span class="line"></span><br><span class="line">1. 以超级管理员打开cmd，关闭mysql服务</span><br><span class="line">net stop mysql</span><br><span class="line"></span><br><span class="line">2. 跳过权限验证登录mysql</span><br><span class="line">mysqld --shared-memory --skip-grant-tables</span><br><span class="line"></span><br><span class="line">3. 在新的窗口中登录mysql</span><br><span class="line">mysql -u root -p</span><br><span class="line">无需输入密码，直接回车即可。</span><br><span class="line"></span><br><span class="line">4. 切换到mysql，将密码置空。</span><br><span class="line">use mysql;</span><br><span class="line">update user set authentication_string=&#x27;&#x27; where user=&#x27;root&#x27;;</span><br><span class="line">5.然后刷新权限:</span><br><span class="line">flush privileges;</span><br><span class="line"></span><br><span class="line">6. 设置加密规则并更新新密码，授权(直接复制这些SQL语句你的密码会更新为123456)</span><br><span class="line">ALTER USER &#x27;root&#x27;@&#x27;localhost&#x27; IDENTIFIED BY &#x27;123456&#x27; PASSWORD EXPIRE NEVER; </span><br><span class="line">alter user &#x27;root&#x27;@&#x27;localhost&#x27; identified by &#x27;123456&#x27;;</span><br><span class="line">grant all privileges  on *.*  to &quot;root&quot;@&#x27;localhost&#x27;;</span><br><span class="line">flush privileges;</span><br><span class="line"></span><br><span class="line">6. 设置成功后，重启mysql服务，使用新密码登录</span><br><span class="line">net start mysql</span><br></pre></td></tr></table></figure>
-
-<h3 id="6，导入sql执行文件，navicate备份文件"><a href="#6，导入sql执行文件，navicate备份文件" class="headerlink" title="6，导入sql执行文件，navicate备份文件"></a>6，导入sql执行文件，navicate备份文件</h3><ul>
-<li>如果是sql执行文件，可以navicate右击库然后执行</li>
-</ul>
-<img src="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20250901184649941.png" alt="image-20250901184649941" style="zoom: 33%;" />
-
-<ul>
-<li><p>如果用的黑框，使用source指令，source 路径</p>
-<ul>
-<li>绝对路径和相对都行</li>
-<li>路径中使用的是&#x2F;这个斜杠</li>
-<li>相对路径的操作<ul>
-<li>.&#x2F;代表当前目录，source  .&#x2F;zxr.sql代表执行当前目录下的sql文件，.&#x2F;一般可以省略</li>
-<li>..&#x2F;代表上一级目录，source  ..&#x2F;zxr.sql 代表去上一级中执行sql文件</li>
-<li>每一个..&#x2F;代表上一级，source  ..&#x2F;..&#x2F;zxr.sql  代表去上两级执行sql文件</li>
-<li>注意，如果在user目录 执行 mysql&#x2F;bin&#x2F;mysql -uroot -p,那么相对路径的基准目录是user而不是bin；配置环境变量同理，环境变量只影响是否能找到该执行文件，并不是先进入目录再执行，而是在当前目录，通过路径直接找到指令然后执行，当前目录依旧是基准目录</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>如果是navicate的备份文件，右击备份选择还原</p>
-</li>
-</ul>
-<img src="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20250901184831795.png" alt="image-20250901184831795" style="zoom:33%;" />
-
-<h3 id="7，更改项目jdk版本"><a href="#7，更改项目jdk版本" class="headerlink" title="7，更改项目jdk版本"></a>7，更改项目jdk版本</h3><img src="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20250901224904182.png" alt="image-20250901224904182" style="zoom:33%;" />
-
-<ul>
-<li>项目结构中可以更改sdk也就是jdk版本，至于底下的模块，选择和项目语言相同这个选项就可以了</li>
-</ul>
-<h3 id="8，对密码进行md5加密处理"><a href="#8，对密码进行md5加密处理" class="headerlink" title="8，对密码进行md5加密处理"></a>8，对密码进行md5加密处理</h3><ul>
-<li>md5加密会生成一个32位的字符串</li>
-<li>md5加密是单向不可逆的，不能通过结果反推原本的密码，因此在比对的时候，先进行加密在与数据库中加密好的数据进行比对即可</li>
-</ul>
-<p><img src="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20250901235001914.png" alt="image-20250901235001914"></p>
-<ul>
-<li>digestutils是基于springframework的，用于加密的工具类</li>
-<li>md5digestashex会生成一个32位的字符串作为结果，相比于md5digest的128位二进制字节数组更加易于人类查看</li>
-</ul>
-<h3 id="9，后端生成接口文档，接口测试，knife4j"><a href="#9，后端生成接口文档，接口测试，knife4j" class="headerlink" title="9，后端生成接口文档，接口测试，knife4j"></a>9，后端生成接口文档，接口测试，knife4j</h3><p>1，knife4j是一个框架，集成了swagger，简化了swagger的操作</p>
-<p>2，在springboot中使用knife4j</p>
-<ul>
-<li>导入依赖</li>
-</ul>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.github.xiaoymin<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>knife4j-spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>配置类中创建需要的bean</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="keyword">public</span> Docket <span class="title function_">docket</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="comment">//设置主页信息</span></span><br><span class="line">    <span class="type">ApiInfo</span> <span class="variable">apiInfo</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ApiInfoBuilder</span>()</span><br><span class="line">        .title(<span class="string">&quot;苍穹外卖项目接口文档&quot;</span>)</span><br><span class="line">        .version(<span class="string">&quot;2.0&quot;</span>)</span><br><span class="line">        .description(<span class="string">&quot;苍穹外卖项目接口文档&quot;</span>)</span><br><span class="line">        .build();</span><br><span class="line">    <span class="comment">//指定swagger版本为swagger2</span></span><br><span class="line">    <span class="type">Docket</span> <span class="variable">docket</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Docket</span>(DocumentationType.SWAGGER_2)</span><br><span class="line">        .apiInfo(apiInfo)</span><br><span class="line">        .select()</span><br><span class="line">        <span class="comment">//指定需要扫描的包</span></span><br><span class="line">        .apis(RequestHandlerSelectors.basePackage(<span class="string">&quot;com.sky.controller&quot;</span>))</span><br><span class="line">        .paths(PathSelectors.any())</span><br><span class="line">        .build();</span><br><span class="line">    <span class="keyword">return</span> docket;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>设置静态资源映射，把访问地址映射到静态资源上；如果没有设置映射，springmvc会把这个路径当做一个controller的路径，就找不到会404</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">addResourceHandlers</span><span class="params">(ResourceHandlerRegistry registry)</span> &#123;</span><br><span class="line">    <span class="comment">//knife4j会吧生成的静态资源都放到classpath下的路径中，在浏览器访问/doc.html的时候，要映射才能访问到classpath下的真正的静态资源</span></span><br><span class="line">    registry</span><br><span class="line">        .addResourceHandler(<span class="string">&quot;/doc.html&quot;</span>)</span><br><span class="line">        .addResourceLocations(<span class="string">&quot;classpath:/META-INF/resources/&quot;</span>);</span><br><span class="line">    registry</span><br><span class="line">        .addResourceHandler(<span class="string">&quot;/webjars/**&quot;</span>)</span><br><span class="line">        .addResourceLocations(<span class="string">&quot;classpath:/META-INF/resources/webjars/&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>通过服务的ip+端口+&#x2F;doc.html可以直接访问主页</li>
-</ul>
-<img src="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20250902115930274.png" alt="image-20250902115930274" style="zoom: 50%;" />
-
-<p>3，knife4j常用注解</p>
-<ul>
-<li>@Api：用在类上，比如controller类，描述类的作用、<ul>
-<li>tags参数写描述信息</li>
-</ul>
-</li>
-<li>@ApiModel：用在实体类上，比如dto，vo，entity，描述作用<ul>
-<li>description参数写描述信息</li>
-</ul>
-</li>
-<li>@ApiModelProperties：用在实体类的属性上<ul>
-<li>value参数写描述信息</li>
-</ul>
-</li>
-<li>@ApiOperation：用在方法上，描述方法的信息，作用，参数，返回值等<ul>
-<li>value参数写描述信息</li>
-</ul>
-</li>
-<li>@ApiImplicitParams：用于描述参数信息，可以包含一个参数列表</li>
-<li>@ApiImplicitParam：描述参数列表中的每一个参数<ul>
-<li>name：必填，和方法签名中的参数名必须一致</li>
-<li>value：非必填，对参数的描述</li>
-<li>required：非必填，描述参数是否可以不传</li>
-<li>paramType：必填，指定参数所在的位置<ul>
-<li>query：代表在路径中通过？拼接的参数</li>
-<li>path：代表路径中使用{}restfull风格的参数</li>
-<li>header：请求头中的参数</li>
-<li>cookie：cookie中的参数</li>
-<li>body：请求体中的参数</li>
-<li>cookie和header都可以通过httprequest对象获取</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="10，接口设计，apifox"><a href="#10，接口设计，apifox" class="headerlink" title="10，接口设计，apifox"></a>10，接口设计，apifox</h3><p>1，接口设计是在写代码之前开会讨论需要什么接口，形成一个文档，同时管理和维护；后面按照文档开发即可，可以使用apifox或yapi等</p>
-<p>2，swagger是后端进行开发的时候，用于自测接口功能的，和设计文档不是一个作用</p>
-<h3 id="11，接口开发流程"><a href="#11，接口开发流程" class="headerlink" title="11，接口开发流程"></a>11，接口开发流程</h3><p>1，通过需求看参数</p>
-<ul>
-<li>是否必须</li>
-<li>参数类型</li>
-<li>请求头中参数传递方式，是否是JSON</li>
-<li>参数校验：号码11位，身份证号18位，用户名和手机号唯一，参数是否必须</li>
-<li>返回类型，是否要封装成Result对象，一般包含<ul>
-<li>code：请求结果码</li>
-<li>data：如果有，代表实际返回的值</li>
-<li>message：如果有，代表后端传来的错误信息，一般用于展示给用户</li>
-</ul>
-</li>
-</ul>
-<p>2，看数据库</p>
-<ul>
-<li>是否需要唯一</li>
-<li>是否需要主键</li>
-<li>是否需要默认值</li>
-</ul>
-<h3 id="12，数据接收，传递，入库"><a href="#12，数据接收，传递，入库" class="headerlink" title="12，数据接收，传递，入库"></a>12，数据接收，传递，入库</h3><p>1，前端数据直接使用dto接收</p>
-<p>2，传输使用dto，入库需要把dto转成entity，因为dto的属性不完全</p>
-<p>3，可以使用：</p>
-<ul>
-<li>BeanUtils.copypropertise转化，并且手动赋值其他没有的属性</li>
-<li>使用lombok的builder，Entity.Builder().build()能链式的赋值，注意返回的是新对象，需要接收，不保留之前对象属性的值，所以两种方法不要混用</li>
-</ul>
-<h3 id="13，前端传入JSON对象"><a href="#13，前端传入JSON对象" class="headerlink" title="13，前端传入JSON对象"></a>13，前端传入JSON对象</h3><p>1，需要用@RequestBody接收，不然收不到</p>
-<h3 id="14，全局异常处理"><a href="#14，全局异常处理" class="headerlink" title="14，全局异常处理"></a>14，全局异常处理</h3><p>1，设定一个自定义异常，通常继承运行时异常类，或者继承自自定义异常基类</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">CustomException</span> <span class="keyword">extends</span> <span class="title class_">BaseException</span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> code;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">CustomException</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">CustomException</span><span class="params">(String message)</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>(message);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">CustomException</span><span class="params">(String message, <span class="type">int</span> code)</span>&#123;</span><br><span class="line">        <span class="built_in">super</span>(message);</span><br><span class="line">        <span class="built_in">this</span>.code = code;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>设置了三个构造器，在手动throw的时候可以选择参数</li>
-</ul>
-<p>2，通过方法增强，捕获异常</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RestControllerAdvice</span></span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">GlobalExceptionHandler</span> &#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 捕获全局自定义异常</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> ex 异常</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 异常信息以及状态码</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@ExceptionHandler()</span></span><br><span class="line">    <span class="keyword">public</span> Result <span class="title function_">exceptionHandler</span><span class="params">(CustomException ex)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> Result.error(ex.getMessage(),ex.getCode());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>@RestControllerAdvice是切面，切点是所有的controller方法，rest表示方法return的结果以JSON形式返回，而不是作为路径跳转</li>
-<li>@ExceptionHandler()是专门在切面中进行异常捕获功能增强的注解，在注解的Value参数中写需要捕获的异常类型，没写的话会根据方法参数类型推出来</li>
-<li>原理就是，对所有controller方法都做了增强，也就是代理，代理原理就是在controller方法外加上try-catch代码，catch的类型就是指定的类型</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> 代理方法(原始方法)&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">try</span>&#123;</span><br><span class="line">        原始方法.invoke();</span><br><span class="line">    &#125;<span class="keyword">catch</span>(CustomException e)&#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="15，获取用户上下文信息"><a href="#15，获取用户上下文信息" class="headerlink" title="15，获取用户上下文信息"></a>15，获取用户上下文信息</h3><p>1，在进行增删改操作时，要获取用户信息并存入记录中，以记录是谁进行的修改</p>
-<p>2，方案一：在拦截器中，通过token反推出存入token的信息，再去库里查询完整的信息，存入threadlocal</p>
-<ul>
-<li>创建threadLocal实例，一般都会对threadlocal进行包装，提供静态的存取删方法</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 员工上下文，用于传递当前请求的员工信息</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">EmployeeContext</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> ThreadLocal&lt;Employee&gt; employeeHolder = <span class="keyword">new</span> <span class="title class_">ThreadLocal</span>&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Employee <span class="title function_">getEmployee</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> employeeHolder.get();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">setEmployee</span><span class="params">(Employee employee)</span> &#123;</span><br><span class="line">        employeeHolder.set(employee);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">removeEmployee</span><span class="params">()</span> &#123;</span><br><span class="line">        employeeHolder.remove();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>通过请求头中的token，获取信息，再去库查询完整信息，再存入ThreadLocal</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">preHandle</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler)</span>&#123;</span><br><span class="line">    <span class="comment">//1、从请求头中获取令牌</span></span><br><span class="line"><span class="type">String</span> <span class="variable">token</span> <span class="operator">=</span> request.getHeader(jwtProperties.getAdminTokenName());</span><br><span class="line"></span><br><span class="line"><span class="comment">//2、校验令牌,令牌生成时是利用id，所以可以通过令牌反推出id</span></span><br><span class="line"><span class="type">Claims</span> <span class="variable">claims</span> <span class="operator">=</span> JwtUtil.parseJWT(jwtProperties.getAdminSecretKey(), token);</span><br><span class="line"><span class="type">Long</span> <span class="variable">empId</span> <span class="operator">=</span> Long.valueOf(claims.get(JwtClaimsConstant.EMP_ID).toString());</span><br><span class="line"></span><br><span class="line"><span class="comment">//将员工信息放入threadLocal</span></span><br><span class="line">Employee employee;</span><br><span class="line">employee = employeeMapper.getById(empId);</span><br><span class="line">EmployeeContext.setEmployee(employee);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//别忘了在请求结束后移除ThreadLocal中的内容</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">afterCompletion</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">    <span class="comment">//请求完成时删除清空threadLocal</span></span><br><span class="line">    EmployeeContext.removeEmployee();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>注意请求结束后清空内容</li>
-<li>由于一个请求在controller，service，mapper直至返回都是同一个线程，所以这种方式在3层都可以获取</li>
-</ul>
-<p>3，方案二：自定义一个注解，例如@Login，注解类型为修饰参数，例如User user</p>
-<ul>
-<li>在参数解析器中，取到有@Login修饰且参数类型是User的参数</li>
-<li>通过token和库查到用户信息</li>
-<li>将用户信息通过反射插入该参数</li>
-<li>这时参数就有用户信息，在每一层方法都带上此参数，就能获取到用户信息</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">LoginUserResolver</span> <span class="keyword">implements</span> <span class="title class_">HandlerMethodArgumentResolver</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>参数解析器和拦截器都是在controller之前执行，但是分工不一样，应正确使用</li>
-<li>这种方法只能给controller的参数赋值，如果其他层想用，那么将此参数作为参数传递下去即可</li>
-</ul>
-<h3 id="16，mybatis中带条件的分页查询"><a href="#16，mybatis中带条件的分页查询" class="headerlink" title="16，mybatis中带条件的分页查询"></a>16，mybatis中带条件的分页查询</h3><p>1，传入的数据为，需要展示的页码，每一页的数量，查询条件；前端的数据应当专门建一个pageXXXDTO来接收</p>
-<ul>
-<li>注意前端的的参数是quey类型(路径中拼接)，后端使用对象可以直接接收；如果前端传入的是JSON，那么后端要加@RequestBody</li>
-</ul>
-<p>2，分页的结果应当封装到一个pageResult类里，类的属性根据前端需要的属性来定，正常需要的是总条数，和当前展示页的数据列表</p>
-<p>3，一般返回前端的都是Result统一结果，一般包含响应信息，响应码，data数据；这个data一般用T泛型表示或者是Object，所以返回的时候返回Result&lt;pageResult&gt; 就指明了data类型是pageResult，然后pageResult又包含总条数和数据列表</p>
-<p>4，手动方案进行分页</p>
-<ul>
-<li>手动先根据条件筛选，然后计算需要页码的开始和结束条目，使用limit截取返回即可</li>
-</ul>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;queryEmployeePage&quot;</span> <span class="attr">resultType</span>=<span class="string">&quot;employee&quot;</span>&gt;</span></span><br><span class="line">    select * from employee</span><br><span class="line">    <span class="comment">&lt;!--需要动态判断条件存在不存在，使用动态标签--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">where</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;name!=null and name!=&#x27;&#x27; &quot;</span>&gt;</span></span><br><span class="line">            <span class="comment">&lt;!-- 模糊查询使用concat拼接比较好--&gt;</span></span><br><span class="line">            and name like concat(&#x27;%&#x27;,#&#123;name&#125;,&#x27;%&#x27;)</span><br><span class="line">        <span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">where</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--谨记limit不需要打括号，limit的含义是跳过start条数据，取pageSize条数据--&gt;</span></span><br><span class="line">    limit #&#123;start&#125;,#&#123;pageSize&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>start计算的时候，page一定要减一，比如需要第一页的，那就从0*pageSize&#x3D;0开始；第二页就是从1*pageSize&#x3D;pageSize开始</li>
-</ul>
-<p>5,使用插件进行分页，原理就是，把pageNum，pageSize保存到threadLocal中，在sql执行之前，拦截执行sql的方法，判断threadLocal是否有分页信息，有的话就进行拼接limit然后执行</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//指定分页的页码，每一页的条数</span></span><br><span class="line">PageHelper.startPage(pageNum,pageSize);</span><br><span class="line"><span class="comment">//直接使用条件查询，插件会自动拦截下一条sql，把计算好的limit的值拼接到sql后面，这里返回的一定是Page对象 </span></span><br><span class="line">Page&lt;Employee&gt; page = employeeMapper.queryEmployeePageList(name);</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//page对象中包含了结果和总数，直接用就行</span></span><br><span class="line">pageResult.setRecords(page.getResult());</span><br><span class="line">pageResult.setTotal(page.getTotal());</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--注意分页的返回值是Page&lt;Employee&gt;中的泛型类型，而不是Page类型--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;queryEmployeePageList&quot;</span> <span class="attr">resultType</span>=<span class="string">&quot;com.sky.entity.Employee&quot;</span>&gt;</span></span><br><span class="line">    select * from employee</span><br><span class="line">    <span class="tag">&lt;<span class="name">where</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--习惯写上and，where标签会自动去除不需要的and和or，但是多条件不写and就会出错--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;name!=null and name!=&#x27;&#x27; &quot;</span>&gt;</span></span><br><span class="line">            and name like concat(&#x27;%&#x27;,#&#123;name&#125;,&#x27;%&#x27;)</span><br><span class="line">        <span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">where</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>在mapper接口中，如果安装了mybatisx插件，mapper接口没有对应sql会爆红，alt+enter可以自动创建sql，自动填写id和返回值</li>
-<li>必须导入pagehelper依赖才可以使用</li>
-</ul>
-<h3 id="17，后端返回给前端日期类型的格式化"><a href="#17，后端返回给前端日期类型的格式化" class="headerlink" title="17，后端返回给前端日期类型的格式化"></a>17，后端返回给前端日期类型的格式化</h3><h3 id="18-在乌班图中下载并安装redis"><a href="#18-在乌班图中下载并安装redis" class="headerlink" title="18.在乌班图中下载并安装redis"></a>18.在乌班图中下载并安装redis</h3><p>1，通过wget <a target="_blank" rel="noopener" href="https://download.redis.io/releases/redis-6.0.5.tar.gz%E8%83%BD%E7%9B%B4%E6%8E%A5%E5%9C%A8%E5%BD%93%E5%89%8D%E7%9B%AE%E5%BD%95%E4%B8%8B%E8%BD%BD%E5%8E%8B%E7%BC%A9%E5%8C%85">https://download.redis.io/releases/redis-6.0.5.tar.gz能直接在当前目录下载压缩包</a></p>
-<p>2.使用tar -zvxf redis-6.0.5.tar.gz -C &#x2F;usr&#x2F;local&#x2F;redis 把压缩包解压到&#x2F;usr&#x2F;local&#x2F;redis目录里面</p>
-<ul>
-<li>tar是tape archive的缩写，用于打包或者解压文件</li>
-<li>z代表使用gzip压缩算法，以.tar.gz或者tgz结尾的必须加上</li>
-<li>v，verbose表示显示详细的文件列表，可以不加</li>
-<li>x，代表解压缩；c代表压缩</li>
-<li>f，指定文件，f后面必须跟文件</li>
-<li>一般的软件都建议放在&#x2F;usr&#x2F;local里，redis这个文件夹要自创；使用sudo mkdir redis创建一个文件夹，需要使用sudo给权限，首次sudo 要输用户密码</li>
-</ul>
-<p>3，由于redis是c语言写的，编译之前要安装编译器，sudo apt install g++，相当于在centos中的yum install gcc-c++</p>
-<p>4，进入解压后的目录，使用 sudo make PREFIX&#x3D;&#x2F;usr&#x2F;local&#x2F;redis install，编译并安装</p>
-<ul>
-<li>make用于编译，PREFIX指定安装目录</li>
-</ul>
-<p>5，默认redis-cli等指令放在PREFIX&#x2F;bin下；配置文件放在PREFIX&#x2F;etc下；包文件放在PREFIX&#x2F;lib下</p>
-<h3 id="19，redis的配置"><a href="#19，redis的配置" class="headerlink" title="19，redis的配置"></a>19，redis的配置</h3><p>1，设置daemonize yes表示后台启动服务</p>
-<p>2，设置protected-mode no关闭保护模式</p>
-<p>3，设置bind 0.0.0.0 开启远程连接</p>
-<p>4，设置requirepass  redis表示连接时需要密码，密码是redis字符串</p>
-<p>5，默认的redis.conf文件在解压后的文件夹里，而redis-server等命令在安装目录的bin下面</p>
-<ul>
-<li>为了方便使用，直接复制一份conf到bin同级：sudo cp rdis.conf ..&#x2F;redisv1.conf 复制到上级一个文件并重命名</li>
-<li>运行时，先切换到root用户，否则无法开启文件权限，redis的数据存不进文件里：su root，然后输入密码就行</li>
-</ul>
-<h3 id="20，vim的使用"><a href="#20，vim的使用" class="headerlink" title="20，vim的使用"></a>20，vim的使用</h3><p>1，安装vim ：sudo apt install vim</p>
-<p>2，sudo vim 文件</p>
-<p>3，操作</p>
-<ul>
-<li>i，进编辑模式</li>
-<li>esc，回浏览模式</li>
-<li>浏览模式中<ul>
-<li>？txt：向后搜索txt字符串，n代表下一个，N代表上一个</li>
-<li>&#x2F;txt:向前</li>
-<li>：wq，保存退出，：wq！强制保存退出</li>
-<li>：q！，退出不保存</li>
-</ul>
-</li>
-</ul>
-<h3 id="21，lombok的使用"><a href="#21，lombok的使用" class="headerlink" title="21，lombok的使用"></a>21，lombok的使用</h3><p>1，@Accessors(chain &#x3D; true)，表示使用链式调用复制，比如User user &#x3D; new User().setName(张三).setAge(18);</p>
-<p>2，@Builder()，让类可以使用builder构建一个对象,返回一个user对象，没有被赋值的会赋值成初值</p>
-<ul>
-<li>一般用于从0开始构建对象</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">User.Builder()</span><br><span class="line">    .name(<span class="string">&quot;张三&quot;</span>)</span><br><span class="line">    .age(<span class="number">18</span>)</span><br></pre></td></tr></table></figure>
-
-<p>3，@Builder(toBuilder &#x3D; true)，如果要在原有的对象上builder，保留原对象之前赋的值，可以使用对象.toBuilder()方法再给其他的属性赋值</p>
-<ul>
-<li>一般用于修改对象少量字段</li>
-</ul>
-<h3 id="22，数据库基本操作"><a href="#22，数据库基本操作" class="headerlink" title="22，数据库基本操作"></a>22，数据库基本操作</h3><p>1，给表加字段</p>
-<ul>
-<li>alter table table_name add colum colum_name varchar(255) not null comment ‘注释’</li>
-</ul>
-<p>2，删字段</p>
-<ul>
-<li>alter table table_name drop colum colum_name;注意删除的时候不要写字段类型</li>
-</ul>
-<h3 id="23，git相关操作"><a href="#23，git相关操作" class="headerlink" title="23，git相关操作"></a>23，git相关操作</h3><h3 id="24，BigDecimal的使用"><a href="#24，BigDecimal的使用" class="headerlink" title="24，BigDecimal的使用"></a>24，BigDecimal的使用</h3><p>1，创建对象，建议使用BigDecimal自带的常量</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">BigDecimal.ZERO.setScale(<span class="number">2</span>, RoundingMode.FLOOR)</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>BigDecimal.ZERO：获取一个值为0的对象，BigDecimal是不可变的，每次修改都返回新的对象，所以这个常量被共用是安全的，建议每次都使用这种方式而不是new；常见除了ZERO还有ONE，TEN等</li>
-<li>使用setScale方法设置小数位数以及舍入模式；setScale(2, RoundingMode.FLOOR)代表两位小数，使用floor模式(向下取整1.5-&gt;1;-1.5-&gt;-2);HALF_UP(四舍五入)是最常用的模式</li>
-<li>对非零的BigDecimal对象setScale时，必须设置舍入模式，否则会ArithmeticException: Rounding necessary</li>
-</ul>
-<h3 id="25，对象类型判空"><a href="#25，对象类型判空" class="headerlink" title="25，对象类型判空"></a>25，对象类型判空</h3><ul>
-<li><p>Boolean Objects.nonNull(T obj)</p>
-</li>
-<li><p>Boolean Objects.isNull(T obj)</p>
-</li>
-<li><p>T Objects.requireNonNull(T obj，String message)：obj不为空返回obj对象，为空固定抛出NullPointerException</p>
-</li>
-</ul>
-<h3 id="26，http客户端"><a href="#26，http客户端" class="headerlink" title="26，http客户端"></a>26，http客户端</h3><p>1，使用hutool工具包的HttpRequest类</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">String</span> <span class="variable">result</span> <span class="operator">=</span> HttpRequest.post(<span class="string">&quot;https://api.example.com/data&quot;</span>)</span><br><span class="line">    .header(<span class="string">&quot;Authorization&quot;</span>, <span class="string">&quot;Bearer token123&quot;</span>)</span><br><span class="line">    .body(<span class="string">&quot;&#123;\&quot;name\&quot;:\&quot;value\&quot;&#125;&quot;</span>, <span class="string">&quot;application/json&quot;</span>)</span><br><span class="line">    .timeout(<span class="number">5000</span>)</span><br><span class="line">    .execute()</span><br><span class="line">    .body();</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>链式调用，post是方法类型可以是.get,.delete.put等；body是请求体；timeout是请求超时时间.execute是执行，返回的是HttpResponse对象</li>
-<li>.body()是获取HttpResponse的请求体</li>
-</ul>
-<h3 id="27，序列化以及反序列化"><a href="#27，序列化以及反序列化" class="headerlink" title="27，序列化以及反序列化"></a>27，序列化以及反序列化</h3><p>1，使用Jackson</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> ObjectMapper JSON_MAPPER;</span><br><span class="line"><span class="comment">//创建一个ObjectMapper</span></span><br><span class="line">JSON_MAPPER = <span class="keyword">new</span> <span class="title class_">ObjectMapper</span>();</span><br><span class="line"></span><br><span class="line"><span class="comment">//设置是否转换空，是否转换类没有的字段，是否转换没有getter，setter的四有字段，是否转换私有构造</span></span><br><span class="line">JSON_MAPPER.setSerializationInclusion(Include.NON_NULL);</span><br><span class="line">JSON_MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, <span class="literal">false</span>);</span><br><span class="line">JSON_MAPPER.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, <span class="literal">true</span>);</span><br><span class="line">JSON_MAPPER.setVisibility(FIELD,JsonAutoDetect.Visibility.ANY);</span><br><span class="line">JSON_MAPPER.setVisibility(CREATOR,JsonAutoDetect.Visibility.ANY);</span><br></pre></td></tr></table></figure>
-
-<p>2，Jackson出异常后在catch块中用hutool兜底</p>
-<h3 id="28，提供接口给第三方调用"><a href="#28，提供接口给第三方调用" class="headerlink" title="28，提供接口给第三方调用"></a>28，提供接口给第三方调用</h3><p>1，设置shiro权限，”路径”，”anon”；允许匿名访问</p>
-<p>2，验证身份，使用jwt，或者在后端验证ip是否正确</p>
-<h3 id="29，shiro"><a href="#29，shiro" class="headerlink" title="29，shiro"></a>29，shiro</h3><p>1，shiro的用户信息只能从controller层获取</p>
-<h3 id="30，Java时间日期"><a href="#30，Java时间日期" class="headerlink" title="30，Java时间日期"></a>30，Java时间日期</h3><p>1，获取当前日期的指定格式</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//使用老方案</span></span><br><span class="line"><span class="comment">// 定义格式</span></span><br><span class="line"><span class="type">SimpleDateFormat</span> <span class="variable">sdf</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SimpleDateFormat</span>(<span class="string">&quot;yyyy-MM-dd HH:mm:ss&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取当前时间并格式化</span></span><br><span class="line"><span class="type">String</span> <span class="variable">formattedDateTime</span> <span class="operator">=</span> sdf.format(<span class="keyword">new</span> <span class="title class_">Date</span>());</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//java8以后推荐的新方案</span></span><br><span class="line"><span class="comment">// 定义格式</span></span><br><span class="line"><span class="type">DateTimeFormatter</span> <span class="variable">formatter</span> <span class="operator">=</span> DateTimeFormatter.ofPattern(<span class="string">&quot;yyyy-MM-dd HH:mm:ss&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取当前时间并格式化</span></span><br><span class="line"><span class="type">String</span> <span class="variable">formattedDateTime</span> <span class="operator">=</span> LocalDateTime.now().format(formatter);</span><br></pre></td></tr></table></figure>
-
-
-
-<p>2，两种日期api的区别，新api的好处，什么情况用新的什么情况用旧的，除安全性外，效率是否有区别</p>
-<ul>
-<li>新api主要解决了simpledateformat的线程安全问题，simpledateformat无论是parse还是format方法，都会先使用calendar对象存中间状态，多个线程同时调用一个simpledateformat的方法时，会导致calendar对象出现线程安全问题，导致转换后的内容和原本预期的内容不一致；效率也是新api更好</li>
-</ul>
-<p>3，前后端日期类型的参数传递</p>
-<ul>
-<li>前端传入指定的字符串格式 “2025:05:20”</li>
-<li>后端直接使用date接收会报错，格式转换错误<ul>
-<li>可以在接收的属性上加spring的注解，@DateTimeFormat(pattern &#x3D; “yyyy-MM-dd”) private Date createDate;</li>
-<li>可以对date类型做全局配置，spring.mvc.format.date&#x3D;yyyy-MM-dd；spring.jackson.date-format&#x3D;yyyy-MM-dd；spring.jackson.time-zone&#x3D;GMT+8；参数传递需要指定springmvc的转换器，json传递需要指定Jackson的转换器</li>
-<li>也可以接收字符串，然后手动转成date类型</li>
-</ul>
-</li>
-<li>服务器的时间保存到数据库<ul>
-<li>数据库保存日期时间用datetime，保存时间用time；需要自动时区转换用timestamp</li>
-<li>java的date和localdatetime可以同时对应datetime和time，instant和timestamp可以对应timestamp</li>
-<li>数据库datetime类型存什么就取什么，不管时区的事；timestamp会把时间转换成utc时区存入，所以存之前要指定时区，取的时候也要指定时区，否则可能导致时间错误</li>
-<li>timestamp取的时候会自动以服务器时区为时区转换时间，因此在国际业务中非常好用，不用每次都手动根据当前时区转换，但是timestamp是从1970-2038，存历史事件等的日期存不进去</li>
-</ul>
-</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
@@ -2041,7 +1798,7 @@
 
   <div class="copyright">
     &copy; 
-    <span itemprop="copyrightYear">2025</span>
+    <span itemprop="copyrightYear">2026</span>
     <span class="with-love">
       <i class="fa fa-heart"></i>
     </span>
@@ -2052,13 +1809,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">133k</span>
+    <span title="站点总字数">135k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:01</span>
+    <span title="站点阅读时长">2:02</span>
   </span>
 </div>
 

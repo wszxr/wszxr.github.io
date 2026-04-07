@@ -596,6 +596,11 @@ ScheduledThreadPoolExecutor scheduledThreadPoolExecutor =
       </tags>
   </entry>
   <entry>
+    <title>链表</title>
+    <url>/2025/12/19/%E9%93%BE%E8%A1%A8/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
     <title>数组</title>
     <url>/2025/12/18/%E6%95%B0%E7%BB%84/</url>
     <content><![CDATA[<h1 id="动态数组"><a href="#动态数组" class="headerlink" title="动态数组"></a>动态数组</h1><p>1，插入类方法</p>
@@ -649,9 +654,20 @@ ScheduledThreadPoolExecutor scheduledThreadPoolExecutor =
   <entry>
     <title>shiro</title>
     <url>/2025/12/01/shiro/</url>
-    <content><![CDATA[<p>1，username</p>
-<div class="tabs" id="first-unique-name"><ul class="nav-tabs"><li class="tab active"><a href="#first-unique-name-1">启动类</a></li><li class="tab"><a href="#first-unique-name-2">basicBinarySearch</a></li><li class="tab"><a href="#first-unique-name-3">insertElementInArray</a></li></ul><div class="tab-content"><div class="tab-pane active" id="first-unique-name-1"></div><div class="tab-pane" id="first-unique-name-2"></div><div class="tab-pane" id="first-unique-name-3"></div></div></div>
-
+    <content><![CDATA[<h2 id="Security-Manager"><a href="#Security-Manager" class="headerlink" title="Security Manager"></a>Security Manager</h2><p>Authenticator</p>
+<p>Authorizer</p>
+<p>sessionmanager</p>
+<p>sessiondao</p>
+<p>cachemanager</p>
+<p>realms</p>
+<p>密码生成器</p>
+<h2 id="身份认证"><a href="#身份认证" class="headerlink" title="身份认证"></a>身份认证</h2><p>1，subject ：主体，可以是用户，可以是一个程序，请求shiro认证的主体</p>
+<p>2，principal： 身份信息，用户名，邮箱，手机号等，需要一个主身份</p>
+<p>3，credential：凭证，可以是密码，证书等</p>
+<h2 id="密码存库MD5-salt"><a href="#密码存库MD5-salt" class="headerlink" title="密码存库MD5+salt"></a>密码存库MD5+salt</h2><p>1，注册时把密码通过md5存到数据库，为了防止用户密码过于简单，md5被穷举出来，给每个用户随机一个salt，密码 + salt 后再通过md5加密存进数据库，同时salt也要存进数据库；salt可以用uuid随机一个</p>
+<p>2，登录时，通过用户名查到密码，通过前端的密码+数据库的salt 进行md5后和数据库的密码比较，相同则登录认证成功</p>
+<p>3，给密码加盐可以调用shiro的MD5hash工具，new Md5Hash(authenticationToken.getCredentials(),”salt”,1024);salt是盐，1024是hash次数</p>
+<p>4，doGetAuthenticationInfo返回SimpleAuthenticationInfo后，携带了密码，由CredentialsMatcher解析，默认用SimpleCredentialsMatcher解析密码，使用equals判断密码是否相等；由于现在要把数据库</p>
 ]]></content>
       <categories>
         <category>计算机</category>
@@ -799,6 +815,95 @@ ScheduledThreadPoolExecutor scheduledThreadPoolExecutor =
 <li>&#x2F;zxr搜索zxr字符并高亮</li>
 <li>esc + U，取消高亮</li>
 </ul>
+<p>less指令</p>
+<h1 id="less-命令速查手册"><a href="#less-命令速查手册" class="headerlink" title="less 命令速查手册"></a>less 命令速查手册</h1><h2 id="基础用法"><a href="#基础用法" class="headerlink" title="基础用法"></a>基础用法</h2><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>less filename.log</code></td>
+<td>查看文件内容</td>
+</tr>
+<tr>
+<td><code>less +F filename.log</code></td>
+<td>实时监控日志（类似 tail -f）</td>
+</tr>
+<tr>
+<td><code>less +G filename.log</code></td>
+<td>从文件末尾开始查看</td>
+</tr>
+<tr>
+<td><code>less +100 filename.log</code></td>
+<td>跳转到第100行</td>
+</tr>
+</tbody></table>
+<h2 id="核心导航操作"><a href="#核心导航操作" class="headerlink" title="核心导航操作"></a>核心导航操作</h2><table>
+<thead>
+<tr>
+<th>按键</th>
+<th>功能</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>空格键</strong></td>
+<td>向下翻页</td>
+<td>Page Down</td>
+</tr>
+<tr>
+<td><strong>b</strong></td>
+<td>向上翻页</td>
+<td>Page Up</td>
+</tr>
+<tr>
+<td><strong>回车键</strong></td>
+<td>向下一行</td>
+<td>Line Down</td>
+</tr>
+<tr>
+<td><strong>k</strong></td>
+<td>向上一行</td>
+<td>Line Up</td>
+</tr>
+<tr>
+<td><strong>g</strong></td>
+<td>跳到文件开头</td>
+<td>Go to top</td>
+</tr>
+<tr>
+<td><strong>G</strong></td>
+<td>跳到文件末尾</td>
+<td>Go to bottom</td>
+</tr>
+<tr>
+<td><strong>50g</strong></td>
+<td>跳到第50行</td>
+<td>跳转到指定行</td>
+</tr>
+<tr>
+<td><strong>&#x2F;keyword</strong></td>
+<td>向下搜索</td>
+<td>如 <code>/ERROR</code></td>
+</tr>
+<tr>
+<td><strong>?keyword</strong></td>
+<td>向上搜索</td>
+<td>如 <code>?NullPointerException</code></td>
+</tr>
+<tr>
+<td><strong>n</strong></td>
+<td>下一个匹配项</td>
+<td>Next match</td>
+</tr>
+<tr>
+<td><strong>N</strong></td>
+<td>上一个匹配项</td>
+<td>Previous match</td>
+</tr>
+</tbody></table>
 <p>4，grep zxr zxr.txt表示在zxr.txt搜索zxr，显示包含zxr的行</p>
 <ul>
 <li>grep -n zxr zxr.txt显示包含行号</li>
@@ -2883,15 +2988,41 @@ ScheduledThreadPoolExecutor scheduledThreadPoolExecutor =
     <url>/2025/03/12/%E6%9C%80%E7%BB%88%E6%B1%87%E6%80%BB/</url>
     <content><![CDATA[<h1 id="Java基础"><a href="#Java基础" class="headerlink" title="Java基础"></a>Java基础</h1><h2 id="语言的三大特性"><a href="#语言的三大特性" class="headerlink" title="语言的三大特性"></a>语言的三大特性</h2><p>1，封装：将属性和方法封装到类中，隐藏实现细节，通过公共接口和外界交互；可以防止外界直接修改敏感数据；安全性高</p>
 <p>2，继承：子类继承父类的属性和方法；实现代码复用</p>
+<ul>
+<li>继承并不是复制所有代码到子类，因为如果是复制，子类肯定能访问自己的private参数；实际上子类无法直接访问父类private的方法和参数，只能通过父类提供的公有方法进行访问</li>
+<li>子类拥有父类的私有方法和私有属性但是无法直接访问，使用反射可以通过子类的Class对象访问到父类私有属性和方法</li>
+</ul>
 <p>3，多态：同一个操作作用不同对象，产生不同行为；分为编译时多态(重载)和运行时多态(重写)；提高了拓展度，降低了耦合，提高了灵活性</p>
-<h2 id="重载和重写的区别"><a href="#重载和重写的区别" class="headerlink" title="重载和重写的区别"></a>重载和重写的区别</h2><p>1，重载：只与参数相关，参数数量，返回类型，参数顺序；主要用于同一个类中横向拓展</p>
+<ul>
+<li>由于子类拥有完整的父类，所以用父类的方法，可以想象成一个类里面有两部分代码，一部分父类，一部分子类，使用多态的父类型调用相当于只用上子类的父类部分代码，是肯定不会出错的</li>
+</ul>
+<h2 id="重载和重写的区别"><a href="#重载和重写的区别" class="headerlink" title="重载和重写的区别"></a>重载和重写的区别</h2><p>1，重载：同一个类中，相同方法名，不同参数的方法，主要用于同一个类中横向拓展</p>
+<ul>
+<li>只于参数有关：参数数量，参数类型，参数顺序中有一个不同就可以</li>
+<li>与方法返回值、方法修饰符、方法异常范围都无关</li>
+</ul>
 <p>2，重写：参数要相同，返回类型只能是被重写的同类或子类，修饰符只能大于等于被重写的；用于父类子类纵向拓展</p>
+<ul>
+<li>访问修饰符限制，是为了使用父类型引用多态调用子类重写的方法时时，不会出现子类重写方法没法调用的情况</li>
+<li>返回值限制，是在使用多态调用时，使用父类方法的的返回值接收不会出现类型错误</li>
+<li>这里的规定都是为多态服务</li>
+</ul>
 <h2 id="包装类型相对基本类型的好处"><a href="#包装类型相对基本类型的好处" class="headerlink" title="包装类型相对基本类型的好处"></a>包装类型相对基本类型的好处</h2><p>1，可以用与数组，集合，泛型</p>
 <p>2，提供了操作数据的一系列方法</p>
+<ul>
+<li>把当前类型转换成其他类型 a.intValue，把a转成int类型</li>
+<li>把其他类型转成需要的类型Long.valueOf(a)，把a转成long类型<ul>
+<li>自动装箱和拆箱就是语法糖调用了这两个方法</li>
+</ul>
+</li>
+<li>包装类型equals方法对比的是值是否相等，而不是地址</li>
+<li>可以使用包装类的MAX_VALUE和MIN_VALUE</li>
+</ul>
 <p>3，有null可以代表是否查到，基本类型只有0无法区分结果和没查到</p>
 <h2 id="static关键字修饰变量，方法"><a href="#static关键字修饰变量，方法" class="headerlink" title="static关键字修饰变量，方法"></a>static关键字修饰变量，方法</h2><p>1，static只能修饰成员变量，不可以修饰局部变量</p>
 <p>2，static方法内在只能用static变量，只能调static方法</p>
 <p>3，普通方法可以调static变量和方法</p>
+<p>4，静态方法不能使用非静态的变量和方法，因为静态方法中无法确定是调用了哪个对象的变量和方法</p>
 <h2 id="抽象类和接口异同"><a href="#抽象类和接口异同" class="headerlink" title="抽象类和接口异同"></a>抽象类和接口异同</h2><p>1，同：</p>
 <ul>
 <li>都不能实例化</li>
@@ -2907,6 +3038,10 @@ ScheduledThreadPoolExecutor scheduledThreadPoolExecutor =
 <h2 id="如何自定义一个异常"><a href="#如何自定义一个异常" class="headerlink" title="如何自定义一个异常"></a>如何自定义一个异常</h2><p>1，实现Exception或者RuntimeException</p>
 <p>2，创建有参和无参构造</p>
 <p>3，构造中用super调用父类的构造</p>
+<ul>
+<li>利用super一直往上调用，super中调super，直到throwAble基类，才会真正执行代码：设置堆栈信息，设置message字段(如果调用的是有参的super)</li>
+<li>调用的途中有且只有自定义异常对象，可以理解成一个对象嵌套调用super方法</li>
+</ul>
 <p>4，使用的时候直接throw，利用构造方法创建对象</p>
 <h2 id="深拷贝和浅拷贝的区别"><a href="#深拷贝和浅拷贝的区别" class="headerlink" title="深拷贝和浅拷贝的区别"></a>深拷贝和浅拷贝的区别</h2><p>1，浅拷贝指的是调用Object的clone方法，拷贝时基本类型变量会复制一份，引用类型只会复制引用，前后的对象的变量都存储同一个对象的地址</p>
 <p>2，深拷贝指的在浅拷贝的基础上，手动新建对象赋值或者递归调用浅拷贝方法，来完成引用类型的复制</p>

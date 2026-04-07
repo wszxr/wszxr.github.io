@@ -19,15 +19,15 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.21.1","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"always","padding":18,"offset":12},"hljswrap":true,"copycode":{"border_radius":8,"enable":true,"show_result":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="1，username 启动类basicBinarySearchinsertElementInArray">
+    <meta name="description" content="Security ManagerAuthenticator Authorizer sessionmanager sessiondao cachemanager realms 密码生成器 身份认证1，subject ：主体，可以是用户，可以是一个程序，请求shiro认证的主体 2，principal： 身份信息，用户名，邮箱，手机号等，需要一个主身份 3，credential：凭证，可以是密码，证书">
 <meta property="og:type" content="article">
 <meta property="og:title" content="shiro">
 <meta property="og:url" content="http://example.com/2025/12/01/shiro/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="1，username 启动类basicBinarySearchinsertElementInArray">
+<meta property="og:description" content="Security ManagerAuthenticator Authorizer sessionmanager sessiondao cachemanager realms 密码生成器 身份认证1，subject ：主体，可以是用户，可以是一个程序，请求shiro认证的主体 2，principal： 身份信息，用户名，邮箱，手机号等，需要一个主身份 3，credential：凭证，可以是密码，证书">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-12-01T08:01:27.000Z">
-<meta property="article:modified_time" content="2025-12-17T08:44:32.267Z">
+<meta property="article:modified_time" content="2026-01-13T10:27:22.650Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="登录，权限">
 <meta name="twitter:card" content="summary">
@@ -125,7 +125,7 @@
   
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -138,6 +138,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Security-Manager"><span class="nav-number">1.</span> <span class="nav-text">Security Manager</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81"><span class="nav-number">2.</span> <span class="nav-text">身份认证</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%86%E7%A0%81%E5%AD%98%E5%BA%93MD5-salt"><span class="nav-number">3.</span> <span class="nav-text">密码存库MD5+salt</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -150,7 +151,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-count">32</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -229,7 +230,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-12-17 16:44:32" itemprop="dateModified" datetime="2025-12-17T16:44:32+08:00">2025-12-17</time>
+      <time title="修改时间：2026-01-13 18:27:22" itemprop="dateModified" datetime="2026-01-13T18:27:22+08:00">2026-01-13</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -247,7 +248,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>50</span>
+      <span>609</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -264,9 +265,20 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><p>1，username</p>
-<div class="tabs" id="first-unique-name"><ul class="nav-tabs"><li class="tab active"><a href="#first-unique-name-1">启动类</a></li><li class="tab"><a href="#first-unique-name-2">basicBinarySearch</a></li><li class="tab"><a href="#first-unique-name-3">insertElementInArray</a></li></ul><div class="tab-content"><div class="tab-pane active" id="first-unique-name-1"></div><div class="tab-pane" id="first-unique-name-2"></div><div class="tab-pane" id="first-unique-name-3"></div></div></div>
-
+    <div class="post-body" itemprop="articleBody"><h2 id="Security-Manager"><a href="#Security-Manager" class="headerlink" title="Security Manager"></a>Security Manager</h2><p>Authenticator</p>
+<p>Authorizer</p>
+<p>sessionmanager</p>
+<p>sessiondao</p>
+<p>cachemanager</p>
+<p>realms</p>
+<p>密码生成器</p>
+<h2 id="身份认证"><a href="#身份认证" class="headerlink" title="身份认证"></a>身份认证</h2><p>1，subject ：主体，可以是用户，可以是一个程序，请求shiro认证的主体</p>
+<p>2，principal： 身份信息，用户名，邮箱，手机号等，需要一个主身份</p>
+<p>3，credential：凭证，可以是密码，证书等</p>
+<h2 id="密码存库MD5-salt"><a href="#密码存库MD5-salt" class="headerlink" title="密码存库MD5+salt"></a>密码存库MD5+salt</h2><p>1，注册时把密码通过md5存到数据库，为了防止用户密码过于简单，md5被穷举出来，给每个用户随机一个salt，密码 + salt 后再通过md5加密存进数据库，同时salt也要存进数据库；salt可以用uuid随机一个</p>
+<p>2，登录时，通过用户名查到密码，通过前端的密码+数据库的salt 进行md5后和数据库的密码比较，相同则登录认证成功</p>
+<p>3，给密码加盐可以调用shiro的MD5hash工具，new Md5Hash(authenticationToken.getCredentials(),”salt”,1024);salt是盐，1024是hash次数</p>
+<p>4，doGetAuthenticationInfo返回SimpleAuthenticationInfo后，携带了密码，由CredentialsMatcher解析，默认用SimpleCredentialsMatcher解析密码，使用equals判断密码是否相等；由于现在要把数据库</p>
 
     </div>
 
@@ -310,7 +322,7 @@
 
   <div class="copyright">
     &copy; 
-    <span itemprop="copyrightYear">2025</span>
+    <span itemprop="copyrightYear">2026</span>
     <span class="with-love">
       <i class="fa fa-heart"></i>
     </span>
@@ -321,13 +333,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">133k</span>
+    <span title="站点总字数">135k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:01</span>
+    <span title="站点阅读时长">2:02</span>
   </span>
 </div>
 
