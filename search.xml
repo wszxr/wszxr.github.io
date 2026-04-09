@@ -17,6 +17,276 @@
       </tags>
   </entry>
   <entry>
+    <title>MySQL</title>
+    <url>/2024/12/09/MySQL/</url>
+    <content><![CDATA[<h2 id="行格式"><a href="#行格式" class="headerlink" title="行格式"></a>行格式</h2><h3 id="1，页存在的意义"><a href="#1，页存在的意义" class="headerlink" title="1，页存在的意义"></a>1，页存在的意义</h3><ul>
+<li>页作为内存和磁盘交互的单位，如果每读一条记录，就从磁盘io到内存一条，会很慢</li>
+</ul>
+<h3 id="2，MyISAM的默认行格式compact"><a href="#2，MyISAM的默认行格式compact" class="headerlink" title="2，MyISAM的默认行格式compact"></a>2，MyISAM的默认行格式compact</h3><ul>
+<li>行格式内容<ul>
+<li>变长字段列表</li>
+<li>null值列表</li>
+<li>记录头信息<ul>
+<li>记录的类型：0是普通记录，1是数据项记录，2是最小记录，3是最大记录</li>
+<li>是否被删除：1代表被标记了删除，等待进入删除列表</li>
+<li>拥有的记录数:作为组的最后一条记录，这个值就是那一组的记录数量</li>
+<li>记录在本页的位置：？</li>
+<li>是否是某层非叶子节点的最小索引列值所在的记录</li>
+</ul>
+</li>
+<li>用户记录</li>
+<li>隐藏列记录：roll_point,transaction_id,row_id(如果没定义主键和唯一键，会生成row_id作为主键)</li>
+</ul>
+</li>
+</ul>
+<h3 id="3，char-M-是否是变长字段-看字符集"><a href="#3，char-M-是否是变长字段-看字符集" class="headerlink" title="3，char(M)是否是变长字段(看字符集)"></a>3，char(M)是否是变长字段(看字符集)</h3><ul>
+<li>M代表字符数，字符不够会用空格填充</li>
+<li>如果字符集中，每个字符都是一样的字节数，那么总的字节数是不会变的，就不是变长字段</li>
+<li>如果字符集中，存在不同的字节数的字符，例如utf8-mb4,那么无法确定最后的字节数，就是变长字段</li>
+<li>char使用空格占位，实际是用少量的空间，减小了产生内存碎片的概率：当char字段的值，在M个字符内变化时，复用原本的内存空间就可以，假如没有占位，char字段的每次增加</li>
+</ul>
+<h3 id="4，varchar-M-中的M可以无限大吗-不行"><a href="#4，varchar-M-中的M可以无限大吗-不行" class="headerlink" title="4，varchar(M)中的M可以无限大吗(不行)"></a>4，varchar(M)中的M可以无限大吗(不行)</h3><ul>
+<li>M指的字符数</li>
+<li>mysql规定每条记录，除隐藏列外，其余所有字段值加起来的大小不能超过65535字节</li>
+<li>M的最大值除了和该varchar列值的大小有关，还和字符集最大字符所需的字节数有关，规定65535-其他字段长度，再除字符集最大字符长度，可以获得M允许的最大值，超过这个值在定义表结构会报错</li>
+</ul>
+<h3 id="5，列溢出"><a href="#5，列溢出" class="headerlink" title="5，列溢出"></a>5，列溢出</h3><ul>
+<li>指的是变长字段长度过大，无法保证MySQL规定的每页至少存下两条记录的规定，就会把该字段值的一部分存到其他页中，并记录指针</li>
+<li>compact格式会在原字段值的位置，存768字节的数据+存到其它页的数据的指针</li>
+<li>dynamic格式，只会在原字段值的位置存指针，所有数据放到其它页中</li>
+</ul>
+<h3 id="6，引擎的默认行格式"><a href="#6，引擎的默认行格式" class="headerlink" title="6，引擎的默认行格式"></a>6，引擎的默认行格式</h3><ul>
+<li>MyISAM使用的compact</li>
+<li>innodb使用的dynamic</li>
+<li>区别就是compact列溢出时会保留768字节到原字段值的位置</li>
+</ul>
+<h2 id="页格式"><a href="#页格式" class="headerlink" title="页格式"></a>页格式</h2><h3 id="1，页的组成"><a href="#1，页的组成" class="headerlink" title="1，页的组成"></a>1，页的组成</h3><ul>
+<li>文件头：存放的是每个类型的页的通用的东西<ul>
+<li>页号</li>
+<li>上下页指针：双向链表连接同层级每一页</li>
+<li>页所属表空间</li>
+<li>页类型：索引用的是索引页，也叫数据页</li>
+<li>检验和：用于和文件尾的检验和配合，判断是否是完整的页</li>
+</ul>
+</li>
+<li>页头：记录页的状态<ul>
+<li>当前页的页目录的槽的数量</li>
+<li>未分配的空间最小地址，是下次分配的起始点</li>
+<li>当前记录数量，包括最大最小和已删除的</li>
+<li>页中第一个被删除的记录的地址，作为删除链表的头节点</li>
+<li>暂未使用的，待更新(TODO)</li>
+</ul>
+</li>
+<li>用户记录：页内单链表连接</li>
+<li>空闲空间</li>
+<li>页目录：存的是分组后的存放着最大索引列的记录的偏移地址，根据该记录的偏移地址可以获取记录的索引列的值，来完成2分法操作判断要查找的数据在哪个组</li>
+<li>文件尾：检验和，配合文件头<ul>
+<li>假如检验和前后不相同，说明页是错的，可能只刷新了一般就被打断了</li>
+</ul>
+</li>
+</ul>
+<h2 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h2><h3 id="1，innodb的聚簇索引"><a href="#1，innodb的聚簇索引" class="headerlink" title="1，innodb的聚簇索引"></a>1，innodb的聚簇索引</h3><ul>
+<li>聚簇索引，是b+树结构，叶子节点是有完整数据的数据页</li>
+<li>同一层级，页中的数据按照主键大小排，页中的记录会被分组，最小记录单独一组，中间记录4-8条一组，含有最大记录可以1-8条一组；每组最后一条的偏移地址存在数组中，供查找的时候二分法找到组，然后遍历组中的记录即可</li>
+<li>非叶子节点存的是数据项记录，每一条数记录指向一个页，记录的内容是主键+下一层级页号+下一级页中记录的最小主键值；因为在叶子节点非常多的时候，先找到页才能进入页使用二分法，找页只能双向链表遍历，因此，使用页中的数据项记录指向叶子节点，可以利用数据项页中使用2分法找到记录，然后去找记录对应的页号，这样就使用2分法替换了链表遍历</li>
+</ul>
+<h3 id="2，二级索引"><a href="#2，二级索引" class="headerlink" title="2，二级索引"></a>2，二级索引</h3><ul>
+<li>二级索引的叶子节点中的记录内容是索引列+主键，先查出主键再利用主键回表去聚簇索引获取完整数据</li>
+<li>二级索引的非叶子节点记录内容是索引列+主键+下一层级页号+下一级页的记录的最小值，如果索引列相同，将会用主键来决定顺序</li>
+<li>每一层级整体都是按照索引列来排的，相同时才会使用主键</li>
+</ul>
+<h3 id="3，联合索引"><a href="#3，联合索引" class="headerlink" title="3，联合索引"></a>3，联合索引</h3><ul>
+<li>使用多个列联合成一个索引</li>
+<li>叶子节点记录内容是所有的索引列+主键</li>
+<li>非叶子节点记录的内容是所有的索引列+主键+下一级页号对应的页的最小索引列值；这里的索引列规则是，从左到右判断</li>
+</ul>
+<h3 id="4，MyISAM的索引"><a href="#4，MyISAM的索引" class="headerlink" title="4，MyISAM的索引"></a>4，MyISAM的索引</h3><ul>
+<li>每条记录挨个存到一个文件中，记录中存储在文件中的偏移值</li>
+<li>b+树记录中叶子节点存的是索引列加索引列对应的偏移地址，相当于全部都是innodb的二级索引，查到后根据偏移地址来进行查询，查询是随机存取的，这一步很快</li>
+</ul>
+<h3 id="5，添加和删除索引"><a href="#5，添加和删除索引" class="headerlink" title="5，添加和删除索引"></a>5，添加和删除索引</h3><ul>
+<li>添加<ul>
+<li>在创建表结构时，index idx_xxx(列)</li>
+<li>创建完表后，alter table 表名 add index idx_xxx(列)</li>
+</ul>
+</li>
+<li>删除<ul>
+<li>alter table 表名 drop index 索引名</li>
+</ul>
+</li>
+</ul>
+<h2 id="使用索引"><a href="#使用索引" class="headerlink" title="使用索引"></a>使用索引</h2><h3 id="1，什么情况可以用到索引"><a href="#1，什么情况可以用到索引" class="headerlink" title="1，什么情况可以用到索引"></a>1，什么情况可以用到索引</h3><ul>
+<li>索引里的数据是有序的，主要是通过多个2分查找快速获取想要的记录集：</li>
+<li>全值匹配时：查询的条件一一对应索引列，&#x3D;号连接<ul>
+<li>先用第一个条件2分查到满足第一个条件的所有记录</li>
+<li>在满足第一个条件的记录中，2分查找满足第二个条件的记录</li>
+<li>由于查每个条件的时候，对于这个条件的列来说，数据都是有序的，所以每次查询都是用2分法，也就是使用了索引</li>
+</ul>
+</li>
+<li>匹配左边的列：对于联合索引来说，索引是按照左到右的索引顺序排序的，左同按右排，因此在查询是，遵循从左到右查即可保证每次查之前的数据都是有序的<ul>
+<li>不能跳过中间列，跳过后，后面的列不能用索引，因为要保证左边列相同右边才会有序</li>
+</ul>
+</li>
+<li>匹配字符串列的前缀：字符串类型的每一个字符都满足左边先排序，左边相等右边再排序，因此在模糊查询的时候，使用xx%才可以使用索引快速查找</li>
+<li>匹配范围值：只有第一个条件用到索引，因为第一个条件查询结果是一个范围，只有在值一样时第二个条件才有序，范围里的值不一样</li>
+<li>排序：和联合索引的使用一样，符合联合索引的排序，结果就是联合索引本身，不需要计算，注意联合索引的列的值都是升序的，排序要么全升序，要么全降序(把从链表顺序读到的值反着放就好)</li>
+<li>分组：也是利用联合索引，每个相同的条件为一组，如果分组条件满足联合索引，那么分组后的每一个组在索引中都是相邻的，直接拿就可以</li>
+</ul>
+<p>总结：</p>
+<ul>
+<li>在每一步查询之前，如果查询的目标(数据集)是按查询条件排序的，那就可以用索引，例如，用name作为条件查之前，先看数据是否是按name排好序的，是的话就可以用2分法，也就是用索引</li>
+<li>索引的列只能是原始列，不可以是表达式和函数式，否则失效，会拿着表达式或者函数式整体去作条件，而不是索引列</li>
+<li>回表的代价很高，通过主键回表，但是主键在二级索引中是无序的，也就是说通过主键在聚簇索引查，分布不均在很多页中，页是内存io基本单位，就会发生多次io；因此，mysql优化器会判断回表数量对效率的影响来使用全表查询还是二级索引加回表的方案；排序用的是联合索引，最好使用limit减少数据结果集来降低回表次数</li>
+</ul>
+<h3 id="2，建立索引的规范"><a href="#2，建立索引的规范" class="headerlink" title="2，建立索引的规范"></a>2，建立索引的规范</h3><ul>
+<li>经常作为查询条件的列</li>
+<li>用于排序和分组的列</li>
+<li>列基数大的列(相同的值少)</li>
+<li>建立索引的列尽量小</li>
+<li>字符串作索引列时，如果值很长，使用前几位建立索引就好，索引查询到一个范围后遍历</li>
+<li>使用自增主键可以明显减少页分裂</li>
+<li>使用覆盖索引可以不用回表操作</li>
+<li>联合索引经常会和其他建的索引冗余，为主键建立其他索引会导致重复</li>
+</ul>
+<h2 id="3，索引的代价"><a href="#3，索引的代价" class="headerlink" title="3，索引的代价"></a>3，索引的代价</h2><ul>
+<li>更大的磁盘空间占用</li>
+<li>每次增删改都会更新索引，增删可能还会导致页分裂，效率降低</li>
+</ul>
+<h2 id="单表访问"><a href="#单表访问" class="headerlink" title="单表访问"></a>单表访问</h2><h3 id="1，访问方法"><a href="#1，访问方法" class="headerlink" title="1，访问方法"></a>1，访问方法</h3><ul>
+<li>const<ul>
+<li>指的是使用聚簇索引和唯一二级索引做等值查询，(唯一的联合索引需要每一个列都等值)，不包括唯一索引使用null作条件的查询，因为唯一索引的null可能会有多个</li>
+<li>总之就要保证查询的结果是一行数据</li>
+</ul>
+</li>
+<li>ref<ul>
+<li>使用二级索引进行等值查询的时候，但是必须保证在使用联合索引时，左边列是等值</li>
+<li>const使用null作查询，实际上会使用ref方式</li>
+</ul>
+</li>
+<li>ref or null<ul>
+<li>在使用二级索引等值查询之外，还顺带查出所有的值为null的记录</li>
+<li>例如，name&#x3D;’张三’ or name IS NULL</li>
+</ul>
+</li>
+<li>range<ul>
+<li>可以把ref获得的结果叫做单点范围，因为范围的值都是一样的；如果有多个单点范围，或者有连续范围(范围内有不相同的值)，使用的查询方法将会是range</li>
+</ul>
+</li>
+<li>index<ul>
+<li>不满足索引使用条件时可能使用</li>
+<li>如果需要的结果列，查询条件列都包含在某个二级索引里，可以遍历二级索引的叶子结点，判断是否满足条件，满足则取出结果列，不需要会标</li>
+<li>对比直接聚簇索引全表扫描，二级索每条记录的内容更少，遍历成本低</li>
+</ul>
+</li>
+<li>all<ul>
+<li>聚簇索引全表扫描</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>计算机</category>
+      </categories>
+      <tags>
+        <tag>mysql</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>docker</title>
+    <url>/2025/11/27/docker/</url>
+    <content><![CDATA[<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="在linux安装docker"><a href="#在linux安装docker" class="headerlink" title="在linux安装docker"></a>在linux安装docker</h3><h4 id="1，bash安装"><a href="#1，bash安装" class="headerlink" title="1，bash安装"></a>1，bash安装</h4><p>1，curl -fsSL get.docker.com -o get-docker.sh</p>
+<ul>
+<li>在docker.com拉取get-docker.sh脚本，是docker官方提供的，适用所有的发行版linux</li>
+</ul>
+<p>2，sudo sh get-docker.sh –mirror Aliyun</p>
+<ul>
+<li>在阿里云镜像执行脚本，自动安装</li>
+</ul>
+<p>3，启动docker服务</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#设置docker服务开机自启动</span></span><br><span class="line"><span class="built_in">sudo</span> systemctl <span class="built_in">enable</span> docker</span><br><span class="line"><span class="comment">#启动docker服务</span></span><br><span class="line"><span class="built_in">sudo</span> systemctl start docker</span><br></pre></td></tr></table></figure>
+
+<p>4，sudo groupadd docker</p>
+<ul>
+<li>创建docker组，一般脚本会自动创建</li>
+<li>&#x2F;etc&#x2F;groups 文件内保存了组信息，可以查看有没有叫docker的组</li>
+</ul>
+<p>5，usermod -aG docker zxr</p>
+<ul>
+<li>将docker组作为zxr用户追加的附加组，服务端需要docker组的权限才可以访问</li>
+</ul>
+<p>6，docker version</p>
+<ul>
+<li>查看客户端和服务端信息</li>
+</ul>
+]]></content>
+      <categories>
+        <category>计算机</category>
+      </categories>
+      <tags>
+        <tag>docker</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>amazon</title>
+    <url>/2024/08/03/amazon/</url>
+    <content><![CDATA[<h3 id="货物运输状态管理"><a href="#货物运输状态管理" class="headerlink" title="货物运输状态管理"></a>货物运输状态管理</h3><p>在shipment管理里面，用运单号查询运输状态：</p>
+<img src="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20240806154722502.png" alt="image-20240806154722502" style="zoom:50%;" />
+
+<ul>
+<li><p>1，注意选择后台的站点</p>
+</li>
+<li><p>2，点进shipment-&gt;manage Shipments，根据运单号搜要看的运单</p>
+</li>
+<li><p><img src="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20240806155433695.png" alt="image-20240806155433695"></p>
+</li>
+<li><p>运输状态</p>
+<ul>
+<li><p>working是没有确认，点击4，进去填上这个确认号：</p>
+</li>
+<li><p><img src="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20240806155602064.png" alt="image-20240806155602064"></p>
+</li>
+<li><p>shipped是已发货</p>
+</li>
+<li><p>in transit是运输中，可以查询系统的到货时间，提交到表格：</p>
+</li>
+<li><p><img src="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/%E6%97%A0%E6%A0%87%E9%A2%98.png" alt="无标题"></p>
+</li>
+<li><p>设置到货时间为系统预测时间，并且更新时间到企业微信表格，日更···</p>
+</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>DianShang</category>
+      </categories>
+      <tags>
+        <tag>Amazon</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/2024/08/03/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+<p>AccessKey ID：zxrLTAI5tJ2X5xUgPqRDLZNLbfy</p>
+<p>AccessKey Secret: zxrhXjVwZVaKBcswugf9kRJyMfQbzi8wF</p>
+<p>bucketname:zxrpicbed</p>
+<p>地域:oss-cn-guangzhou</p>
+]]></content>
+  </entry>
+  <entry>
     <title>JP大学习</title>
     <url>/2024/10/18/JP%E5%A4%A7%E5%AD%A6%E4%B9%A0/</url>
     <content><![CDATA[<h2 id="自身"><a href="#自身" class="headerlink" title="自身"></a>自身</h2><p>1，重拳接刺，接od，传送最速中脚+下重拳取消引爆，打拆</p>
@@ -398,276 +668,6 @@
       </categories>
       <tags>
         <tag>street fighter 6</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>MySQL</title>
-    <url>/2024/12/09/MySQL/</url>
-    <content><![CDATA[<h2 id="行格式"><a href="#行格式" class="headerlink" title="行格式"></a>行格式</h2><h3 id="1，页存在的意义"><a href="#1，页存在的意义" class="headerlink" title="1，页存在的意义"></a>1，页存在的意义</h3><ul>
-<li>页作为内存和磁盘交互的单位，如果每读一条记录，就从磁盘io到内存一条，会很慢</li>
-</ul>
-<h3 id="2，MyISAM的默认行格式compact"><a href="#2，MyISAM的默认行格式compact" class="headerlink" title="2，MyISAM的默认行格式compact"></a>2，MyISAM的默认行格式compact</h3><ul>
-<li>行格式内容<ul>
-<li>变长字段列表</li>
-<li>null值列表</li>
-<li>记录头信息<ul>
-<li>记录的类型：0是普通记录，1是数据项记录，2是最小记录，3是最大记录</li>
-<li>是否被删除：1代表被标记了删除，等待进入删除列表</li>
-<li>拥有的记录数:作为组的最后一条记录，这个值就是那一组的记录数量</li>
-<li>记录在本页的位置：？</li>
-<li>是否是某层非叶子节点的最小索引列值所在的记录</li>
-</ul>
-</li>
-<li>用户记录</li>
-<li>隐藏列记录：roll_point,transaction_id,row_id(如果没定义主键和唯一键，会生成row_id作为主键)</li>
-</ul>
-</li>
-</ul>
-<h3 id="3，char-M-是否是变长字段-看字符集"><a href="#3，char-M-是否是变长字段-看字符集" class="headerlink" title="3，char(M)是否是变长字段(看字符集)"></a>3，char(M)是否是变长字段(看字符集)</h3><ul>
-<li>M代表字符数，字符不够会用空格填充</li>
-<li>如果字符集中，每个字符都是一样的字节数，那么总的字节数是不会变的，就不是变长字段</li>
-<li>如果字符集中，存在不同的字节数的字符，例如utf8-mb4,那么无法确定最后的字节数，就是变长字段</li>
-<li>char使用空格占位，实际是用少量的空间，减小了产生内存碎片的概率：当char字段的值，在M个字符内变化时，复用原本的内存空间就可以，假如没有占位，char字段的每次增加</li>
-</ul>
-<h3 id="4，varchar-M-中的M可以无限大吗-不行"><a href="#4，varchar-M-中的M可以无限大吗-不行" class="headerlink" title="4，varchar(M)中的M可以无限大吗(不行)"></a>4，varchar(M)中的M可以无限大吗(不行)</h3><ul>
-<li>M指的字符数</li>
-<li>mysql规定每条记录，除隐藏列外，其余所有字段值加起来的大小不能超过65535字节</li>
-<li>M的最大值除了和该varchar列值的大小有关，还和字符集最大字符所需的字节数有关，规定65535-其他字段长度，再除字符集最大字符长度，可以获得M允许的最大值，超过这个值在定义表结构会报错</li>
-</ul>
-<h3 id="5，列溢出"><a href="#5，列溢出" class="headerlink" title="5，列溢出"></a>5，列溢出</h3><ul>
-<li>指的是变长字段长度过大，无法保证MySQL规定的每页至少存下两条记录的规定，就会把该字段值的一部分存到其他页中，并记录指针</li>
-<li>compact格式会在原字段值的位置，存768字节的数据+存到其它页的数据的指针</li>
-<li>dynamic格式，只会在原字段值的位置存指针，所有数据放到其它页中</li>
-</ul>
-<h3 id="6，引擎的默认行格式"><a href="#6，引擎的默认行格式" class="headerlink" title="6，引擎的默认行格式"></a>6，引擎的默认行格式</h3><ul>
-<li>MyISAM使用的compact</li>
-<li>innodb使用的dynamic</li>
-<li>区别就是compact列溢出时会保留768字节到原字段值的位置</li>
-</ul>
-<h2 id="页格式"><a href="#页格式" class="headerlink" title="页格式"></a>页格式</h2><h3 id="1，页的组成"><a href="#1，页的组成" class="headerlink" title="1，页的组成"></a>1，页的组成</h3><ul>
-<li>文件头：存放的是每个类型的页的通用的东西<ul>
-<li>页号</li>
-<li>上下页指针：双向链表连接同层级每一页</li>
-<li>页所属表空间</li>
-<li>页类型：索引用的是索引页，也叫数据页</li>
-<li>检验和：用于和文件尾的检验和配合，判断是否是完整的页</li>
-</ul>
-</li>
-<li>页头：记录页的状态<ul>
-<li>当前页的页目录的槽的数量</li>
-<li>未分配的空间最小地址，是下次分配的起始点</li>
-<li>当前记录数量，包括最大最小和已删除的</li>
-<li>页中第一个被删除的记录的地址，作为删除链表的头节点</li>
-<li>暂未使用的，待更新(TODO)</li>
-</ul>
-</li>
-<li>用户记录：页内单链表连接</li>
-<li>空闲空间</li>
-<li>页目录：存的是分组后的存放着最大索引列的记录的偏移地址，根据该记录的偏移地址可以获取记录的索引列的值，来完成2分法操作判断要查找的数据在哪个组</li>
-<li>文件尾：检验和，配合文件头<ul>
-<li>假如检验和前后不相同，说明页是错的，可能只刷新了一般就被打断了</li>
-</ul>
-</li>
-</ul>
-<h2 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h2><h3 id="1，innodb的聚簇索引"><a href="#1，innodb的聚簇索引" class="headerlink" title="1，innodb的聚簇索引"></a>1，innodb的聚簇索引</h3><ul>
-<li>聚簇索引，是b+树结构，叶子节点是有完整数据的数据页</li>
-<li>同一层级，页中的数据按照主键大小排，页中的记录会被分组，最小记录单独一组，中间记录4-8条一组，含有最大记录可以1-8条一组；每组最后一条的偏移地址存在数组中，供查找的时候二分法找到组，然后遍历组中的记录即可</li>
-<li>非叶子节点存的是数据项记录，每一条数记录指向一个页，记录的内容是主键+下一层级页号+下一级页中记录的最小主键值；因为在叶子节点非常多的时候，先找到页才能进入页使用二分法，找页只能双向链表遍历，因此，使用页中的数据项记录指向叶子节点，可以利用数据项页中使用2分法找到记录，然后去找记录对应的页号，这样就使用2分法替换了链表遍历</li>
-</ul>
-<h3 id="2，二级索引"><a href="#2，二级索引" class="headerlink" title="2，二级索引"></a>2，二级索引</h3><ul>
-<li>二级索引的叶子节点中的记录内容是索引列+主键，先查出主键再利用主键回表去聚簇索引获取完整数据</li>
-<li>二级索引的非叶子节点记录内容是索引列+主键+下一层级页号+下一级页的记录的最小值，如果索引列相同，将会用主键来决定顺序</li>
-<li>每一层级整体都是按照索引列来排的，相同时才会使用主键</li>
-</ul>
-<h3 id="3，联合索引"><a href="#3，联合索引" class="headerlink" title="3，联合索引"></a>3，联合索引</h3><ul>
-<li>使用多个列联合成一个索引</li>
-<li>叶子节点记录内容是所有的索引列+主键</li>
-<li>非叶子节点记录的内容是所有的索引列+主键+下一级页号对应的页的最小索引列值；这里的索引列规则是，从左到右判断</li>
-</ul>
-<h3 id="4，MyISAM的索引"><a href="#4，MyISAM的索引" class="headerlink" title="4，MyISAM的索引"></a>4，MyISAM的索引</h3><ul>
-<li>每条记录挨个存到一个文件中，记录中存储在文件中的偏移值</li>
-<li>b+树记录中叶子节点存的是索引列加索引列对应的偏移地址，相当于全部都是innodb的二级索引，查到后根据偏移地址来进行查询，查询是随机存取的，这一步很快</li>
-</ul>
-<h3 id="5，添加和删除索引"><a href="#5，添加和删除索引" class="headerlink" title="5，添加和删除索引"></a>5，添加和删除索引</h3><ul>
-<li>添加<ul>
-<li>在创建表结构时，index idx_xxx(列)</li>
-<li>创建完表后，alter table 表名 add index idx_xxx(列)</li>
-</ul>
-</li>
-<li>删除<ul>
-<li>alter table 表名 drop index 索引名</li>
-</ul>
-</li>
-</ul>
-<h2 id="使用索引"><a href="#使用索引" class="headerlink" title="使用索引"></a>使用索引</h2><h3 id="1，什么情况可以用到索引"><a href="#1，什么情况可以用到索引" class="headerlink" title="1，什么情况可以用到索引"></a>1，什么情况可以用到索引</h3><ul>
-<li>索引里的数据是有序的，主要是通过多个2分查找快速获取想要的记录集：</li>
-<li>全值匹配时：查询的条件一一对应索引列，&#x3D;号连接<ul>
-<li>先用第一个条件2分查到满足第一个条件的所有记录</li>
-<li>在满足第一个条件的记录中，2分查找满足第二个条件的记录</li>
-<li>由于查每个条件的时候，对于这个条件的列来说，数据都是有序的，所以每次查询都是用2分法，也就是使用了索引</li>
-</ul>
-</li>
-<li>匹配左边的列：对于联合索引来说，索引是按照左到右的索引顺序排序的，左同按右排，因此在查询是，遵循从左到右查即可保证每次查之前的数据都是有序的<ul>
-<li>不能跳过中间列，跳过后，后面的列不能用索引，因为要保证左边列相同右边才会有序</li>
-</ul>
-</li>
-<li>匹配字符串列的前缀：字符串类型的每一个字符都满足左边先排序，左边相等右边再排序，因此在模糊查询的时候，使用xx%才可以使用索引快速查找</li>
-<li>匹配范围值：只有第一个条件用到索引，因为第一个条件查询结果是一个范围，只有在值一样时第二个条件才有序，范围里的值不一样</li>
-<li>排序：和联合索引的使用一样，符合联合索引的排序，结果就是联合索引本身，不需要计算，注意联合索引的列的值都是升序的，排序要么全升序，要么全降序(把从链表顺序读到的值反着放就好)</li>
-<li>分组：也是利用联合索引，每个相同的条件为一组，如果分组条件满足联合索引，那么分组后的每一个组在索引中都是相邻的，直接拿就可以</li>
-</ul>
-<p>总结：</p>
-<ul>
-<li>在每一步查询之前，如果查询的目标(数据集)是按查询条件排序的，那就可以用索引，例如，用name作为条件查之前，先看数据是否是按name排好序的，是的话就可以用2分法，也就是用索引</li>
-<li>索引的列只能是原始列，不可以是表达式和函数式，否则失效，会拿着表达式或者函数式整体去作条件，而不是索引列</li>
-<li>回表的代价很高，通过主键回表，但是主键在二级索引中是无序的，也就是说通过主键在聚簇索引查，分布不均在很多页中，页是内存io基本单位，就会发生多次io；因此，mysql优化器会判断回表数量对效率的影响来使用全表查询还是二级索引加回表的方案；排序用的是联合索引，最好使用limit减少数据结果集来降低回表次数</li>
-</ul>
-<h3 id="2，建立索引的规范"><a href="#2，建立索引的规范" class="headerlink" title="2，建立索引的规范"></a>2，建立索引的规范</h3><ul>
-<li>经常作为查询条件的列</li>
-<li>用于排序和分组的列</li>
-<li>列基数大的列(相同的值少)</li>
-<li>建立索引的列尽量小</li>
-<li>字符串作索引列时，如果值很长，使用前几位建立索引就好，索引查询到一个范围后遍历</li>
-<li>使用自增主键可以明显减少页分裂</li>
-<li>使用覆盖索引可以不用回表操作</li>
-<li>联合索引经常会和其他建的索引冗余，为主键建立其他索引会导致重复</li>
-</ul>
-<h2 id="3，索引的代价"><a href="#3，索引的代价" class="headerlink" title="3，索引的代价"></a>3，索引的代价</h2><ul>
-<li>更大的磁盘空间占用</li>
-<li>每次增删改都会更新索引，增删可能还会导致页分裂，效率降低</li>
-</ul>
-<h2 id="单表访问"><a href="#单表访问" class="headerlink" title="单表访问"></a>单表访问</h2><h3 id="1，访问方法"><a href="#1，访问方法" class="headerlink" title="1，访问方法"></a>1，访问方法</h3><ul>
-<li>const<ul>
-<li>指的是使用聚簇索引和唯一二级索引做等值查询，(唯一的联合索引需要每一个列都等值)，不包括唯一索引使用null作条件的查询，因为唯一索引的null可能会有多个</li>
-<li>总之就要保证查询的结果是一行数据</li>
-</ul>
-</li>
-<li>ref<ul>
-<li>使用二级索引进行等值查询的时候，但是必须保证在使用联合索引时，左边列是等值</li>
-<li>const使用null作查询，实际上会使用ref方式</li>
-</ul>
-</li>
-<li>ref or null<ul>
-<li>在使用二级索引等值查询之外，还顺带查出所有的值为null的记录</li>
-<li>例如，name&#x3D;’张三’ or name IS NULL</li>
-</ul>
-</li>
-<li>range<ul>
-<li>可以把ref获得的结果叫做单点范围，因为范围的值都是一样的；如果有多个单点范围，或者有连续范围(范围内有不相同的值)，使用的查询方法将会是range</li>
-</ul>
-</li>
-<li>index<ul>
-<li>不满足索引使用条件时可能使用</li>
-<li>如果需要的结果列，查询条件列都包含在某个二级索引里，可以遍历二级索引的叶子结点，判断是否满足条件，满足则取出结果列，不需要会标</li>
-<li>对比直接聚簇索引全表扫描，二级索每条记录的内容更少，遍历成本低</li>
-</ul>
-</li>
-<li>all<ul>
-<li>聚簇索引全表扫描</li>
-</ul>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>计算机</category>
-      </categories>
-      <tags>
-        <tag>mysql</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>amazon</title>
-    <url>/2024/08/03/amazon/</url>
-    <content><![CDATA[<h3 id="货物运输状态管理"><a href="#货物运输状态管理" class="headerlink" title="货物运输状态管理"></a>货物运输状态管理</h3><p>在shipment管理里面，用运单号查询运输状态：</p>
-<img src="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20240806154722502.png" alt="image-20240806154722502" style="zoom:50%;" />
-
-<ul>
-<li><p>1，注意选择后台的站点</p>
-</li>
-<li><p>2，点进shipment-&gt;manage Shipments，根据运单号搜要看的运单</p>
-</li>
-<li><p><img src="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20240806155433695.png" alt="image-20240806155433695"></p>
-</li>
-<li><p>运输状态</p>
-<ul>
-<li><p>working是没有确认，点击4，进去填上这个确认号：</p>
-</li>
-<li><p><img src="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20240806155602064.png" alt="image-20240806155602064"></p>
-</li>
-<li><p>shipped是已发货</p>
-</li>
-<li><p>in transit是运输中，可以查询系统的到货时间，提交到表格：</p>
-</li>
-<li><p><img src="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/%E6%97%A0%E6%A0%87%E9%A2%98.png" alt="无标题"></p>
-</li>
-<li><p>设置到货时间为系统预测时间，并且更新时间到企业微信表格，日更···</p>
-</li>
-</ul>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>DianShang</category>
-      </categories>
-      <tags>
-        <tag>Amazon</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/2024/08/03/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-<p>AccessKey ID：zxrLTAI5tJ2X5xUgPqRDLZNLbfy</p>
-<p>AccessKey Secret: zxrhXjVwZVaKBcswugf9kRJyMfQbzi8wF</p>
-<p>bucketname:zxrpicbed</p>
-<p>地域:oss-cn-guangzhou</p>
-]]></content>
-  </entry>
-  <entry>
-    <title>docker</title>
-    <url>/2025/11/27/docker/</url>
-    <content><![CDATA[<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="在linux安装docker"><a href="#在linux安装docker" class="headerlink" title="在linux安装docker"></a>在linux安装docker</h3><h4 id="1，bash安装"><a href="#1，bash安装" class="headerlink" title="1，bash安装"></a>1，bash安装</h4><p>1，curl -fsSL get.docker.com -o get-docker.sh</p>
-<ul>
-<li>在docker.com拉取get-docker.sh脚本，是docker官方提供的，适用所有的发行版linux</li>
-</ul>
-<p>2，sudo sh get-docker.sh –mirror Aliyun</p>
-<ul>
-<li>在阿里云镜像执行脚本，自动安装</li>
-</ul>
-<p>3，启动docker服务</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#设置docker服务开机自启动</span></span><br><span class="line"><span class="built_in">sudo</span> systemctl <span class="built_in">enable</span> docker</span><br><span class="line"><span class="comment">#启动docker服务</span></span><br><span class="line"><span class="built_in">sudo</span> systemctl start docker</span><br></pre></td></tr></table></figure>
-
-<p>4，sudo groupadd docker</p>
-<ul>
-<li>创建docker组，一般脚本会自动创建</li>
-<li>&#x2F;etc&#x2F;groups 文件内保存了组信息，可以查看有没有叫docker的组</li>
-</ul>
-<p>5，usermod -aG docker zxr</p>
-<ul>
-<li>将docker组作为zxr用户追加的附加组，服务端需要docker组的权限才可以访问</li>
-</ul>
-<p>6，docker version</p>
-<ul>
-<li>查看客户端和服务端信息</li>
-</ul>
-]]></content>
-      <categories>
-        <category>计算机</category>
-      </categories>
-      <tags>
-        <tag>docker</tag>
       </tags>
   </entry>
   <entry>
@@ -1151,17 +1151,6 @@
       </tags>
   </entry>
   <entry>
-    <title>ps</title>
-    <url>/2024/08/18/ps/</url>
-    <content><![CDATA[<h2 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h2><h3 id="移动和选区"><a href="#移动和选区" class="headerlink" title="移动和选区"></a>移动和选区</h3>]]></content>
-      <categories>
-        <category>图片视频处理</category>
-      </categories>
-      <tags>
-        <tag>ps教程</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>mybatis</title>
     <url>/2024/12/07/mybatis/</url>
     <content><![CDATA[<p>mybatis配置文件</p>
@@ -1331,28 +1320,14 @@
       </tags>
   </entry>
   <entry>
-    <title>shiro</title>
-    <url>/2025/12/01/shiro/</url>
-    <content><![CDATA[<h2 id="Security-Manager"><a href="#Security-Manager" class="headerlink" title="Security Manager"></a>Security Manager</h2><p>Authenticator</p>
-<p>Authorizer</p>
-<p>sessionmanager</p>
-<p>sessiondao</p>
-<p>cachemanager</p>
-<p>realms</p>
-<p>密码生成器</p>
-<h2 id="身份认证"><a href="#身份认证" class="headerlink" title="身份认证"></a>身份认证</h2><p>1，subject ：主体，可以是用户，可以是一个程序，请求shiro认证的主体</p>
-<p>2，principal： 身份信息，用户名，邮箱，手机号等，需要一个主身份</p>
-<p>3，credential：凭证，可以是密码，证书等</p>
-<h2 id="密码存库MD5-salt"><a href="#密码存库MD5-salt" class="headerlink" title="密码存库MD5+salt"></a>密码存库MD5+salt</h2><p>1，注册时把密码通过md5存到数据库，为了防止用户密码过于简单，md5被穷举出来，给每个用户随机一个salt，密码 + salt 后再通过md5加密存进数据库，同时salt也要存进数据库；salt可以用uuid随机一个</p>
-<p>2，登录时，通过用户名查到密码，通过前端的密码+数据库的salt 进行md5后和数据库的密码比较，相同则登录认证成功</p>
-<p>3，给密码加盐可以调用shiro的MD5hash工具，new Md5Hash(authenticationToken.getCredentials(),”salt”,1024);salt是盐，1024是hash次数</p>
-<p>4，doGetAuthenticationInfo返回SimpleAuthenticationInfo后，携带了密码，由CredentialsMatcher解析，默认用SimpleCredentialsMatcher解析密码，使用equals判断密码是否相等；由于现在要把数据库</p>
-]]></content>
+    <title>ps</title>
+    <url>/2024/08/18/ps/</url>
+    <content><![CDATA[<h2 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h2><h3 id="移动和选区"><a href="#移动和选区" class="headerlink" title="移动和选区"></a>移动和选区</h3>]]></content>
       <categories>
-        <category>计算机</category>
+        <category>图片视频处理</category>
       </categories>
       <tags>
-        <tag>登录，权限</tag>
+        <tag>ps教程</tag>
       </tags>
   </entry>
   <entry>
@@ -1622,6 +1597,31 @@
       </tags>
   </entry>
   <entry>
+    <title>shiro</title>
+    <url>/2025/12/01/shiro/</url>
+    <content><![CDATA[<h2 id="Security-Manager"><a href="#Security-Manager" class="headerlink" title="Security Manager"></a>Security Manager</h2><p>Authenticator</p>
+<p>Authorizer</p>
+<p>sessionmanager</p>
+<p>sessiondao</p>
+<p>cachemanager</p>
+<p>realms</p>
+<p>密码生成器</p>
+<h2 id="身份认证"><a href="#身份认证" class="headerlink" title="身份认证"></a>身份认证</h2><p>1，subject ：主体，可以是用户，可以是一个程序，请求shiro认证的主体</p>
+<p>2，principal： 身份信息，用户名，邮箱，手机号等，需要一个主身份</p>
+<p>3，credential：凭证，可以是密码，证书等</p>
+<h2 id="密码存库MD5-salt"><a href="#密码存库MD5-salt" class="headerlink" title="密码存库MD5+salt"></a>密码存库MD5+salt</h2><p>1，注册时把密码通过md5存到数据库，为了防止用户密码过于简单，md5被穷举出来，给每个用户随机一个salt，密码 + salt 后再通过md5加密存进数据库，同时salt也要存进数据库；salt可以用uuid随机一个</p>
+<p>2，登录时，通过用户名查到密码，通过前端的密码+数据库的salt 进行md5后和数据库的密码比较，相同则登录认证成功</p>
+<p>3，给密码加盐可以调用shiro的MD5hash工具，new Md5Hash(authenticationToken.getCredentials(),”salt”,1024);salt是盐，1024是hash次数</p>
+<p>4，doGetAuthenticationInfo返回SimpleAuthenticationInfo后，携带了密码，由CredentialsMatcher解析，默认用SimpleCredentialsMatcher解析密码，使用equals判断密码是否相等；由于现在要把数据库</p>
+]]></content>
+      <categories>
+        <category>计算机</category>
+      </categories>
+      <tags>
+        <tag>登录，权限</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>redis</title>
     <url>/2024/12/30/redis/</url>
     <content><![CDATA[<h2 id="redis持久化"><a href="#redis持久化" class="headerlink" title="redis持久化"></a>redis持久化</h2><h3 id="RDB"><a href="#RDB" class="headerlink" title="RDB"></a>RDB</h3><span id="more"></span>
@@ -1762,6 +1762,42 @@ auto-aof-rewrite-percentage 100
       </tags>
   </entry>
   <entry>
+    <title>springmvc</title>
+    <url>/2025/09/27/springmvc/</url>
+    <content><![CDATA[<p>1，@RequestMapping的Value代表路径，同一个应用的路径不可以一样，不同的类中控制器路径也不能一样，一般设置一个修饰类的@RequestMapping可以解决，类上的路径设置为和页面相关</p>
+<p>2，mvc：</p>
+<ul>
+<li>m代表Model，包括service层和dao层</li>
+<li>v是view，视图，比如jsp，html；控制器的返回值为string，配置的视图解析器会通过配置好的前缀和后缀拼接返回值，结果是一个路径，一般是一个本地的jsp或者html文件；视图解析器会解析文件展示到浏览器成一个页面</li>
+<li>c是控制器，springmvc中是每个controller；javaweb中是servlet</li>
+</ul>
+<p>3，Restful风格代码</p>
+<ul>
+<li>路径占位符 <a href="http://localhost:8080/api/login/%7Busername%7D/%7Bpassword%7D%EF%BC%9B%E9%80%9A%E8%BF%87%E5%A4%A7%E6%8B%AC%E5%8F%B7%E5%8D%A0%E4%BD%8D%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0">http://localhost:8080/api/login/{username}/{password}；通过大括号占位接收参数</a></li>
+<li>使用@Pathvariable(“username”)  String uname来给方法参数赋值；@Pathvariable有两个属性，name和value，是同样的效果，指定参数在大括号中的名字</li>
+<li>不同请求方式方法的使用场景<ul>
+<li>get：查</li>
+<li>post：增；非常规参数，比如文件，音频等都是通过post传输</li>
+<li>put：修改</li>
+<li>delete：删除</li>
+<li>headers：请求头</li>
+</ul>
+</li>
+</ul>
+<p>4，状态码</p>
+<ul>
+<li>400：前端参数和后端params指定的对象没完全对应上</li>
+<li>404：前端的请求头和后端的headers指定的不一样那个</li>
+</ul>
+]]></content>
+      <categories>
+        <category>JAVA框架</category>
+      </categories>
+      <tags>
+        <tag>springmvc知识以及使用注意点</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>spring原理</title>
     <url>/2025/07/14/spring%E5%8E%9F%E7%90%86/</url>
     <content><![CDATA[<h1 id="1，核心接口"><a href="#1，核心接口" class="headerlink" title="1，核心接口"></a>1，核心接口</h1><p>beanFactory：负责getbean</p>
@@ -1818,42 +1854,6 @@ auto-aof-rewrite-percentage 100
       </tags>
   </entry>
   <entry>
-    <title>springmvc</title>
-    <url>/2025/09/27/springmvc/</url>
-    <content><![CDATA[<p>1，@RequestMapping的Value代表路径，同一个应用的路径不可以一样，不同的类中控制器路径也不能一样，一般设置一个修饰类的@RequestMapping可以解决，类上的路径设置为和页面相关</p>
-<p>2，mvc：</p>
-<ul>
-<li>m代表Model，包括service层和dao层</li>
-<li>v是view，视图，比如jsp，html；控制器的返回值为string，配置的视图解析器会通过配置好的前缀和后缀拼接返回值，结果是一个路径，一般是一个本地的jsp或者html文件；视图解析器会解析文件展示到浏览器成一个页面</li>
-<li>c是控制器，springmvc中是每个controller；javaweb中是servlet</li>
-</ul>
-<p>3，Restful风格代码</p>
-<ul>
-<li>路径占位符 <a href="http://localhost:8080/api/login/%7Busername%7D/%7Bpassword%7D%EF%BC%9B%E9%80%9A%E8%BF%87%E5%A4%A7%E6%8B%AC%E5%8F%B7%E5%8D%A0%E4%BD%8D%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0">http://localhost:8080/api/login/{username}/{password}；通过大括号占位接收参数</a></li>
-<li>使用@Pathvariable(“username”)  String uname来给方法参数赋值；@Pathvariable有两个属性，name和value，是同样的效果，指定参数在大括号中的名字</li>
-<li>不同请求方式方法的使用场景<ul>
-<li>get：查</li>
-<li>post：增；非常规参数，比如文件，音频等都是通过post传输</li>
-<li>put：修改</li>
-<li>delete：删除</li>
-<li>headers：请求头</li>
-</ul>
-</li>
-</ul>
-<p>4，状态码</p>
-<ul>
-<li>400：前端参数和后端params指定的对象没完全对应上</li>
-<li>404：前端的请求头和后端的headers指定的不一样那个</li>
-</ul>
-]]></content>
-      <categories>
-        <category>JAVA框架</category>
-      </categories>
-      <tags>
-        <tag>springmvc知识以及使用注意点</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>二分法</title>
     <url>/2025/12/02/%E4%BA%8C%E5%88%86%E6%B3%95/</url>
     <content><![CDATA[<h1 id="二分查找"><a href="#二分查找" class="headerlink" title="二分查找"></a>二分查找</h1><h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><div class="tabs" id="first-unique-name"><ul class="nav-tabs"><li class="tab active"><a href="#first-unique-name-1">basicBinarySearch <br>初始二分查找</a></li><li class="tab"><a href="#first-unique-name-2">getFirstOrLastIndexBinarySearch <br>获取相同元素的首位或末位</a></li><li class="tab"><a href="#first-unique-name-3">insertElementInArray <br>数组中插入元素</a></li></ul><div class="tab-content"><div class="tab-pane active" id="first-unique-name-1"><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> array 原始升序数组</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> key   需要查找的元素</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> 索引的位置，元素不在数组中返回-1</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="type">int</span> <span class="title function_">basicBinarySearch</span><span class="params">(<span class="type">int</span>[] array, <span class="type">int</span> key)</span> &#123;</span><br><span class="line">    <span class="comment">//1,定义前后指针，指向的是索引</span></span><br><span class="line">    <span class="type">int</span> <span class="variable">low</span> <span class="operator">=</span> <span class="number">0</span>, high = array.length - <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//2,当i&lt;j时，判断目标元素和中间元素的大小；目标元素小说明可能在数组的左半边，大则说明可能在数组的右半边</span></span><br><span class="line">    <span class="keyword">while</span> (low &lt;= high) &#123;   <span class="comment">//===&gt;易错点一：low &lt;= high，两个指针相同时，也要判断是不是和查找的元素相等，如果没有等号，则会漏过这一个元素</span></span><br><span class="line">        <span class="comment">//获取中间元素</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">midIndex</span> <span class="operator">=</span> (high + low) / <span class="number">2</span>;</span><br><span class="line">        <span class="type">int</span> <span class="variable">midVal</span> <span class="operator">=</span> array[midIndex];</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (key &lt; midVal) &#123;</span><br><span class="line">            high = midIndex - <span class="number">1</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (key &gt; midVal) &#123;</span><br><span class="line">            low = midIndex + <span class="number">1</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> midIndex;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//当查找不到时，最后的low就是查找的值在原数组应该插入的位置，</span></span><br><span class="line">    <span class="comment">//按理说返回-low，用负号标记没找到，用low代表位置即可，</span></span><br><span class="line">    <span class="comment">//但是考虑到-0和0在java没差，无法判断是查找到了还是没有查找到，所以给原本的-low 加上了一个-1</span></span><br><span class="line">    <span class="comment">//只需要给返回值+1，再取绝对值，就可以获取到插入位置</span></span><br><span class="line">    <span class="keyword">return</span> -(low + <span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div><div class="tab-pane" id="first-unique-name-2"><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> array   原始升序数组</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> key     元素值</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> isFirst 是否要最左元素，否的话就是最右元素</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> 元素的索引，或者元素应该插入的索引index： -(index+1)</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="type">int</span> <span class="title function_">getFirstOrLastIndexBinarySearch</span><span class="params">(<span class="type">int</span>[] array, <span class="type">int</span> key, <span class="type">boolean</span> isFirst)</span> &#123;</span><br><span class="line">    <span class="comment">//1,照常找元素，找到后先记录下索引，下次找到的时候，比较索引大小即可</span></span><br><span class="line">    <span class="type">int</span> <span class="variable">low</span> <span class="operator">=</span> <span class="number">0</span>, high = array.length - <span class="number">1</span>;</span><br><span class="line">    <span class="type">int</span> <span class="variable">resultIndex</span> <span class="operator">=</span> -<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span> (low &lt;= high) &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">midIndex</span> <span class="operator">=</span> (high + low) / <span class="number">2</span>;</span><br><span class="line">        <span class="type">int</span> <span class="variable">midVal</span> <span class="operator">=</span> array[midIndex];</span><br><span class="line">        <span class="keyword">if</span> (key &lt; midVal) &#123;</span><br><span class="line">            high = midIndex - <span class="number">1</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (key &gt; midVal) &#123;</span><br><span class="line">            low = midIndex + <span class="number">1</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            resultIndex = midIndex;</span><br><span class="line">            <span class="comment">//2,找到之后，要把这个midIndex排除到下一次查找的范围，如果是向左查找，就把high指针-1排除当前的mid，是向右则low+1</span></span><br><span class="line">            <span class="keyword">if</span> (isFirst) &#123;</span><br><span class="line">                high = midIndex - <span class="number">1</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                low = midIndex + <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> resultIndex == -<span class="number">1</span> ? -(low + <span class="number">1</span>) : resultIndex;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div><div class="tab-pane" id="first-unique-name-3"><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  * <span class="doctag">@param</span> array 原始数组</span></span><br><span class="line"><span class="comment">  * <span class="doctag">@param</span> key   新插入的元素</span></span><br><span class="line"><span class="comment">  * <span class="doctag">@param</span> index 新插入元素的位置</span></span><br><span class="line"><span class="comment">  * <span class="doctag">@return</span> 新数组</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line"> <span class="keyword">public</span> <span class="keyword">static</span> <span class="type">int</span>[] insertElementInArray(<span class="type">int</span>[] array, <span class="type">int</span> key, <span class="type">int</span> index) &#123;</span><br><span class="line">     <span class="type">int</span>[] newArray = <span class="keyword">new</span> <span class="title class_">int</span>[array.length + <span class="number">1</span>];</span><br><span class="line">     <span class="comment">/*</span></span><br><span class="line"><span class="comment">     arraycopy:参数</span></span><br><span class="line"><span class="comment">         1，原始数组</span></span><br><span class="line"><span class="comment">         2，原始数组要拷贝的起始索引</span></span><br><span class="line"><span class="comment">         3，新数组</span></span><br><span class="line"><span class="comment">         4，拷贝到新数组的起始索引</span></span><br><span class="line"><span class="comment">         5，原数组要拷贝的元素个数</span></span><br><span class="line"><span class="comment">      */</span></span><br><span class="line">     System.arraycopy(array, <span class="number">0</span>, newArray, <span class="number">0</span>, index - <span class="number">0</span>);</span><br><span class="line">     newArray[index] = key;</span><br><span class="line">     System.arraycopy(array, index, newArray, index + <span class="number">1</span>, array.length - index);</span><br><span class="line">     <span class="keyword">return</span> newArray;</span><br><span class="line"></span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure></div></div></div> 
@@ -1906,53 +1906,6 @@ auto-aof-rewrite-percentage 100
       <tags>
         <tag>Amazon</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>卖家大学</title>
-    <url>/2024/08/19/%E5%8D%96%E5%AE%B6%E5%A4%A7%E5%AD%A6/</url>
-    <content><![CDATA[<h3 id="listing组成"><a href="#listing组成" class="headerlink" title="listing组成"></a>listing组成</h3><ul>
-<li>listing: 对商品的具体介绍</li>
-</ul>
-<p>1，分类</p>
-<p>2，关键词</p>
-<p>3，图片</p>
-<p>4，品牌</p>
-<p>5，标题</p>
-<p>6，5点</p>
-<p>7，描述(有A+会被A+顶替)</p>
-<p>8，A+图文详情</p>
-<h3 id="北美产品认证"><a href="#北美产品认证" class="headerlink" title="北美产品认证"></a>北美产品认证</h3><p><img src="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20240819222904797.png" alt="image-20240819222904797"></p>
-<ul>
-<li><p>食品药品安全</p>
-</li>
-<li><p>儿童安全</p>
-</li>
-<li><p>无线电通讯产品</p>
-</li>
-<li><p>蓝牙产品</p>
-</li>
-<li><p>机动车和配件</p>
-</li>
-<li><p>ic？</p>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>DianShang</category>
-      </categories>
-      <tags>
-        <tag>Amazon</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>商城支付</title>
-    <url>/2024/11/12/%E5%95%86%E5%9F%8E%E6%94%AF%E4%BB%98/</url>
-    <content><![CDATA[<h2 id="1，内网穿透-natapp"><a href="#1，内网穿透-natapp" class="headerlink" title="1，内网穿透 natapp"></a>1，内网穿透 natapp</h2><p>1，使用netapp，获取公网ip</p>
-<p><a href="https://natapp.cn/">https://natapp.cn/</a></p>
-<ul>
-<li>购买</li>
-</ul>
-]]></content>
   </entry>
   <entry>
     <title>优先准备</title>
@@ -2273,6 +2226,53 @@ auto-aof-rewrite-percentage 100
       <tags>
         <tag>springcloud</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>卖家大学</title>
+    <url>/2024/08/19/%E5%8D%96%E5%AE%B6%E5%A4%A7%E5%AD%A6/</url>
+    <content><![CDATA[<h3 id="listing组成"><a href="#listing组成" class="headerlink" title="listing组成"></a>listing组成</h3><ul>
+<li>listing: 对商品的具体介绍</li>
+</ul>
+<p>1，分类</p>
+<p>2，关键词</p>
+<p>3，图片</p>
+<p>4，品牌</p>
+<p>5，标题</p>
+<p>6，5点</p>
+<p>7，描述(有A+会被A+顶替)</p>
+<p>8，A+图文详情</p>
+<h3 id="北美产品认证"><a href="#北美产品认证" class="headerlink" title="北美产品认证"></a>北美产品认证</h3><p><img src="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20240819222904797.png" alt="image-20240819222904797"></p>
+<ul>
+<li><p>食品药品安全</p>
+</li>
+<li><p>儿童安全</p>
+</li>
+<li><p>无线电通讯产品</p>
+</li>
+<li><p>蓝牙产品</p>
+</li>
+<li><p>机动车和配件</p>
+</li>
+<li><p>ic？</p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>DianShang</category>
+      </categories>
+      <tags>
+        <tag>Amazon</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>商城支付</title>
+    <url>/2024/11/12/%E5%95%86%E5%9F%8E%E6%94%AF%E4%BB%98/</url>
+    <content><![CDATA[<h2 id="1，内网穿透-natapp"><a href="#1，内网穿透-natapp" class="headerlink" title="1，内网穿透 natapp"></a>1，内网穿透 natapp</h2><p>1，使用netapp，获取公网ip</p>
+<p><a href="https://natapp.cn/">https://natapp.cn/</a></p>
+<ul>
+<li>购买</li>
+</ul>
+]]></content>
   </entry>
   <entry>
     <title>大汇总</title>
@@ -2870,6 +2870,55 @@ ScheduledThreadPoolExecutor scheduledThreadPoolExecutor =
       </tags>
   </entry>
   <entry>
+    <title>搭建Hexo</title>
+    <url>/2025/01/24/%E6%90%AD%E5%BB%BAHexo/</url>
+    <content><![CDATA[<h1 id="Hexo博客的搭建以及主题选取"><a href="#Hexo博客的搭建以及主题选取" class="headerlink" title="Hexo博客的搭建以及主题选取"></a>Hexo博客的搭建以及主题选取</h1><h2 id="hexo搭建"><a href="#hexo搭建" class="headerlink" title="hexo搭建"></a>hexo搭建</h2><h3 id="1，购买低价vpn翻墙"><a href="#1，购买低价vpn翻墙" class="headerlink" title="1，购买低价vpn翻墙"></a>1，购买低价vpn翻墙</h3><p>1，推荐卷王机场，20元一年，每月提供100g流量</p>
+<p>2，步骤</p>
+<ul>
+<li>地址栏输入卷王机场官网(卷王.xyz),选择国内入口</li>
+</ul>
+<p><img src="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20250124095008769.png" alt="image-20250124095008769"></p>
+<p>3，注册账号</p>
+<p>4，进入主页面，点击左侧使用文档，查看widows使用方式</p>
+<p><img src="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20250124095215919.png" alt="image-20250124095215919"></p>
+<h3 id="2，创建github账号"><a href="#2，创建github账号" class="headerlink" title="2，创建github账号"></a>2，创建github账号</h3><p>1，github是外国网站，需要开启翻墙才可以稳定访问</p>
+<p>2，目的是把本地电脑硬盘上的笔记，放到网络(github仓库)上，经过hexo展示</p>
+<p>3，<a href="https://github.com/">GitHub · Build and ship software on a single, collaborative platform · GitHub</a> –github官网</p>
+<p>4，步骤</p>
+<ul>
+<li>打开官网，点击sign in，再点击创建新用户</li>
+</ul>
+<p><img src="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20250124104822511.png" alt="image-20250124104822511"></p>
+<p><img src="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20250124104842827.png" alt="image-20250124104842827"></p>
+]]></content>
+      <categories>
+        <category>搭建hexo</category>
+      </categories>
+      <tags>
+        <tag>博客</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>小型支付商城</title>
+    <url>/2025/10/28/%E5%B0%8F%E5%9E%8B%E6%94%AF%E4%BB%98%E5%95%86%E5%9F%8E/</url>
+    <content><![CDATA[<h2 id="数据库表设计"><a href="#数据库表设计" class="headerlink" title="数据库表设计"></a>数据库表设计</h2><h3 id="规范"><a href="#规范" class="headerlink" title="规范"></a>规范</h3><p>1，库，表，字段统一使用下划线分隔</p>
+<p>2，显示宽度和存储宽度</p>
+<ul>
+<li>存储宽度：指的是数据类型可以存储的最大范围，比如int是4字节，tinyint是1字节，是固定的</li>
+<li>显示宽度：指的是指定显示成几位，不够的补0，比如定义数据类型int(4)，显示4位，0001,0055等<ul>
+<li>注意：tinyint(1)在不同的客户端可能有不同的显示，在老版本中tinyint(1)可能会被读取成布尔类型，如果服务器使用的是数字代表布尔，那么不要用tinyint(1)，直接使用tinyint；在msyql8后用Boolean类型替代了它。</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>项目</category>
+      </categories>
+      <tags>
+        <tag>java-小型支付商城</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>操作系统</title>
     <url>/2024/08/13/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</url>
     <content><![CDATA[<h1 id="1，安装bochs硬件模拟程序"><a href="#1，安装bochs硬件模拟程序" class="headerlink" title="1，安装bochs硬件模拟程序"></a>1，安装bochs硬件模拟程序</h1><h4 id="1-给解压好的bochs配置安装文件-make编译，make-install安装"><a href="#1-给解压好的bochs配置安装文件-make编译，make-install安装" class="headerlink" title="1,给解压好的bochs配置安装文件,make编译，make install安装"></a>1,给解压好的bochs配置安装文件,make编译，make install安装</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">./configure \ </span><br><span class="line">--prefix=/home/zxr/bochs_install \ <span class="comment">#安装路径</span></span><br><span class="line">--enable-debugger \ <span class="comment">#启用bochs自带的调试功能</span></span><br><span class="line">--enable-disasm \ <span class="comment">#支持反汇编</span></span><br><span class="line">--enable-iodebug \ <span class="comment">#开启io调试接口</span></span><br><span class="line">--enable-x86-debugger \ <span class="comment">#支持x86调试器</span></span><br><span class="line">--with-x \ <span class="comment">#使用xwindows</span></span><br><span class="line">--with-x11 <span class="comment">#x11图形用户界面</span></span><br></pre></td></tr></table></figure>
@@ -2933,52 +2982,54 @@ ScheduledThreadPoolExecutor scheduledThreadPoolExecutor =
       </tags>
   </entry>
   <entry>
-    <title>小型支付商城</title>
-    <url>/2025/10/28/%E5%B0%8F%E5%9E%8B%E6%94%AF%E4%BB%98%E5%95%86%E5%9F%8E/</url>
-    <content><![CDATA[<h2 id="数据库表设计"><a href="#数据库表设计" class="headerlink" title="数据库表设计"></a>数据库表设计</h2><h3 id="规范"><a href="#规范" class="headerlink" title="规范"></a>规范</h3><p>1，库，表，字段统一使用下划线分隔</p>
-<p>2，显示宽度和存储宽度</p>
+    <title>数组</title>
+    <url>/2025/12/18/%E6%95%B0%E7%BB%84/</url>
+    <content><![CDATA[<h1 id="动态数组"><a href="#动态数组" class="headerlink" title="动态数组"></a>动态数组</h1><p>1，插入类方法</p>
+<p>2，删除类方法</p>
+<p>3，查询类方法</p>
+<p>4，遍历</p>
+<p>5，其他</p>
+<h2 id="动态数组的类和属性"><a href="#动态数组的类和属性" class="headerlink" title="动态数组的类和属性"></a>动态数组的类和属性</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">DynamicArray</span> <span class="keyword">implements</span> <span class="title class_">Iterable</span>&lt;Integer&gt; &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> <span class="variable">size</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> capacity;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span>[] array;</span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">DynamicArray</span><span class="params">(<span class="type">int</span> capacity)</span>&#123;</span><br><span class="line">        <span class="built_in">this</span>.capacity = capacity;</span><br><span class="line">        array = <span class="keyword">new</span> <span class="title class_">int</span>[capacity];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//没有指定容量，默认为8</span></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">DynamicArray</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="built_in">this</span>(<span class="number">8</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>1，size：当前数组的元素个数</p>
+<p>2，capacity：当前数组的容量</p>
+<p>3，array[]：原始数组</p>
+<p>4，两种构造</p>
 <ul>
-<li>存储宽度：指的是数据类型可以存储的最大范围，比如int是4字节，tinyint是1字节，是固定的</li>
-<li>显示宽度：指的是指定显示成几位，不够的补0，比如定义数据类型int(4)，显示4位，0001,0055等<ul>
-<li>注意：tinyint(1)在不同的客户端可能有不同的显示，在老版本中tinyint(1)可能会被读取成布尔类型，如果服务器使用的是数字代表布尔，那么不要用tinyint(1)，直接使用tinyint；在msyql8后用Boolean类型替代了它。</li>
+<li>指定数组初始容量</li>
+<li>不指定初始容量，默认为8</li>
 </ul>
-</li>
-</ul>
+<h2 id="插入类和删除方法"><a href="#插入类和删除方法" class="headerlink" title="插入类和删除方法"></a>插入类和删除方法</h2><div class="tabs" id="插入类方法"><ul class="nav-tabs"><li class="tab active"><a href="#插入类方法-1">add() <br> 插入元素到某一个索引</a></li><li class="tab"><a href="#插入类方法-2">addLast() <br> 尾插</a></li><li class="tab"><a href="#插入类方法-3">checkAndGrow() <br> 检查扩容</a></li><li class="tab"><a href="#插入类方法-4">remove() <br> 删除索引元素</a></li></ul><div class="tab-content"><div class="tab-pane active" id="插入类方法-1"><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 插入元素到某一个索引</span></span><br><span class="line"><span class="comment"> * 1，插入的位置不能超过容量</span></span><br><span class="line"><span class="comment"> * 2，如果不是插入最后一个位置，后续所有的元素都要后移</span></span><br><span class="line"><span class="comment"> * 3，插入最后一个位置，后面没有元素不用管</span></span><br><span class="line"><span class="comment"> * 4,插入之前要检查容量，如果元素沾满了容量，进行1.5倍扩容</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> index 索引</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> value 元素值</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">add</span><span class="params">(<span class="type">int</span> index, <span class="type">int</span> value)</span> &#123;</span><br><span class="line">    checkAndGrow();</span><br><span class="line">    <span class="comment">//index最多等于size，size的值是最大索引+1，index=size时相当于尾插</span></span><br><span class="line">    <span class="keyword">if</span>(index &gt; size) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(<span class="string">&quot;插入的位置超过容量&quot;</span>);</span><br><span class="line">    <span class="keyword">if</span>(index &gt; <span class="number">0</span> &amp;&amp; index &lt; size)&#123;</span><br><span class="line">        System.arraycopy(array,index,array,index + <span class="number">1</span>,size - index);</span><br><span class="line">    &#125;</span><br><span class="line">    array[index] = value;</span><br><span class="line">    size++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div><div class="tab-pane" id="插入类方法-2"><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 尾插</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> value 元素</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">addLast</span><span class="params">(<span class="type">int</span> value)</span> &#123;</span><br><span class="line">    add(size,value);;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div><div class="tab-pane" id="插入类方法-3"><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 扩容</span></span><br><span class="line"><span class="comment"> * 1，容量为1.5倍</span></span><br><span class="line"><span class="comment"> * 2，创建新数组，赋值，取代旧数组</span></span><br><span class="line"><span class="comment"> * 3，如果还没有元素，那就用容量来初始化数组</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">checkAndGrow</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="comment">//扩容1.5倍</span></span><br><span class="line">    <span class="keyword">if</span> (size == capacity) &#123;</span><br><span class="line">        capacity = capacity + capacity &gt;&gt;&gt; <span class="number">1</span>;</span><br><span class="line">        <span class="comment">//创建新数组，拷贝原来的数据</span></span><br><span class="line">        <span class="type">int</span>[] newArray = <span class="keyword">new</span> <span class="title class_">int</span>[capacity];</span><br><span class="line">        System.arraycopy(array, <span class="number">0</span>, newArray, <span class="number">0</span>, size);</span><br><span class="line">        array = newArray;</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span> (size == <span class="number">0</span>)&#123;</span><br><span class="line">        array = <span class="keyword">new</span> <span class="title class_">int</span>[capacity];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div><div class="tab-pane" id="插入类方法-4"><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 删除某个索引的元素</span></span><br><span class="line"><span class="comment"> * 1，当删除的不是最后一个元素时，后面所有的元素都得前移</span></span><br><span class="line"><span class="comment"> * 2,为什么是size -index：最大索引4到索引0 有4-0+1=5个元素，size是等于最大索引+1也就是4+1，所以size -0 = 4+1-0就等于元素个数，而不用size + 1</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> index 需要删除的索引</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> 删除的元素</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="type">int</span> <span class="title function_">remove</span><span class="params">(<span class="type">int</span> index)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (index &lt; size-<span class="number">1</span>)&#123;</span><br><span class="line">        System.arraycopy(array,index+<span class="number">1</span>,array,index,size - index);</span><br><span class="line">    &#125;</span><br><span class="line">    size--;</span><br><span class="line">    <span class="keyword">return</span> array[index];</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div></div></div>
+
+<h2 id="遍历类方法"><a href="#遍历类方法" class="headerlink" title="遍历类方法"></a>遍历类方法</h2><div class="tabs" id="遍历类方法"><ul class="nav-tabs"><li class="tab active"><a href="#遍历类方法-1">foreach() <br> 函数式接口遍历</a></li><li class="tab"><a href="#遍历类方法-2">iterator() <br> 迭代器</a></li><li class="tab"><a href="#遍历类方法-3">stream() <br> 返回流</a></li></ul><div class="tab-content"><div class="tab-pane active" id="遍历类方法-1"><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 遍历方法原理:提供元素i，使用函数式接口的唯一方法来操作i，具体操作代码取决于接口的accept方法的实际实现</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> consumer 消费者接口，获取一个参数，不提供返回值</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">foreach</span><span class="params">(IntConsumer consumer)</span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; size; i++) &#123;</span><br><span class="line">        consumer.accept(array[i]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div><div class="tab-pane" id="遍历类方法-2"><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 迭代器方法，来源于Iterable&lt;Integer&gt;接口，该方法返回一个迭代器</span></span><br><span class="line"><span class="comment"> * 1，可以手动调用该方法获取迭代器，从而调用hasNext和next方法</span></span><br><span class="line"><span class="comment"> * 2，增强for循环会自动调用这个方法，实现了这个方法，可以正常使用增强for循环了</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> 迭代器对象</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> Iterator&lt;Integer&gt; <span class="title function_">iterator</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Iterator</span>&lt;Integer&gt;() &#123;</span><br><span class="line">        <span class="comment">//迭代器指针，设置迭代器每次迭代的开始位置，默认从第一个元素开始</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">hasNext</span><span class="params">()</span> &#123;</span><br><span class="line">            <span class="comment">//注意边界，虽然i是从0开始，但是由于size是等于maxIndex + 1的</span></span><br><span class="line">            <span class="comment">//0-&gt;maxIndex+1开区间实际上就是0-&gt;maxIndex闭区间，所以包含了所有的元素了</span></span><br><span class="line">            <span class="keyword">return</span> i&lt;size;</span><br><span class="line">        &#125;</span><br><span class="line">		<span class="comment">//获取当前迭代器指针指向的元素，并右移指针</span></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="keyword">public</span> Integer <span class="title function_">next</span><span class="params">()</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> array[i++];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div><div class="tab-pane" id="遍历类方法-3"><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 流方法，转换成流，可以使用流式的forEach遍历了</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> int流</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> IntStream <span class="title function_">stream</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="comment">//指定size内的数据转换成流，copyOfRange是左闭右开，所以写size就行不用写size-1</span></span><br><span class="line">    <span class="keyword">return</span> IntStream.of(Arrays.copyOfRange(array,<span class="number">0</span>,size));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div></div></div>
+
+<h2 id="遍历方法演示"><a href="#遍历方法演示" class="headerlink" title="遍历方法演示"></a>遍历方法演示</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">    </span><br><span class="line">        <span class="type">DynamicArray</span> <span class="variable">dynamicArray</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">DynamicArray</span>();</span><br><span class="line">        dynamicArray.add(<span class="number">0</span>,<span class="number">5</span>);;</span><br><span class="line">        dynamicArray.addLast(<span class="number">6</span>);</span><br><span class="line">    	<span class="comment">//1，函数式接口遍历，这里参数是Consumer接口，foreach提供的accept方法参数是array的每个具体的元素</span></span><br><span class="line">    	<span class="comment">//accept方法的方法体是System.out::println</span></span><br><span class="line">        dynamicArray.foreach(System.out::println);</span><br><span class="line">    </span><br><span class="line">        <span class="comment">//2，获取迭代器遍历</span></span><br><span class="line">        Iterator&lt;Integer&gt; iterator = dynamicArray.iterator();</span><br><span class="line">        <span class="keyword">while</span> (iterator.hasNext())&#123;</span><br><span class="line">            System.out.println(iterator.next());</span><br><span class="line">        &#125;</span><br><span class="line">		<span class="comment">//3,增强for循环遍历，底层是获取迭代器</span></span><br><span class="line">        <span class="keyword">for</span> (Integer e : dynamicArray)&#123;</span><br><span class="line">            System.out.println(e);</span><br><span class="line">        &#125;</span><br><span class="line">        dynamicArray.remove(<span class="number">0</span>);</span><br><span class="line">        <span class="comment">//4,stream流遍历</span></span><br><span class="line">        dynamicArray.stream().forEach(System.out::println);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
 ]]></content>
       <categories>
-        <category>项目</category>
+        <category>计算机</category>
       </categories>
       <tags>
-        <tag>java-小型支付商城</tag>
+        <tag>数据结构</tag>
       </tags>
   </entry>
   <entry>
-    <title>搭建Hexo</title>
-    <url>/2025/01/24/%E6%90%AD%E5%BB%BAHexo/</url>
-    <content><![CDATA[<h1 id="Hexo博客的搭建以及主题选取"><a href="#Hexo博客的搭建以及主题选取" class="headerlink" title="Hexo博客的搭建以及主题选取"></a>Hexo博客的搭建以及主题选取</h1><h2 id="hexo搭建"><a href="#hexo搭建" class="headerlink" title="hexo搭建"></a>hexo搭建</h2><h3 id="1，购买低价vpn翻墙"><a href="#1，购买低价vpn翻墙" class="headerlink" title="1，购买低价vpn翻墙"></a>1，购买低价vpn翻墙</h3><p>1，推荐卷王机场，20元一年，每月提供100g流量</p>
-<p>2，步骤</p>
+    <title>注意点</title>
+    <url>/2025/08/19/%E6%B3%A8%E6%84%8F%E7%82%B9/</url>
+    <content><![CDATA[<p>1，每次编写代码之前，需要更新到最新版本，利用idean中git的update操作</p>
+<p>2，在改了代码后，执行Maven生命周期的clean操作可以删除target的文件，就不会导致代码更新不及时</p>
 <ul>
-<li>地址栏输入卷王机场官网(卷王.xyz),选择国内入口</li>
+<li>clean，删除target，里面包含和编译好的文件</li>
+<li>test，运行所有的单元测试</li>
+<li>complie，编译java目录下面的源代码，不涉及测试代码</li>
+<li>package，执行complied+test，根据设定的打包类型jar&#x2F;war生成可分发包在target</li>
 </ul>
-<p><img src="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20250124095008769.png" alt="image-20250124095008769"></p>
-<p>3，注册账号</p>
-<p>4，进入主页面，点击左侧使用文档，查看widows使用方式</p>
-<p><img src="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20250124095215919.png" alt="image-20250124095215919"></p>
-<h3 id="2，创建github账号"><a href="#2，创建github账号" class="headerlink" title="2，创建github账号"></a>2，创建github账号</h3><p>1，github是外国网站，需要开启翻墙才可以稳定访问</p>
-<p>2，目的是把本地电脑硬盘上的笔记，放到网络(github仓库)上，经过hexo展示</p>
-<p>3，<a href="https://github.com/">GitHub · Build and ship software on a single, collaborative platform · GitHub</a> –github官网</p>
-<p>4，步骤</p>
-<ul>
-<li>打开官网，点击sign in，再点击创建新用户</li>
-</ul>
-<p><img src="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20250124104822511.png" alt="image-20250124104822511"></p>
-<p><img src="https://zxrpicbed.oss-cn-guangzhou.aliyuncs.com/image/image-20250124104842827.png" alt="image-20250124104842827"></p>
 ]]></content>
       <categories>
-        <category>搭建hexo</category>
+        <category>计算机</category>
       </categories>
       <tags>
-        <tag>博客</tag>
+        <tag>实际操作注意点</tag>
       </tags>
   </entry>
   <entry>
@@ -3626,179 +3677,6 @@ ScheduledThreadPoolExecutor scheduledThreadPoolExecutor =
       </tags>
   </entry>
   <entry>
-    <title>注解和aop</title>
-    <url>/2026/04/07/%E6%B3%A8%E8%A7%A3%E5%92%8Caop/</url>
-    <content><![CDATA[<h1 id="通过反射获取注解中的信息"><a href="#通过反射获取注解中的信息" class="headerlink" title="通过反射获取注解中的信息"></a>通过反射获取注解中的信息</h1><h2 id="需求分析"><a href="#需求分析" class="headerlink" title="需求分析"></a>需求分析</h2><p>1，创建一个注解：</p>
-<ul>
-<li>只能用在方法上</li>
-<li>运行时可用</li>
-<li>带两个属性：<ul>
-<li>module：模块名：例如用户管理</li>
-<li>action：操作名：例如新增用户</li>
-</ul>
-</li>
-</ul>
-<p>2，测试代码-读取注解属性：</p>
-<ul>
-<li>创建一个UserService类，创建一个新增用户的方法</li>
-<li>用自定义注解标识这个方法</li>
-<li>使用反射获取注解中的属性值并打印</li>
-</ul>
-<h2 id="创建注解"><a href="#创建注解" class="headerlink" title="创建注解"></a>创建注解</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Target(ElementType.METHOD)</span></span><br><span class="line"><span class="comment">//忘记了元数据的名字</span></span><br><span class="line"><span class="meta">@Retention(RetentionPolicy.RUNTIME)</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> OperationLog &#123;</span><br><span class="line">    <span class="comment">//注解的数据为什么不能用private,为什么用方法的形式</span></span><br><span class="line">    String <span class="title function_">module</span><span class="params">()</span>;</span><br><span class="line">    String <span class="title function_">action</span><span class="params">()</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h3><p>1，如何指定为运行时？为什么要指定为运行时？指定其他的有什么作用？</p>
-<ul>
-<li>@Retention(RetentionPolicy.RUNTIME)可以指定为运行时。</li>
-<li>总共有三种环境：SOURCE（源码环境）、CLASS（字节码环境）、Runtime（运行时环境），暂时可以粗略理解成，反射是在运行时环境拿注解，必须保证运行时注解还存在。</li>
-<li>@Retention决定注解能活到哪个阶段；指定为其他环境的作用待深入理解，涉及字节码工具和编译器。</li>
-</ul>
-<p>2，注解的属性为什么是方法的形式？为什么不能写成private的方法？</p>
-<ul>
-<li>注解的本质是一个接口，写一个注解相当于写了一个接口继承了java.lang.annotation.Annotation接口，因此：<ul>
-<li>接口的方法都是默认public Abstract的，所以不能用private修饰</li>
-</ul>
-</li>
-</ul>
-<h2 id="测试代码-读取注解属性"><a href="#测试代码-读取注解属性" class="headerlink" title="测试代码-读取注解属性"></a>测试代码-读取注解属性</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserService</span> &#123;</span><br><span class="line">    <span class="meta">@OperationLog(module = &quot;用户管理&quot;, action = &quot;添加用户&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">addUser</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;添加用户&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">test</span>&#123;</span><br><span class="line">     <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">         Class&lt;UserService&gt; userServiceClass = UserService.class;</span><br><span class="line">         <span class="type">Method</span> <span class="variable">addUser</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">         <span class="keyword">try</span> &#123;</span><br><span class="line">             addUser = userServiceClass.getDeclaredMethod(<span class="string">&quot;addUser&quot;</span>);</span><br><span class="line">         &#125; <span class="keyword">catch</span> (NoSuchMethodException e) &#123;</span><br><span class="line">             <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(e);</span><br><span class="line">         &#125;</span><br><span class="line">         <span class="comment">//这句话的用法</span></span><br><span class="line">         addUser.setAccessible(<span class="literal">true</span>);</span><br><span class="line">         <span class="keyword">if</span> (addUser.isAnnotationPresent(OperationLog.class)) &#123;</span><br><span class="line">             <span class="type">OperationLog</span> <span class="variable">operationLog</span> <span class="operator">=</span> addUser.getAnnotation(OperationLog.class);</span><br><span class="line">             System.out.println(<span class="string">&quot;模块：&quot;</span> + operationLog.<span class="keyword">module</span>() + <span class="string">&quot;, 操作：&quot;</span> + operationLog.action());</span><br><span class="line">         &#125;</span><br><span class="line">     &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="遇到的问题-1"><a href="#遇到的问题-1" class="headerlink" title="遇到的问题"></a>遇到的问题</h3><p>1， @OperationLog(module &#x3D; “用户管理”, action &#x3D; “添加用户”)是怎么把值赋值给注解的？</p>
-<ul>
-<li>使用代理类的方式，见代码：</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">final</span> <span class="keyword">class</span> <span class="title class_">$ProxyAnnotation</span> <span class="keyword">implements</span> <span class="title class_">OperationLog</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Map&lt;String, Object&gt; values;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> $ProxyAnnotation(Map&lt;String, Object&gt; values) &#123;</span><br><span class="line">        <span class="built_in">this</span>.values = values;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">module</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> (String) values.get(<span class="string">&quot;module&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">action</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> (String) values.get(<span class="string">&quot;action&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Class&lt;? <span class="keyword">extends</span> <span class="title class_">Annotation</span>&gt; annotationType() &#123;</span><br><span class="line">        <span class="keyword">return</span> OperationLog.class;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>当调用addUser.getAnnotation(OperationLog.class)时，需要获取一个代理对象回去：<ul>
-<li>代理对象会把注解属性名和方法上标记的值存进map，</li>
-<li>调用代理对象的方法，就会在map里取然后返回，</li>
-<li>每次调这个方法都会返回一个代理对象，也就是每个方法都单独对应一个代理对象，不会混乱。</li>
-</ul>
-</li>
-</ul>
-<p>2，operationLog.module()，既然OperationLog是接口，那怎么能用接口直接调用方法？</p>
-<ul>
-<li>同上，实际调用的是代理对象的方法。</li>
-</ul>
-<p>3，addUser.setAccessible(true)的作用？什么时候要setAccessible(true)？</p>
-<ul>
-<li>setAccessible(true)是跳过访问控制检查：<ul>
-<li>private属性要set()和get()时需要，</li>
-<li>private方法要invoke()时需要，</li>
-<li>通过属性和方法获取注解或者判断注解之类的，不需要，因为不管属性和方法原内容的事(待以后深入)。</li>
-</ul>
-</li>
-</ul>
-<h1 id="使用aop-注解"><a href="#使用aop-注解" class="headerlink" title="使用aop + 注解"></a>使用aop + 注解</h1><h2 id="需求分析-1"><a href="#需求分析-1" class="headerlink" title="需求分析"></a>需求分析</h2><p>1，使用aop打印出方法的执行时间</p>
-<p>2，使用aop防止方法短时间内重复提交</p>
-<h2 id="使用aop打印出方法的执行时间"><a href="#使用aop打印出方法的执行时间" class="headerlink" title="使用aop打印出方法的执行时间"></a>使用aop打印出方法的执行时间</h2><h3 id="创建自定义注解"><a href="#创建自定义注解" class="headerlink" title="创建自定义注解"></a>创建自定义注解</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Target(ElementType.METHOD)</span></span><br><span class="line"><span class="meta">@Retention(RetentionPolicy.RUNTIME)</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> TimeLog &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="使用注解标记方法"><a href="#使用注解标记方法" class="headerlink" title="使用注解标记方法"></a>使用注解标记方法</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@TimeLog</span></span><br><span class="line"><span class="keyword">public</span> String <span class="title function_">addUser</span><span class="params">()</span>  &#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;添加用户&quot;</span>);</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        Thread.sleep(<span class="number">3000</span>);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(e);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;success&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="创建切面"><a href="#创建切面" class="headerlink" title="创建切面"></a>创建切面</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="meta">@Aspect</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TimeLogAspect</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Around(&quot;@annotation(test.anotation.TimeLog)&quot;)</span></span><br><span class="line">    <span class="comment">//问题：@Around参数怎么写</span></span><br><span class="line">    <span class="keyword">public</span> Object <span class="title function_">logTime</span><span class="params">(ProceedingJoinPoint joinPoint)</span> &#123;</span><br><span class="line">        <span class="type">LocalDateTime</span> <span class="variable">start</span> <span class="operator">=</span> LocalDateTime.now();</span><br><span class="line">        <span class="comment">//问题：参数是哪个类型？是不是joinPoint</span></span><br><span class="line">        Object bean;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            bean = joinPoint.proceed();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Throwable e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(e);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="type">LocalDateTime</span> <span class="variable">end</span> <span class="operator">=</span> LocalDateTime.now();</span><br><span class="line">        <span class="comment">//问题：如何相减后获取毫秒数，转化为分钟</span></span><br><span class="line">        <span class="type">Duration</span> <span class="variable">duration</span> <span class="operator">=</span> Duration.between(start, end);</span><br><span class="line">        <span class="type">long</span> <span class="variable">seconds</span> <span class="operator">=</span> duration.toSeconds();</span><br><span class="line">        System.out.println(<span class="string">&quot;耗时：&quot;</span> + seconds + <span class="string">&quot;秒&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> bean;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    <span class="comment">//也可以写参数名，会通过参数的类型去找切点，而且spring会把注解的代理对象传进来，就不用通过method去拿了</span></span><br><span class="line">    <span class="meta">@Around(&quot;@annotation(timeLog)&quot;)</span></span><br><span class="line">    <span class="comment">//问题：@Around参数怎么写</span></span><br><span class="line">    <span class="keyword">public</span> Object <span class="title function_">logTime</span><span class="params">(ProceedingJoinPoint joinPoint, TimeLog timeLog)</span> &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="遇到的问题-2"><a href="#遇到的问题-2" class="headerlink" title="遇到的问题"></a>遇到的问题</h3><p>1，@Around的参数是什么？除了Around还有其他的吗，这几个区别是什么？</p>
-<ul>
-<li>参数，常用两种：<ul>
-<li>切点为注解：写注解全限定名或者参数名，详情见以上代码，</li>
-<li>用execution：execution(* com.xxx..*(..))：(返回类型 包.类.方法名(参数1类型，参数2类型，··))。</li>
-</ul>
-</li>
-<li>除Around外：<ul>
-<li>@Before：方法执行前：参数校验 &#x2F; 权限校验</li>
-<li>@After：方法执行后，不在呼是否成功：释放资源 &#x2F; 收尾日志</li>
-<li>@AfterReturning：方法成功返回：返回值脱敏&#x2F; 补字段</li>
-</ul>
-</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@AfterReturning(</span></span><br><span class="line"><span class="meta">    pointcut = &quot;@annotation(timeLog)&quot;,</span></span><br><span class="line"><span class="meta">    returning = &quot;result&quot;</span></span><br><span class="line"><span class="meta">)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">afterReturning</span><span class="params">(JoinPoint joinPoint, Object result)</span> &#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;返回值：&quot;</span> + result);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>@AfterThrowing：统一异常日志 &#x2F; 告警</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@AfterThrowing(</span></span><br><span class="line"><span class="meta">    pointcut = &quot;@annotation(timeLog)&quot;,</span></span><br><span class="line"><span class="meta">    throwing = &quot;ex&quot;</span></span><br><span class="line"><span class="meta">)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">afterThrowing</span><span class="params">(JoinPoint joinPoint, Exception ex)</span> &#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;异常：&quot;</span> + ex.getMessage());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>2，joinPoint具体是哪个类型？</p>
-<ul>
-<li>ProceedingJoinPoint类型，通过这个类型可以获取原始方法、类、参数：</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="type">MethodSignature</span> <span class="variable">signature</span> <span class="operator">=</span> (MethodSignature) joinPoint.getSignature();</span><br><span class="line"><span class="comment">//方法</span></span><br><span class="line"><span class="type">Method</span> <span class="variable">method</span> <span class="operator">=</span> signature.getMethod();</span><br><span class="line"><span class="comment">//方法名</span></span><br><span class="line"><span class="type">String</span> <span class="variable">methodName</span> <span class="operator">=</span> method.getName();</span><br><span class="line"><span class="comment">//方法参数</span></span><br><span class="line">Object[] args = joinPoint.getArgs();</span><br><span class="line"><span class="comment">//方法所在的类</span></span><br><span class="line"><span class="type">UserService</span> <span class="variable">target</span> <span class="operator">=</span> (UserService) joinPoint.getTarget();</span><br></pre></td></tr></table></figure>
-
-<p>3，localDatetime如何计算出时间间隔，并转成想要的单位？</p>
-<ul>
-<li>用Duration工具类</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="type">UserService</span> <span class="variable">target</span> <span class="operator">=</span> (UserService) joinPoint.getTarget();</span><br></pre></td></tr></table></figure>
-
-<h2 id="使用aop防止方法短时间内重复提交"><a href="#使用aop防止方法短时间内重复提交" class="headerlink" title="使用aop防止方法短时间内重复提交"></a>使用aop防止方法短时间内重复提交</h2><h3 id="创建自定义注解-1"><a href="#创建自定义注解-1" class="headerlink" title="创建自定义注解"></a>创建自定义注解</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Target(ElementType.METHOD)</span></span><br><span class="line"><span class="meta">@Retention(RetentionPolicy.RUNTIME)</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> NoRepeatSubmit &#123;</span><br><span class="line">    <span class="type">long</span> <span class="title function_">seconds</span><span class="params">()</span> <span class="keyword">default</span> <span class="number">5</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="使用注解标记方法-1"><a href="#使用注解标记方法-1" class="headerlink" title="使用注解标记方法"></a>使用注解标记方法</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@NoRepeatSubmit(seconds = 10L)</span></span><br><span class="line"><span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">updateUser</span><span class="params">(Long userId)</span>  &#123;</span><br><span class="line">    <span class="comment">//这里还要拼接上url路径，或者是拼接上类全限定名，userId变量</span></span><br><span class="line">    methodInvokeTime.put(userId + url + <span class="string">&quot;updateUser&quot;</span>, LocalDateTime.now());</span><br><span class="line">    System.out.println(<span class="string">&quot;更新用户&quot;</span>);</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        Thread.sleep(<span class="number">3000</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;更新用户成功&quot;</span> + userId);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(e);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="创建切面-1"><a href="#创建切面-1" class="headerlink" title="创建切面"></a>创建切面</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Aspect</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">NoRepeatSubmitAspect</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Around(&quot;@annotation(test.anotation.NoRepeatSubmit)&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Object <span class="title function_">noRepeatSubmit</span><span class="params">(ProceedingJoinPoint joinPoint)</span>&#123;</span><br><span class="line">        <span class="type">MethodSignature</span> <span class="variable">signature</span> <span class="operator">=</span> (MethodSignature) joinPoint.getSignature();</span><br><span class="line">        <span class="type">Method</span> <span class="variable">method</span> <span class="operator">=</span> signature.getMethod();</span><br><span class="line">        <span class="type">String</span> <span class="variable">methodName</span> <span class="operator">=</span> method.getName();</span><br><span class="line">        Object[] args = joinPoint.getArgs();</span><br><span class="line">        <span class="type">NoRepeatSubmit</span> <span class="variable">noRepeatSubmit</span> <span class="operator">=</span> method.getAnnotation(NoRepeatSubmit.class);</span><br><span class="line">        </span><br><span class="line">        <span class="type">LocalDateTime</span> <span class="variable">now</span> <span class="operator">=</span> LocalDateTime.now();</span><br><span class="line">        <span class="comment">//这里可以存到redis里，也可以存ConcurrentHashMap</span></span><br><span class="line">        ConcurrentHashMap&lt;String, LocalDateTime&gt; methodInvokeTime = UserService.methodInvokeTime;</span><br><span class="line">        <span class="comment">//第一次放心</span></span><br><span class="line">        <span class="type">LocalDateTime</span> <span class="variable">lastInvokeTime</span> <span class="operator">=</span> methodInvokeTime.get(methodName) == <span class="literal">null</span>? now.minusSeconds(noRepeatSubmit.seconds()) : methodInvokeTime.get(methodName);</span><br><span class="line">        <span class="type">long</span> <span class="variable">seconds</span> <span class="operator">=</span> Duration.between(lastInvokeTime, now).toSeconds();</span><br><span class="line">        <span class="keyword">if</span> (seconds &lt; noRepeatSubmit.seconds()) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(<span class="string">&quot;请勿重复提交&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> joinPoint.proceed(args);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Throwable e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="注意点"><a href="#注意点" class="headerlink" title="注意点"></a>注意点</h3><p>1，每个用户id + 方法url （或者类全限定名）+ 方法名 作为key，保证每个用户每个时间段内只能提交一次。</p>
-<p>2，ConcurrentHashMap是必须的，会有很多线程同时往里面put。</p>
-<p>3，如果有分布式的需求，可以存进redis里面，需要分布式锁(后续待深入)。</p>
-<p>4，一定要记得joinPoint.proceed(args)的返回值是原始bean，要返回回去；@Around标记的方法也要返回Object。</p>
-]]></content>
-      <categories>
-        <category>认真版</category>
-      </categories>
-      <tags>
-        <tag>认真版</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>注意点</title>
-    <url>/2025/08/19/%E6%B3%A8%E6%84%8F%E7%82%B9/</url>
-    <content><![CDATA[<p>1，每次编写代码之前，需要更新到最新版本，利用idean中git的update操作</p>
-<p>2，在改了代码后，执行Maven生命周期的clean操作可以删除target的文件，就不会导致代码更新不及时</p>
-<ul>
-<li>clean，删除target，里面包含和编译好的文件</li>
-<li>test，运行所有的单元测试</li>
-<li>complie，编译java目录下面的源代码，不涉及测试代码</li>
-<li>package，执行complied+test，根据设定的打包类型jar&#x2F;war生成可分发包在target</li>
-</ul>
-]]></content>
-      <categories>
-        <category>计算机</category>
-      </categories>
-      <tags>
-        <tag>实际操作注意点</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>数组</title>
-    <url>/2025/12/18/%E6%95%B0%E7%BB%84/</url>
-    <content><![CDATA[<h1 id="动态数组"><a href="#动态数组" class="headerlink" title="动态数组"></a>动态数组</h1><p>1，插入类方法</p>
-<p>2，删除类方法</p>
-<p>3，查询类方法</p>
-<p>4，遍历</p>
-<p>5，其他</p>
-<h2 id="动态数组的类和属性"><a href="#动态数组的类和属性" class="headerlink" title="动态数组的类和属性"></a>动态数组的类和属性</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">DynamicArray</span> <span class="keyword">implements</span> <span class="title class_">Iterable</span>&lt;Integer&gt; &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> <span class="variable">size</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> capacity;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span>[] array;</span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">DynamicArray</span><span class="params">(<span class="type">int</span> capacity)</span>&#123;</span><br><span class="line">        <span class="built_in">this</span>.capacity = capacity;</span><br><span class="line">        array = <span class="keyword">new</span> <span class="title class_">int</span>[capacity];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//没有指定容量，默认为8</span></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">DynamicArray</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="built_in">this</span>(<span class="number">8</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>1，size：当前数组的元素个数</p>
-<p>2，capacity：当前数组的容量</p>
-<p>3，array[]：原始数组</p>
-<p>4，两种构造</p>
-<ul>
-<li>指定数组初始容量</li>
-<li>不指定初始容量，默认为8</li>
-</ul>
-<h2 id="插入类和删除方法"><a href="#插入类和删除方法" class="headerlink" title="插入类和删除方法"></a>插入类和删除方法</h2><div class="tabs" id="插入类方法"><ul class="nav-tabs"><li class="tab active"><a href="#插入类方法-1">add() <br> 插入元素到某一个索引</a></li><li class="tab"><a href="#插入类方法-2">addLast() <br> 尾插</a></li><li class="tab"><a href="#插入类方法-3">checkAndGrow() <br> 检查扩容</a></li><li class="tab"><a href="#插入类方法-4">remove() <br> 删除索引元素</a></li></ul><div class="tab-content"><div class="tab-pane active" id="插入类方法-1"><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 插入元素到某一个索引</span></span><br><span class="line"><span class="comment"> * 1，插入的位置不能超过容量</span></span><br><span class="line"><span class="comment"> * 2，如果不是插入最后一个位置，后续所有的元素都要后移</span></span><br><span class="line"><span class="comment"> * 3，插入最后一个位置，后面没有元素不用管</span></span><br><span class="line"><span class="comment"> * 4,插入之前要检查容量，如果元素沾满了容量，进行1.5倍扩容</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> index 索引</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> value 元素值</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">add</span><span class="params">(<span class="type">int</span> index, <span class="type">int</span> value)</span> &#123;</span><br><span class="line">    checkAndGrow();</span><br><span class="line">    <span class="comment">//index最多等于size，size的值是最大索引+1，index=size时相当于尾插</span></span><br><span class="line">    <span class="keyword">if</span>(index &gt; size) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(<span class="string">&quot;插入的位置超过容量&quot;</span>);</span><br><span class="line">    <span class="keyword">if</span>(index &gt; <span class="number">0</span> &amp;&amp; index &lt; size)&#123;</span><br><span class="line">        System.arraycopy(array,index,array,index + <span class="number">1</span>,size - index);</span><br><span class="line">    &#125;</span><br><span class="line">    array[index] = value;</span><br><span class="line">    size++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div><div class="tab-pane" id="插入类方法-2"><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 尾插</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> value 元素</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">addLast</span><span class="params">(<span class="type">int</span> value)</span> &#123;</span><br><span class="line">    add(size,value);;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div><div class="tab-pane" id="插入类方法-3"><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 扩容</span></span><br><span class="line"><span class="comment"> * 1，容量为1.5倍</span></span><br><span class="line"><span class="comment"> * 2，创建新数组，赋值，取代旧数组</span></span><br><span class="line"><span class="comment"> * 3，如果还没有元素，那就用容量来初始化数组</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">checkAndGrow</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="comment">//扩容1.5倍</span></span><br><span class="line">    <span class="keyword">if</span> (size == capacity) &#123;</span><br><span class="line">        capacity = capacity + capacity &gt;&gt;&gt; <span class="number">1</span>;</span><br><span class="line">        <span class="comment">//创建新数组，拷贝原来的数据</span></span><br><span class="line">        <span class="type">int</span>[] newArray = <span class="keyword">new</span> <span class="title class_">int</span>[capacity];</span><br><span class="line">        System.arraycopy(array, <span class="number">0</span>, newArray, <span class="number">0</span>, size);</span><br><span class="line">        array = newArray;</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span> (size == <span class="number">0</span>)&#123;</span><br><span class="line">        array = <span class="keyword">new</span> <span class="title class_">int</span>[capacity];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div><div class="tab-pane" id="插入类方法-4"><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 删除某个索引的元素</span></span><br><span class="line"><span class="comment"> * 1，当删除的不是最后一个元素时，后面所有的元素都得前移</span></span><br><span class="line"><span class="comment"> * 2,为什么是size -index：最大索引4到索引0 有4-0+1=5个元素，size是等于最大索引+1也就是4+1，所以size -0 = 4+1-0就等于元素个数，而不用size + 1</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> index 需要删除的索引</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> 删除的元素</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="type">int</span> <span class="title function_">remove</span><span class="params">(<span class="type">int</span> index)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (index &lt; size-<span class="number">1</span>)&#123;</span><br><span class="line">        System.arraycopy(array,index+<span class="number">1</span>,array,index,size - index);</span><br><span class="line">    &#125;</span><br><span class="line">    size--;</span><br><span class="line">    <span class="keyword">return</span> array[index];</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div></div></div>
-
-<h2 id="遍历类方法"><a href="#遍历类方法" class="headerlink" title="遍历类方法"></a>遍历类方法</h2><div class="tabs" id="遍历类方法"><ul class="nav-tabs"><li class="tab active"><a href="#遍历类方法-1">foreach() <br> 函数式接口遍历</a></li><li class="tab"><a href="#遍历类方法-2">iterator() <br> 迭代器</a></li><li class="tab"><a href="#遍历类方法-3">stream() <br> 返回流</a></li></ul><div class="tab-content"><div class="tab-pane active" id="遍历类方法-1"><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 遍历方法原理:提供元素i，使用函数式接口的唯一方法来操作i，具体操作代码取决于接口的accept方法的实际实现</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> consumer 消费者接口，获取一个参数，不提供返回值</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">foreach</span><span class="params">(IntConsumer consumer)</span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; size; i++) &#123;</span><br><span class="line">        consumer.accept(array[i]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div><div class="tab-pane" id="遍历类方法-2"><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 迭代器方法，来源于Iterable&lt;Integer&gt;接口，该方法返回一个迭代器</span></span><br><span class="line"><span class="comment"> * 1，可以手动调用该方法获取迭代器，从而调用hasNext和next方法</span></span><br><span class="line"><span class="comment"> * 2，增强for循环会自动调用这个方法，实现了这个方法，可以正常使用增强for循环了</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> 迭代器对象</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> Iterator&lt;Integer&gt; <span class="title function_">iterator</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Iterator</span>&lt;Integer&gt;() &#123;</span><br><span class="line">        <span class="comment">//迭代器指针，设置迭代器每次迭代的开始位置，默认从第一个元素开始</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">hasNext</span><span class="params">()</span> &#123;</span><br><span class="line">            <span class="comment">//注意边界，虽然i是从0开始，但是由于size是等于maxIndex + 1的</span></span><br><span class="line">            <span class="comment">//0-&gt;maxIndex+1开区间实际上就是0-&gt;maxIndex闭区间，所以包含了所有的元素了</span></span><br><span class="line">            <span class="keyword">return</span> i&lt;size;</span><br><span class="line">        &#125;</span><br><span class="line">		<span class="comment">//获取当前迭代器指针指向的元素，并右移指针</span></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="keyword">public</span> Integer <span class="title function_">next</span><span class="params">()</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> array[i++];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div><div class="tab-pane" id="遍历类方法-3"><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 流方法，转换成流，可以使用流式的forEach遍历了</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> int流</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> IntStream <span class="title function_">stream</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="comment">//指定size内的数据转换成流，copyOfRange是左闭右开，所以写size就行不用写size-1</span></span><br><span class="line">    <span class="keyword">return</span> IntStream.of(Arrays.copyOfRange(array,<span class="number">0</span>,size));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div></div></div>
-
-<h2 id="遍历方法演示"><a href="#遍历方法演示" class="headerlink" title="遍历方法演示"></a>遍历方法演示</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">    </span><br><span class="line">        <span class="type">DynamicArray</span> <span class="variable">dynamicArray</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">DynamicArray</span>();</span><br><span class="line">        dynamicArray.add(<span class="number">0</span>,<span class="number">5</span>);;</span><br><span class="line">        dynamicArray.addLast(<span class="number">6</span>);</span><br><span class="line">    	<span class="comment">//1，函数式接口遍历，这里参数是Consumer接口，foreach提供的accept方法参数是array的每个具体的元素</span></span><br><span class="line">    	<span class="comment">//accept方法的方法体是System.out::println</span></span><br><span class="line">        dynamicArray.foreach(System.out::println);</span><br><span class="line">    </span><br><span class="line">        <span class="comment">//2，获取迭代器遍历</span></span><br><span class="line">        Iterator&lt;Integer&gt; iterator = dynamicArray.iterator();</span><br><span class="line">        <span class="keyword">while</span> (iterator.hasNext())&#123;</span><br><span class="line">            System.out.println(iterator.next());</span><br><span class="line">        &#125;</span><br><span class="line">		<span class="comment">//3,增强for循环遍历，底层是获取迭代器</span></span><br><span class="line">        <span class="keyword">for</span> (Integer e : dynamicArray)&#123;</span><br><span class="line">            System.out.println(e);</span><br><span class="line">        &#125;</span><br><span class="line">        dynamicArray.remove(<span class="number">0</span>);</span><br><span class="line">        <span class="comment">//4,stream流遍历</span></span><br><span class="line">        dynamicArray.stream().forEach(System.out::println);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>计算机</category>
-      </categories>
-      <tags>
-        <tag>数据结构</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>重要</title>
     <url>/2024/11/17/%E9%87%8D%E8%A6%81/</url>
     <content><![CDATA[<p>1，通过合作第三方获取资讯</p>
@@ -3969,6 +3847,258 @@ ScheduledThreadPoolExecutor scheduledThreadPoolExecutor =
     <title>链表</title>
     <url>/2025/12/19/%E9%93%BE%E8%A1%A8/</url>
     <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>错题</title>
+    <url>/2025/08/03/%E9%94%99%E9%A2%98/</url>
+    <content><![CDATA[<h1 id="SQL-MySQL"><a href="#SQL-MySQL" class="headerlink" title="SQL-MySQL"></a>SQL-MySQL</h1><p>1，查找条件为不等于</p>
+<ul>
+<li>!&#x3D;</li>
+<li>&lt;&gt;</li>
+<li>not in()</li>
+</ul>
+<p>2，查找条件为非空</p>
+<ul>
+<li>is not null</li>
+</ul>
+<p>3,order by 默认 asc升序</p>
+<p>4，模糊查询通配符意义，···where name like···</p>
+<ul>
+<li>%：多个任意字符</li>
+<li>_:一个任意字符</li>
+</ul>
+<p>5，正则匹配，··where name regexp··· （内有乾坤，有时间了再详细去看）</p>
+<ul>
+<li>[abc]：abc范围内任意一个字符</li>
+<li>[^abc] : abc范围外的任意一个字符</li>
+</ul>
+<p>6，查找某列最大值</p>
+<ul>
+<li>先order by xx desc降序，再limit 1，取一个<ul>
+<li>limit(a,b)表示跳过a个后取b个</li>
+</ul>
+</li>
+<li>直接select max(xx) as xx,给列取一个别名代替max(xx)</li>
+</ul>
+<p>7,avg，count，round，as，group by，order by，的使用</p>
+<p>求每个班，男生和女生分别的，语文和数学平均成绩，人数，结果以班级为首列，性别为第二列，以班级+性别升序排列，成绩保留1位小数</p>
+<ul>
+<li>每个班-&gt;以班级分组；男女-&gt;以性别分组；应当有班级+性别作为分组条件</li>
+<li>平均成绩用avg(成绩列) as xx；某列的平均数并起别名<ul>
+<li>保留小数用round(a,b),给a保留b位小数</li>
+</ul>
+</li>
+<li>计数用count(*),conut(列名)会略过null值</li>
+<li>结果：</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> </span><br><span class="line">#一定记住把分组条件放进结果集，不然结果意义不明，看不懂</span><br><span class="line">class,</span><br><span class="line">gender, </span><br><span class="line">#<span class="keyword">as</span>用来设置别名，也就是结果集最终的列名，<span class="keyword">as</span>写在所有的聚合函数后面，等运行好了再设置别名</span><br><span class="line"><span class="built_in">count</span>(<span class="operator">*</span>) <span class="keyword">as</span> sum_num,</span><br><span class="line">round(<span class="built_in">avg</span>(math),<span class="number">1</span>) <span class="keyword">as</span> avg_math,</span><br><span class="line">round(<span class="built_in">avg</span>(chinese),<span class="number">1</span>)  <span class="keyword">as</span> avg_chinese,</span><br><span class="line"><span class="keyword">from</span> t_score </span><br><span class="line">#永远是先分组，再排序，再limit筛选</span><br><span class="line"><span class="keyword">group</span> <span class="keyword">by</span> class,gender </span><br><span class="line"><span class="keyword">order</span> <span class="keyword">by</span>  class,gender;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>8，sql执行顺序</p>
+<ul>
+<li>通过from或者join确定原始数据来源</li>
+<li>通过where进行过滤</li>
+<li>过滤完通过group by进行分组</li>
+<li>分组后的结果通常包含一对多，检查是否需要对多使用聚合函数，分组后结果集基本形成，对结果集进行聚合函数运算也在这一步，这样下一步having就可以拿到聚合函数结果进行判断了</li>
+<li>having通过聚合函数的结果进行条件判断，比如取分组后，数学平均成绩大于80的组；<ul>
+<li>注意：having子句在select执行之前执行，所以在select关键字后定义的列的别名按理是不可以在having子句中直接引用的</li>
+<li>但是：mysql对此进行了语法糖优化，可以把select中对聚合函数列(只限聚合函数列，普通列不行)的别名直接用于having子句</li>
+<li>然而：不提倡写这种，老老实实写聚合函数表达</li>
+</ul>
+</li>
+<li>select ，选择需要列生成最终结果集</li>
+<li>distinct，对最终的列进行去重</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">#<span class="keyword">distinct</span>是对结果集的所有行去重，<span class="keyword">distinct</span>后接的是去重依据，这条依据department, employee_name对结果集去重</span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> department, employee_name <span class="keyword">FROM</span> employees;</span><br><span class="line">#下面这个是语法错误，</span><br><span class="line"><span class="keyword">SELECT</span> department, <span class="keyword">DISTINCT</span> employee_name <span class="keyword">FROM</span> employees;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>order by，对最终的结果集排序</li>
+<li>limit ，指定最终结果集的显示数量</li>
+</ul>
+<p>9，表连接</p>
+<ul>
+<li>join&#x2F;innerjoin：求交集，左表和有表都满足连接条件的行才会组合</li>
+<li>left join：以左表为依据，右表满足条件的行会组合，右表没有满足条件的行，对应的select 出来的列值为null</li>
+<li>right：和left相反</li>
+<li>full join：左右两边都组合，不满足条件用null值替代</li>
+</ul>
+<h1 id="基础知识-MySQL"><a href="#基础知识-MySQL" class="headerlink" title="基础知识-MySQL"></a>基础知识-MySQL</h1><p>1，主从复制</p>
+<p>2，分库分表</p>
+<p>3，死锁</p>
+<p>4，锁类型</p>
+<p>5，索引术语</p>
+<h3 id="6，索引下推"><a href="#6，索引下推" class="headerlink" title="6，索引下推"></a>6，索引下推</h3><ul>
+<li>联合索引第一列命中，第二列没有命中，比如where a &#x3D;1 and c&#x3D;1，a&#x3D;1可以走索引，无需回表，这个联合索引中已经有c的值，直接在server层判断就好了</li>
+<li>使用了索引下推，extra 会显示using index condition</li>
+</ul>
+<h3 id="7，索引合并"><a href="#7，索引合并" class="headerlink" title="7，索引合并"></a>7，索引合并</h3><ul>
+<li>索引交集，where a&#x3D;1 and b &#x3D;2，a，b列都有联合索引，独立查出来，然后去重<ul>
+<li>一定程度上可以替代a,b联合索引，减少索引冗余</li>
+<li>联合索引效率会快一些</li>
+</ul>
+</li>
+<li>索引并集，a&#x3D;1 or b&#x3D;2,和上面的相同</li>
+</ul>
+<h1 id="基础知识-Redis"><a href="#基础知识-Redis" class="headerlink" title="基础知识-Redis"></a>基础知识-Redis</h1><p>1，数据结构底层原理</p>
+<p>2，io多路复用对于Redis的作用</p>
+<ul>
+<li>单线程的情况下应对多个并发的网络连接</li>
+<li>时间驱动消除连接等待</li>
+<li>最大程度消除网络阻塞带来的影响</li>
+</ul>
+<h1 id="基础知识-SpringCloudAlibaba"><a href="#基础知识-SpringCloudAlibaba" class="headerlink" title="基础知识-SpringCloudAlibaba"></a>基础知识-SpringCloudAlibaba</h1><p>1，openfeign底层原理和流程</p>
+<h1 id="基础知识SSM"><a href="#基础知识SSM" class="headerlink" title="基础知识SSM"></a>基础知识SSM</h1><h3 id="1，spring事务失效的场景"><a href="#1，spring事务失效的场景" class="headerlink" title="1，spring事务失效的场景"></a>1，spring事务失效的场景</h3><ul>
+<li>事务方法所在类没有被spring管理</li>
+<li>方法被final修饰，aop无法重写方法，无法实现事务</li>
+<li>非public的方法</li>
+<li>同一个类自调用用的是原对象，不是代理对象，事务是代理对象增强的结果</li>
+<li>传播类型错误</li>
+<li>异常被内部catch了，不会触发回滚</li>
+</ul>
+<h3 id="2，mybatis分页的具体实现"><a href="#2，mybatis分页的具体实现" class="headerlink" title="2，mybatis分页的具体实现"></a>2，mybatis分页的具体实现</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//逻辑分页，先读到内存中，在进行分页</span></span><br><span class="line"><span class="type">RowBounds</span> <span class="variable">rowBounds</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">RowBounds</span>(offset, limit);</span><br><span class="line">List&lt;User&gt; users = userMapper.selectAllUsers(rowBounds);</span><br><span class="line"><span class="comment">//物理分页，直接更改sql语句</span></span><br><span class="line">PageHelper.startPage(pageNum, pageSize);</span><br><span class="line">List&lt;User&gt; users = userMapper.getAllUsers();</span><br></pre></td></tr></table></figure>
+
+<h1 id="面试经验"><a href="#面试经验" class="headerlink" title="面试经验"></a>面试经验</h1><h3 id="1，springboot给静态字段注入值"><a href="#1，springboot给静态字段注入值" class="headerlink" title="1，springboot给静态字段注入值"></a>1，springboot给静态字段注入值</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//通过@PostConstruct注解配合非静态临时字段来给静态字段赋值</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ConfigProperties</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> String apiKey; <span class="comment">// 静态字段</span></span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Value(&quot;$&#123;app.api.key&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> String tempApiKey; <span class="comment">// 非静态临时字段</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@PostConstruct</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">initStaticFields</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="comment">// 将非静态字段的值赋给静态字段</span></span><br><span class="line">        apiKey = <span class="built_in">this</span>.tempApiKey;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/ *</span><br><span class="line"><span class="number">1</span>，创建一个非静态的字段，给非静态字段注入值,</span><br><span class="line"><span class="number">2</span>，定义PostConstruct注解，这个注解在的方法，会在其他注入完成后执行(必须在<span class="meta">@value</span>执行完之后)，在方法内可以给静态字段赋值</span><br><span class="line">* /</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//加上了@Value注解的方法，会吧值放进参数里，拿到参数给静态变量赋值</span></span><br><span class="line"><span class="comment">//这个方法名不限，只能有一个参数，只能是public void修饰</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">DatabaseConfig</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> String dbUrl; <span class="comment">// 静态字段</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value(&quot;$&#123;database.url&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setDbUrl</span><span class="params">(String url)</span> &#123;</span><br><span class="line">        <span class="comment">// 在setter中直接设置静态字段</span></span><br><span class="line">        DatabaseConfig.dbUrl = url;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h1><p>1，alt+8可以快速唤出底下services控制台</p>
+<p>2，alt+9调出git提交日志</p>
+<p>3，alt+0调出提交页面，选择需要提交的类，写上提交注释，点击commitandpush</p>
+<ul>
+<li>如果直点击了commit，需要在导航栏点击git并点击push才能推到远程</li>
+</ul>
+<p>4，BeanCopyUtils.copyListPropertise(entities,dto);可以直接把一个list的对象转换类型并赋值，就不需要一个一个循环赋值或者是用stream流了</p>
+<p>5，在dao上加上@mapper，再使用@mapperscan配置，即可读取到dao接口，加上@repository可以增加可读性并且启动的时候spring不会警告说找不到这个bean</p>
+]]></content>
+      <categories>
+        <category>计算机</category>
+      </categories>
+      <tags>
+        <tag>成长</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>注解和aop</title>
+    <url>/2026/04/07/%E6%B3%A8%E8%A7%A3%E5%92%8Caop/</url>
+    <content><![CDATA[<h1 id="通过反射获取注解中的信息"><a href="#通过反射获取注解中的信息" class="headerlink" title="通过反射获取注解中的信息"></a>通过反射获取注解中的信息</h1><h2 id="需求分析"><a href="#需求分析" class="headerlink" title="需求分析"></a>需求分析</h2><p>1，创建一个注解：</p>
+<ul>
+<li>只能用在方法上</li>
+<li>运行时可用</li>
+<li>带两个属性：<ul>
+<li>module：模块名：例如用户管理</li>
+<li>action：操作名：例如新增用户</li>
+</ul>
+</li>
+</ul>
+<p>2，测试代码-读取注解属性：</p>
+<ul>
+<li>创建一个UserService类，创建一个新增用户的方法</li>
+<li>用自定义注解标识这个方法</li>
+<li>使用反射获取注解中的属性值并打印</li>
+</ul>
+<h2 id="创建注解"><a href="#创建注解" class="headerlink" title="创建注解"></a>创建注解</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Target(ElementType.METHOD)</span></span><br><span class="line"><span class="comment">//忘记了元数据的名字</span></span><br><span class="line"><span class="meta">@Retention(RetentionPolicy.RUNTIME)</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> OperationLog &#123;</span><br><span class="line">    <span class="comment">//注解的数据为什么不能用private,为什么用方法的形式</span></span><br><span class="line">    String <span class="title function_">module</span><span class="params">()</span>;</span><br><span class="line">    String <span class="title function_">action</span><span class="params">()</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h3><p>1，如何指定为运行时？为什么要指定为运行时？指定其他的有什么作用？</p>
+<ul>
+<li>@Retention(RetentionPolicy.RUNTIME)可以指定为运行时。</li>
+<li>总共有三种环境：SOURCE（源码环境）、CLASS（字节码环境）、Runtime（运行时环境），暂时可以粗略理解成，反射是在运行时环境拿注解，必须保证运行时注解还存在。</li>
+<li>@Retention决定注解能活到哪个阶段；指定为其他环境的作用待深入理解，涉及字节码工具和编译器。</li>
+</ul>
+<p>2，注解的属性为什么是方法的形式？为什么不能写成private的方法？</p>
+<ul>
+<li>注解的本质是一个接口，写一个注解相当于写了一个接口继承了java.lang.annotation.Annotation接口，因此：<ul>
+<li>接口的方法都是默认public Abstract的，所以不能用private修饰</li>
+</ul>
+</li>
+</ul>
+<h2 id="测试代码-读取注解属性"><a href="#测试代码-读取注解属性" class="headerlink" title="测试代码-读取注解属性"></a>测试代码-读取注解属性</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserService</span> &#123;</span><br><span class="line">    <span class="meta">@OperationLog(module = &quot;用户管理&quot;, action = &quot;添加用户&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">addUser</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;添加用户&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">test</span>&#123;</span><br><span class="line">     <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">         Class&lt;UserService&gt; userServiceClass = UserService.class;</span><br><span class="line">         <span class="type">Method</span> <span class="variable">addUser</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">         <span class="keyword">try</span> &#123;</span><br><span class="line">             addUser = userServiceClass.getDeclaredMethod(<span class="string">&quot;addUser&quot;</span>);</span><br><span class="line">         &#125; <span class="keyword">catch</span> (NoSuchMethodException e) &#123;</span><br><span class="line">             <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(e);</span><br><span class="line">         &#125;</span><br><span class="line">         <span class="comment">//这句话的用法</span></span><br><span class="line">         addUser.setAccessible(<span class="literal">true</span>);</span><br><span class="line">         <span class="keyword">if</span> (addUser.isAnnotationPresent(OperationLog.class)) &#123;</span><br><span class="line">             <span class="type">OperationLog</span> <span class="variable">operationLog</span> <span class="operator">=</span> addUser.getAnnotation(OperationLog.class);</span><br><span class="line">             System.out.println(<span class="string">&quot;模块：&quot;</span> + operationLog.<span class="keyword">module</span>() + <span class="string">&quot;, 操作：&quot;</span> + operationLog.action());</span><br><span class="line">         &#125;</span><br><span class="line">     &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="遇到的问题-1"><a href="#遇到的问题-1" class="headerlink" title="遇到的问题"></a>遇到的问题</h3><p>1， @OperationLog(module &#x3D; “用户管理”, action &#x3D; “添加用户”)是怎么把值赋值给注解的？</p>
+<ul>
+<li>使用代理类的方式，见代码：</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">final</span> <span class="keyword">class</span> <span class="title class_">$ProxyAnnotation</span> <span class="keyword">implements</span> <span class="title class_">OperationLog</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Map&lt;String, Object&gt; values;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> $ProxyAnnotation(Map&lt;String, Object&gt; values) &#123;</span><br><span class="line">        <span class="built_in">this</span>.values = values;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">module</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> (String) values.get(<span class="string">&quot;module&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">action</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> (String) values.get(<span class="string">&quot;action&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Class&lt;? <span class="keyword">extends</span> <span class="title class_">Annotation</span>&gt; annotationType() &#123;</span><br><span class="line">        <span class="keyword">return</span> OperationLog.class;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>当调用addUser.getAnnotation(OperationLog.class)时，需要获取一个代理对象回去：<ul>
+<li>代理对象会把注解属性名和方法上标记的值存进map，</li>
+<li>调用代理对象的方法，就会在map里取然后返回，</li>
+<li>每次调这个方法都会返回一个代理对象，也就是每个方法都单独对应一个代理对象，不会混乱。</li>
+</ul>
+</li>
+</ul>
+<p>2，operationLog.module()，既然OperationLog是接口，那怎么能用接口直接调用方法？</p>
+<ul>
+<li>同上，实际调用的是代理对象的方法。</li>
+</ul>
+<p>3，addUser.setAccessible(true)的作用？什么时候要setAccessible(true)？</p>
+<ul>
+<li>setAccessible(true)是跳过访问控制检查：<ul>
+<li>private属性要set()和get()时需要，</li>
+<li>private方法要invoke()时需要，</li>
+<li>通过属性和方法获取注解或者判断注解之类的，不需要，因为不管属性和方法原内容的事(待以后深入)。</li>
+</ul>
+</li>
+</ul>
+<h1 id="使用aop-注解"><a href="#使用aop-注解" class="headerlink" title="使用aop + 注解"></a>使用aop + 注解</h1><h2 id="需求分析-1"><a href="#需求分析-1" class="headerlink" title="需求分析"></a>需求分析</h2><p>1，使用aop打印出方法的执行时间</p>
+<p>2，使用aop防止方法短时间内重复提交</p>
+<h2 id="使用aop打印出方法的执行时间"><a href="#使用aop打印出方法的执行时间" class="headerlink" title="使用aop打印出方法的执行时间"></a>使用aop打印出方法的执行时间</h2><h3 id="创建自定义注解"><a href="#创建自定义注解" class="headerlink" title="创建自定义注解"></a>创建自定义注解</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Target(ElementType.METHOD)</span></span><br><span class="line"><span class="meta">@Retention(RetentionPolicy.RUNTIME)</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> TimeLog &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用注解标记方法"><a href="#使用注解标记方法" class="headerlink" title="使用注解标记方法"></a>使用注解标记方法</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@TimeLog</span></span><br><span class="line"><span class="keyword">public</span> String <span class="title function_">addUser</span><span class="params">()</span>  &#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;添加用户&quot;</span>);</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        Thread.sleep(<span class="number">3000</span>);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(e);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;success&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="创建切面"><a href="#创建切面" class="headerlink" title="创建切面"></a>创建切面</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="meta">@Aspect</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TimeLogAspect</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Around(&quot;@annotation(test.anotation.TimeLog)&quot;)</span></span><br><span class="line">    <span class="comment">//问题：@Around参数怎么写</span></span><br><span class="line">    <span class="keyword">public</span> Object <span class="title function_">logTime</span><span class="params">(ProceedingJoinPoint joinPoint)</span> &#123;</span><br><span class="line">        <span class="type">LocalDateTime</span> <span class="variable">start</span> <span class="operator">=</span> LocalDateTime.now();</span><br><span class="line">        <span class="comment">//问题：参数是哪个类型？是不是joinPoint</span></span><br><span class="line">        Object bean;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            bean = joinPoint.proceed();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Throwable e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(e);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="type">LocalDateTime</span> <span class="variable">end</span> <span class="operator">=</span> LocalDateTime.now();</span><br><span class="line">        <span class="comment">//问题：如何相减后获取毫秒数，转化为分钟</span></span><br><span class="line">        <span class="type">Duration</span> <span class="variable">duration</span> <span class="operator">=</span> Duration.between(start, end);</span><br><span class="line">        <span class="type">long</span> <span class="variable">seconds</span> <span class="operator">=</span> duration.toSeconds();</span><br><span class="line">        System.out.println(<span class="string">&quot;耗时：&quot;</span> + seconds + <span class="string">&quot;秒&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> bean;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    <span class="comment">//也可以写参数名，会通过参数的类型去找切点，而且spring会把注解的代理对象传进来，就不用通过method去拿了</span></span><br><span class="line">    <span class="meta">@Around(&quot;@annotation(timeLog)&quot;)</span></span><br><span class="line">    <span class="comment">//问题：@Around参数怎么写</span></span><br><span class="line">    <span class="keyword">public</span> Object <span class="title function_">logTime</span><span class="params">(ProceedingJoinPoint joinPoint, TimeLog timeLog)</span> &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="遇到的问题-2"><a href="#遇到的问题-2" class="headerlink" title="遇到的问题"></a>遇到的问题</h3><p>1，@Around的参数是什么？除了Around还有其他的吗，这几个区别是什么？</p>
+<ul>
+<li>参数，常用两种：<ul>
+<li>切点为注解：写注解全限定名或者参数名，详情见以上代码，</li>
+<li>用execution：execution(* com.xxx..*(..))：(返回类型 包.类.方法名(参数1类型，参数2类型，··))。</li>
+</ul>
+</li>
+<li>除Around外：<ul>
+<li>@Before：方法执行前：参数校验 &#x2F; 权限校验</li>
+<li>@After：方法执行后，不在呼是否成功：释放资源 &#x2F; 收尾日志</li>
+<li>@AfterReturning：方法成功返回：返回值脱敏&#x2F; 补字段</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@AfterReturning(</span></span><br><span class="line"><span class="meta">    pointcut = &quot;@annotation(timeLog)&quot;,</span></span><br><span class="line"><span class="meta">    returning = &quot;result&quot;</span></span><br><span class="line"><span class="meta">)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">afterReturning</span><span class="params">(JoinPoint joinPoint, Object result)</span> &#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;返回值：&quot;</span> + result);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>@AfterThrowing：统一异常日志 &#x2F; 告警</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@AfterThrowing(</span></span><br><span class="line"><span class="meta">    pointcut = &quot;@annotation(timeLog)&quot;,</span></span><br><span class="line"><span class="meta">    throwing = &quot;ex&quot;</span></span><br><span class="line"><span class="meta">)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">afterThrowing</span><span class="params">(JoinPoint joinPoint, Exception ex)</span> &#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;异常：&quot;</span> + ex.getMessage());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>2，joinPoint具体是哪个类型？</p>
+<ul>
+<li>ProceedingJoinPoint类型，通过这个类型可以获取原始方法、类、参数：</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="type">MethodSignature</span> <span class="variable">signature</span> <span class="operator">=</span> (MethodSignature) joinPoint.getSignature();</span><br><span class="line"><span class="comment">//方法</span></span><br><span class="line"><span class="type">Method</span> <span class="variable">method</span> <span class="operator">=</span> signature.getMethod();</span><br><span class="line"><span class="comment">//方法名</span></span><br><span class="line"><span class="type">String</span> <span class="variable">methodName</span> <span class="operator">=</span> method.getName();</span><br><span class="line"><span class="comment">//方法参数</span></span><br><span class="line">Object[] args = joinPoint.getArgs();</span><br><span class="line"><span class="comment">//方法所在的类</span></span><br><span class="line"><span class="type">UserService</span> <span class="variable">target</span> <span class="operator">=</span> (UserService) joinPoint.getTarget();</span><br></pre></td></tr></table></figure>
+
+<p>3，localDatetime如何计算出时间间隔，并转成想要的单位？</p>
+<ul>
+<li>用Duration工具类</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="type">UserService</span> <span class="variable">target</span> <span class="operator">=</span> (UserService) joinPoint.getTarget();</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用aop防止方法短时间内重复提交"><a href="#使用aop防止方法短时间内重复提交" class="headerlink" title="使用aop防止方法短时间内重复提交"></a>使用aop防止方法短时间内重复提交</h2><h3 id="创建自定义注解-1"><a href="#创建自定义注解-1" class="headerlink" title="创建自定义注解"></a>创建自定义注解</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Target(ElementType.METHOD)</span></span><br><span class="line"><span class="meta">@Retention(RetentionPolicy.RUNTIME)</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> NoRepeatSubmit &#123;</span><br><span class="line">    <span class="type">long</span> <span class="title function_">seconds</span><span class="params">()</span> <span class="keyword">default</span> <span class="number">5</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用注解标记方法-1"><a href="#使用注解标记方法-1" class="headerlink" title="使用注解标记方法"></a>使用注解标记方法</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@NoRepeatSubmit(seconds = 10L)</span></span><br><span class="line"><span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">updateUser</span><span class="params">(Long userId)</span>  &#123;</span><br><span class="line">    <span class="comment">//这里还要拼接上url路径，或者是拼接上类全限定名，userId变量</span></span><br><span class="line">    methodInvokeTime.put(userId + url + <span class="string">&quot;updateUser&quot;</span>, LocalDateTime.now());</span><br><span class="line">    System.out.println(<span class="string">&quot;更新用户&quot;</span>);</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        Thread.sleep(<span class="number">3000</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;更新用户成功&quot;</span> + userId);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(e);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="创建切面-1"><a href="#创建切面-1" class="headerlink" title="创建切面"></a>创建切面</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Aspect</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">NoRepeatSubmitAspect</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Around(&quot;@annotation(test.anotation.NoRepeatSubmit)&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Object <span class="title function_">noRepeatSubmit</span><span class="params">(ProceedingJoinPoint joinPoint)</span>&#123;</span><br><span class="line">        <span class="type">MethodSignature</span> <span class="variable">signature</span> <span class="operator">=</span> (MethodSignature) joinPoint.getSignature();</span><br><span class="line">        <span class="type">Method</span> <span class="variable">method</span> <span class="operator">=</span> signature.getMethod();</span><br><span class="line">        <span class="type">String</span> <span class="variable">methodName</span> <span class="operator">=</span> method.getName();</span><br><span class="line">        Object[] args = joinPoint.getArgs();</span><br><span class="line">        <span class="type">NoRepeatSubmit</span> <span class="variable">noRepeatSubmit</span> <span class="operator">=</span> method.getAnnotation(NoRepeatSubmit.class);</span><br><span class="line">        </span><br><span class="line">        <span class="type">LocalDateTime</span> <span class="variable">now</span> <span class="operator">=</span> LocalDateTime.now();</span><br><span class="line">        <span class="comment">//这里可以存到redis里，也可以存ConcurrentHashMap</span></span><br><span class="line">        ConcurrentHashMap&lt;String, LocalDateTime&gt; methodInvokeTime = UserService.methodInvokeTime;</span><br><span class="line">        <span class="comment">//第一次放心</span></span><br><span class="line">        <span class="type">LocalDateTime</span> <span class="variable">lastInvokeTime</span> <span class="operator">=</span> methodInvokeTime.get(methodName) == <span class="literal">null</span>? now.minusSeconds(noRepeatSubmit.seconds()) : methodInvokeTime.get(methodName);</span><br><span class="line">        <span class="type">long</span> <span class="variable">seconds</span> <span class="operator">=</span> Duration.between(lastInvokeTime, now).toSeconds();</span><br><span class="line">        <span class="keyword">if</span> (seconds &lt; noRepeatSubmit.seconds()) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(<span class="string">&quot;请勿重复提交&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> joinPoint.proceed(args);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Throwable e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="注意点"><a href="#注意点" class="headerlink" title="注意点"></a>注意点</h3><p>1，每个用户id + 方法url （或者类全限定名）+ 方法名 作为key，保证每个用户每个时间段内只能提交一次。</p>
+<p>2，ConcurrentHashMap是必须的，会有很多线程同时往里面put。</p>
+<p>3，如果有分布式的需求，可以存进redis里面，需要分布式锁(后续待深入)。</p>
+<p>4，一定要记得joinPoint.proceed(args)的返回值是原始bean，要返回回去；@Around标记的方法也要返回Object。</p>
+]]></content>
+      <categories>
+        <category>认真版</category>
+      </categories>
+      <tags>
+        <tag>认真版</tag>
+      </tags>
   </entry>
   <entry>
     <title>项目经验</title>
@@ -5483,136 +5613,6 @@ ScheduledThreadPoolExecutor scheduledThreadPoolExecutor =
       </categories>
       <tags>
         <tag>面试八股文</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>错题</title>
-    <url>/2025/08/03/%E9%94%99%E9%A2%98/</url>
-    <content><![CDATA[<h1 id="SQL-MySQL"><a href="#SQL-MySQL" class="headerlink" title="SQL-MySQL"></a>SQL-MySQL</h1><p>1，查找条件为不等于</p>
-<ul>
-<li>!&#x3D;</li>
-<li>&lt;&gt;</li>
-<li>not in()</li>
-</ul>
-<p>2，查找条件为非空</p>
-<ul>
-<li>is not null</li>
-</ul>
-<p>3,order by 默认 asc升序</p>
-<p>4，模糊查询通配符意义，···where name like···</p>
-<ul>
-<li>%：多个任意字符</li>
-<li>_:一个任意字符</li>
-</ul>
-<p>5，正则匹配，··where name regexp··· （内有乾坤，有时间了再详细去看）</p>
-<ul>
-<li>[abc]：abc范围内任意一个字符</li>
-<li>[^abc] : abc范围外的任意一个字符</li>
-</ul>
-<p>6，查找某列最大值</p>
-<ul>
-<li>先order by xx desc降序，再limit 1，取一个<ul>
-<li>limit(a,b)表示跳过a个后取b个</li>
-</ul>
-</li>
-<li>直接select max(xx) as xx,给列取一个别名代替max(xx)</li>
-</ul>
-<p>7,avg，count，round，as，group by，order by，的使用</p>
-<p>求每个班，男生和女生分别的，语文和数学平均成绩，人数，结果以班级为首列，性别为第二列，以班级+性别升序排列，成绩保留1位小数</p>
-<ul>
-<li>每个班-&gt;以班级分组；男女-&gt;以性别分组；应当有班级+性别作为分组条件</li>
-<li>平均成绩用avg(成绩列) as xx；某列的平均数并起别名<ul>
-<li>保留小数用round(a,b),给a保留b位小数</li>
-</ul>
-</li>
-<li>计数用count(*),conut(列名)会略过null值</li>
-<li>结果：</li>
-</ul>
-<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> </span><br><span class="line">#一定记住把分组条件放进结果集，不然结果意义不明，看不懂</span><br><span class="line">class,</span><br><span class="line">gender, </span><br><span class="line">#<span class="keyword">as</span>用来设置别名，也就是结果集最终的列名，<span class="keyword">as</span>写在所有的聚合函数后面，等运行好了再设置别名</span><br><span class="line"><span class="built_in">count</span>(<span class="operator">*</span>) <span class="keyword">as</span> sum_num,</span><br><span class="line">round(<span class="built_in">avg</span>(math),<span class="number">1</span>) <span class="keyword">as</span> avg_math,</span><br><span class="line">round(<span class="built_in">avg</span>(chinese),<span class="number">1</span>)  <span class="keyword">as</span> avg_chinese,</span><br><span class="line"><span class="keyword">from</span> t_score </span><br><span class="line">#永远是先分组，再排序，再limit筛选</span><br><span class="line"><span class="keyword">group</span> <span class="keyword">by</span> class,gender </span><br><span class="line"><span class="keyword">order</span> <span class="keyword">by</span>  class,gender;</span><br></pre></td></tr></table></figure>
-
-
-
-<p>8，sql执行顺序</p>
-<ul>
-<li>通过from或者join确定原始数据来源</li>
-<li>通过where进行过滤</li>
-<li>过滤完通过group by进行分组</li>
-<li>分组后的结果通常包含一对多，检查是否需要对多使用聚合函数，分组后结果集基本形成，对结果集进行聚合函数运算也在这一步，这样下一步having就可以拿到聚合函数结果进行判断了</li>
-<li>having通过聚合函数的结果进行条件判断，比如取分组后，数学平均成绩大于80的组；<ul>
-<li>注意：having子句在select执行之前执行，所以在select关键字后定义的列的别名按理是不可以在having子句中直接引用的</li>
-<li>但是：mysql对此进行了语法糖优化，可以把select中对聚合函数列(只限聚合函数列，普通列不行)的别名直接用于having子句</li>
-<li>然而：不提倡写这种，老老实实写聚合函数表达</li>
-</ul>
-</li>
-<li>select ，选择需要列生成最终结果集</li>
-<li>distinct，对最终的列进行去重</li>
-</ul>
-<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">#<span class="keyword">distinct</span>是对结果集的所有行去重，<span class="keyword">distinct</span>后接的是去重依据，这条依据department, employee_name对结果集去重</span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> department, employee_name <span class="keyword">FROM</span> employees;</span><br><span class="line">#下面这个是语法错误，</span><br><span class="line"><span class="keyword">SELECT</span> department, <span class="keyword">DISTINCT</span> employee_name <span class="keyword">FROM</span> employees;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>order by，对最终的结果集排序</li>
-<li>limit ，指定最终结果集的显示数量</li>
-</ul>
-<p>9，表连接</p>
-<ul>
-<li>join&#x2F;innerjoin：求交集，左表和有表都满足连接条件的行才会组合</li>
-<li>left join：以左表为依据，右表满足条件的行会组合，右表没有满足条件的行，对应的select 出来的列值为null</li>
-<li>right：和left相反</li>
-<li>full join：左右两边都组合，不满足条件用null值替代</li>
-</ul>
-<h1 id="基础知识-MySQL"><a href="#基础知识-MySQL" class="headerlink" title="基础知识-MySQL"></a>基础知识-MySQL</h1><p>1，主从复制</p>
-<p>2，分库分表</p>
-<p>3，死锁</p>
-<p>4，锁类型</p>
-<p>5，索引术语</p>
-<h3 id="6，索引下推"><a href="#6，索引下推" class="headerlink" title="6，索引下推"></a>6，索引下推</h3><ul>
-<li>联合索引第一列命中，第二列没有命中，比如where a &#x3D;1 and c&#x3D;1，a&#x3D;1可以走索引，无需回表，这个联合索引中已经有c的值，直接在server层判断就好了</li>
-<li>使用了索引下推，extra 会显示using index condition</li>
-</ul>
-<h3 id="7，索引合并"><a href="#7，索引合并" class="headerlink" title="7，索引合并"></a>7，索引合并</h3><ul>
-<li>索引交集，where a&#x3D;1 and b &#x3D;2，a，b列都有联合索引，独立查出来，然后去重<ul>
-<li>一定程度上可以替代a,b联合索引，减少索引冗余</li>
-<li>联合索引效率会快一些</li>
-</ul>
-</li>
-<li>索引并集，a&#x3D;1 or b&#x3D;2,和上面的相同</li>
-</ul>
-<h1 id="基础知识-Redis"><a href="#基础知识-Redis" class="headerlink" title="基础知识-Redis"></a>基础知识-Redis</h1><p>1，数据结构底层原理</p>
-<p>2，io多路复用对于Redis的作用</p>
-<ul>
-<li>单线程的情况下应对多个并发的网络连接</li>
-<li>时间驱动消除连接等待</li>
-<li>最大程度消除网络阻塞带来的影响</li>
-</ul>
-<h1 id="基础知识-SpringCloudAlibaba"><a href="#基础知识-SpringCloudAlibaba" class="headerlink" title="基础知识-SpringCloudAlibaba"></a>基础知识-SpringCloudAlibaba</h1><p>1，openfeign底层原理和流程</p>
-<h1 id="基础知识SSM"><a href="#基础知识SSM" class="headerlink" title="基础知识SSM"></a>基础知识SSM</h1><h3 id="1，spring事务失效的场景"><a href="#1，spring事务失效的场景" class="headerlink" title="1，spring事务失效的场景"></a>1，spring事务失效的场景</h3><ul>
-<li>事务方法所在类没有被spring管理</li>
-<li>方法被final修饰，aop无法重写方法，无法实现事务</li>
-<li>非public的方法</li>
-<li>同一个类自调用用的是原对象，不是代理对象，事务是代理对象增强的结果</li>
-<li>传播类型错误</li>
-<li>异常被内部catch了，不会触发回滚</li>
-</ul>
-<h3 id="2，mybatis分页的具体实现"><a href="#2，mybatis分页的具体实现" class="headerlink" title="2，mybatis分页的具体实现"></a>2，mybatis分页的具体实现</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//逻辑分页，先读到内存中，在进行分页</span></span><br><span class="line"><span class="type">RowBounds</span> <span class="variable">rowBounds</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">RowBounds</span>(offset, limit);</span><br><span class="line">List&lt;User&gt; users = userMapper.selectAllUsers(rowBounds);</span><br><span class="line"><span class="comment">//物理分页，直接更改sql语句</span></span><br><span class="line">PageHelper.startPage(pageNum, pageSize);</span><br><span class="line">List&lt;User&gt; users = userMapper.getAllUsers();</span><br></pre></td></tr></table></figure>
-
-<h1 id="面试经验"><a href="#面试经验" class="headerlink" title="面试经验"></a>面试经验</h1><h3 id="1，springboot给静态字段注入值"><a href="#1，springboot给静态字段注入值" class="headerlink" title="1，springboot给静态字段注入值"></a>1，springboot给静态字段注入值</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//通过@PostConstruct注解配合非静态临时字段来给静态字段赋值</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ConfigProperties</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> String apiKey; <span class="comment">// 静态字段</span></span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Value(&quot;$&#123;app.api.key&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> String tempApiKey; <span class="comment">// 非静态临时字段</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@PostConstruct</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">initStaticFields</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="comment">// 将非静态字段的值赋给静态字段</span></span><br><span class="line">        apiKey = <span class="built_in">this</span>.tempApiKey;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/ *</span><br><span class="line"><span class="number">1</span>，创建一个非静态的字段，给非静态字段注入值,</span><br><span class="line"><span class="number">2</span>，定义PostConstruct注解，这个注解在的方法，会在其他注入完成后执行(必须在<span class="meta">@value</span>执行完之后)，在方法内可以给静态字段赋值</span><br><span class="line">* /</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//加上了@Value注解的方法，会吧值放进参数里，拿到参数给静态变量赋值</span></span><br><span class="line"><span class="comment">//这个方法名不限，只能有一个参数，只能是public void修饰</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">DatabaseConfig</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> String dbUrl; <span class="comment">// 静态字段</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value(&quot;$&#123;database.url&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setDbUrl</span><span class="params">(String url)</span> &#123;</span><br><span class="line">        <span class="comment">// 在setter中直接设置静态字段</span></span><br><span class="line">        DatabaseConfig.dbUrl = url;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h1><p>1，alt+8可以快速唤出底下services控制台</p>
-<p>2，alt+9调出git提交日志</p>
-<p>3，alt+0调出提交页面，选择需要提交的类，写上提交注释，点击commitandpush</p>
-<ul>
-<li>如果直点击了commit，需要在导航栏点击git并点击push才能推到远程</li>
-</ul>
-<p>4，BeanCopyUtils.copyListPropertise(entities,dto);可以直接把一个list的对象转换类型并赋值，就不需要一个一个循环赋值或者是用stream流了</p>
-<p>5，在dao上加上@mapper，再使用@mapperscan配置，即可读取到dao接口，加上@repository可以增加可读性并且启动的时候spring不会警告说找不到这个bean</p>
-]]></content>
-      <categories>
-        <category>计算机</category>
-      </categories>
-      <tags>
-        <tag>成长</tag>
       </tags>
   </entry>
 </search>
