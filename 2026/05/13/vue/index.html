@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha256-5eIC48iZUHmSlSUz9XtjRyK2mzQkHScZY1WdMaoz74E=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.21.1","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"always","padding":18,"offset":12},"hljswrap":true,"copycode":{"border_radius":8,"enable":true,"show_result":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Vue 核心概念笔记（一句话版）一、Vue 是怎么跑起来的？ main.ts是整个应用的 入口 createApp(App).mount(&#39;#app&#39;)相当于 Java 的 new Application().run() 从这开始，Vue 接管页面   二、组件到底是什么？ .vue文件 &#x3D; 一个 组件 组件 ≈ Java 类 export default &#123;&amp;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue">
+<meta property="og:url" content="http://example.com/2026/05/13/vue/index.html">
+<meta property="og:site_name" content="沙沙沙">
+<meta property="og:description" content="Vue 核心概念笔记（一句话版）一、Vue 是怎么跑起来的？ main.ts是整个应用的 入口 createApp(App).mount(&#39;#app&#39;)相当于 Java 的 new Application().run() 从这开始，Vue 接管页面   二、组件到底是什么？ .vue文件 &#x3D; 一个 组件 组件 ≈ Java 类 export default &#123;&amp;">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-05-13T07:03:44.000Z">
+<meta property="article:modified_time" content="2026-05-13T07:20:30.142Z">
+<meta property="article:author" content="呼呼呼">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2026/05/13/vue/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2026/05/13/vue/","path":"2026/05/13/vue/","title":"vue"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>vue | 沙沙沙</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">沙沙沙</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Vue-%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%E5%8F%A5%E8%AF%9D%E7%89%88%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">Vue 核心概念笔记（一句话版）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81Vue-%E6%98%AF%E6%80%8E%E4%B9%88%E8%B7%91%E8%B5%B7%E6%9D%A5%E7%9A%84%EF%BC%9F"><span class="nav-number">1.1.</span> <span class="nav-text">一、Vue 是怎么跑起来的？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E7%BB%84%E4%BB%B6%E5%88%B0%E5%BA%95%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">1.2.</span> <span class="nav-text">二、组件到底是什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E7%BB%84%E4%BB%B6%E4%B9%8B%E9%97%B4%E6%80%8E%E4%B9%88%E4%BC%A0%E6%95%B0%E6%8D%AE%EF%BC%9F"><span class="nav-number">1.3.</span> <span class="nav-text">三、组件之间怎么传数据？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E7%BB%84%E4%BB%B6%E9%87%8C%E7%9A%84%E6%95%B0%E6%8D%AE%E6%94%BE%E5%9C%A8%E5%93%AA%EF%BC%9F"><span class="nav-number">1.4.</span> <span class="nav-text">四、组件里的数据放在哪？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Vue-2"><span class="nav-number">1.4.1.</span> <span class="nav-text">Vue 2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Vue-3%EF%BC%88%E6%8E%A8%E8%8D%90%EF%BC%89"><span class="nav-number">1.4.2.</span> <span class="nav-text">Vue 3（推荐）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E4%BB%80%E4%B9%88%E6%98%AF%E5%93%8D%E5%BA%94%E5%BC%8F%EF%BC%9F%EF%BC%88%E6%9C%80%E9%87%8D%E8%A6%81%EF%BC%89"><span class="nav-number">1.5.</span> <span class="nav-text">五、什么是响应式？（最重要）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81v-model-%E5%92%8C%E5%93%8D%E5%BA%94%E5%BC%8F%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="nav-number">1.6.</span> <span class="nav-text">六、v-model 和响应式的关系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%83%E3%80%81setup-%E6%98%AF%E5%B9%B2%E5%98%9B%E7%9A%84%EF%BC%9F"><span class="nav-number">1.7.</span> <span class="nav-text">七、setup() 是干嘛的？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AB%E3%80%81import-export-%E6%80%8E%E4%B9%88%E7%90%86%E8%A7%A3%EF%BC%9F"><span class="nav-number">1.8.</span> <span class="nav-text">八、import &#x2F; export 怎么理解？</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="呼呼呼"
+      src="/images/%E5%A4%B4%E5%83%8F.gif">
+  <p class="site-author-name" itemprop="name">呼呼呼</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">38</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">29</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+
+<div class="post-block">
+
+
+
+
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2026/05/13/vue/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/%E5%A4%B4%E5%83%8F.gif">
+      <meta itemprop="name" content="呼呼呼">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沙沙沙">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="vue | 沙沙沙">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          vue
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2026-05-13 15:03:44 / 修改时间：15:20:30" itemprop="dateCreated datePublished" datetime="2026-05-13T15:03:44+08:00">2026-05-13</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>845</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="Vue-核心概念笔记（一句话版）"><a href="#Vue-核心概念笔记（一句话版）" class="headerlink" title="Vue 核心概念笔记（一句话版）"></a>Vue 核心概念笔记（一句话版）</h1><h2 id="一、Vue-是怎么跑起来的？"><a href="#一、Vue-是怎么跑起来的？" class="headerlink" title="一、Vue 是怎么跑起来的？"></a>一、Vue 是怎么跑起来的？</h2><ul>
+<li><code>main.ts</code>是整个应用的 <strong>入口</strong></li>
+<li><code>createApp(App).mount(&#39;#app&#39;)</code>相当于 Java 的 <code>new Application().run()</code></li>
+<li>从这开始，Vue 接管页面</li>
+</ul>
+<hr>
+<h2 id="二、组件到底是什么？"><a href="#二、组件到底是什么？" class="headerlink" title="二、组件到底是什么？"></a>二、组件到底是什么？</h2><ul>
+<li><code>.vue</code>文件 &#x3D; 一个 <strong>组件</strong></li>
+<li>组件 ≈ Java 类</li>
+<li><code>export default &#123;&#125;</code>&#x3D; 告诉 Vue：这是一个组件</li>
+<li><code>&lt;HelloWorld /&gt;</code>&#x3D; 使用这个组件（new 一个实例）</li>
+</ul>
+<hr>
+<h2 id="三、组件之间怎么传数据？"><a href="#三、组件之间怎么传数据？" class="headerlink" title="三、组件之间怎么传数据？"></a>三、组件之间怎么传数据？</h2><ul>
+<li>父组件：</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">HelloWorld</span> <span class="attr">msg</span>=<span class="string">&quot;你好&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>子组件：</li>
+</ul>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">defineProps&lt;&#123; <span class="attr">msg</span>: <span class="built_in">string</span> &#125;&gt;()</span><br></pre></td></tr></table></figure>
+
+<p>✅ 相当于 Java 构造器参数</p>
+<p>✅ 父 → 子 单向传值</p>
+<hr>
+<h2 id="四、组件里的数据放在哪？"><a href="#四、组件里的数据放在哪？" class="headerlink" title="四、组件里的数据放在哪？"></a>四、组件里的数据放在哪？</h2><h3 id="Vue-2"><a href="#Vue-2" class="headerlink" title="Vue 2"></a>Vue 2</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">data</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> &#123; <span class="attr">count</span>: <span class="number">0</span> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Vue-3（推荐）"><a href="#Vue-3（推荐）" class="headerlink" title="Vue 3（推荐）"></a>Vue 3（推荐）</h3><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> count = <span class="title function_">ref</span>(<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+
+<p>✅ 作用一样：</p>
+<blockquote>
+<p><strong>存组件内部状态</strong></p>
+</blockquote>
+<p>✅ 每个组件实例都有自己的一份</p>
+<p>✅ 不会互相影响</p>
+<hr>
+<h2 id="五、什么是响应式？（最重要）"><a href="#五、什么是响应式？（最重要）" class="headerlink" title="五、什么是响应式？（最重要）"></a>五、什么是响应式？（最重要）</h2><ul>
+<li>响应式 &#x3D; <strong>数据变 → 页面自动变</strong></li>
+<li><code>ref()</code>就是让数据“能被 Vue 监听”</li>
+<li>普通变量变了： ❌ Vue 不知道 ❌ 页面不更新</li>
+</ul>
+<p>📌 Java 类比：</p>
+<ul>
+<li>响应式 ≈ 观察者模式</li>
+</ul>
+<hr>
+<h2 id="六、v-model-和响应式的关系"><a href="#六、v-model-和响应式的关系" class="headerlink" title="六、v-model 和响应式的关系"></a>六、v-model 和响应式的关系</h2><ul>
+<li><code>v-model</code>只是语法糖</li>
+<li>本质是： 绑定值 监听输入 改响应式数据</li>
+<li><strong>没有响应式，v-model 没用</strong></li>
+</ul>
+<hr>
+<h2 id="七、setup-是干嘛的？"><a href="#七、setup-是干嘛的？" class="headerlink" title="七、setup() 是干嘛的？"></a>七、setup() 是干嘛的？</h2><ul>
+<li><code>setup()</code>&#x3D; 组件构造器</li>
+<li>每次创建组件都会执行一次</li>
+<li>在里面初始化响应式数据</li>
+</ul>
+<hr>
+<h2 id="八、import-export-怎么理解？"><a href="#八、import-export-怎么理解？" class="headerlink" title="八、import &#x2F; export 怎么理解？"></a>八、import &#x2F; export 怎么理解？</h2><ul>
+<li><code>export</code>&#x3D; 对外暴露（public）</li>
+<li>没写 &#x3D; 内部私有（private）</li>
+<li><code>&#123; &#125;</code>&#x3D; 具名导出</li>
+<li><code>export default</code>&#x3D; 主出口</li>
+</ul>
+<p>📌 Java 类比：</p>
+<ul>
+<li><code>&#123;&#125;</code>→ <code>import static</code></li>
+<li><code>default</code>→ 主类</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026/04/23/%E5%95%86%E5%9F%8E%E6%94%AF%E4%BB%98%E9%A1%B9%E7%9B%AE/" rel="prev" title="商城支付项目">
+                  <i class="fa fa-angle-left"></i> 商城支付项目
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2026/05/20/%E7%BD%91%E7%BB%9C/" rel="next" title="网络">
+                  网络 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">呼呼呼</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">164k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">2:29</span>
+  </span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div> -->
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('/n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+          if(result)$(this).text('复制成功')
+          else $(this).text('复制失败')
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('复制')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+</body>
+</html>

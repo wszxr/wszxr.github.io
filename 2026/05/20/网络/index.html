@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha256-5eIC48iZUHmSlSUz9XtjRyK2mzQkHScZY1WdMaoz74E=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.21.1","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"always","padding":18,"offset":12},"hljswrap":true,"copycode":{"border_radius":8,"enable":true,"show_result":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="1，ipv4地址192.168.1.1 网络号+主机地址； 用四段十进制表示，每一段都是8位2进制； 当前网络一般不在使用abc类分配，都是动态的CIDR(无分类地址)，192.168.1.1&#x2F;24显示前3块(24位)是网络号，原理是通过子网掩码，255.255.255.0 &amp; 192.168.1.1 就算出了192.168.1.0这个网络号； 2，网段网络号相同就是同一个网段，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="网络">
+<meta property="og:url" content="http://example.com/2026/05/20/%E7%BD%91%E7%BB%9C/index.html">
+<meta property="og:site_name" content="沙沙沙">
+<meta property="og:description" content="1，ipv4地址192.168.1.1 网络号+主机地址； 用四段十进制表示，每一段都是8位2进制； 当前网络一般不在使用abc类分配，都是动态的CIDR(无分类地址)，192.168.1.1&#x2F;24显示前3块(24位)是网络号，原理是通过子网掩码，255.255.255.0 &amp; 192.168.1.1 就算出了192.168.1.0这个网络号； 2，网段网络号相同就是同一个网段，">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-05-20T03:17:50.000Z">
+<meta property="article:modified_time" content="2026-05-20T07:41:37.587Z">
+<meta property="article:author" content="呼呼呼">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2026/05/20/%E7%BD%91%E7%BB%9C/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2026/05/20/%E7%BD%91%E7%BB%9C/","path":"2026/05/20/网络/","title":"网络"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>网络 | 沙沙沙</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">沙沙沙</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#socket%E7%A4%BA%E4%BE%8B"><span class="nav-number">1.</span> <span class="nav-text">socket示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Socket-TCP-%E6%80%BB%E7%BB%93"><span class="nav-number">2.</span> <span class="nav-text">Socket &amp; TCP 总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="呼呼呼"
+      src="/images/%E5%A4%B4%E5%83%8F.gif">
+  <p class="site-author-name" itemprop="name">呼呼呼</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">38</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">29</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+
+<div class="post-block">
+
+
+
+
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2026/05/20/%E7%BD%91%E7%BB%9C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/%E5%A4%B4%E5%83%8F.gif">
+      <meta itemprop="name" content="呼呼呼">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沙沙沙">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="网络 | 沙沙沙">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          网络
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2026-05-20 11:17:50 / 修改时间：15:41:37" itemprop="dateCreated datePublished" datetime="2026-05-20T11:17:50+08:00">2026-05-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%9F%BA%E7%A1%80/" itemprop="url" rel="index"><span itemprop="name">基础</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>6k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>5 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>1，ipv4地址<br>192.168.1.1 网络号+主机地址；</p>
+<p>用四段十进制表示，每一段都是8位2进制；</p>
+<p>当前网络一般不在使用abc类分配，都是动态的CIDR(无分类地址)，<br>192.168.1.1&#x2F;24显示前3块(24位)是网络号，<br>原理是通过子网掩码，255.255.255.0 &amp; 192.168.1.1</p>
+<p>就算出了192.168.1.0这个网络号；</p>
+<p>2，网段<br>网络号相同就是同一个网段，同一个网段才能直接转发数据包，<br>否则就需要转到网关(路由器)；</p>
+<p>3，包传输<br>例子：从192.168.1.0&#x2F;24 ping 192.168.2.0&#x2F;24<br>电脑发出包-&gt;判断是不是同一网段(否)-&gt;需要转发到网关(路由器)</p>
+<p>1，os查路由表，知道要转发路由器的ip<br>2，os查arp缓存获取路由去的mac，缓存没有，触发arp广播，交换机泛洪广播<br>3，先发送到交换机(把帧直接发到网线里，交换机端口检测到电平变化，被动工作)，交换机全接收<br>4，交换机记录发起方ip和交换机端口，用于之后从交换机往源主机发报文<br>5，交换机通过报文的路由器mac，发给路由器<br>要注意，运营商的网络基本路由表都只有默认的一个目标路由器，<br>运营商0.0.0.0&#x2F;0，只跳这个路由器或者找到了的话就直连<br>4，私有地址<br>10.0.0.0&#x2F;8&#x3D;&gt;以10开头的<br>172.16.0.0&#x2F;12&#x3D;&gt;172.16-172.31开头的<br>192.168.0.0&#x2F;16&#x3D;&gt;192.168开头的<br>一眼就要看出不是公共互联网网段</p>
+<p>tcp<br>1，面向连接的，一对一连接<br>2，可靠的，保证报文按顺序到达目标端口，不重复，不漏，不出差错<br>3，基于字节流的</p>
+<p>什么是连接？<br>某些状态信息的组合，用来可保证可靠性和流量控制，包括socker，序列号，窗口大小<br>1，sockets &#x3D; ip + 端口<br>2，sequence numbers，序列号，用于保证报文的顺序<br>3，window size，用来做流量控制<br>4，用源 ip(32位，ipv4) + 端口(16位)和目标ip + 端口可以确定一个连接，也叫tcp四元组<br>其实还有一元，协议，tcp或者udp<br>也就是说，通过tcp协议和udp协议发送报文到同一个端口，他们的数据不会互相污染</p>
+<p>问题：一个服务最多允许多少tcp连接<br>一个服务一般允许在一个端口上，也就是监听一个端口；<br>tcp是端口到端口的，端口并没有连接数限制，因此服务的tcp数取决于有多少客户端；<br>数量等于客户端ip数 * 客户端端口数；<br>由于连接在linux里是一个fd文件，因此收到linux文件夹内最大文件数的限制<br>由于tcp连接要消耗内存，还受到内存的限制</p>
+<p>tcp三次握手过程 ：初始客户端和服务端都是close状态<br>服务端启动，注册端口，监听这个端口，属于listen状态<br>1，客户端发syn，发完后处于syn-sent状态<br>客户端设置tcp报文的syn字段为1，携带序列号过去，发给服务端<br>2，服务端接收syn，返回syn和ack，发完后服务端处于syn-rcvd状态<br>服务端拿到客户端syn的序列号，将确认应答号设置为syn的序列号+1，<br>设置syn和ack标志为1，携带自己的序列号，发送给客户端<br>3，客户端接收服务端的syn和ack，收到后处于establishd状态(收到就得变，不变这个状态不能携带数据)，发送ack<br>客户端拿到服务端tcp报文的确认应答号字段，判断是否是客户端当前序列号+1：<br>是的话，设置ack标志为1，设置确认应答号为服务端序列号+1，发送给服务端，这次可以携带数据；<br>否的话，说明是旧连接，设置rst标志为1，发送给服务端，断开连接，服务端清除半连接<br>4，服务端接收到ack后处于established状态，<br>处于established状态就是全连接了，必须先验证再进全连接队列，不然可能浪费资源</p>
+<p>注意，仅仅在握手阶段，才期望的是对方确认应答号等于我的序列号+1，<br>实际传数据的时候，期望的是序列号+这次发过去的数据len</p>
+<p>为什么要三次？<br>1，第三次时，客户端会检查服务端的确认应答号，避免旧连接<br>2，第三次时，确认到服务端的序列号，这样就同步好了<br>3，避免资源浪费，如果没有第三次握手，服务端接收到syn就创建连接，<br>客户端syn阻塞，重发多个，建立多个连接，虽然后续由于确认应答号对不上连接会断开，<br>但是建立连接消耗了资源</p>
+<p>为什么第三次可以携带数据？<br>第三次离成功就只差一个服务端接收到ack然后确认了，大概率成功，携带数据可以少发一个包，效率高<br>第一次和第二次都不够安全，规定不发</p>
+<p>握手时丢失数据，会怎样？<br>1，第一次握手丢失<br>客户端重发syn<br>2，第二次握手丢失<br>客户端接不到ack和syn，以为自己syn没发过去，会重发syn；<br>服务端接收不到第三次ack，会重发第二次的ack和syn<br>3，第三次握手丢失<br>服务端接收不到ack，会重发第二次握手<br>客户端接到重发的第二次，才会重发第三次ack</p>
+<p>为什么ip已经可以分片传输，tcp还要分片一次？<br>如果用ip的分片，一般是ip报文不能超过1500字节，否则分片传输；<br>如果有一片失败，tcp的包装信息就不完整，接收方tcp就不能正常接收，<br>需要重传所有片。<br>与其这样，tcp自己分片，mss，保证分片后满足ip的最大长度要求，就不用ip分片，<br>失败一片，重传一片就可以</p>
+<p>四次回收断开连接，可以是任意方发起<br>1，客户端请求断开连接(调用close函数)，发送fin，发fin表示我不再发送新数据；进入fin_wait_1状态<br>2，服务端收到fin，发ack；进入close_wait状态，等待服务端调用close方法<br>3，服务端数据发送完后，发fin表示不再发新数据；进入last_ack状态<br>4，客户端收到fin，发送ack，进入time_waiting<br>5，服务端收到ack，进入close状态<br>6，客户端经过2msl时间后，途中没有收到fin，也自动进入close状态</p>
+<p>每一方都发一个fin和ack，加起来四次</p>
+<p>为什么要4次？<br>服务端收到fin后，先发ack给客户端表示收到，然后需要先发送没发送完的数据，再发fin</p>
+<p>第一次丢失会怎样？<br>服务端收不到fin，不返回ack，<br>客户端收不到ack，触发超时重传，重发fin，tcp_orphan_retries参数控制次数，每次重传的时间都是之前的两倍，<br>如果次数用完，再等到下次重发的时间，会直接进入close状态</p>
+<p>第二次丢失？<br>ack丢失，客户端收不到ack，会触发fin重传</p>
+<p>第三次丢失？<br>第三次服务端主动发fin，期待客户端的ack，<br>如果丢失，会重发fin，<br>tcp_orphan_retries 控制次数，到了次数后的下一次的时间，服务器会断掉连接；<br>客户端是fin_wait_2状态，这个状态默认60s将主动关闭连接</p>
+<p>第四次丢失？<br>客户端的ack丢失，服务端接收不到，会重发fin，和第三次丢失的结果一样</p>
+<p>为什么客户端获取到fin，进入time_wait状态，<br>要等2msl才自动close，而不是发了ack就自动close？</p>
+<p>1，处理ack丢失的情况<br>如果立马进close，如果ack丢失了，服务端(被关闭方)重发的fin过来，<br>客户端发送rst而不是ack，服务端以为出错，不优雅；<br>所以在time_wait中等2msl(报文最大存活时间，由ip层控制，最大路由次数，64，判断64次时间大概在30s，因此msl就是30s)<br>等2msl（60s）就是，当客户端ack丢失时，最大程度让重发的fin能传过来，<br>每次接受到fin都会重置time_wait的倒计时，因此每次fin都有一次丢失ack的机会<br>2，防止新连接存在旧报文<br>一个四元组+协议，能确定一个连接，当前连接断开后，用同样的五元组创建新连接；<br>如果之前的报文的seq或ack，刚好能被这次连接的初始seq或ack接收，就会新连接接收旧数据，不能接受；<br>因为seq是32位计数器，没4微妙加1，4.55小时后就会到最大值，然后回环，因此这是可能存在的；<br>2msl的时间能保证旧连接的包完全过期。</p>
+<p>time_wait有什么危害？<br>1，连接主动断开方，在收到第三次挥手的fin，发送ack之后，会把自身状态变为time_wait，要等待2msl后才close;<br>如果客户端time_wait过多，会把端口全占用，因为time_await时连接还在，想用同一个四元组创建新连接是不可以的；<br>2，如果服务端主动断开次数多，time_wait就多，就相当于无意义的保持的连接多，服务器的内存的fd号会耗完；</p>
+<p>time_wait多的原因？<br>1，没有开启长连接，<br>http1.1是默认开启长连接的，只要不在请求头里写Connection: close ，<br>如果写了，而且不管是客户端还是服务端看到这个参数断开了，连接，最终都会视为在服务端断开，<br>会在服务端产生大量的time_wait状态的连接</p>
+<p>http1.0要手动写Connection: Keep-Alive<br>2，没有用连接池，连接不复用<br>比如使用okhttp的方式发请求给另一个服务，new的时候会默认创建一个连接池，<br>如果没有这个，那么一个请求结束后，会自动调用close方法关闭socket，产生time_wait<br>3,长连接的最大数量不够<br>nginx的keepalive_requests 参数指定默认最多长连接数是100，<br>如果是客户端高并发访问，超过后nginx会主动关闭连接；<br>这时候需要调大这个参数</p>
+<p>TIME_WAIT多怎么优化？<br>1，对于客户端的端口占用问题<br>调整linux的net.ipv4.tcp_tw_reuse &#x3D; 1，net.ipv4.tcp_timestamps&#x3D;1（默认即为 1），<br>前者表示可以复用，处在time_wait下的连接，可以被相同的四元组的新连接复用，不会因为端口冲突失败；<br>后者表示在tcp报文中加时间戳，前者开启需要依赖这个；<br>开启前者就破坏了time_wait的作用：<br>    1，等待给第四次挥手一个丢失的机会，不用rst报文这种暴力方式关闭被关闭方<br>    2，防止旧数据被新连接接收<br>加上时间戳后，解决了这两个问题<br>    1，新连接诞生后，进入establish状态，接收到重发的fin后，不返回rst，不做处理<br>    2，tcp报文有时间戳，他如果小于连接时间，那肯定是旧数据<br>注意：这两参数是Linux里的，客户端必须运行在Linux服务器上，安卓，ios等都不行，<br>客户端是相对的，请求发起连接的服务就可以叫客户端<br>2，net.ipv4.tcp_max_tw_buckets<br>默认1800，time_wait的连接超过这个数，会重置连接状态，通常会用lru给最老的连接销毁</p>
+<p>close_wait多的原因？<br>close_wait发生在被断开方发出第二次挥手的ack后，<br>如果没有发出第三次挥手的fin，就会一直保持在close_wait；<br>不会消失，除非重启服务，这时客户端的端口被消耗，<br>服务端由于close_wait状态的连接越来越多，fd和内存资源会慢慢耗尽；<br>第三次的fin是调用close方法才会发出的，优先看代码逻辑，<br>是否保证了finally里面close，不会因为异常导致不关；<br>是否处理了read() &#x3D;&#x3D; -1，当是-1时，代表内核收到了第一次fin，而且返回了第二次的ack，<br>这时候客户端已经请求断开连接了，要手动调用close发第三次挥手；</p>
+<h3 id="socket示例"><a href="#socket示例" class="headerlink" title="socket示例"></a>socket示例</h3><p>服务端</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//监听8080</span></span><br><span class="line"><span class="type">ServerSocket</span> <span class="variable">serverSocket</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ServerSocket</span>(<span class="number">8080</span>);</span><br><span class="line"><span class="comment">//等待客户端连接，去内核拿连接句柄</span></span><br><span class="line"><span class="type">Socket</span> <span class="variable">socket</span> <span class="operator">=</span> serverSocket.accept();</span><br><span class="line"><span class="comment">//socket传输字节流,</span></span><br><span class="line"><span class="type">InputStream</span> <span class="variable">inputStream</span> <span class="operator">=</span> socket.getInputStream();</span><br><span class="line"><span class="type">BufferedReader</span> <span class="variable">in</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">BufferedReader</span>(<span class="keyword">new</span> <span class="title class_">InputStreamReader</span>(inputStream));</span><br><span class="line"><span class="comment">//用字符流包装，虽然写的是字符，也是转成outputstream字节流出去的，这个方便，而且会自动加一个换行符号</span></span><br><span class="line"><span class="type">PrintWriter</span> <span class="variable">out</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">PrintWriter</span>(socket.getOutputStream());</span><br><span class="line">String res;</span><br><span class="line"><span class="comment">//readLine内部循环读，直到客户端断开连接，解决半包问题</span></span><br><span class="line"><span class="keyword">while</span> ((res = in.readLine()) !=<span class="literal">null</span>)&#123;</span><br><span class="line">    System.out.println(res);</span><br><span class="line">    <span class="comment">//输入字符，自动加换行符，转成字节流出去tcp</span></span><br><span class="line">    out.println(<span class="string">&quot;accept&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//关socket就行了，会把流也顺便关了</span></span><br><span class="line">socket.close();</span><br><span class="line">serverSocket.close();</span><br></pre></td></tr></table></figure>
+
+<p>客户端</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Socket</span> <span class="variable">socket</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">socket = <span class="keyword">new</span> <span class="title class_">Socket</span>(<span class="string">&quot;localhost&quot;</span>,<span class="number">8080</span>);</span><br><span class="line"><span class="type">OutputStream</span> <span class="variable">outputStream</span> <span class="operator">=</span> socket.getOutputStream();</span><br><span class="line"><span class="type">PrintWriter</span> <span class="variable">out</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">PrintWriter</span>(outputStream, <span class="literal">true</span>);</span><br><span class="line">out.println(<span class="string">&quot;Hello Server&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="type">InputStream</span> <span class="variable">inputStream</span> <span class="operator">=</span> socket.getInputStream();</span><br><span class="line"><span class="type">BufferedReader</span> <span class="variable">in</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">BufferedReader</span>(<span class="keyword">new</span> <span class="title class_">InputStreamReader</span>(inputStream));</span><br><span class="line">String res;</span><br><span class="line"><span class="keyword">while</span> ((res = in.readLine()) != <span class="literal">null</span> )&#123;</span><br><span class="line">    System.out.println(res);</span><br><span class="line">&#125;</span><br><span class="line">socket.close();</span><br></pre></td></tr></table></figure>
+
+<p>注意，用PrintWriter必须要把内容flush出去，或者再构造中指定autoFlush为true</p>
+<h3 id="Socket-TCP-总结"><a href="#Socket-TCP-总结" class="headerlink" title="Socket &amp; TCP 总结"></a>Socket &amp; TCP 总结</h3><ol>
+<li>服务端先创建 <code>ServerSocket</code>，等同于在该主机上监听端口，内核维护<strong>半连接队列</strong>和<strong>全连接队列</strong></li>
+<li>客户端用构造方法建立 <code>Socket</code>，代表发送 SYN，请求连接，进入<strong>半连接队列</strong></li>
+<li>服务端监听中，内核完成三次握手，连接从<strong>半连接队列</strong>移入<strong>全连接队列</strong></li>
+<li>服务端调用 <code>accept</code>，是从内核<strong>全连接队列</strong>中取出已建立的连接</li>
+<li>客户端调用 <code>close</code>，发起四次挥手，发送 FIN；若服务端异常断开，会发送 RST</li>
+<li>内核收到 FIN，返回 ACK，服务端 <code>read</code>读到 <code>-1</code>；若收到 RST，连接直接异常断开</li>
+<li>服务端调用 <code>close</code>，发送 FIN；若不调用 <code>close</code>，连接会长期停留在 <code>CLOSE_WAIT</code>状态</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026/05/13/vue/" rel="prev" title="vue">
+                  <i class="fa fa-angle-left"></i> vue
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">呼呼呼</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">164k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">2:29</span>
+  </span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div> -->
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('/n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+          if(result)$(this).text('复制成功')
+          else $(this).text('复制失败')
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('复制')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+</body>
+</html>
